@@ -1,0 +1,66 @@
+# Model 1
+
+Prediction model for `Y1`.
+
+
+## Data preprocessing
+
+Split data set into 60:40 training:validation samples.
+
+```{r}
+inTrain <- createDataPartition(df$id, p = 0.6)
+dfTrain <- df[inTrain$Resample1, ]
+dfValid <- df[-inTrain$Resample1, ]
+```
+
+Preprocess the training sample.
+
+1. Exclude near-zero variance predictors
+2. Center variables
+3. Scale variables
+4. Impute missing values using k-nearest neighbor
+
+```{r}
+predictors <-
+  dfTrain %>% 
+  select(-id, -Y1, -Y2, -Y3) %>% 
+  preProcess(method = c("nzv", "center", "scale", "knnImpute")
+predictors$data %>% write.csv("data/processed/predictors.csv", row.names = FALSE)
+```
+
+## Training
+
+Set the control parameters.
+
+```{r}
+ctrl <- trainControl(method = "repeatedcv",
+                     number = 10,
+                     repeats = 10,
+                     classProbs=TRUE,
+                     savePredictions = TRUE,
+                     allowParallel = FALSE,
+                     search = "random")
+```
+
+Set the model.
+
+```{r}
+library(randomForest)
+method <- "rf"
+```
+
+Set the tuning grid for model xgbTree.
+
+```{r}
+grid <- expand.grid(mtry = seq(5, 25, 5))
+```
+
+Fit model over the tuning parameters.
+
+trainingModel <- train(type ~ .,
+                       data = select(train, -matches("id")),
+                       method = method,
+                       trControl = ctrl,
+                       # tuneGrid = grid,
+                       tuneLength = 10,
+                       nthreads = 3)
