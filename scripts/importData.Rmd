@@ -1,0 +1,185 @@
+# Import Andrew's SPSS data
+
+```{r}
+df <-
+  "data/raw/APP-BIT.sav" %>% 
+  read_sav() 
+oldnames <- names(df)
+newnames <- c("id",
+              "languageSurvey",
+              "totalChildren",
+              "birthOrder",
+              "childAge",
+              "childAgeDichotomous",
+              "childSex",
+              "childEthnicity",
+              "childRaceWhite",
+              "childRaceAsian",
+              "childRaceAfrAm",
+              "childRaceAIAN",
+              "childRaceNHPI",
+              "childRaceOther",
+              "childRaceNoResp",
+              "visitType",
+              "childRelationship",
+              "parentGender",
+              "parentSex",
+              "parentAge",
+              "parentEthnicity",
+              "parentRaceWhite",
+              "parentRaceAsian",
+              "parentRaceAfrAm",
+              "parentRaceAIAN",
+              "parentRaceNHPI",
+              "parentRaceOther",
+              "parentRaceNoResp",
+              "parentMaritalStatus",
+              "parentSituation",
+              "zipcode",
+              "community",
+              "distance",
+              "parentEducation",
+              "income",
+              "internet")
+newnames <- c(newnames, oldnames[(1 + length(newnames)):length(oldnames)])
+names(df) <- newnames
+```
+
+Map new names to variables.
+
+```{r}
+data.frame(oldnames, newnames) %>% kable()
+```
+
+```{r}
+df <- 
+  df %>%
+  mutate(languageSurvey = factor(languageSurvey,
+                                 levels = seq(2), 
+                                 labels = c("English", "Spanish"))) %>% 
+  mutate(birthOrder = factor(birthOrder, 
+                             levels = seq(3), 
+                             labels = c("Oldest", "Middle", "Youngest"))) %>% 
+  mutate(childAgeDichotomous = factor(childAgeDichotomous, 
+                                      levels = seq(2), 
+                                      labels = c("Under 3", "3 or older"))) %>% 
+  mutate(childSex = factor(childSex, 
+                           levels = seq(2), 
+                           labels = c("Female", "Male"))) %>% 
+  mutate(childEthnicity = factor(childEthnicity, 
+                                 levels = seq(4), 
+                                 labels = c("Hispanic/Latino", 
+                                            "Not Hispanic/Latino", 
+                                            "Unknown", 
+                                            "Prefer not to respond"))) %>% 
+  mutate(visitType = factor(visitType, 
+                            levels = seq(5), 
+                            labels = c("Check-up/well child visit", 
+                                       "Child is sick or medical concern", 
+                                       "Behavioral or developmental concern", 
+                                       "Follow-up appointment", 
+                                       "Other"))) %>% 
+  mutate(childRelationship = factor(childRelationship,
+                                    levels = seq(6),
+                                    labels = c("Biological or adoptive mother",
+                                               "Biological or adoptive father",
+                                               "Step parent",
+                                               "Grandparent",
+                                               "Relative",
+                                               "Other"))) %>% 
+  mutate(parentGender = factor(parentGender,
+                               levels = seq(5),
+                               labels = c("Male",
+                                          "Female",
+                                          "Transgender",
+                                          "Other",
+                                          "Prefer not to respond"))) %>% 
+  mutate(parentSex = factor(parentSex, 
+                            levels = seq(2), 
+                            labels = c("Female", "Male"))) %>% 
+  mutate(parentEthnicity = factor(parentEthnicity, 
+                                  levels = seq(4), 
+                                  labels = c("Hispanic/Latino", 
+                                             "Not Hispanic/Latino", 
+                                             "Unknown", 
+                                             "Prefer not to respond"))) %>% 
+  mutate(parentMaritalStatus = factor(parentMaritalStatus,
+                                      levels = seq(6),
+                                      labels = c("Married",
+                                                 "Widowed",
+                                                 "Divorced",
+                                                 "Separated",
+                                                 "Remarried",
+                                                 "Never married"))) %>% 
+  mutate(parentSituation = factor(parentSituation,
+                                  levels = seq(3),
+                                  labels = c("Single parenting",
+                                             "Couple parenting with spouse or partner in the same household",
+                                             "Co-parenting in separate households"))) %>% 
+  mutate(community = factor(community, levels = seq(3), labels = c("Urban", "Suburban", "Rural"))) %>% 
+  mutate(parentEducation = factor(parentEducation,
+                                  levels = seq(4),
+                                  labels = c("High school or less",
+                                             "Vocational school/some college",
+                                             "College",
+                                             "Graduate/professional school"))) %>% 
+  mutate(income = factor(income,
+                         levels = seq(6),
+                         labels = c("$25,000 or less",
+                                    "$25,001-$49,999",
+                                    "$50,000-$79,999",
+                                    "$80,000-$119,999",
+                                    "$120,000-$149,999",
+                                    "$150,000 or more")))
+```
+
+```{r, results = FALSE}
+sink("output/importData_sink.txt")
+data.frame(oldnames, newnames)
+df %>% names()
+df %>% str()
+sink()
+```
+
+Output to [CSV file](../data/processed/dataframe.csv).
+
+```{r}
+df %>% write.csv("data/processed/dataframe.csv", row.names = FALSE)
+```
+
+Build analysis data set.
+Exclude is missing any dependent variable, `Y1`, `Y2`, `Y3`.
+
+![figures/flowChart.png](figures/flowChart.png)
+
+```{r}
+n0 <- nrow(df)
+nMissing <- df %>% filter(is.na(Y1) | is.na(Y2) | is.na(Y3)) %>% nrow()
+df <- df %>% filter(!is.na(Y1) & !is.na(Y2) & !is.na(Y3))
+```
+
+```{r}
+label <- sprintf("%s\nN = %d", 
+                 c("Initial sample", 
+                   "Missing dependent variable", 
+                   "Analysis sample"), 
+                 c(n0, 
+                   nMissing, 
+                   nrow(df)))
+nodes <- data.frame(text = label)
+edges <- 
+  create_edge_df(from = c(1, 1),
+                 to   = c(2, 3))
+G <-
+  create_graph() %>% 
+  add_nodes_from_table(table = nodes, label_col = "text") %>%
+  add_edge_df(edges) %>% 
+  add_global_graph_attrs("layout", "dot", "graph") %>%
+  add_global_graph_attrs("shape", "oval", "node") %>%
+  add_global_graph_attrs("width", "2", "node") %>%
+  add_global_graph_attrs("height", "0.8", "node") %>%
+  add_global_graph_attrs("fontcolor", "black", "node")
+# render_graph(G)
+G %>% export_graph(file_name = "figures/flowChart.png", file_type = "png")
+G %>% export_graph(file_name = "figures/flowChart.svg", file_type = "svg")
+```

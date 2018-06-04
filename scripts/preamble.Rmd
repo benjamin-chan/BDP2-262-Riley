@@ -1,0 +1,11 @@
+```{r, echo = FALSE, include = FALSE}
+library(magrittr)
+library(tidyverse)
+library(haven)
+library(DiagrammeR)
+library(caret)
+
+set.seed(as.integer(as.Date("2018-06-04")))
+
+# sapply(list.files("lib", full.names = TRUE), source)
+```
