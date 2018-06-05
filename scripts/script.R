@@ -1,4 +1,4 @@
-setwd("C:/Users/chanb/Box Sync/Share/BDP2-262 Riley")
+setwd("~/Projects/BDP2-262 Riley")
 
 library(checkpoint)
 checkpoint("2018-04-01", use.knitr = TRUE)
