@@ -36,36 +36,49 @@ Set the control parameters.
 
 ```{r}
 ctrl <- trainControl(method = "repeatedcv",
-                     number = 5,
-                     repeats = 5,
+                     number = 10,
+                     repeats = 10,
                      savePredictions = TRUE,
                      allowParallel = TRUE,
                      search = "random")
 ```
 
-Set the model.
+Set the model and tuning parameter grid.
 
 ```{r}
 library(randomForest)
 method <- "rf"
-```
-
-Set the tuning grid for model xgbTree.
-
-```{r, eval = FALSE}
-grid <- expand.grid(mtry = seq(5, 25, 5))
+grid <- expand.grid(mtry = seq(2, 16, 2))
 ```
 
 Fit model over the tuning parameters.
 
-```{r}
-trainingModel <- 
+```{r trainingModel, fig.show = "hide"}
+trainingModel <-
+  dfTrainPreProc %>% 
+  select(-c(id, Y2, Y3) %>% 
   train(Y1 ~ .,
-        data = dfTrainPreProc %>% select(-c(id, Y2, Y3)),
+        data = .),
         method = method,
         trControl = ctrl,
-        # tuneGrid = grid,
+        tuneGrid = grid,
         tuneLength = 10,
-        nthreads = 3,
+        nthreads = 8,
         na.action = "na.omit")
+trainingModel
+trainingModel %>% 
+  ggplot() + 
+  geom_line() +
+  geom_point() +
+  theme_bw()
+ggsave("figures/trainingModel.png")
+ggsave("figures/trainingModel.svg")
+```
+
+![figures/trainingModel.png](figures/trainingModel.png)
+
+```{r, eval = FALSE}
+hat <- predict(trainingModel, dfTrainPreProc)
+varImp(trainingModel)
+trainingModel$finalModel
 ```

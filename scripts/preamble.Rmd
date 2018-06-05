@@ -4,6 +4,8 @@ library(tidyverse)
 library(haven)
 library(DiagrammeR)
 library(caret)
+library(parallel)
+library(doParallel)
 
 set.seed(as.integer(as.Date("2018-06-04")))
 
