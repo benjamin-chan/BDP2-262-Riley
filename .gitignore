@@ -34,3 +34,9 @@ vignettes/*.pdf
 
 # Shiny token, see https://shiny.rstudio.com/articles/shinyapps.html
 rsconnect/
+
+# Raw Data
+data/raw/*.*
+
+# Visual Studio Code workspace files
+*.code-workspace
