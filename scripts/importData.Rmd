@@ -57,9 +57,11 @@ df <-
   mutate(languageSurvey = factor(languageSurvey,
                                  levels = seq(2), 
                                  labels = c("English", "Spanish"))) %>% 
-  mutate(birthOrder = factor(birthOrder, 
-                             levels = seq(3), 
-                             labels = c("Oldest", "Middle", "Youngest"))) %>% 
+  mutate(birthOrder = case_when(totalChildren == 1 ~ 0,
+                                TRUE ~ as.numeric(birthOrder)) %>% 
+                      factor(., 
+                             levels = 0:3, 
+                             labels = c("Only child", "Oldest", "Middle", "Youngest"))) %>% 
   mutate(childAgeDichotomous = factor(childAgeDichotomous, 
                                       levels = seq(2), 
                                       labels = c("Under 3", "3 or older"))) %>% 
@@ -116,6 +118,7 @@ df <-
                                   labels = c("Single parenting",
                                              "Couple parenting with spouse or partner in the same household",
                                              "Co-parenting in separate households"))) %>% 
+  mutate(zipcode = factor(zipcode)) %>% 
   mutate(community = factor(community, levels = seq(3), labels = c("Urban", "Suburban", "Rural"))) %>% 
   mutate(parentEducation = factor(parentEducation,
                                   levels = seq(4),
