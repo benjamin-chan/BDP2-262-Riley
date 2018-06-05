@@ -8,7 +8,7 @@ Prediction model for `Y1`.
 Split data set into 60:40 training:validation samples.
 
 ```{r}
-inTrain <- createDataPartition(df$id, p = 0.6)
+inTrain <- createDataPartition(df$id, p = 0.7)
 dfTrain <- df[inTrain$Resample1, ]
 dfValid <- df[-inTrain$Resample1, ]
 ```
@@ -21,11 +21,13 @@ Preprocess the training sample.
 4. Impute missing values using k-nearest neighbor
 
 ```{r}
-predictors <-
+preProc <-
   dfTrain %>% 
-  select(-id, -Y1, -Y2, -Y3) %>% 
-  preProcess(method = c("nzv", "center", "scale", "knnImpute")
-predictors$data %>% write.csv("data/processed/predictors.csv", row.names = FALSE)
+  select(-c(id, Y1, Y2, Y3)) %>% 
+  preProcess(method = c("nzv", "corr", "medianImpute"))
+preProc
+dfTrainPreProc <- predict(preProc, dfTrain)
+dfTrainPreProc %>% write.csv("data/processed/dfTrainPreProc.csv", row.names = FALSE)
 ```
 
 ## Training
@@ -34,11 +36,10 @@ Set the control parameters.
 
 ```{r}
 ctrl <- trainControl(method = "repeatedcv",
-                     number = 10,
-                     repeats = 10,
-                     classProbs=TRUE,
+                     number = 5,
+                     repeats = 5,
                      savePredictions = TRUE,
-                     allowParallel = FALSE,
+                     allowParallel = TRUE,
                      search = "random")
 ```
 
@@ -51,16 +52,20 @@ method <- "rf"
 
 Set the tuning grid for model xgbTree.
 
-```{r}
+```{r, eval = FALSE}
 grid <- expand.grid(mtry = seq(5, 25, 5))
 ```
 
 Fit model over the tuning parameters.
 
-trainingModel <- train(type ~ .,
-                       data = select(train, -matches("id")),
-                       method = method,
-                       trControl = ctrl,
-                       # tuneGrid = grid,
-                       tuneLength = 10,
-                       nthreads = 3)
+```{r}
+trainingModel <- 
+  train(Y1 ~ .,
+        data = dfTrainPreProc %>% select(-c(id, Y2, Y3)),
+        method = method,
+        trControl = ctrl,
+        # tuneGrid = grid,
+        tuneLength = 10,
+        nthreads = 3,
+        na.action = "na.omit")
+```
