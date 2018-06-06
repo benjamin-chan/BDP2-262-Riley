@@ -161,7 +161,7 @@ nMissing <- df %>% filter(is.na(Y1) | is.na(Y2) | is.na(Y3)) %>% nrow()
 df <- df %>% filter(!is.na(Y1) & !is.na(Y2) & !is.na(Y3))
 ```
 
-```{r}
+```{r, eval = FALSE}
 label <- sprintf("%s\nN = %d", 
                  c("Initial sample", 
                    "Missing dependent variable", 
