@@ -1,7 +1,7 @@
-setwd("~/Projects/BDP2-262 Riley")
+setwd("~/Projects/BDP2-262-Riley")
 
 library(checkpoint)
-checkpoint("2018-04-01", use.knitr = TRUE)
+checkpoint("2018-04-01", use.knitr = TRUE, verbose = FALSE)
 
 Sys.time0 <- Sys.time()
 
@@ -22,7 +22,7 @@ opts_chunk$set(echo = FALSE, fig.path = "figures/", dpi = 300)
 knit("master.Rmd", output = "docs/BDP2-262_Riley.md")
 # pandoc("docs/BDP2-262_Riley.md", format = "docx")
 # system("pandoc --template=GitHub.html5 --self-contained docs/BDP2-262_Riley.md -o docs/BDP2-262_Riley.html")
-file.remove("master.Rmd")
+# file.remove("master.Rmd")
 # sink()
 
 sink("output/session.log")
