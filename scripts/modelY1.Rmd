@@ -56,9 +56,9 @@ Fit model over the tuning parameters.
 ```{r trainingModel, fig.show = "hide"}
 trainingModel <-
   dfTrainPreProc %>% 
-  dplyr::select(-c(id, Y2, Y3) %>% 
+  select(-c(id, Y2, Y3)) %>% 
   train(Y1 ~ .,
-        data = .),
+        data = .,
         method = method,
         trControl = ctrl,
         tuneGrid = grid,
