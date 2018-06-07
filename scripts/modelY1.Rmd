@@ -7,7 +7,7 @@ Prediction model for `Y1`.
 
 Split data set into 70:30 training:validation samples.
 
-```{r}
+```{r, echo = TRUE}
 inTrain <- createDataPartition(df$id, p = 0.7)
 dfTrain <- df[inTrain$Resample1, ]
 dfValid <- df[-inTrain$Resample1, ]
@@ -16,11 +16,9 @@ dfValid <- df[-inTrain$Resample1, ]
 Preprocess the training sample.
 
 1. Exclude near-zero variance predictors
-2. Center variables
-3. Scale variables
-4. Impute missing values using k-nearest neighbor
+2. Impute missing values using k-nearest neighbor
 
-```{r}
+```{r, echo = TRUE}
 message(sprintf("Number of complete cases before imputation = %d",
                 complete.cases(dfTrain) %>% sum()))
 nzv <- 
@@ -58,7 +56,7 @@ dfTrainPreProc %>% write.csv("data/processed/dfTrainPreProc.csv", row.names = FA
 
 Set the control parameters.
 
-```{r}
+```{r, echo = TRUE}
 ctrl <- trainControl(method = "repeatedcv",
                      number = 10,
                      repeats = 25,
@@ -69,7 +67,7 @@ ctrl <- trainControl(method = "repeatedcv",
 
 Set the model and tuning parameter grid.
 
-```{r}
+```{r, echo = TRUE}
 library(randomForest)
 method <- "rf"
 grid <- expand.grid(mtry = seq(5, 10, 1))
@@ -124,11 +122,13 @@ dfTrainPred %>%
   geom_point(alpha = 1/2)
 ```
 
+Evaluate model on the validation sample.
+
 ```{r Y1Validation-predict}
 dfValidPred <- 
-  dfValid %>% 
+  predict(preProc, dfValid) %>% 
   filter(complete.cases(.)) %>% 
-  mutate(hat = predict(trainingModel, dfValid) %>% as.numeric())
+  mutate(hat = predict(trainingModel, .) %>% as.numeric())
 postResample(pred = dfValidPred$hat, obs = dfValidPred$Y1)
 cor(dfValidPred %>% select(Y1, hat))
 dfValidPred %>% 
