@@ -187,17 +187,16 @@ Train model over the tuning parameters.
 ## Resampling results across tuning parameters:
 ## 
 ##   mtry  RMSE      Rsquared   MAE     
-##    2    17.13928  0.1273614  13.90657
-##    4    16.85642  0.1376379  13.67567
-##    6    16.84179  0.1302233  13.65908
-##    8    16.84172  0.1271833  13.63635
-##   10    16.87490  0.1229894  13.65325
-##   12    16.88498  0.1208655  13.67220
-##   14    16.90959  0.1178629  13.65815
-##   16    16.91504  0.1174649  13.66325
+##    4    16.88700  0.1303926  13.70975
+##    5    16.85556  0.1266613  13.66929
+##    6    16.84630  0.1262597  13.65939
+##    7    16.81950  0.1303648  13.64271
+##    8    16.88126  0.1232592  13.67366
+##    9    16.88858  0.1209391  13.67064
+##   10    16.84372  0.1228112  13.64316
 ## 
 ## RMSE was used to select the optimal model using the smallest value.
-## The final value used for the model was mtry = 8.
+## The final value used for the model was mtry = 7.
 ```
 
 ```

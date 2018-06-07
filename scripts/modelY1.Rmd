@@ -48,7 +48,7 @@ Set the model and tuning parameter grid.
 ```{r}
 library(randomForest)
 method <- "rf"
-grid <- expand.grid(mtry = seq(2, 16, 2))
+grid <- expand.grid(mtry = seq(4, 10, 1))
 ```
 
 Train model over the tuning parameters.
@@ -64,7 +64,8 @@ trainingModel <-
         tuneGrid = grid,
         tuneLength = 10,
         nthreads = 8,
-        na.action = "na.omit")
+        na.action = "na.omit",
+        importance = TRUE)
 trainingModel
 trainingModel %>% 
   ggplot() + 
@@ -74,6 +75,7 @@ trainingModel %>%
 ggsave("figures/trainingModelY1.png")
 ggsave("figures/trainingModelY1.svg")
 save(trainingModel, file = "output/trainingModelY1.RData")
+# load("output/trainingModelY1.RData")
 ```
 
 ![figures/trainingModelY1.png](figures/trainingModelY1.png)
