@@ -33,8 +33,9 @@ label: unnamed-chunk-4
 
   |                                                                         |......................                                           |  34%
 label: unnamed-chunk-5 (with options) 
-List of 1
+List of 2
  $ results: logi FALSE
+ $ eval   : logi FALSE
 
   |                                                                         |.........................                                        |  38%
   ordinary text without R code
@@ -78,7 +79,7 @@ label: unnamed-chunk-12
   ordinary text without R code
 
   |                                                                         |..........................................................       |  90%
-label: trainingModel (with options) 
+label: trainingModelY1 (with options) 
 List of 1
  $ fig.show: chr "hide"
 
@@ -86,10 +87,7 @@ List of 1
   ordinary text without R code
 
   |                                                                         |...............................................................  |  97%
-label: unnamed-chunk-13 (with options) 
-List of 1
- $ eval: logi FALSE
-
+label: trainingModelY1-predict
   |                                                                         |.................................................................| 100%
   ordinary text without R code
 
@@ -97,5 +95,3 @@ List of 1
 output file: docs/BDP2-262_Riley.md
 
 [1] "docs/BDP2-262_Riley.md"
-Warning message:
-In sink() : no sink to remove

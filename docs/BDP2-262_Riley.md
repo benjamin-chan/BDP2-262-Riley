@@ -130,12 +130,22 @@ Preprocess the training sample.
 
 
 ```
+## Number of complete cases before imputation = 247
+```
+
+```
 ## Created from 247 samples and 63 variables
 ## 
 ## Pre-processing:
+##   - centered (30)
 ##   - ignored (31)
-##   - median imputation (30)
+##   - 5 nearest neighbor imputation (30)
 ##   - removed (2)
+##   - scaled (30)
+```
+
+```
+## Number of complete cases after imputation = 274
 ```
 
 ## Training
@@ -182,21 +192,20 @@ Train model over the tuning parameters.
 ##  61 predictor
 ## 
 ## No pre-processing
-## Resampling: Cross-Validated (10 fold, repeated 10 times) 
-## Summary of sample sizes: 238, 237, 238, 238, 239, 238, ... 
+## Resampling: Cross-Validated (10 fold, repeated 25 times) 
+## Summary of sample sizes: 247, 246, 247, 247, 247, 246, ... 
 ## Resampling results across tuning parameters:
 ## 
 ##   mtry  RMSE      Rsquared   MAE     
-##    4    16.88700  0.1303926  13.70975
-##    5    16.85556  0.1266613  13.66929
-##    6    16.84630  0.1262597  13.65939
-##    7    16.81950  0.1303648  13.64271
-##    8    16.88126  0.1232592  13.67366
-##    9    16.88858  0.1209391  13.67064
-##   10    16.84372  0.1228112  13.64316
+##    5    16.64326  0.1430733  13.47938
+##    6    16.61381  0.1433864  13.44687
+##    7    16.62315  0.1401251  13.45028
+##    8    16.61360  0.1391500  13.43144
+##    9    16.63913  0.1359562  13.45766
+##   10    16.63912  0.1350297  13.45652
 ## 
 ## RMSE was used to select the optimal model using the smallest value.
-## The final value used for the model was mtry = 7.
+## The final value used for the model was mtry = 8.
 ```
 
 ```
@@ -207,6 +216,53 @@ Train model over the tuning parameters.
 ![figures/trainingModelY1.png](figures/trainingModelY1.png)
 
 
+```
+## 
+## Call:
+##  randomForest(x = x, y = y, mtry = param$mtry, importance = TRUE,      nthreads = 8) 
+##                Type of random forest: regression
+##                      Number of trees: 500
+## No. of variables tried at each split: 8
+## 
+##           Mean of squared residuals: 287.1884
+##                     % Var explained: 7.3
+```
+
+```
+## rf variable importance
+## 
+##   only 20 most important variables shown (out of 173)
+## 
+##                                             Overall
+## childRaceWhite                               100.00
+## parentRaceWhite                               96.75
+## childAgeDichotomous3 or older                 87.49
+## MAPS_POS                                      76.70
+## parentEthnicityNot Hispanic/Latino            71.39
+## MAPS_PR                                       70.66
+## SEPTI_total                                   69.45
+## MAPS_SP                                       68.82
+## childRaceAsian                                66.56
+## MAPS_LC                                       66.54
+## parentEducationGraduate/professional school   64.44
+## SEPTI_r_clinical_cutoff                       63.65
+## SEPTI_routine                                 63.42
+## SEPTI_d_clinical_cutoff                       61.59
+## parentRaceAsian                               59.32
+## zipcode97008                                  59.04
+## zipcode97225                                  59.00
+## MAPS_WM                                       58.06
+## zipcode97741                                  57.85
+## SEPTI_n_clinical_cutoff                       57.56
+```
+
+```
+##            Y1       hat
+## Y1  1.0000000 0.9730155
+## hat 0.9730155 1.0000000
+```
+
+![plot of chunk trainingModelY1-predict](figures/trainingModelY1-predict-1.png)
 
 
 
