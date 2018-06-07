@@ -136,7 +136,7 @@ df <-
                                     "$150,000 or more")))
 ```
 
-```{r, results = FALSE}
+```{r, results = FALSE, eval = FALSE}
 sink("output/importData_sink.txt")
 data.frame(oldnames, newnames)
 df %>% names()
