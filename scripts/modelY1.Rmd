@@ -34,7 +34,7 @@ nzv %>% kable()
 dfTrainPreProc1 <-
   dfTrain %>% 
   select(-one_of(nzv$varname)) %>% 
-  select(-c(id, Y1, Y2, Y3))
+  select(-c(id, Y2, Y3))
 preProc <-
   dfTrainPreProc1 %>% 
   preProcess(method = c("nzv", "corr", "knnImpute"), verbose = TRUE)
