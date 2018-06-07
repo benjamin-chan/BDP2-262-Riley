@@ -47,10 +47,10 @@ dfTrainPreProc2 <-
   mutate(childAgeDichotomous = factor(childAgeDichotomous, 
                                       levels = seq(2), 
                                       labels = c("Under 3", "3 or older")))
-message(sprintf("Number of complete cases after imputation = %d",
-                complete.cases(dfTrainPreProc) %>% sum()))
 dfTrainPreProc <- dfTrainPreProc2
 rm(dfTrainPreProc1, dfTrainPreProc2)
+message(sprintf("Number of complete cases after imputation = %d",
+                complete.cases(dfTrainPreProc) %>% sum()))
 dfTrainPreProc %>% write.csv("data/processed/dfTrainPreProc.csv", row.names = FALSE)
 ```
 
