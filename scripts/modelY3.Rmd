@@ -56,8 +56,11 @@ Evaluate model on the validation sample.
 
 ```{r Y3Validation-predict}
 dfValidPred <- 
-  predict(preProc, dfValid) %>% 
+  dfValid %>% 
+  select(-c(id, Y1, Y2)) %>% 
+  select(-one_of(nzv$varname)) %>%
   filter(complete.cases(.)) %>% 
+  predict(preProc, .) %>% 
   mutate(hat = predict(trainingModel, .) %>% as.numeric())
 postResample(pred = dfValidPred$hat, obs = dfValidPred$Y3)
 cor(dfValidPred %>% select(Y3, hat))

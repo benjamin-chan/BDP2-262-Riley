@@ -58,15 +58,8 @@ dfValidPred <-
   dfValid %>% 
   select(-c(id, Y2, Y3)) %>% 
   select(-one_of(nzv$varname)) %>%
-  filter(complete.cases(.))
-dfValidPred %>% names()
-dfValidPred %>% dim()
-dfValidPred %>% str()
-dfValidPred <- 
-  dfValidPred %>% 
-  predict(preProc, .)
-dfValidPred <-
-  dfValidPred %>% 
+  filter(complete.cases(.)) %>% 
+  predict(preProc, .) %>% 
   mutate(hat = predict(trainingModel, .) %>% as.numeric())
 postResample(pred = dfValidPred$hat, obs = dfValidPred$Y1)
 cor(dfValidPred %>% select(Y1, hat))
