@@ -29,7 +29,6 @@ trainingModel %>%
 ggsave("figures/Y1Training.png")
 ggsave("figures/Y1Training.svg")
 save(trainingModel, file = "output/Y1Training.RData")
-# load("output/Y1Training.RData")
 ```
 
 ![figures/Y1Training.png](figures/Y1Training.png)
@@ -56,8 +55,18 @@ Evaluate model on the validation sample.
 
 ```{r Y1Validation-predict}
 dfValidPred <- 
-  predict(preProc, dfValid) %>% 
-  filter(complete.cases(.)) %>% 
+  dfValid %>% 
+  select(-c(id, Y2, Y3)) %>% 
+  select(-one_of(nzv$varname)) %>%
+  filter(complete.cases(.))
+dfValidPred %>% names()
+dfValidPred %>% dim()
+dfValidPred %>% str()
+dfValidPred <- 
+  dfValidPred %>% 
+  predict(preProc, .)
+dfValidPred <-
+  dfValidPred %>% 
   mutate(hat = predict(trainingModel, .) %>% as.numeric())
 postResample(pred = dfValidPred$hat, obs = dfValidPred$Y1)
 cor(dfValidPred %>% select(Y1, hat))
