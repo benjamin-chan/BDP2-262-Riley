@@ -11,5 +11,8 @@ library(doParallel)
 
 set.seed(as.integer(as.Date("2018-06-04")))
 
+theme_set(theme_bw())
+theme_update(plot.title = element_text(hjust = 0.5))
+
 # sapply(list.files("lib", full.names = TRUE), source)
 ```

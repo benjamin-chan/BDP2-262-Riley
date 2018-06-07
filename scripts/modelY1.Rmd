@@ -89,10 +89,18 @@ save(trainingModel, file = "output/trainingModelY1.RData")
 ![figures/trainingModelY1.png](figures/trainingModelY1.png)
 
 ```{r}
+trainingModel$finalModel
 varImp(trainingModel)
 dfTrainPred <- 
   dfTrainPreProc %>% 
   mutate(hat = predict(trainingModel, dfTrainPreProc) %>% as.numeric())
 cor(dfTrainPred %>% select(Y1, hat))
-trainingModel$finalModel
+dfTrainPred %>% 
+  ggplot() +
+  ggtitle(sprintf("Correlation = %.03f", cor(dfTrainPred %>% select(Y1, hat)) %>% .[1, 2])) +
+  aes(x = hat, y = Y1) +
+  geom_abline(slope = 1, intercept = 0) +
+  geom_smooth(method = "lm", formula = y ~ x - 1, se = FALSE) +
+  geom_smooth(method = "lm", formula = y ~ x, color = "red", se = FALSE) +
+  geom_point(alpha = 1/2)
 ```
