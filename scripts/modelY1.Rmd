@@ -5,7 +5,7 @@ Prediction model for `Y1`.
 
 ## Data preprocessing
 
-Split data set into 60:40 training:validation samples.
+Split data set into 70:30 training:validation samples.
 
 ```{r}
 inTrain <- createDataPartition(df$id, p = 0.7)
@@ -77,7 +77,7 @@ grid <- expand.grid(mtry = seq(5, 10, 1))
 
 Train model over the tuning parameters.
 
-```{r trainingModelY1, fig.show = "hide"}
+```{r Y1Training, fig.show = "hide"}
 cl <- makeCluster(8)
 registerDoParallel(cl)
 trainingModel <-
@@ -98,24 +98,42 @@ trainingModel %>%
   geom_line() +
   geom_point() +
   theme_bw()
-ggsave("figures/trainingModelY1.png")
-ggsave("figures/trainingModelY1.svg")
-save(trainingModel, file = "output/trainingModelY1.RData")
-# load("output/trainingModelY1.RData")
+ggsave("figures/Y1Training.png")
+ggsave("figures/Y1Training.svg")
+save(trainingModel, file = "output/Y1Training.RData")
+# load("output/Y1Training.RData")
 ```
 
-![figures/trainingModelY1.png](figures/trainingModelY1.png)
+![figures/Y1Training.png](figures/Y1Training.png)
 
-```{r trainingModelY1-predict}
+```{r Y1Training-predict}
 trainingModel$finalModel
 varImp(trainingModel)
 dfTrainPred <- 
   dfTrainPreProc %>% 
   mutate(hat = predict(trainingModel, dfTrainPreProc) %>% as.numeric())
+postResample(pred = dfTrainPred$hat, obs = dfTrainPred$Y1)
 cor(dfTrainPred %>% select(Y1, hat))
 dfTrainPred %>% 
   ggplot() +
   ggtitle(sprintf("Correlation = %.03f", cor(dfTrainPred %>% select(Y1, hat)) %>% .[1, 2])) +
+  aes(x = hat, y = Y1) +
+  geom_abline(slope = 1, intercept = 0) +
+  geom_smooth(method = "lm", formula = y ~ x - 1, se = FALSE) +
+  geom_smooth(method = "lm", formula = y ~ x, color = "red", se = FALSE) +
+  geom_point(alpha = 1/2)
+```
+
+```{r Y1Validation-predict}
+dfValidPred <- 
+  dfValid %>% 
+  filter(complete.cases(.)) %>% 
+  mutate(hat = predict(trainingModel, dfValid) %>% as.numeric())
+postResample(pred = dfValidPred$hat, obs = dfValidPred$Y1)
+cor(dfValidPred %>% select(Y1, hat))
+dfValidPred %>% 
+  ggplot() +
+  ggtitle(sprintf("Correlation = %.03f", cor(dfValidPred %>% select(Y1, hat)) %>% .[1, 2])) +
   aes(x = hat, y = Y1) +
   geom_abline(slope = 1, intercept = 0) +
   geom_smooth(method = "lm", formula = y ~ x - 1, se = FALSE) +
