@@ -117,20 +117,39 @@ Prediction model for `Y1`.
 
 ## Data preprocessing
 
-Split data set into 60:40 training:validation samples.
+Split data set into 70:30 training:validation samples.
 
 
+```r
+inTrain <- createDataPartition(df$id, p = 0.7)
+dfTrain <- df[inTrain$Resample1, ]
+dfValid <- df[-inTrain$Resample1, ]
+```
 
 Preprocess the training sample.
 
 1. Exclude near-zero variance predictors
-2. Center variables
-3. Scale variables
-4. Impute missing values using k-nearest neighbor
+2. Impute missing values using k-nearest neighbor
 
+
+```r
+message(sprintf("Number of complete cases before imputation = %d",
+                complete.cases(dfTrain) %>% sum()))
+```
 
 ```
 ## Number of complete cases before imputation = 247
+```
+
+```r
+nzv <- 
+  dfTrain %>% 
+  select(-c(id, Y1, Y2, Y3)) %>% 
+  nearZeroVar(names = TRUE, saveMetric = TRUE) %>%
+  mutate(varname = row.names(.)) %>% 
+  filter(nzv == TRUE) %>% 
+  select(varname, freqRatio, percentUnique, zeroVar, nzv) 
+nzv %>% kable()
 ```
 
 
@@ -148,10 +167,24 @@ Preprocess the training sample.
 |parentRaceOther |  20.07692|      0.729927|FALSE   |TRUE |
 |internet        |  33.25000|      0.729927|FALSE   |TRUE |
 
+```r
+dfTrainPreProc1 <-
+  dfTrain %>% 
+  select(-one_of(nzv$varname)) %>% 
+  select(-c(id, Y2, Y3))
+preProc <-
+  dfTrainPreProc1 %>% 
+  preProcess(method = c("nzv", "corr", "knnImpute"), verbose = TRUE)
+```
+
 ```
 ##   2 highly correlated predictors were removed.
 ## Calculating 31 means for centering
 ## Calculating 31 standard deviations for scaling
+```
+
+```r
+preProc
 ```
 
 ```
@@ -165,8 +198,27 @@ Preprocess the training sample.
 ##   - scaled (31)
 ```
 
+```r
+dfTrainPreProc2 <-  
+  predict(preProc, dfTrainPreProc1) %>% 
+  mutate(childAgeDichotomous = case_when(is.na(childAgeDichotomous) & childAge < 3 ~ 1,
+                                         is.na(childAgeDichotomous) & childAge >= 3 ~ 2,
+                                         TRUE ~ as.numeric(childAgeDichotomous))) %>% 
+  mutate(childAgeDichotomous = factor(childAgeDichotomous, 
+                                      levels = seq(2), 
+                                      labels = c("Under 3", "3 or older")))
+dfTrainPreProc <- dfTrainPreProc2
+rm(dfTrainPreProc1, dfTrainPreProc2)
+message(sprintf("Number of complete cases after imputation = %d",
+                complete.cases(dfTrainPreProc) %>% sum()))
+```
+
 ```
 ## Number of complete cases after imputation = 274
+```
+
+```r
+dfTrainPreProc %>% write.csv("data/processed/dfTrainPreProc.csv", row.names = FALSE)
 ```
 
 ## Training
@@ -174,9 +226,21 @@ Preprocess the training sample.
 Set the control parameters.
 
 
+```r
+ctrl <- trainControl(method = "repeatedcv",
+                     number = 10,
+                     repeats = 25,
+                     savePredictions = TRUE,
+                     allowParallel = TRUE,
+                     search = "random")
+```
 
 Set the model and tuning parameter grid.
 
+
+```r
+library(randomForest)
+```
 
 ```
 ## randomForest 4.6-14
@@ -201,6 +265,11 @@ Set the model and tuning parameter grid.
 ## The following object is masked from 'package:ggplot2':
 ## 
 ##     margin
+```
+
+```r
+method <- "rf"
+grid <- expand.grid(mtry = seq(5, 10, 1))
 ```
 
 Train model over the tuning parameters.
@@ -234,7 +303,7 @@ Train model over the tuning parameters.
 ## Saving 7 x 7 in image
 ```
 
-![figures/trainingModelY1.png](figures/trainingModelY1.png)
+![figures/Y1Training.png](figures/Y1Training.png)
 
 
 ```
@@ -278,12 +347,33 @@ Train model over the tuning parameters.
 ```
 
 ```
+##      RMSE  Rsquared       MAE 
+## 0.4795928 0.9435874 0.3817198
+```
+
+```
 ##            Y1       hat
 ## Y1  1.0000000 0.9713843
 ## hat 0.9713843 1.0000000
 ```
 
-![plot of chunk trainingModelY1-predict](figures/trainingModelY1-predict-1.png)
+![plot of chunk Y1Training-predict](figures/Y1Training-predict-1.png)
+
+Evaluate model on the validation sample.
+
+
+```
+##       RMSE   Rsquared        MAE 
+## 0.95963050 0.03440275 0.76980139
+```
+
+```
+##            Y1       hat
+## Y1  1.0000000 0.1854798
+## hat 0.1854798 1.0000000
+```
+
+![plot of chunk Y1Validation-predict](figures/Y1Validation-predict-1.png)
 
 
 
