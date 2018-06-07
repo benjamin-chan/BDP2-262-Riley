@@ -1,0 +1,74 @@
+# Preprocess data
+
+Initial preprocesssing that needs to be done that is common to `Y1`, `Y2`, and `Y3`.
+
+Split data set into 70:30 training:validation samples.
+
+```{r, echo = TRUE}
+inTrain <- createDataPartition(df$id, p = 0.7)
+dfTrain <- df[inTrain$Resample1, ]
+dfValid <- df[-inTrain$Resample1, ]
+```
+
+Preprocess the training sample.
+
+1. Exclude near-zero variance predictors
+2. Impute missing values using k-nearest neighbor
+
+```{r, echo = TRUE}
+message(sprintf("Number of complete cases before imputation = %d",
+                complete.cases(dfTrain) %>% sum()))
+nzv <- 
+  dfTrain %>% 
+  select(-c(id, Y1, Y2, Y3)) %>% 
+  nearZeroVar(names = TRUE, saveMetric = TRUE) %>%
+  mutate(varname = row.names(.)) %>% 
+  filter(nzv == TRUE) %>% 
+  select(varname, freqRatio, percentUnique, zeroVar, nzv) 
+nzv %>% kable()
+dfTrainPreProc1 <-
+  dfTrain %>% 
+  select(-one_of(nzv$varname))
+dfOutcomes <- 
+  dfTrainPreProc1 %>% 
+  select(c(id, Y1, Y2, Y3))
+dfTrainPreProc2 <- 
+  dfTrainPreProc1 %>% 
+  select(-c(id, Y1, Y2, Y3))
+preProc <-
+  dfTrainPreProc2 %>% 
+  preProcess(method = c("nzv", "corr", "knnImpute"), verbose = TRUE)
+preProc
+dfTrainPreProc3 <-  
+  predict(preProc, dfTrainPreProc2) %>% 
+  mutate(childAgeDichotomous = case_when(is.na(childAgeDichotomous) & childAge < 3 ~ 1,
+                                         is.na(childAgeDichotomous) & childAge >= 3 ~ 2,
+                                         TRUE ~ as.numeric(childAgeDichotomous))) %>% 
+  mutate(childAgeDichotomous = factor(childAgeDichotomous, 
+                                      levels = seq(2), 
+                                      labels = c("Under 3", "3 or older")))
+dfTrainPreProc <- bind_cols(dfOutcome, dfTrainPreProc3)
+message(sprintf("Number of complete cases after imputation = %d",
+                complete.cases(dfTrainPreProc) %>% sum()))
+dfTrainPreProc %>% write.csv("data/processed/dfTrainPreProc.csv", row.names = FALSE)
+rm(dfTrainPreProc1, dfTrainPreProc2, dfTrainPreProc3)
+```
+
+Set the control parameters.
+
+```{r, echo = TRUE}
+ctrl <- trainControl(method = "repeatedcv",
+                     number = 10,
+                     repeats = 25,
+                     savePredictions = TRUE,
+                     allowParallel = TRUE,
+                     search = "random")
+```
+
+Set the model and tuning parameter grid.
+
+```{r, echo = TRUE}
+library(randomForest)
+method <- "rf"
+grid <- expand.grid(mtry = seq(5, 10, 1))
+```

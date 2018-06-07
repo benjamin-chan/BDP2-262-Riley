@@ -9,6 +9,7 @@ Sys.time0 <- Sys.time()
 files <- c("header.yaml",
            "preamble.Rmd",
            "importData.Rmd",
+           "preprocess.Rmd",
            "modelY1.Rmd",
            "modelY2.Rmd",
            "modelY3.Rmd")
