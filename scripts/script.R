@@ -9,7 +9,9 @@ Sys.time0 <- Sys.time()
 files <- c("header.yaml",
            "preamble.Rmd",
            "importData.Rmd",
-           "modelY1.Rmd")
+           "modelY1.Rmd",
+           "modelY2.Rmd",
+           "modelY3.Rmd")
 f <- file("master.Rmd", open = "w")
 for (i in 1:length(files)) {
     x <- readLines(file.path("scripts", files[i]))
