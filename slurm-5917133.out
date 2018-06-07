@@ -1,0 +1,166 @@
+
+checkpoint: Part of the Reproducible R Toolkit from Microsoft
+https://mran.microsoft.com/documents/rro/reproducibility/
+* installing *source* package 'gdtools' ...
+** package 'gdtools' successfully unpacked and MD5 sums checked
+Found pkg-config cflags and libs!
+Using PKG_CFLAGS=-I/usr/include/cairo -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -I/usr/include/pixman-1 -I/usr/include/freetype2 -I/usr/include/libpng15 -I/usr/include/libdrm  
+Using PKG_LIBS=-lcairo  
+** libs
+g++ -m64  -I/usr/include/R -DNDEBUG -I/usr/include/cairo -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -I/usr/include/pixman-1 -I/usr/include/freetype2 -I/usr/include/libpng15 -I/usr/include/libdrm   -I../inst/include/ -I"/home/users/chanb/.checkpoint/2018-04-01/lib/x86_64-redhat-linux-gnu/3.4.3/Rcpp/include" -I/usr/local/include  -fvisibility=hidden -fpic  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -c CairoContext.cpp -o CairoContext.o
+g++ -m64  -I/usr/include/R -DNDEBUG -I/usr/include/cairo -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -I/usr/include/pixman-1 -I/usr/include/freetype2 -I/usr/include/libpng15 -I/usr/include/libdrm   -I../inst/include/ -I"/home/users/chanb/.checkpoint/2018-04-01/lib/x86_64-redhat-linux-gnu/3.4.3/Rcpp/include" -I/usr/local/include  -fvisibility=hidden -fpic  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -c RcppExports.cpp -o RcppExports.o
+g++ -m64  -I/usr/include/R -DNDEBUG -I/usr/include/cairo -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -I/usr/include/pixman-1 -I/usr/include/freetype2 -I/usr/include/libpng15 -I/usr/include/libdrm   -I../inst/include/ -I"/home/users/chanb/.checkpoint/2018-04-01/lib/x86_64-redhat-linux-gnu/3.4.3/Rcpp/include" -I/usr/local/include  -fvisibility=hidden -fpic  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -c font_metrics.cpp -o font_metrics.o
+g++ -m64  -I/usr/include/R -DNDEBUG -I/usr/include/cairo -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -I/usr/include/pixman-1 -I/usr/include/freetype2 -I/usr/include/libpng15 -I/usr/include/libdrm   -I../inst/include/ -I"/home/users/chanb/.checkpoint/2018-04-01/lib/x86_64-redhat-linux-gnu/3.4.3/Rcpp/include" -I/usr/local/include  -fvisibility=hidden -fpic  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -c gdtools.cpp -o gdtools.o
+g++ -m64  -I/usr/include/R -DNDEBUG -I/usr/include/cairo -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -I/usr/include/pixman-1 -I/usr/include/freetype2 -I/usr/include/libpng15 -I/usr/include/libdrm   -I../inst/include/ -I"/home/users/chanb/.checkpoint/2018-04-01/lib/x86_64-redhat-linux-gnu/3.4.3/Rcpp/include" -I/usr/local/include  -fvisibility=hidden -fpic  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -c raster_to_base64.cpp -o raster_to_base64.o
+g++ -m64  -I/usr/include/R -DNDEBUG -I/usr/include/cairo -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -I/usr/include/pixman-1 -I/usr/include/freetype2 -I/usr/include/libpng15 -I/usr/include/libdrm   -I../inst/include/ -I"/home/users/chanb/.checkpoint/2018-04-01/lib/x86_64-redhat-linux-gnu/3.4.3/Rcpp/include" -I/usr/local/include  -fvisibility=hidden -fpic  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -c sys_fonts.cpp -o sys_fonts.o
+sys_fonts.cpp: In function 'Rcpp::DataFrame sys_fonts()':
+sys_fonts.cpp:21:10: warning: variable 'result' set but not used [-Wunused-but-set-variable]
+   FcBool result;
+          ^
+g++ -m64  -I/usr/include/R -DNDEBUG -I/usr/include/cairo -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -I/usr/include/pixman-1 -I/usr/include/freetype2 -I/usr/include/libpng15 -I/usr/include/libdrm   -I../inst/include/ -I"/home/users/chanb/.checkpoint/2018-04-01/lib/x86_64-redhat-linux-gnu/3.4.3/Rcpp/include" -I/usr/local/include  -fvisibility=hidden -fpic  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -c versions.cpp -o versions.o
+g++ -m64 -shared -L/usr/lib64/R/lib -Wl,-z,relro -o gdtools.so CairoContext.o RcppExports.o font_metrics.o gdtools.o raster_to_base64.o sys_fonts.o versions.o -lcairo -L/usr/lib64/R/lib -lR
+installing to /home/users/chanb/.checkpoint/2018-04-01/lib/x86_64-redhat-linux-gnu/3.4.3/gdtools/libs
+** R
+** inst
+** preparing package for lazy loading
+** help
+*** installing help indices
+  converting help for package 'gdtools'
+    finding HTML links ... done
+    font_family_exists                      html  
+    glyphs_match                            html  
+    m_str_extents                           html  
+    match_family                            html  
+    raster_str                              html  
+    raster_write                            html  
+    set_dummy_conf                          html  
+    str_extents                             html  
+    str_metrics                             html  
+    sys_fonts                               html  
+    version_cairo                           html  
+Rd warning: /tmp/RtmpXsQC5l/R.INSTALL214e64adb710f/gdtools/man/version_cairo.Rd:19: missing file link 'packageVersion'
+** building package indices
+** testing if installed package can be loaded
+* DONE (gdtools)
+* installing *source* package 'svglite' ...
+** package 'svglite' successfully unpacked and MD5 sums checked
+** libs
+g++ -m64  -I/usr/include/R -DNDEBUG  -I"/home/users/chanb/.checkpoint/2018-04-01/lib/x86_64-redhat-linux-gnu/3.4.3/Rcpp/include" -I"/home/users/chanb/.checkpoint/2018-04-01/lib/x86_64-redhat-linux-gnu/3.4.3/gdtools/include" -I"/home/users/chanb/.checkpoint/2018-04-01/lib/x86_64-redhat-linux-gnu/3.4.3/BH/include" -I/usr/local/include   -fpic  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -c RcppExports.cpp -o RcppExports.o
+g++ -m64  -I/usr/include/R -DNDEBUG  -I"/home/users/chanb/.checkpoint/2018-04-01/lib/x86_64-redhat-linux-gnu/3.4.3/Rcpp/include" -I"/home/users/chanb/.checkpoint/2018-04-01/lib/x86_64-redhat-linux-gnu/3.4.3/gdtools/include" -I"/home/users/chanb/.checkpoint/2018-04-01/lib/x86_64-redhat-linux-gnu/3.4.3/BH/include" -I/usr/local/include   -fpic  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -c devSVG.cpp -o devSVG.o
+g++ -m64 -shared -L/usr/lib64/R/lib -Wl,-z,relro -o svglite.so RcppExports.o devSVG.o -L/usr/lib64/R/lib -lR
+installing to /home/users/chanb/.checkpoint/2018-04-01/lib/x86_64-redhat-linux-gnu/3.4.3/svglite/libs
+** R
+** inst
+** preparing package for lazy loading
+** help
+*** installing help indices
+  converting help for package 'svglite'
+    finding HTML links ... done
+    editSVG                                 html  
+    htmlSVG                                 html  
+    stringSVG                               html  
+    svglite                                 html  
+    svgstring                               html  
+    xmlSVG                                  html  
+** building package indices
+** installing vignettes
+** testing if installed package can be loaded
+* DONE (svglite)
+
+
+processing file: master.Rmd
+  |                                                                         |                                                                 |   0%  |                                                                         |..                                                               |   3%
+   inline R code fragments
+
+  |                                                                         |....                                                             |   7%
+label: unnamed-chunk-1 (with options) 
+List of 2
+ $ echo   : logi FALSE
+ $ include: logi FALSE
+
+  |                                                                         |.......                                                          |  10%
+  ordinary text without R code
+
+  |                                                                         |.........                                                        |  14%
+label: unnamed-chunk-2
+  |                                                                         |...........                                                      |  17%
+  ordinary text without R code
+
+  |                                                                         |.............                                                    |  21%
+label: unnamed-chunk-3
+  |                                                                         |................                                                 |  24%
+  ordinary text without R code
+
+  |                                                                         |..................                                               |  28%
+label: unnamed-chunk-4
+  |                                                                         |....................                                             |  31%
+  ordinary text without R code
+
+  |                                                                         |......................                                           |  34%
+label: unnamed-chunk-5 (with options) 
+List of 1
+ $ results: logi FALSE
+
+  |                                                                         |.........................                                        |  38%
+  ordinary text without R code
+
+  |                                                                         |...........................                                      |  41%
+label: unnamed-chunk-6
+  |                                                                         |.............................                                    |  45%
+  ordinary text without R code
+
+  |                                                                         |...............................                                  |  48%
+label: unnamed-chunk-7
+  |                                                                         |..................................                               |  52%
+  ordinary text without R code
+
+  |                                                                         |....................................                             |  55%
+label: unnamed-chunk-8 (with options) 
+List of 1
+ $ eval: logi FALSE
+
+  |                                                                         |......................................                           |  59%
+  ordinary text without R code
+
+  |                                                                         |........................................                         |  62%
+label: unnamed-chunk-9
+  |                                                                         |...........................................                      |  66%
+  ordinary text without R code
+
+  |                                                                         |.............................................                    |  69%
+label: unnamed-chunk-10
+  |                                                                         |...............................................                  |  72%
+  ordinary text without R code
+
+  |                                                                         |.................................................                |  76%
+label: unnamed-chunk-11
+  |                                                                         |....................................................             |  79%
+  ordinary text without R code
+
+  |                                                                         |......................................................           |  83%
+label: unnamed-chunk-12
+  |                                                                         |........................................................         |  86%
+  ordinary text without R code
+
+  |                                                                         |..........................................................       |  90%
+label: trainingModel (with options) 
+List of 1
+ $ fig.show: chr "hide"
+
+  |                                                                         |.............................................................    |  93%
+  ordinary text without R code
+
+  |                                                                         |...............................................................  |  97%
+label: unnamed-chunk-13 (with options) 
+List of 1
+ $ eval: logi FALSE
+
+  |                                                                         |.................................................................| 100%
+  ordinary text without R code
+
+
+output file: docs/BDP2-262_Riley.md
+
+[1] "docs/BDP2-262_Riley.md"
+Warning message:
+In sink() : no sink to remove
