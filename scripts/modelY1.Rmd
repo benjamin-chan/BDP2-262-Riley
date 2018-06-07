@@ -26,7 +26,15 @@ preProc <-
   select(-c(id, Y1, Y2, Y3)) %>% 
   preProcess(method = c("nzv", "corr", "medianImpute"))
 preProc
-dfTrainPreProc <- predict(preProc, dfTrain)
+dfTrainPreProc <- 
+  predict(preProc, dfTrain) %>% 
+  mutate(childAgeDichotomous = case_when(is.na(childAgeDichotomous) & childAge < 3 ~ 1,
+                                         is.na(childAgeDichotomous) & childAge >= 3 ~ 2,
+                                         TRUE ~ as.numeric(childAgeDichotomous))) %>% 
+  mutate(childAgeDichotomous = factor(childAgeDichotomous, 
+                                      levels = seq(2), 
+                                      labels = c("Under 3", "3 or older")))
+complete.cases(dfTrainPreProc) %>% sum()
 dfTrainPreProc %>% write.csv("data/processed/dfTrainPreProc.csv", row.names = FALSE)
 ```
 
@@ -53,7 +61,7 @@ grid <- expand.grid(mtry = seq(4, 10, 1))
 
 Train model over the tuning parameters.
 
-```{r trainingModel, fig.show = "hide"}
+```{r trainingModelY1, fig.show = "hide"}
 trainingModel <-
   dfTrainPreProc %>% 
   select(-c(id, Y2, Y3)) %>% 
@@ -80,8 +88,11 @@ save(trainingModel, file = "output/trainingModelY1.RData")
 
 ![figures/trainingModelY1.png](figures/trainingModelY1.png)
 
-```{r, eval = FALSE}
-hat <- predict(trainingModel, dfTrainPreProc)
+```{r}
 varImp(trainingModel)
+dfTrainPred <- 
+  dfTrainPreProc %>% 
+  mutate(hat = predict(trainingModel, dfTrainPreProc) %>% as.numeric())
+cor(dfTrainPred %>% select(Y1, hat))
 trainingModel$finalModel
 ```
