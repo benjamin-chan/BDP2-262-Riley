@@ -21,10 +21,12 @@ Preprocess the training sample.
 4. Impute missing values using k-nearest neighbor
 
 ```{r}
+message(sprintf("Number of complete cases before imputation = %d",
+                complete.cases(dfTrain) %>% sum()))
 preProc <-
   dfTrain %>% 
   select(-c(id, Y1, Y2, Y3)) %>% 
-  preProcess(method = c("nzv", "corr", "medianImpute"))
+  preProcess(method = c("nzv", "corr", "knnImpute"))
 preProc
 dfTrainPreProc <- 
   predict(preProc, dfTrain) %>% 
@@ -34,7 +36,8 @@ dfTrainPreProc <-
   mutate(childAgeDichotomous = factor(childAgeDichotomous, 
                                       levels = seq(2), 
                                       labels = c("Under 3", "3 or older")))
-complete.cases(dfTrainPreProc) %>% sum()
+message(sprintf("Number of complete cases after imputation = %d",
+                complete.cases(dfTrainPreProc) %>% sum()))
 dfTrainPreProc %>% write.csv("data/processed/dfTrainPreProc.csv", row.names = FALSE)
 ```
 
