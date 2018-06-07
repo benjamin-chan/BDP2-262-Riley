@@ -59,7 +59,7 @@ Set the model and tuning parameter grid.
 ```{r}
 library(randomForest)
 method <- "rf"
-grid <- expand.grid(mtry = seq(4, 10, 1))
+grid <- expand.grid(mtry = seq(7, 12, 1))
 ```
 
 Train model over the tuning parameters.
