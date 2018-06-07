@@ -47,7 +47,7 @@ dfTrainPreProc3 <-
   mutate(childAgeDichotomous = factor(childAgeDichotomous, 
                                       levels = seq(2), 
                                       labels = c("Under 3", "3 or older")))
-dfTrainPreProc <- bind_cols(dfOutcome, dfTrainPreProc3)
+dfTrainPreProc <- bind_cols(dfOutcomes, dfTrainPreProc3)
 message(sprintf("Number of complete cases after imputation = %d",
                 complete.cases(dfTrainPreProc) %>% sum()))
 dfTrainPreProc %>% write.csv("data/processed/dfTrainPreProc.csv", row.names = FALSE)
