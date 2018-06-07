@@ -73,7 +73,7 @@ trainingModel %>%
   theme_bw()
 ggsave("figures/trainingModelY1.png")
 ggsave("figures/trainingModelY1.svg")
-save(trainingModel, "output/trainingModelY1.RData")
+save(trainingModel, file = "output/trainingModelY1.RData")
 ```
 
 ![figures/trainingModelY1.png](figures/trainingModelY1.png)
