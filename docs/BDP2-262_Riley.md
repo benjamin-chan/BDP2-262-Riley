@@ -1,6 +1,6 @@
 ---
 title: "Parent and Provider Perceptions of Behavioral Healthcare in Pediatric Primary Care (PI: Andrew Riley; BDP2-262)"
-date: "2018-06-06"
+date: "2018-06-07"
 author: Benjamin Chan (chanb@ohsu.edu)
 output:
   html_document:
@@ -133,15 +133,36 @@ Preprocess the training sample.
 ## Number of complete cases before imputation = 247
 ```
 
+
+
+|varname         | freqRatio| percentUnique|zeroVar |nzv  |
+|:---------------|---------:|-------------:|:-------|:----|
+|languageSurvey  |  53.80000|      0.729927|FALSE   |TRUE |
+|childRaceAfrAm  |  26.40000|      0.729927|FALSE   |TRUE |
+|childRaceAIAN   |  38.14286|      0.729927|FALSE   |TRUE |
+|childRaceNHPI   |  44.66667|      0.729927|FALSE   |TRUE |
+|childRaceOther  |  21.83333|      0.729927|FALSE   |TRUE |
+|parentRaceAfrAm |  44.66667|      0.729927|FALSE   |TRUE |
+|parentRaceAIAN  |  29.44444|      0.729927|FALSE   |TRUE |
+|parentRaceNHPI  |  44.66667|      0.729927|FALSE   |TRUE |
+|parentRaceOther |  20.07692|      0.729927|FALSE   |TRUE |
+|internet        |  33.25000|      0.729927|FALSE   |TRUE |
+
 ```
-## Created from 247 samples and 63 variables
+##   2 highly correlated predictors were removed.
+## Calculating 31 means for centering
+## Calculating 31 standard deviations for scaling
+```
+
+```
+## Created from 247 samples and 54 variables
 ## 
 ## Pre-processing:
-##   - centered (30)
-##   - ignored (31)
-##   - 5 nearest neighbor imputation (30)
+##   - centered (31)
+##   - ignored (21)
+##   - 5 nearest neighbor imputation (31)
 ##   - removed (2)
-##   - scaled (30)
+##   - scaled (31)
 ```
 
 ```
@@ -189,20 +210,20 @@ Train model over the tuning parameters.
 ## Random Forest 
 ## 
 ## 274 samples
-##  61 predictor
+##  51 predictor
 ## 
 ## No pre-processing
 ## Resampling: Cross-Validated (10 fold, repeated 25 times) 
 ## Summary of sample sizes: 247, 246, 247, 247, 247, 246, ... 
 ## Resampling results across tuning parameters:
 ## 
-##   mtry  RMSE      Rsquared   MAE     
-##    5    16.64326  0.1430733  13.47938
-##    6    16.61381  0.1433864  13.44687
-##    7    16.62315  0.1401251  13.45028
-##    8    16.61360  0.1391500  13.43144
-##    9    16.63913  0.1359562  13.45766
-##   10    16.63912  0.1350297  13.45652
+##   mtry  RMSE       Rsquared   MAE      
+##    5    0.9381476  0.1573338  0.7596259
+##    6    0.9367478  0.1564280  0.7584490
+##    7    0.9365328  0.1543444  0.7576408
+##    8    0.9355895  0.1549550  0.7567035
+##    9    0.9361715  0.1515172  0.7568281
+##   10    0.9372978  0.1491414  0.7570633
 ## 
 ## RMSE was used to select the optimal model using the smallest value.
 ## The final value used for the model was mtry = 8.
@@ -224,42 +245,42 @@ Train model over the tuning parameters.
 ##                      Number of trees: 500
 ## No. of variables tried at each split: 8
 ## 
-##           Mean of squared residuals: 287.1884
-##                     % Var explained: 7.3
+##           Mean of squared residuals: 0.8927054
+##                     % Var explained: 10.4
 ```
 
 ```
 ## rf variable importance
 ## 
-##   only 20 most important variables shown (out of 173)
+##   only 20 most important variables shown (out of 163)
 ## 
-##                                             Overall
-## childRaceWhite                               100.00
-## parentRaceWhite                               96.75
-## childAgeDichotomous3 or older                 87.49
-## MAPS_POS                                      76.70
-## parentEthnicityNot Hispanic/Latino            71.39
-## MAPS_PR                                       70.66
-## SEPTI_total                                   69.45
-## MAPS_SP                                       68.82
-## childRaceAsian                                66.56
-## MAPS_LC                                       66.54
-## parentEducationGraduate/professional school   64.44
-## SEPTI_r_clinical_cutoff                       63.65
-## SEPTI_routine                                 63.42
-## SEPTI_d_clinical_cutoff                       61.59
-## parentRaceAsian                               59.32
-## zipcode97008                                  59.04
-## zipcode97225                                  59.00
-## MAPS_WM                                       58.06
-## zipcode97741                                  57.85
-## SEPTI_n_clinical_cutoff                       57.56
+##                                                    Overall
+## childRaceWhite                                      100.00
+## parentRaceWhite                                      99.54
+## SEPTI_r_clinical_cutoff                              97.06
+## childAge                                             77.78
+## childAgeDichotomous3 or older                        75.65
+## MAPS_PP                                              75.48
+## MAPS_SP                                              70.74
+## SEPTI_total_clin_cutoff                              69.99
+## SEPTI_play                                           69.67
+## MAPS_POS                                             68.79
+## SEPTI_total                                          61.40
+## parentEthnicityNot Hispanic/Latino                   61.19
+## zipcode97756                                         60.40
+## MAPS_LC                                              57.56
+## parentSituationCo-parenting in separate households   56.32
+## childRaceAsian                                       55.73
+## zipcode97225                                         55.47
+## zipcode97220                                         54.77
+## SEPTI_routine                                        54.55
+## MAPS_NEG                                             54.28
 ```
 
 ```
 ##            Y1       hat
-## Y1  1.0000000 0.9730155
-## hat 0.9730155 1.0000000
+## Y1  1.0000000 0.9713843
+## hat 0.9713843 1.0000000
 ```
 
 ![plot of chunk trainingModelY1-predict](figures/trainingModelY1-predict-1.png)
