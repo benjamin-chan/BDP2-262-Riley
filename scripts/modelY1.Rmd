@@ -51,7 +51,7 @@ method <- "rf"
 grid <- expand.grid(mtry = seq(2, 16, 2))
 ```
 
-Fit model over the tuning parameters.
+Train model over the tuning parameters.
 
 ```{r trainingModel, fig.show = "hide"}
 trainingModel <-
@@ -71,11 +71,12 @@ trainingModel %>%
   geom_line() +
   geom_point() +
   theme_bw()
-ggsave("figures/trainingModel.png")
-ggsave("figures/trainingModel.svg")
+ggsave("figures/trainingModelY1.png")
+ggsave("figures/trainingModelY1.svg")
+save(trainingModel, "output/trainingModelY1.RData")
 ```
 
-![figures/trainingModel.png](figures/trainingModel.png)
+![figures/trainingModelY1.png](figures/trainingModelY1.png)
 
 ```{r, eval = FALSE}
 hat <- predict(trainingModel, dfTrainPreProc)
