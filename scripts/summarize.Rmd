@@ -4,7 +4,7 @@
 foo <- function (infile, outfile) {
   require(magrittr)
   require(randomForestExplainer)
-  load(infile)
+  load(infile, verbose = TRUE)
   forest <- trainingModel$finalModel
   explain_forest(forest)
   file.copy("Your_forest_explained.html", outfile)
