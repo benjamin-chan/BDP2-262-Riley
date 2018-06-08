@@ -70,5 +70,5 @@ Set the model and tuning parameter grid.
 ```{r, echo = TRUE}
 library(randomForest)
 method <- "rf"
-grid <- expand.grid(mtry = seq(4, 14, 2))
+grid <- expand.grid(mtry = seq(5, 10, 1))
 ```
