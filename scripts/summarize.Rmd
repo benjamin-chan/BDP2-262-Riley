@@ -7,7 +7,7 @@ foo <- function (infile, outfile) {
   load(infile, verbose = TRUE)
   forest <- trainingModel$finalModel
   explain_forest(forest)
-  file.copy("Your_forest_explained.html", outfile)
+  file.copy("Your_forest_explained.html", outfile, overwrite = TRUE)
   file.remove("Your_forest_explained.html")
   file.info(outfile)[c("size", "mtime")]
 }
