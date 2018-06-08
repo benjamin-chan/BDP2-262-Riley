@@ -12,6 +12,7 @@ library(caret)
 library(parallel)
 library(doParallel)
 library(RANN)
+library(knitr)
 
 set.seed(as.integer(as.Date("2018-06-04")))
 

@@ -136,20 +136,6 @@ df <-
                                     "$150,000 or more")))
 ```
 
-```{r, results = FALSE, eval = FALSE}
-sink("output/importData_sink.txt")
-data.frame(oldnames, newnames)
-df %>% names()
-df %>% str()
-sink()
-```
-
-Output to [CSV file](../data/processed/dataframe.csv).
-
-```{r}
-df %>% write.csv("data/processed/dataframe.csv", row.names = FALSE)
-```
-
 Build analysis data set.
 Exclude if missing any dependent variable, `Y1`, `Y2`, `Y3`.
 
@@ -159,6 +145,7 @@ Exclude if missing any dependent variable, `Y1`, `Y2`, `Y3`.
 n0 <- nrow(df)
 nMissing <- df %>% filter(is.na(Y1) | is.na(Y2) | is.na(Y3)) %>% nrow()
 df <- df %>% filter(!is.na(Y1) & !is.na(Y2) & !is.na(Y3))
+summary(df[, c("Y1", "Y2", "Y3")])
 ```
 
 ```{r, eval = FALSE}

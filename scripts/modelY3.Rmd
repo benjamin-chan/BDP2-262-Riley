@@ -5,7 +5,6 @@ Prediction model for `Y3`.
 Train model over the tuning parameters.
 
 ```{r Y3Training, fig.show = "hide"}
-grid <- expand.grid(mtry = seq(16, 20, 1))
 cl <- makeCluster(8)
 registerDoParallel(cl)
 trainingModel <-
