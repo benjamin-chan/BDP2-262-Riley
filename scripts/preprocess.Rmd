@@ -50,6 +50,7 @@ dfTrainPreProc3 <-
 dfTrainPreProc <- bind_cols(dfOutcomes, dfTrainPreProc3)
 message(sprintf("Number of complete cases after imputation = %d",
                 complete.cases(dfTrainPreProc) %>% sum()))
+save(dfTrainPreProc, dfValid, dfTrain, df, file = "data/processed/dataframes.RData")
 dfTrainPreProc %>% write.csv("data/processed/dfTrainPreProc.csv", row.names = FALSE)
 rm(dfTrainPreProc1, dfTrainPreProc2, dfTrainPreProc3)
 ```
@@ -70,5 +71,8 @@ Set the model and tuning parameter grid.
 ```{r, echo = TRUE}
 library(earth)
 method <- "earth"
-# grid <- expand.grid(nprune = seq(5, 10, 1))
+modelLookup(method)
+grid <- expand.grid(nprune = seq(2, 10, 2),
+                    degree = seq(2))
+grid %>% kable()
 ```

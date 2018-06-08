@@ -11,19 +11,14 @@ registerDoParallel(cl)
 trainingModel <-
   dfTrainPreProc %>% 
   select(-c(id, Y1, Y2)) %>% 
-  train(Y3 ~ .,
-        data = .,
-        method = method,
-        trControl = ctrl,
-        tuneGrid = grid,
-        tuneLength = 10,
-        nthreads = 8,
-        na.action = "na.omit",
-        localImp = TRUE)
+  train(Y3 ~ ., data = ., method = method, trControl = ctrl, tuneGrid = grid)
 stopCluster(cl)
 trainingModel
 trainingModel %>% 
+  .$results %>% 
+  mutate(degree = factor(degree)) %>% 
   ggplot() + 
+  aes(x = nprune, y = RMSE, color = degree, group = degree) +
   geom_line() +
   geom_point() +
   theme_bw()
@@ -48,8 +43,8 @@ dfTrainPred %>%
   ggtitle(sprintf("Correlation = %.03f", cor(dfTrainPred %>% select(Y3, hat)) %>% .[1, 2])) +
   aes(x = hat, y = Y3) +
   geom_abline(slope = 1, intercept = 0) +
-  geom_smooth(method = "lm", formula = y ~ x - 1, se = FALSE) +
-  geom_smooth(method = "lm", formula = y ~ x, color = "red", se = FALSE) +
+  geom_smooth(method = "lm", formula = y ~ x - 1, color = rgb(0, 0, 1, 0.5), se = FALSE) +
+  geom_smooth(method = "lm", formula = y ~ x, color = rgb(1, 0, 0, 0.5), se = FALSE) +
   geom_point(alpha = 1/2)
 ```
 
@@ -70,7 +65,7 @@ dfValidPred %>%
   ggtitle(sprintf("Correlation = %.03f", cor(dfValidPred %>% select(Y3, hat)) %>% .[1, 2])) +
   aes(x = hat, y = Y3) +
   geom_abline(slope = 1, intercept = 0) +
-  geom_smooth(method = "lm", formula = y ~ x - 1, se = FALSE) +
-  geom_smooth(method = "lm", formula = y ~ x, color = "red", se = FALSE) +
+  geom_smooth(method = "lm", formula = y ~ x - 1, color = rgb(0, 0, 1, 0.5), se = FALSE) +
+  geom_smooth(method = "lm", formula = y ~ x, color = rgb(1, 0, 0, 0.5), se = FALSE) +
   geom_point(alpha = 1/2)
 ```
