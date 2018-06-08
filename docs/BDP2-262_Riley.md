@@ -268,6 +268,7 @@ library(randomForest)
 ```
 
 ```r
+library(randomForestExplainer)
 method <- "rf"
 grid <- expand.grid(mtry = seq(5, 10, 1))
 ```
@@ -315,7 +316,7 @@ Train model over the tuning parameters.
 ```
 ## 
 ## Call:
-##  randomForest(x = x, y = y, mtry = param$mtry, importance = TRUE,      nthreads = 8) 
+##  randomForest(x = x, y = y, mtry = param$mtry, localImp = TRUE,      nthreads = 8) 
 ##                Type of random forest: regression
 ##                      Number of trees: 500
 ## No. of variables tried at each split: 7
@@ -424,7 +425,7 @@ Train model over the tuning parameters.
 ```
 ## 
 ## Call:
-##  randomForest(x = x, y = y, mtry = param$mtry, importance = TRUE,      nthreads = 8) 
+##  randomForest(x = x, y = y, mtry = param$mtry, localImp = TRUE,      nthreads = 8) 
 ##                Type of random forest: regression
 ##                      Number of trees: 500
 ## No. of variables tried at each split: 6
@@ -532,7 +533,7 @@ Train model over the tuning parameters.
 ```
 ## 
 ## Call:
-##  randomForest(x = x, y = y, mtry = param$mtry, importance = TRUE,      nthreads = 8) 
+##  randomForest(x = x, y = y, mtry = param$mtry, localImp = TRUE,      nthreads = 8) 
 ##                Type of random forest: regression
 ##                      Number of trees: 500
 ## No. of variables tried at each split: 18

@@ -1,0 +1,949 @@
+
+checkpoint: Part of the Reproducible R Toolkit from Microsoft
+https://mran.microsoft.com/documents/rro/reproducibility/
+* installing *source* package 'httpuv' ...
+** package 'httpuv' successfully unpacked and MD5 sums checked
+** libs
+g++ -m64 -std=gnu++11 -I/usr/include/R -DNDEBUG -I./libuv/include -I./http-parser -I./sha1 -I./base64 -I"/home/users/chanb/.checkpoint/2018-04-01/lib/x86_64-redhat-linux-gnu/3.4.4/Rcpp/include" -I/usr/local/include   -fpic  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic -c RcppExports.cpp -o RcppExports.o
+g++ -m64 -std=gnu++11 -I/usr/include/R -DNDEBUG -I./libuv/include -I./http-parser -I./sha1 -I./base64 -I"/home/users/chanb/.checkpoint/2018-04-01/lib/x86_64-redhat-linux-gnu/3.4.4/Rcpp/include" -I/usr/local/include   -fpic  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic -c filedatasource-unix.cpp -o filedatasource-unix.o
+g++ -m64 -std=gnu++11 -I/usr/include/R -DNDEBUG -I./libuv/include -I./http-parser -I./sha1 -I./base64 -I"/home/users/chanb/.checkpoint/2018-04-01/lib/x86_64-redhat-linux-gnu/3.4.4/Rcpp/include" -I/usr/local/include   -fpic  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic -c filedatasource-win.cpp -o filedatasource-win.o
+g++ -m64 -std=gnu++11 -I/usr/include/R -DNDEBUG -I./libuv/include -I./http-parser -I./sha1 -I./base64 -I"/home/users/chanb/.checkpoint/2018-04-01/lib/x86_64-redhat-linux-gnu/3.4.4/Rcpp/include" -I/usr/local/include   -fpic  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic -c http.cpp -o http.o
+g++ -m64 -std=gnu++11 -I/usr/include/R -DNDEBUG -I./libuv/include -I./http-parser -I./sha1 -I./base64 -I"/home/users/chanb/.checkpoint/2018-04-01/lib/x86_64-redhat-linux-gnu/3.4.4/Rcpp/include" -I/usr/local/include   -fpic  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic -c httpuv.cpp -o httpuv.o
+gcc -m64 -std=gnu99 -I/usr/include/R -DNDEBUG -I./libuv/include -I./http-parser -I./sha1 -I./base64 -I"/home/users/chanb/.checkpoint/2018-04-01/lib/x86_64-redhat-linux-gnu/3.4.4/Rcpp/include" -I/usr/local/include   -fpic  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -c md5.c -o md5.o
+gcc -m64 -std=gnu99 -I/usr/include/R -DNDEBUG -I./libuv/include -I./http-parser -I./sha1 -I./base64 -I"/home/users/chanb/.checkpoint/2018-04-01/lib/x86_64-redhat-linux-gnu/3.4.4/Rcpp/include" -I/usr/local/include   -fpic  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -c register.c -o register.o
+gcc -m64 -std=gnu99 -I/usr/include/R -DNDEBUG -I./libuv/include -I./http-parser -I./sha1 -I./base64 -I"/home/users/chanb/.checkpoint/2018-04-01/lib/x86_64-redhat-linux-gnu/3.4.4/Rcpp/include" -I/usr/local/include   -fpic  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -c set_invalid_parameter.c -o set_invalid_parameter.o
+g++ -m64 -std=gnu++11 -I/usr/include/R -DNDEBUG -I./libuv/include -I./http-parser -I./sha1 -I./base64 -I"/home/users/chanb/.checkpoint/2018-04-01/lib/x86_64-redhat-linux-gnu/3.4.4/Rcpp/include" -I/usr/local/include   -fpic  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic -c uvutil.cpp -o uvutil.o
+g++ -m64 -std=gnu++11 -I/usr/include/R -DNDEBUG -I./libuv/include -I./http-parser -I./sha1 -I./base64 -I"/home/users/chanb/.checkpoint/2018-04-01/lib/x86_64-redhat-linux-gnu/3.4.4/Rcpp/include" -I/usr/local/include   -fpic  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic -c websockets-base.cpp -o websockets-base.o
+g++ -m64 -std=gnu++11 -I/usr/include/R -DNDEBUG -I./libuv/include -I./http-parser -I./sha1 -I./base64 -I"/home/users/chanb/.checkpoint/2018-04-01/lib/x86_64-redhat-linux-gnu/3.4.4/Rcpp/include" -I/usr/local/include   -fpic  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic -c websockets-hixie76.cpp -o websockets-hixie76.o
+g++ -m64 -std=gnu++11 -I/usr/include/R -DNDEBUG -I./libuv/include -I./http-parser -I./sha1 -I./base64 -I"/home/users/chanb/.checkpoint/2018-04-01/lib/x86_64-redhat-linux-gnu/3.4.4/Rcpp/include" -I/usr/local/include   -fpic  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic -c websockets-hybi03.cpp -o websockets-hybi03.o
+websockets-hybi03.cpp: In member function 'virtual void WebSocketProto_HyBi03::handshake(const string&, const RequestHeaders&, char**, size_t*, ResponseHeaders*, std::vector<unsigned char>*) const':
+websockets-hybi03.cpp:64:41: warning: dereferencing type-punned pointer will break strict-aliasing rules [-Wstrict-aliasing]
+   *reinterpret_cast<uint32_t*>(handshake) = key1;
+                                         ^
+g++ -m64 -std=gnu++11 -I/usr/include/R -DNDEBUG -I./libuv/include -I./http-parser -I./sha1 -I./base64 -I"/home/users/chanb/.checkpoint/2018-04-01/lib/x86_64-redhat-linux-gnu/3.4.4/Rcpp/include" -I/usr/local/include   -fpic  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic -c websockets-ietf.cpp -o websockets-ietf.o
+g++ -m64 -std=gnu++11 -I/usr/include/R -DNDEBUG -I./libuv/include -I./http-parser -I./sha1 -I./base64 -I"/home/users/chanb/.checkpoint/2018-04-01/lib/x86_64-redhat-linux-gnu/3.4.4/Rcpp/include" -I/usr/local/include   -fpic  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic -c websockets.cpp -o websockets.o
+make --directory=libuv \
+	CC="gcc -m64 -std=gnu99" CFLAGS="-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -fpic" AR="ar" RANLIB="ranlib" \
+    HAVE_DTRACE=0 \
+	libuv.a
+make[1]: Entering directory `/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv'
+mkdir -p src/unix
+touch src/unix/.buildstamp
+gcc -m64 -std=gnu99 -D_GNU_SOURCE -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/include -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/include/uv-private -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/src -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -fpic -c src/unix/async.c -o src/unix/async.o
+gcc -m64 -std=gnu99 -D_GNU_SOURCE -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/include -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/include/uv-private -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/src -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -fpic -c src/unix/core.c -o src/unix/core.o
+gcc -m64 -std=gnu99 -D_GNU_SOURCE -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/include -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/include/uv-private -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/src -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -fpic -c src/unix/dl.c -o src/unix/dl.o
+gcc -m64 -std=gnu99 -D_GNU_SOURCE -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/include -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/include/uv-private -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/src -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -fpic -c src/unix/error.c -o src/unix/error.o
+gcc -m64 -std=gnu99 -D_GNU_SOURCE -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/include -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/include/uv-private -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/src -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -fpic -c src/unix/fs.c -o src/unix/fs.o
+gcc -m64 -std=gnu99 -D_GNU_SOURCE -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/include -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/include/uv-private -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/src -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -fpic -c src/unix/getaddrinfo.c -o src/unix/getaddrinfo.o
+gcc -m64 -std=gnu99 -D_GNU_SOURCE -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/include -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/include/uv-private -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/src -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -fpic -c src/unix/loop.c -o src/unix/loop.o
+gcc -m64 -std=gnu99 -D_GNU_SOURCE -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/include -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/include/uv-private -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/src -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -fpic -c src/unix/loop-watcher.c -o src/unix/loop-watcher.o
+gcc -m64 -std=gnu99 -D_GNU_SOURCE -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/include -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/include/uv-private -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/src -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -fpic -c src/unix/pipe.c -o src/unix/pipe.o
+gcc -m64 -std=gnu99 -D_GNU_SOURCE -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/include -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/include/uv-private -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/src -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -fpic -c src/unix/poll.c -o src/unix/poll.o
+gcc -m64 -std=gnu99 -D_GNU_SOURCE -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/include -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/include/uv-private -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/src -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -fpic -c src/unix/process.c -o src/unix/process.o
+gcc -m64 -std=gnu99 -D_GNU_SOURCE -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/include -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/include/uv-private -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/src -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -fpic -c src/unix/signal.c -o src/unix/signal.o
+gcc -m64 -std=gnu99 -D_GNU_SOURCE -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/include -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/include/uv-private -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/src -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -fpic -c src/unix/stream.c -o src/unix/stream.o
+gcc -m64 -std=gnu99 -D_GNU_SOURCE -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/include -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/include/uv-private -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/src -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -fpic -c src/unix/tcp.c -o src/unix/tcp.o
+gcc -m64 -std=gnu99 -D_GNU_SOURCE -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/include -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/include/uv-private -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/src -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -fpic -c src/unix/thread.c -o src/unix/thread.o
+gcc -m64 -std=gnu99 -D_GNU_SOURCE -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/include -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/include/uv-private -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/src -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -fpic -c src/unix/threadpool.c -o src/unix/threadpool.o
+gcc -m64 -std=gnu99 -D_GNU_SOURCE -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/include -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/include/uv-private -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/src -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -fpic -c src/unix/timer.c -o src/unix/timer.o
+gcc -m64 -std=gnu99 -D_GNU_SOURCE -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/include -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/include/uv-private -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/src -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -fpic -c src/unix/tty.c -o src/unix/tty.o
+gcc -m64 -std=gnu99 -D_GNU_SOURCE -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/include -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/include/uv-private -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/src -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -fpic -c src/unix/udp.c -o src/unix/udp.o
+mkdir -p src
+touch src/.buildstamp
+gcc -m64 -std=gnu99 -D_GNU_SOURCE -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/include -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/include/uv-private -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/src -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -fpic -c src/fs-poll.c -o src/fs-poll.o
+gcc -m64 -std=gnu99 -D_GNU_SOURCE -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/include -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/include/uv-private -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/src -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -fpic -c src/uv-common.c -o src/uv-common.o
+gcc -m64 -std=gnu99 -D_GNU_SOURCE -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/include -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/include/uv-private -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/src -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -fpic -c src/inet.c -o src/inet.o
+gcc -m64 -std=gnu99 -D_GNU_SOURCE -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/include -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/include/uv-private -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/src -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -fpic -c src/version.c -o src/version.o
+gcc -m64 -std=gnu99 -D_GNU_SOURCE -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/include -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/include/uv-private -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/src -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -fpic -c src/unix/linux-core.c -o src/unix/linux-core.o
+gcc -m64 -std=gnu99 -D_GNU_SOURCE -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/include -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/include/uv-private -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/src -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -fpic -c src/unix/linux-inotify.c -o src/unix/linux-inotify.o
+gcc -m64 -std=gnu99 -D_GNU_SOURCE -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/include -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/include/uv-private -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/src -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -fpic -c src/unix/linux-syscalls.c -o src/unix/linux-syscalls.o
+gcc -m64 -std=gnu99 -D_GNU_SOURCE -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/include -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/include/uv-private -I/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv/src -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -fpic -c src/unix/proctitle.c -o src/unix/proctitle.o
+ar rcs libuv.a src/unix/async.o src/unix/core.o src/unix/dl.o src/unix/error.o src/unix/fs.o src/unix/getaddrinfo.o src/unix/loop.o src/unix/loop-watcher.o src/unix/pipe.o src/unix/poll.o src/unix/process.o src/unix/signal.o src/unix/stream.o src/unix/tcp.o src/unix/thread.o src/unix/threadpool.o src/unix/timer.o src/unix/tty.o src/unix/udp.o src/fs-poll.o src/uv-common.o src/inet.o src/version.o src/unix/linux-core.o src/unix/linux-inotify.o src/unix/linux-syscalls.o src/unix/proctitle.o
+make[1]: Leaving directory `/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/libuv'
+make --directory=http-parser \
+	CC="gcc -m64 -std=gnu99" CFLAGS="-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -fpic" AR="ar" RANLIB="ranlib" \
+	http_parser.o
+make[1]: Entering directory `/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/http-parser'
+gcc -m64 -std=gnu99 -I. -DHTTP_PARSER_STRICT=0  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -fpic -O3  -c http_parser.c
+make[1]: Leaving directory `/tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/src/http-parser'
+(cd sha1 && gcc -m64 -std=gnu99 -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -fpic -c sha1.c -o sha1.o)
+(cd base64 && g++ -m64 -std=gnu++11 -I/usr/include/R -DNDEBUG -I./libuv/include -I./http-parser -I./sha1 -I./base64 -I"/home/users/chanb/.checkpoint/2018-04-01/lib/x86_64-redhat-linux-gnu/3.4.4/Rcpp/include" -I/usr/local/include   -fpic  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic -c base64.cpp -o base64.o)
+g++ -m64 -std=gnu++11 -shared -L/usr/lib64/R/lib -Wl,-z,relro -o httpuv.so RcppExports.o filedatasource-unix.o filedatasource-win.o http.o httpuv.o md5.o register.o set_invalid_parameter.o uvutil.o websockets-base.o websockets-hixie76.o websockets-hybi03.o websockets-ietf.o websockets.o ./libuv/libuv.a ./http-parser/http_parser.o ./sha1/sha1.o ./base64/base64.o -L/usr/lib64/R/lib -lR
+installing to /home/users/chanb/.checkpoint/2018-04-01/lib/x86_64-redhat-linux-gnu/3.4.4/httpuv/libs
+** R
+** demo
+** preparing package for lazy loading
+** help
+*** installing help indices
+  converting help for package 'httpuv'
+    finding HTML links ... done
+    WebSocket-class                         html  
+    encodeURI                               html  
+Rd warning: /tmp/Rtmp6Onk5o/R.INSTALLc078618ead28/httpuv/man/encodeURI.Rd:36: missing file link 'URLdecode'
+    getRNGState                             html  
+    httpuv-package                          html  
+    interrupt                               html  
+    rawToBase64                             html  
+    runServer                               html  
+    service                                 html  
+    startDaemonizedServer                   html  
+    startServer                             html  
+    stopDaemonizedServer                    html  
+    stopServer                              html  
+** building package indices
+** testing if installed package can be loaded
+* DONE (httpuv)
+* installing *source* package 'xtable' ...
+** package 'xtable' successfully unpacked and MD5 sums checked
+** R
+** data
+** inst
+** preparing package for lazy loading
+** help
+*** installing help indices
+  converting help for package 'xtable'
+    finding HTML links ... done
+    autoformat                              html  
+    print.xtable                            html  
+    print.xtableMatharray                   html  
+    sanitize                                html  
+    string                                  html  
+    table.attributes                        html  
+    tli                                     html  
+    toLatex                                 html  
+    xtable-internal                         html  
+    xtable                                  html  
+    xtableFtable                            html  
+    xtableList                              html  
+    xtableMatharray                         html  
+** building package indices
+** installing vignettes
+** testing if installed package can be loaded
+* DONE (xtable)
+* installing *source* package 'sourcetools' ...
+** package 'sourcetools' successfully unpacked and MD5 sums checked
+** libs
+g++ -m64  -I/usr/include/R -DNDEBUG -I../inst/include  -I/usr/local/include   -fpic  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -c Reader.cpp -o Reader.o
+g++ -m64  -I/usr/include/R -DNDEBUG -I../inst/include  -I/usr/local/include   -fpic  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -c Tokenizer.cpp -o Tokenizer.o
+gcc -m64 -std=gnu99 -I/usr/include/R -DNDEBUG -I../inst/include  -I/usr/local/include   -fpic  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -c sourcetools-init.c -o sourcetools-init.o
+g++ -m64 -shared -L/usr/lib64/R/lib -Wl,-z,relro -o sourcetools.so Reader.o Tokenizer.o sourcetools-init.o -L/usr/lib64/R/lib -lR
+installing to /home/users/chanb/.checkpoint/2018-04-01/lib/x86_64-redhat-linux-gnu/3.4.4/sourcetools/libs
+** R
+** inst
+** preparing package for lazy loading
+** help
+*** installing help indices
+  converting help for package 'sourcetools'
+    finding HTML links ... done
+    read                                    html  
+    tokenize-methods                        html  
+** building package indices
+** testing if installed package can be loaded
+* DONE (sourcetools)
+* installing *source* package 'prettyunits' ...
+** package 'prettyunits' successfully unpacked and MD5 sums checked
+** R
+** inst
+** preparing package for lazy loading
+** help
+*** installing help indices
+  converting help for package 'prettyunits'
+    finding HTML links ... done
+    pretty_bytes                            html  
+    pretty_dt                               html  
+    pretty_ms                               html  
+    pretty_sec                              html  
+    prettyunits                             html  
+    time_ago                                html  
+    vague_dt                                html  
+** building package indices
+** testing if installed package can be loaded
+* DONE (prettyunits)
+* installing *source* package 'htmlwidgets' ...
+** package 'htmlwidgets' successfully unpacked and MD5 sums checked
+** R
+** inst
+** preparing package for lazy loading
+Failed with error:  'there is no package called 'shiny''
+** help
+*** installing help indices
+  converting help for package 'htmlwidgets'
+    finding HTML links ... done
+    JS                                      html  
+    createWidget                            html  
+Rd warning: /tmp/RtmpzUj6Qs/R.INSTALLc199ab0f147/htmlwidgets/man/createWidget.Rd:17: missing file link 'toJSON'
+    getDependency                           html  
+    htmlwidgets-package                     html  
+    htmlwidgets-shiny                       html  
+    onRender                                html  
+    onStaticRenderComplete                  html  
+Rd warning: /tmp/RtmpzUj6Qs/R.INSTALLc199ab0f147/htmlwidgets/man/onStaticRenderComplete.Rd:15: missing file link 'tags'
+    prependContent                          html  
+Rd warning: /tmp/RtmpzUj6Qs/R.INSTALLc199ab0f147/htmlwidgets/man/prependContent.Rd:15: missing file link 'tags'
+    saveWidget                              html  
+    scaffoldWidget                          html  
+    setWidgetIdSeed                         html  
+    sizingPolicy                            html  
+** building package indices
+** installing vignettes
+** testing if installed package can be loaded
+* DONE (htmlwidgets)
+* installing *source* package 'reshape' ...
+** package 'reshape' successfully unpacked and MD5 sums checked
+** R
+** data
+*** moving datasets to lazyload DB
+** inst
+** preparing package for lazy loading
+** help
+*** installing help indices
+  converting help for package 'reshape'
+    finding HTML links ... done
+    add-all-combinations-dk                 html  
+    add-missing-levels-ko                   html  
+    all-vars-character-rs                   html  
+    as-data-frame-cast-df-v7                html  
+    as-data-frame-cast-matrix-59            html  
+    as-matrix-cast-df-bu                    html  
+    as-matrix-cast-matrix-2y                html  
+    cast-9g                                 html  
+    cast-matrix-hj                          html  
+    cast-parse-formula-uw                   html  
+    check-formula-20                        html  
+    clean-vars-rc                           html  
+    colsplit-9h                             html  
+    combine-factor-9x                       html  
+    compute-margins-dh                      html  
+    condense-df-34                          html  
+    condense-ss                             html  
+    dim-names-fi                            html  
+    expand-grid-df-fl                       html  
+    expand-kx                               html  
+    french-fries                            html  
+    funstofun-gl                            html  
+    guess-value-2f                          html  
+    margin-vars-rw                          html  
+    melt-24                                 html  
+    melt-array-e0                           html  
+    melt-cast-df-c7                         html  
+    melt-cast-matrix-vq                     html  
+    melt-check-j7                           html  
+    melt-data-frame-da                      html  
+    melt-default-gi                         html  
+    melt-list-8m                            html  
+    merge-all-hc                            html  
+    merge-recurse-2d                        html  
+    namerows-6u                             html  
+    nested-by-92                            html  
+    nulldefault-ck                          html  
+    prettyprint-hy                          html  
+    rdimnames-11                            html  
+    recast-ar                               html  
+    rename-au                               html  
+    rescaler-40                             html  
+    rescaler-data-frame-4u                  html  
+    rescaler-default-bl                     html  
+    rescaler-matrix-xv                      html  
+    reshape-4u                              html  
+    round-any-u2                            html  
+    smiths                                  html  
+    sort-df-aw                              html  
+    sparse-by                               html  
+    stamp-fw                                html  
+    str-cast-matrix-ez                      html  
+    strip-dups-7t                           html  
+    tidystamp-1p                            html  
+    tips                                    html  
+    uniquedefault-01                        html  
+    untable-1x                              html  
+    updatelist-50                           html  
+** building package indices
+** testing if installed package can be loaded
+* DONE (reshape)
+* installing *source* package 'data.table' ...
+** package 'data.table' successfully unpacked and MD5 sums checked
+** libs
+gcc -m64 -std=gnu99 -I/usr/include/R -DNDEBUG   -I/usr/local/include  -fopenmp -fpic  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -c assign.c -o assign.o
+gcc -m64 -std=gnu99 -I/usr/include/R -DNDEBUG   -I/usr/local/include  -fopenmp -fpic  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -c between.c -o between.o
+gcc -m64 -std=gnu99 -I/usr/include/R -DNDEBUG   -I/usr/local/include  -fopenmp -fpic  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -c bmerge.c -o bmerge.o
+gcc -m64 -std=gnu99 -I/usr/include/R -DNDEBUG   -I/usr/local/include  -fopenmp -fpic  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -c chmatch.c -o chmatch.o
+gcc -m64 -std=gnu99 -I/usr/include/R -DNDEBUG   -I/usr/local/include  -fopenmp -fpic  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -c dogroups.c -o dogroups.o
+gcc -m64 -std=gnu99 -I/usr/include/R -DNDEBUG   -I/usr/local/include  -fopenmp -fpic  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -c fastmean.c -o fastmean.o
+gcc -m64 -std=gnu99 -I/usr/include/R -DNDEBUG   -I/usr/local/include  -fopenmp -fpic  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -c fcast.c -o fcast.o
+gcc -m64 -std=gnu99 -I/usr/include/R -DNDEBUG   -I/usr/local/include  -fopenmp -fpic  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -c fmelt.c -o fmelt.o
+gcc -m64 -std=gnu99 -I/usr/include/R -DNDEBUG   -I/usr/local/include  -fopenmp -fpic  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -c forder.c -o forder.o
+gcc -m64 -std=gnu99 -I/usr/include/R -DNDEBUG   -I/usr/local/include  -fopenmp -fpic  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -c frank.c -o frank.o
+gcc -m64 -std=gnu99 -I/usr/include/R -DNDEBUG   -I/usr/local/include  -fopenmp -fpic  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -c fread.c -o fread.o
+gcc -m64 -std=gnu99 -I/usr/include/R -DNDEBUG   -I/usr/local/include  -fopenmp -fpic  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -c fsort.c -o fsort.o
+gcc -m64 -std=gnu99 -I/usr/include/R -DNDEBUG   -I/usr/local/include  -fopenmp -fpic  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -c fwrite.c -o fwrite.o
+gcc -m64 -std=gnu99 -I/usr/include/R -DNDEBUG   -I/usr/local/include  -fopenmp -fpic  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -c gsumm.c -o gsumm.o
+gcc -m64 -std=gnu99 -I/usr/include/R -DNDEBUG   -I/usr/local/include  -fopenmp -fpic  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -c ijoin.c -o ijoin.o
+gcc -m64 -std=gnu99 -I/usr/include/R -DNDEBUG   -I/usr/local/include  -fopenmp -fpic  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -c init.c -o init.o
+gcc -m64 -std=gnu99 -I/usr/include/R -DNDEBUG   -I/usr/local/include  -fopenmp -fpic  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -c inrange.c -o inrange.o
+gcc -m64 -std=gnu99 -I/usr/include/R -DNDEBUG   -I/usr/local/include  -fopenmp -fpic  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -c openmp-utils.c -o openmp-utils.o
+gcc -m64 -std=gnu99 -I/usr/include/R -DNDEBUG   -I/usr/local/include  -fopenmp -fpic  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -c quickselect.c -o quickselect.o
+gcc -m64 -std=gnu99 -I/usr/include/R -DNDEBUG   -I/usr/local/include  -fopenmp -fpic  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -c rbindlist.c -o rbindlist.o
+gcc -m64 -std=gnu99 -I/usr/include/R -DNDEBUG   -I/usr/local/include  -fopenmp -fpic  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -c reorder.c -o reorder.o
+gcc -m64 -std=gnu99 -I/usr/include/R -DNDEBUG   -I/usr/local/include  -fopenmp -fpic  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -c shift.c -o shift.o
+gcc -m64 -std=gnu99 -I/usr/include/R -DNDEBUG   -I/usr/local/include  -fopenmp -fpic  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -c subset.c -o subset.o
+gcc -m64 -std=gnu99 -I/usr/include/R -DNDEBUG   -I/usr/local/include  -fopenmp -fpic  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -c transpose.c -o transpose.o
+gcc -m64 -std=gnu99 -I/usr/include/R -DNDEBUG   -I/usr/local/include  -fopenmp -fpic  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -c uniqlist.c -o uniqlist.o
+gcc -m64 -std=gnu99 -I/usr/include/R -DNDEBUG   -I/usr/local/include  -fopenmp -fpic  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -c vecseq.c -o vecseq.o
+gcc -m64 -std=gnu99 -I/usr/include/R -DNDEBUG   -I/usr/local/include  -fopenmp -fpic  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -c wrappers.c -o wrappers.o
+g++ -m64 -shared -L/usr/lib64/R/lib -Wl,-z,relro -o data.table.so assign.o between.o bmerge.o chmatch.o dogroups.o fastmean.o fcast.o fmelt.o forder.o frank.o fread.o fsort.o fwrite.o gsumm.o ijoin.o init.o inrange.o openmp-utils.o quickselect.o rbindlist.o reorder.o shift.o subset.o transpose.o uniqlist.o vecseq.o wrappers.o -fopenmp -L/usr/lib64/R/lib -lR
+mv data.table.so datatable.so
+if [ "" != "Windows_NT" ] && [ `uname -s` = 'Darwin' ]; then install_name_tool -id datatable.so datatable.so; fi
+installing to /home/users/chanb/.checkpoint/2018-04-01/lib/x86_64-redhat-linux-gnu/3.4.4/data.table/libs
+** R
+** inst
+** byte-compile and prepare package for lazy loading
+** help
+*** installing help indices
+  converting help for package 'data.table'
+    finding HTML links ... done
+    IDateTime                               html  
+    J                                       html  
+    address                                 html  
+    all.equal.data.table                    html  
+    as.data.table                           html  
+    as.data.table.xts                       html  
+    as.xts.data.table                       html  
+    assign                                  html  
+    between                                 html  
+    chmatch                                 html  
+    copy                                    html  
+    data.table-class                        html  
+    data.table                              html  
+    datatable-optimize                      html  
+    dcast.data.table                        html  
+    duplicated                              html  
+Rd warning: /tmp/RtmpdRXAlJ/R.INSTALLc1b5589e8afe/data.table/man/duplicated.Rd:55: missing file link 'unique.data.frame'
+    first                                   html  
+    foverlaps                               html  
+    frank                                   html  
+    fread                                   html  
+Rd warning: /tmp/RtmpdRXAlJ/R.INSTALLc1b5589e8afe/data.table/man/fread.Rd:108: missing file link 'read.csv'
+Rd warning: /tmp/RtmpdRXAlJ/R.INSTALLc1b5589e8afe/data.table/man/fread.Rd:108: missing file link 'url'
+Rd warning: /tmp/RtmpdRXAlJ/R.INSTALLc1b5589e8afe/data.table/man/fread.Rd:108: missing file link 'Sys.setlocale'
+    fsort                                   html  
+    fwrite                                  html  
+Rd warning: /tmp/RtmpdRXAlJ/R.INSTALLc1b5589e8afe/data.table/man/fwrite.Rd:58: missing file link 'write.csv'
+    last                                    html  
+    like                                    html  
+    melt.data.table                         html  
+    merge                                   html  
+    na.omit.data.table                      html  
+    openmp-utils                            html  
+    patterns                                html  
+    print.data.table                        html  
+    rbindlist                               html  
+    rleid                                   html  
+    rowid                                   html  
+    setDF                                   html  
+    setDT                                   html  
+    setNumericRounding                      html  
+    setattr                                 html  
+    setcolorder                             html  
+    setkey                                  html  
+Rd warning: /tmp/RtmpdRXAlJ/R.INSTALLc1b5589e8afe/data.table/man/setkey.Rd:74: missing file link 'sort.list'
+Rd warning: /tmp/RtmpdRXAlJ/R.INSTALLc1b5589e8afe/data.table/man/setkey.Rd:134: missing file link 'sort.list'
+    setops                                  html  
+    setorder                                html  
+    shift                                   html  
+    shouldPrint                             html  
+    special-symbols                         html  
+    split                                   html  
+Rd warning: /tmp/RtmpdRXAlJ/R.INSTALLc1b5589e8afe/data.table/man/split.Rd:15: missing file link 'split.data.frame'
+    subset.data.table                       html  
+    tables                                  html  
+    test.data.table                         html  
+    timetaken                               html  
+    transform.data.table                    html  
+Rd warning: /tmp/RtmpdRXAlJ/R.INSTALLc1b5589e8afe/data.table/man/transform.data.table.Rd:38: missing file link 'within'
+    transpose                               html  
+    truelength                              html  
+    tstrsplit                               html  
+** building package indices
+** installing vignettes
+** testing if installed package can be loaded
+* DONE (data.table)
+* installing *source* package 'ggrepel' ...
+** package 'ggrepel' successfully unpacked and MD5 sums checked
+** libs
+g++ -m64  -I/usr/include/R -DNDEBUG  -I"/home/users/chanb/.checkpoint/2018-04-01/lib/x86_64-redhat-linux-gnu/3.4.4/Rcpp/include" -I/usr/local/include   -fpic  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -c RcppExports.cpp -o RcppExports.o
+g++ -m64  -I/usr/include/R -DNDEBUG  -I"/home/users/chanb/.checkpoint/2018-04-01/lib/x86_64-redhat-linux-gnu/3.4.4/Rcpp/include" -I/usr/local/include   -fpic  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic  -c repel_boxes.cpp -o repel_boxes.o
+g++ -m64 -shared -L/usr/lib64/R/lib -Wl,-z,relro -o ggrepel.so RcppExports.o repel_boxes.o -L/usr/lib64/R/lib -lR
+installing to /home/users/chanb/.checkpoint/2018-04-01/lib/x86_64-redhat-linux-gnu/3.4.4/ggrepel/libs
+** R
+** inst
+** preparing package for lazy loading
+** help
+*** installing help indices
+  converting help for package 'ggrepel'
+    finding HTML links ... done
+    geom_text_repel                         html  
+Rd warning: /tmp/Rtmpsw8UYA/R.INSTALLc23143339f42/ggrepel/man/geom_text_repel.Rd:108: missing file link 'set.seed'
+Rd warning: /tmp/Rtmpsw8UYA/R.INSTALLc23143339f42/ggrepel/man/geom_text_repel.Rd:124: missing file link 'geom_label'
+    ggplot2-ggproto                         html  
+    ggrepel                                 html  
+** building package indices
+** installing vignettes
+** testing if installed package can be loaded
+* DONE (ggrepel)
+* installing *source* package 'shiny' ...
+** package 'shiny' successfully unpacked and MD5 sums checked
+** R
+** inst
+** preparing package for lazy loading
+** help
+*** installing help indices
+  converting help for package 'shiny'
+    finding HTML links ... done
+    HTML                                    html  
+    NS                                      html  
+    Progress                                html  
+    absolutePanel                           html  
+    actionButton                            html  
+    addResourcePath                         html  
+    applyInputHandlers                      html  
+    bookmarkButton                          html  
+    bootstrapLib                            html  
+    bootstrapPage                           html  
+    brushOpts                               html  
+    brushedPoints                           html  
+    builder                                 html  
+Rd warning: /tmp/RtmpUwoJui/R.INSTALLc2502faf66b4/shiny/man/builder.Rd:78: missing file link 'as.character'
+    callModule                              html  
+    checkboxGroupInput                      html  
+    checkboxInput                           html  
+    clickOpts                               html  
+    column                                  html  
+    conditionalPanel                        html  
+    createWebDependency                     html  
+    dateInput                               html  
+    dateRangeInput                          html  
+    dblclickOpts                            html  
+    debounce                                html  
+    domains                                 html  
+    downloadButton                          html  
+    downloadHandler                         html  
+    enableBookmarking                       html  
+    exportTestValues                        html  
+    exprToFunction                          html  
+    fileInput                               html  
+    fillPage                                html  
+    fillRow                                 html  
+    fixedPage                               html  
+    flowLayout                              html  
+    fluidPage                               html  
+    freezeReactiveValue                     html  
+    getQueryString                          html  
+    headerPanel                             html  
+    helpText                                html  
+    hoverOpts                               html  
+    htmlOutput                              html  
+
+    finding level-2 HTML links ... done
+    htmlTemplate                            html  
+    icon                                    html  
+    include                                 html  
+    inputPanel                              html  
+    insertTab                               html  
+    insertUI                                html  
+    installExprFunction                     html  
+    invalidateLater                         html  
+    is.reactivevalues                       html  
+    isRunning                               html  
+    isolate                                 html  
+Rd warning: /tmp/RtmpUwoJui/R.INSTALLc2502faf66b4/shiny/man/isolate.Rd:28: missing file link 'local'
+    knitr_methods                           html  
+    knitr_methods_htmltools                 html  
+    mainPanel                               html  
+    makeReactiveBinding                     html  
+    markOutputAttrs                         html  
+    markRenderFunction                      html  
+    maskReactiveContext                     html  
+    modalButton                             html  
+    modalDialog                             html  
+    navbarPage                              html  
+    navlistPanel                            html  
+    nearPoints                              html  
+    numericInput                            html  
+    observe                                 html  
+    observeEvent                            html  
+    onBookmark                              html  
+    onFlush                                 html  
+    onStop                                  html  
+    outputOptions                           html  
+    pageWithSidebar                         html  
+    parseQueryString                        html  
+    passwordInput                           html  
+    plotOutput                              html  
+    plotPNG                                 html  
+    radioButtons                            html  
+    reactive                                html  
+    reactiveFileReader                      html  
+    reactivePlot                            html  
+    reactivePoll                            html  
+    reactivePrint                           html  
+    reactiveTable                           html  
+    reactiveText                            html  
+    reactiveTimer                           html  
+    reactiveUI                              html  
+    reactiveVal                             html  
+    reactiveValues                          html  
+    reactiveValuesToList                    html  
+Rd warning: /tmp/RtmpUwoJui/R.INSTALLc2502faf66b4/shiny/man/reactiveValuesToList.Rd:16: missing file link 'as.list'
+    registerInputHandler                    html  
+    removeInputHandler                      html  
+    removeUI                                html  
+    renderDataTable                         html  
+Rd warning: /tmp/RtmpUwoJui/R.INSTALLc2502faf66b4/shiny/man/renderDataTable.Rd:48: missing file link 'I'
+    renderImage                             html  
+    renderPlot                              html  
+Rd warning: /tmp/RtmpUwoJui/R.INSTALLc2502faf66b4/shiny/man/renderPlot.Rd:36: missing file link 'replayPlot'
+    renderPrint                             html  
+    renderTable                             html  
+    renderText                              html  
+    renderUI                                html  
+    repeatable                              html  
+Rd warning: /tmp/RtmpUwoJui/R.INSTALLc2502faf66b4/shiny/man/repeatable.Rd:25: missing file link '.Random.seed'
+    req                                     html  
+    restoreInput                            html  
+    runApp                                  html  
+    runExample                              html  
+    runGadget                               html  
+    runUrl                                  html  
+    safeError                               html  
+    selectInput                             html  
+Rd warning: /tmp/RtmpUwoJui/R.INSTALLc2502faf66b4/shiny/man/selectInput.Rd:45: missing file link 'I'
+    serverInfo                              html  
+    session                                 html  
+    setBookmarkExclude                      html  
+    setSerializer                           html  
+    shiny-options                           html  
+    shiny-package                           html  
+    shinyApp                                html  
+    shinyDeprecated                         html  
+    shinyOptions                            html  
+    shinyServer                             html  
+    shinyUI                                 html  
+    showBookmarkUrlModal                    html  
+    showModal                               html  
+    showNotification                        html  
+    showReactLog                            html  
+    showTab                                 html  
+    sidebarLayout                           html  
+    sidebarPanel                            html  
+    singleton                               html  
+    sliderInput                             html  
+Rd warning: /tmp/RtmpUwoJui/R.INSTALLc2502faf66b4/shiny/man/sliderInput.Rd:65: missing file link 'strftime'
+    snapshotExclude                         html  
+    snapshotPreprocessInput                 html  
+    snapshotPreprocessOutput                html  
+    splitLayout                             html  
+    stacktrace                              html  
+    stopApp                                 html  
+    submitButton                            html  
+    suppressDependencies                    html  
+    tabPanel                                html  
+    tableOutput                             html  
+    tabsetPanel                             html  
+    tag                                     html  
+Rd warning: /tmp/RtmpUwoJui/R.INSTALLc2502faf66b4/shiny/man/tag.Rd:42: missing file link 'as.character'
+    textAreaInput                           html  
+    textInput                               html  
+    textOutput                              html  
+    titlePanel                              html  
+    updateActionButton                      html  
+    updateCheckboxGroupInput                html  
+    updateCheckboxInput                     html  
+    updateDateInput                         html  
+    updateDateRangeInput                    html  
+    updateNumericInput                      html  
+    updateQueryString                       html  
+    updateRadioButtons                      html  
+    updateSelectInput                       html  
+Rd warning: /tmp/RtmpUwoJui/R.INSTALLc2502faf66b4/shiny/man/updateSelectInput.Rd:35: missing file link 'I'
+    updateSliderInput                       html  
+    updateTabsetPanel                       html  
+    updateTextAreaInput                     html  
+    updateTextInput                         html  
+    urlModal                                html  
+    validate                                html  
+    validateCssUnit                         html  
+    verbatimTextOutput                      html  
+    verticalLayout                          html  
+    viewer                                  html  
+    wellPanel                               html  
+    withMathJax                             html  
+    withProgress                            html  
+    withTags                                html  
+** building package indices
+** testing if installed package can be loaded
+* DONE (shiny)
+* installing *source* package 'progress' ...
+** package 'progress' successfully unpacked and MD5 sums checked
+** R
+** inst
+** preparing package for lazy loading
+** help
+*** installing help indices
+  converting help for package 'progress'
+    finding HTML links ... done
+    progress_bar                            html  
+** building package indices
+** testing if installed package can be loaded
+* DONE (progress)
+* installing *source* package 'dtplyr' ...
+** package 'dtplyr' successfully unpacked and MD5 sums checked
+** R
+** preparing package for lazy loading
+** help
+*** installing help indices
+  converting help for package 'dtplyr'
+    finding HTML links ... done
+    grouped_dt                              html  
+
+    finding level-2 HTML links ... done
+    join.tbl_dt                             html  
+    src_local                               html  
+    tbl_dt                                  html  
+** building package indices
+** testing if installed package can be loaded
+* DONE (dtplyr)
+* installing *source* package 'crosstalk' ...
+** package 'crosstalk' successfully unpacked and MD5 sums checked
+** R
+** inst
+** preparing package for lazy loading
+** help
+*** installing help indices
+  converting help for package 'crosstalk'
+    finding HTML links ... done
+
+    finding level-2 HTML links ... done
+    ClientValue                             html  
+    SharedData                              html  
+    bscols                                  html  
+    crosstalkLibs                           html  
+    filter_select                           html  
+    filter_slider                           html  
+    is.SharedData                           html  
+    maintain_selection                      html  
+    scale_fill_selection                    html  
+** building package indices
+** testing if installed package can be loaded
+* DONE (crosstalk)
+* installing *source* package 'GGally' ...
+** package 'GGally' successfully unpacked and MD5 sums checked
+** R
+** data
+*** moving datasets to lazyload DB
+** inst
+** preparing package for lazy loading
+** help
+*** installing help indices
+  converting help for package 'GGally'
+    finding HTML links ... done
+    add_and_overwrite_aes                   html  
+    add_ref_boxes                           html  
+Rd warning: /tmp/RtmpsYWTm1/R.INSTALLc2937e1dd22/GGally/man/add_ref_boxes.Rd:21: missing file link 'geom_rect'
+    add_ref_lines                           html  
+Rd warning: /tmp/RtmpsYWTm1/R.INSTALLc2937e1dd22/GGally/man/add_ref_lines.Rd:16: missing file link 'geom_line'
+    australia_PISA2012                      html  
+    brew_colors                             html  
+    broomify                                html  
+    column_is_character                     html  
+    find_plot_type                          html  
+    flea                                    html  
+    fn_switch                               html  
+    getPlot                                 html  
+    get_x_axis_labels                       html  
+    gg-add                                  html  
+Rd warning: /tmp/RtmpsYWTm1/R.INSTALLc2937e1dd22/GGally/man/gg-add.Rd:43: missing file link '+.gg'
+    ggally_barDiag                          html  
+    ggally_blank                            html  
+    ggally_box                              html  
+    ggally_cor                              html  
+    ggally_density                          html  
+    ggally_densityDiag                      html  
+    ggally_denstrip                         html  
+    ggally_diagAxis                         html  
+    ggally_dot                              html  
+    ggally_dot_and_box                      html  
+    ggally_facetbar                         html  
+    ggally_facetdensity                     html  
+    ggally_facetdensitystrip                html  
+    ggally_facethist                        html  
+    ggally_na                               html  
+    ggally_nostic_cooksd                    html  
+Rd warning: /tmp/RtmpsYWTm1/R.INSTALLc2937e1dd22/GGally/man/ggally_nostic_cooksd.Rd:19: missing file link 'cooks.distance'
+Rd warning: /tmp/RtmpsYWTm1/R.INSTALLc2937e1dd22/GGally/man/ggally_nostic_cooksd.Rd:31: missing file link 'cooks.distance'
+    ggally_nostic_hat                       html  
+Rd warning: /tmp/RtmpsYWTm1/R.INSTALLc2937e1dd22/GGally/man/ggally_nostic_hat.Rd:17: missing file link 'geom_line'
+Rd warning: /tmp/RtmpsYWTm1/R.INSTALLc2937e1dd22/GGally/man/ggally_nostic_hat.Rd:19: missing file link 'geom_line'
+Rd warning: /tmp/RtmpsYWTm1/R.INSTALLc2937e1dd22/GGally/man/ggally_nostic_hat.Rd:28: missing file link 'influence'
+Rd warning: /tmp/RtmpsYWTm1/R.INSTALLc2937e1dd22/GGally/man/ggally_nostic_hat.Rd:42: missing file link 'influence'
+    ggally_nostic_line                      html  
+Rd warning: /tmp/RtmpsYWTm1/R.INSTALLc2937e1dd22/GGally/man/ggally_nostic_line.Rd:17: missing file link 'geom_line'
+    ggally_nostic_resid                     html  
+Rd warning: /tmp/RtmpsYWTm1/R.INSTALLc2937e1dd22/GGally/man/ggally_nostic_resid.Rd:17: missing file link 'geom_line'
+    ggally_nostic_se_fit                    html  
+Rd warning: /tmp/RtmpsYWTm1/R.INSTALLc2937e1dd22/GGally/man/ggally_nostic_se_fit.Rd:35: missing file link 'influence'
+    ggally_nostic_sigma                     html  
+Rd warning: /tmp/RtmpsYWTm1/R.INSTALLc2937e1dd22/GGally/man/ggally_nostic_sigma.Rd:19: missing file link 'influence'
+Rd warning: /tmp/RtmpsYWTm1/R.INSTALLc2937e1dd22/GGally/man/ggally_nostic_sigma.Rd:22: missing file link 'influence'
+Rd warning: /tmp/RtmpsYWTm1/R.INSTALLc2937e1dd22/GGally/man/ggally_nostic_sigma.Rd:33: missing file link 'influence'
+    ggally_nostic_std_resid                 html  
+Rd warning: /tmp/RtmpsYWTm1/R.INSTALLc2937e1dd22/GGally/man/ggally_nostic_std_resid.Rd:25: missing file link 'rstandard'
+    ggally_points                           html  
+    ggally_ratio                            html  
+    ggally_smooth                           html  
+    ggally_text                             html  
+    ggcoef                                  html  
+    ggcorr                                  html  
+    ggduo                                   html  
+    ggfacet                                 html  
+    gglegend                                html  
+    ggmatrix                                html  
+    ggmatrix_gtable                         html  
+    ggnet                                   html  
+    ggnet2                                  html  
+Rd warning: /tmp/RtmpsYWTm1/R.INSTALLc2937e1dd22/GGally/man/ggnet2.Rd:83: missing file link 'RColorBrewer'
+Rd warning: /tmp/RtmpsYWTm1/R.INSTALLc2937e1dd22/GGally/man/ggnet2.Rd:84: missing file link 'brewer.pal'
+    ggnetworkmap                            html  
+    ggnostic                                html  
+Rd warning: /tmp/RtmpsYWTm1/R.INSTALLc2937e1dd22/GGally/man/ggnostic.Rd:54: missing file link 'cooks.distance'
+    ggpairs                                 html  
+    ggparcoord                              html  
+    ggscatmat                               html  
+    ggsurv                                  html  
+    ggts                                    html  
+    glyphplot                               html  
+    glyphs                                  html  
+    grab_legend                             html  
+    happy                                   html  
+    is_blank_plot                           html  
+    is_date                                 html  
+    lowertriangle                           html  
+    mapping_color_to_fill                   html  
+    model_terms                             html  
+    nasa                                    html  
+    pigs                                    html  
+    plot_types                              html  
+    plotting_data_type                      html  
+    print.ggmatrix                          html  
+    print_if_interactive                    html  
+    psychademic                             html  
+    putPlot                                 html  
+    require_pkgs                            html  
+    rescale01                               html  
+    scag_order                              html  
+    scatmat                                 html  
+    singleClassOrder                        html  
+    skewness                                html  
+    str.ggmatrix                            html  
+    twitter_spambots                        html  
+    uppertriangle                           html  
+    v1_ggmatrix_theme                       html  
+    wrap                                    html  
+** building package indices
+** installing vignettes
+** testing if installed package can be loaded
+* DONE (GGally)
+* installing *source* package 'DT' ...
+** package 'DT' successfully unpacked and MD5 sums checked
+** R
+** inst
+** preparing package for lazy loading
+** help
+*** installing help indices
+  converting help for package 'DT'
+    finding HTML links ... done
+    DT-imports                              html  
+Rd warning: /tmp/Rtmp14efHC/R.INSTALLc2a421d8fc5a/DT/man/DT-imports.Rd:11: missing file link '%>%'
+    coerceValue                             html  
+    dataTableAjax                           html  
+    dataTableOutput                         html  
+    datatable                               html  
+    formatCurrency                          html  
+    proxy                                   html  
+    replaceData                             html  
+    styleInterval                           html  
+    tableHeader                             html  
+** building package indices
+** installing vignettes
+** testing if installed package can be loaded
+* DONE (DT)
+* installing *source* package 'randomForestExplainer' ...
+** package 'randomForestExplainer' successfully unpacked and MD5 sums checked
+** R
+** inst
+** preparing package for lazy loading
+** help
+*** installing help indices
+  converting help for package 'randomForestExplainer'
+    finding HTML links ... done
+    explain_forest                          html  
+    important_variables                     html  
+    measure_importance                      html  
+    min_depth_distribution                  html  
+    min_depth_interactions                  html  
+    plot_importance_ggpairs                 html  
+    plot_importance_rankings                html  
+    plot_min_depth_distribution             html  
+    plot_min_depth_interactions             html  
+    plot_multi_way_importance               html  
+    plot_predict_interaction                html  
+** building package indices
+** installing vignettes
+** testing if installed package can be loaded
+* DONE (randomForestExplainer)
+
+
+processing file: master.Rmd
+  |                                                                         |                                                                 |   0%  |                                                                         |..                                                               |   2%
+   inline R code fragments
+
+  |                                                                         |...                                                              |   5%
+label: unnamed-chunk-1 (with options) 
+List of 2
+ $ echo   : logi FALSE
+ $ include: logi FALSE
+
+  |                                                                         |.....                                                            |   7%
+  ordinary text without R code
+
+  |                                                                         |......                                                           |   9%
+label: unnamed-chunk-2
+  |                                                                         |........                                                         |  12%
+  ordinary text without R code
+
+  |                                                                         |.........                                                        |  14%
+label: unnamed-chunk-3
+  |                                                                         |...........                                                      |  16%
+  ordinary text without R code
+
+  |                                                                         |............                                                     |  19%
+label: unnamed-chunk-4
+  |                                                                         |..............                                                   |  21%
+  ordinary text without R code
+
+  |                                                                         |...............                                                  |  23%
+label: unnamed-chunk-5 (with options) 
+List of 2
+ $ results: logi FALSE
+ $ eval   : logi FALSE
+
+  |                                                                         |.................                                                |  26%
+  ordinary text without R code
+
+  |                                                                         |..................                                               |  28%
+label: unnamed-chunk-6
+  |                                                                         |....................                                             |  30%
+  ordinary text without R code
+
+  |                                                                         |.....................                                            |  33%
+label: unnamed-chunk-7
+  |                                                                         |.......................                                          |  35%
+  ordinary text without R code
+
+  |                                                                         |........................                                         |  37%
+label: unnamed-chunk-8 (with options) 
+List of 1
+ $ eval: logi FALSE
+
+  |                                                                         |..........................                                       |  40%
+  ordinary text without R code
+
+  |                                                                         |...........................                                      |  42%
+label: unnamed-chunk-9 (with options) 
+List of 1
+ $ echo: logi TRUE
+
+  |                                                                         |.............................                                    |  44%
+  ordinary text without R code
+
+  |                                                                         |..............................                                   |  47%
+label: unnamed-chunk-10 (with options) 
+List of 1
+ $ echo: logi TRUE
+
+  |                                                                         |................................                                 |  49%
+  ordinary text without R code
+
+  |                                                                         |.................................                                |  51%
+label: unnamed-chunk-11 (with options) 
+List of 1
+ $ echo: logi TRUE
+
+  |                                                                         |...................................                              |  53%
+  ordinary text without R code
+
+  |                                                                         |....................................                             |  56%
+label: unnamed-chunk-12 (with options) 
+List of 1
+ $ echo: logi TRUE
+
+  |                                                                         |......................................                           |  58%
+  ordinary text without R code
+
+  |                                                                         |.......................................                          |  60%
+label: Y1Training (with options) 
+List of 1
+ $ fig.show: chr "hide"
+
+  |                                                                         |.........................................                        |  63%
+  ordinary text without R code
+
+  |                                                                         |..........................................                       |  65%
+label: Y1Training-predict
+  |                                                                         |............................................                     |  67%
+  ordinary text without R code
+
+  |                                                                         |.............................................                    |  70%
+label: Y1Validation-predict
+  |                                                                         |...............................................                  |  72%
+  ordinary text without R code
+
+  |                                                                         |................................................                 |  74%
+label: Y2Training (with options) 
+List of 1
+ $ fig.show: chr "hide"
+
+  |                                                                         |..................................................               |  77%
+  ordinary text without R code
+
+  |                                                                         |...................................................              |  79%
+label: Y2Training-predict
+  |                                                                         |.....................................................            |  81%
+  ordinary text without R code
+
+  |                                                                         |......................................................           |  84%
+label: Y2Validation-predict
+  |                                                                         |........................................................         |  86%
+  ordinary text without R code
+
+  |                                                                         |.........................................................        |  88%
+label: Y3Training (with options) 
+List of 1
+ $ fig.show: chr "hide"
+
+  |                                                                         |...........................................................      |  91%
+  ordinary text without R code
+
+  |                                                                         |............................................................     |  93%
+label: Y3Training-predict
+  |                                                                         |..............................................................   |  95%
+  ordinary text without R code
+
+  |                                                                         |...............................................................  |  98%
+label: Y3Validation-predict
+  |                                                                         |.................................................................| 100%
+  ordinary text without R code
+
+
+output file: docs/BDP2-262_Riley.md
+
+[1] "docs/BDP2-262_Riley.md"
