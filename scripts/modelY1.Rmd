@@ -18,7 +18,7 @@ trainingModel <-
         tuneLength = 10,
         nthreads = 8,
         na.action = "na.omit",
-        importance = TRUE)
+        localImp = TRUE)
 stopCluster(cl)
 trainingModel
 trainingModel %>% 

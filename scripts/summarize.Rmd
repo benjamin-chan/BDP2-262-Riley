@@ -1,0 +1,17 @@
+# Summarize models
+
+```{r}
+foo <- function (infile, outfile) {
+  require(magrittr)
+  require(randomForestExplainer)
+  load(infile)
+  forest <- trainingModel$finalModel
+  explain_forest(forest)
+  file.copy("Your_forest_explained.html", outfile)
+  file.remove("Your_forest_explained.html")
+  file.info(outfile)[c("size", "mtime")]
+}
+foo("output/Y1Training.RData", "docs/Y1ForestExplained.html")
+foo("output/Y2Training.RData", "docs/Y2ForestExplained.html")
+foo("output/Y3Training.RData", "docs/Y3ForestExplained.html")
+```
