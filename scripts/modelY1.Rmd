@@ -14,7 +14,7 @@ trainingModel <-
         data = .,
         method = method,
         trControl = ctrl,
-        tuneGrid = grid,
+        # tuneGrid = grid,
         tuneLength = 10,
         nthreads = 8,
         na.action = "na.omit",
