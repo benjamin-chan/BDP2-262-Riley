@@ -72,7 +72,7 @@ Set the model and tuning parameter grid.
 library(earth)
 method <- "earth"
 modelLookup(method)
-grid <- expand.grid(nprune = seq(2, 10, 2),
-                    degree = seq(2))
+grid <- expand.grid(nprune = seq(5, 25, 5),
+                    degree = seq(3))
 grid %>% kable()
 ```
