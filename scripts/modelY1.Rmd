@@ -5,7 +5,7 @@ Prediction model for `Y1`.
 Train model over the tuning parameters.
 
 ```{r Y1Training}
-cl <- makeCluster(8)
+cl <- makeCluster(cores)
 registerDoParallel(cl)
 trainingModel <-
   dfTrainPreProc %>% 

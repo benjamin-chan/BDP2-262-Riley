@@ -8,7 +8,7 @@ Train model over the tuning parameters.
 grid <- expand.grid(nprune = c(seq(7, 12, 1), seq(20, 50, 10)),
                     degree = seq(3))
 grid %>% kable()
-cl <- makeCluster(8)
+cl <- makeCluster(cores)
 registerDoParallel(cl)
 trainingModel <-
   dfTrainPreProc %>% 
