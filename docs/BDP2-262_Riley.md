@@ -235,6 +235,7 @@ ctrl <- trainControl(method = "LOOCV",
                      savePredictions = TRUE,
                      allowParallel = TRUE,
                      search = "random")
+cores <- 24
 ```
 
 Set the model and tuning parameter grid.
