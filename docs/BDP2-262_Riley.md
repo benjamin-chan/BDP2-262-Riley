@@ -1,6 +1,6 @@
 ---
 title: "Parent and Provider Perceptions of Behavioral Healthcare in Pediatric Primary Care (PI: Andrew Riley; BDP2-262)"
-date: "2018-06-08"
+date: "2018-06-09"
 author: Benjamin Chan (chanb@ohsu.edu)
 output:
   html_document:
@@ -231,9 +231,7 @@ Set the control parameters.
 
 
 ```r
-ctrl <- trainControl(method = "repeatedcv",
-                     number = 10,
-                     repeats = 50,
+ctrl <- trainControl(method = "LOOCV",
                      savePredictions = TRUE,
                      allowParallel = TRUE,
                      search = "random")
@@ -271,7 +269,7 @@ modelLookup(method) %>% kable()
 |earth |degree    |Product Degree |TRUE   |TRUE     |TRUE      |
 
 ```r
-grid <- expand.grid(nprune = seq(2, 8, 1),
+grid <- expand.grid(nprune = c(seq(2, 8, 1), seq(10, 50, 10)),
                     degree = seq(3))
 grid %>% kable()
 ```
@@ -287,6 +285,11 @@ grid %>% kable()
 |      6|      1|
 |      7|      1|
 |      8|      1|
+|     10|      1|
+|     20|      1|
+|     30|      1|
+|     40|      1|
+|     50|      1|
 |      2|      2|
 |      3|      2|
 |      4|      2|
@@ -294,6 +297,11 @@ grid %>% kable()
 |      6|      2|
 |      7|      2|
 |      8|      2|
+|     10|      2|
+|     20|      2|
+|     30|      2|
+|     40|      2|
+|     50|      2|
 |      2|      3|
 |      3|      3|
 |      4|      3|
@@ -301,6 +309,11 @@ grid %>% kable()
 |      6|      3|
 |      7|      3|
 |      8|      3|
+|     10|      3|
+|     20|      3|
+|     30|      3|
+|     40|      3|
+|     50|      3|
 
 ```r
 citation(method)
@@ -341,77 +354,85 @@ Train model over the tuning parameters.
 
 
 ```
-## Warning in nominalTrainWorkflow(x = x, y = y, wts = weights, info =
-## trainInfo, : There were missing values in resampled performance measures.
-```
-
-```
 ## Multivariate Adaptive Regression Spline 
 ## 
 ## 274 samples
 ##  51 predictor
 ## 
 ## No pre-processing
-## Resampling: Cross-Validated (10 fold, repeated 50 times) 
-## Summary of sample sizes: 247, 246, 247, 247, 247, 246, ... 
+## Resampling: Leave-One-Out Cross-Validation 
+## Summary of sample sizes: 273, 273, 273, 273, 273, 273, ... 
 ## Resampling results across tuning parameters:
 ## 
-##   degree  nprune  RMSE      Rsquared    MAE     
-##   1       2       17.13406  0.07929239  13.71328
-##   1       3       17.23651  0.08314674  13.78765
-##   1       4       17.26866  0.08556012  13.85806
-##   1       5       17.43226  0.07825704  13.94377
-##   1       6       17.65325  0.06822519  14.11949
-##   1       7       17.75137  0.07108870  14.18879
-##   1       8       17.90116  0.06810602  14.25926
-##   2       2       17.38415  0.06785644  13.93422
-##   2       3       17.82426  0.06296132  14.18043
-##   2       4       18.09926  0.05868106  14.40085
-##   2       5       18.50074  0.05527826  14.62787
-##   2       6       18.78379  0.05613203  14.75910
-##   2       7       19.02022  0.05703011  14.86908
-##   2       8       19.19281  0.06064838  14.97792
-##   3       2       17.62777  0.06474974  14.09974
-##   3       3       17.98996  0.07345258  14.20457
-##   3       4       19.01632  0.06615987  14.64983
-##   3       5       19.29056  0.06500075  14.83188
-##   3       6       19.66481  0.06664439  15.02840
-##   3       7       19.77798  0.06557503  15.12069
-##   3       8       20.44010  0.06464180  15.37954
+##   nprune  degree  RMSE      Rsquared     MAE     
+##    2      1       17.01071  0.066389559  13.49196
+##    2      2       17.11130  0.056746018  13.52673
+##    2      3       17.94193  0.001591162  14.37905
+##    3      1       17.00095  0.071158964  13.44421
+##    3      2       19.27878  0.011430008  14.31089
+##    3      3       17.54470  0.022128835  13.95639
+##    4      1       17.09116  0.068487315  13.49252
+##    4      2       19.50641  0.007266362  14.68732
+##    4      3       17.87813  0.019773362  14.25694
+##    5      1       17.65130  0.034266093  13.94014
+##    5      2       20.30220  0.004463746  15.12980
+##    5      3       17.93490  0.020855849  14.23640
+##    6      1       17.53932  0.043273329  13.96819
+##    6      2       20.52897  0.003907908  15.32919
+##    6      3       18.13757  0.019411830  14.47820
+##    7      1       17.37497  0.060441465  13.59799
+##    7      2       20.65269  0.007363705  15.50435
+##    7      3       18.14849  0.022799821  14.53092
+##    8      1       17.82241  0.049180349  13.87009
+##    8      2       20.61689  0.009136240  15.44326
+##    8      3       18.18823  0.026907086  14.59668
+##   10      1       18.29080  0.029023368  14.33433
+##   10      2       20.37193  0.023463104  15.11353
+##   10      3       18.42004  0.028206489  14.70860
+##   20      1       19.22172  0.033087034  14.89624
+##   20      2       20.36811  0.059220540  14.96274
+##   20      3       19.20482  0.045929487  14.83053
+##   30      1       19.50963  0.039510878  15.04542
+##   30      2       20.65181  0.062933831  15.38412
+##   30      3       23.71532  0.041514668  16.27041
+##   40      1       19.56067  0.038722960  15.08410
+##   40      2       20.60930  0.066798344  15.42893
+##   40      3       31.63776  0.035199160  17.91783
+##   50      1       19.56067  0.038722960  15.08410
+##   50      2       20.61180  0.066644590  15.43571
+##   50      3       32.45119  0.031278783  18.89169
 ## 
 ## RMSE was used to select the optimal model using the smallest value.
-## The final values used for the model were nprune = 2 and degree = 1.
+## The final values used for the model were nprune = 3 and degree = 1.
 ```
 
-```
-## Saving 7 x 7 in image
-## Saving 7 x 7 in image
-```
+![plot of chunk Y1Training](figures/Y1Training-1.png)
 
 ![figures/Y1Training.png](figures/Y1Training.png)
 
 
 ```
-## Selected 2 of 122 terms, and 1 of 163 predictors
+## Selected 3 of 122 terms, and 2 of 163 predictors
 ## Termination condition: Reached nk 201
-## Importance: childRaceWhite, totalChildren-unused, ...
-## Number of terms at each degree of interaction: 1 1 (additive model)
-## GCV 292.0476    RSS 78278.36    GRSq 0.06414023    RSq 0.07780223
+## Importance: childRaceWhite, SEPTI_total, totalChildren-unused, ...
+## Number of terms at each degree of interaction: 1 2 (additive model)
+## GCV 285.8836    RSS 75499.36    GRSq 0.0838927    RSq 0.1105417
 ```
 
 ```
 ## Call: earth(x=matrix[274,163], y=c(77,79,80,40,7...), keepxy=TRUE,
-##             degree=1, nprune=2)
+##             degree=1, nprune=3)
 ## 
-##                coefficients
-## (Intercept)        80.30303
-## childRaceWhite    -11.48091
+##                          coefficients
+## (Intercept)                 75.972994
+## childRaceWhite             -11.755010
+## h(SEPTI_total- -1.22401)     3.583336
 ## 
-## Selected 2 of 122 terms, and 1 of 163 predictors
+## Selected 3 of 122 terms, and 2 of 163 predictors
 ## Termination condition: Reached nk 201
-## Importance: childRaceWhite, totalChildren-unused, ...
-## Number of terms at each degree of interaction: 1 1 (additive model)
-## GCV 292.0476    RSS 78278.36    GRSq 0.06414023    RSq 0.07780223
+## Importance: childRaceWhite, SEPTI_total, totalChildren-unused, ...
+## Number of terms at each degree of interaction: 1 2 (additive model)
+## GCV 285.8836    RSS 75499.36    GRSq 0.0838927    RSq 0.1105417
 ```
 
 ![plot of chunk Y1Training-finalModel](figures/Y1Training-finalModel-1.png)
@@ -421,27 +442,27 @@ Train model over the tuning parameters.
 ## 
 ##   only 20 most important variables shown (out of 163)
 ## 
-##                                             Overall
-## childRaceWhite                                  100
-## zipcode97702                                      0
-## ECBI_Inatt_Tot                                    0
-## SEPTI_discipline                                  0
-## childRelationshipGrandparent                      0
-## parentEducationVocationalschool/somecollege       0
-## zipcode97239                                      0
-## zipcode97223                                      0
-## SEPTI_total                                       0
-## childRelationshipStepparent                       0
-## zipcode75502                                      0
-## distance                                          0
-## parentMaritalStatusNevermarried                   0
-## zipcode97203                                      0
-## zipcode97707                                      0
-## communityRural                                    0
-## visitTypeOther                                    0
-## zipcode97027                                      0
-## parentGenderFemale                                0
-## communitySuburban                                 0
+##                                            Overall
+## childRaceWhite                              100.00
+## SEPTI_total                                  48.52
+## zipcode97232                                  0.00
+## zipcode97203                                  0.00
+## SEPTI_n_clinical_cutoff                       0.00
+## zipcode97759                                  0.00
+## visitTypeBehavioralordevelopmentalconcern     0.00
+## zipcode97266                                  0.00
+## parentRaceWhite                               0.00
+## zipcode97007                                  0.00
+## parentGenderPrefernottorespond                0.00
+## parentMaritalStatusRemarried                  0.00
+## zipcode97209                                  0.00
+## zipcode97753                                  0.00
+## parentMaritalStatusSeparated                  0.00
+## zipcode98685                                  0.00
+## parentMaritalStatusDivorced                   0.00
+## zipcode97140                                  0.00
+## parentEducationGraduate/professionalschool    0.00
+## zipcode97220                                  0.00
 ```
 
 ```{r Y1Training-predict)
@@ -465,13 +486,13 @@ Evaluate model on the validation sample.
 
 ```
 ##        RMSE    Rsquared         MAE 
-## 17.28865022  0.02081483 13.95346623
+## 17.19504421  0.04047677 13.71400070
 ```
 
 ```
 ##            Y1       hat
-## Y1  1.0000000 0.1442734
-## hat 0.1442734 1.0000000
+## Y1  1.0000000 0.2011884
+## hat 0.2011884 1.0000000
 ```
 
 ![plot of chunk Y1Validation-predict](figures/Y1Validation-predict-1.png)
@@ -486,52 +507,59 @@ Train model over the tuning parameters.
 
 
 ```
-## Warning in nominalTrainWorkflow(x = x, y = y, wts = weights, info =
-## trainInfo, : There were missing values in resampled performance measures.
-```
-
-```
 ## Multivariate Adaptive Regression Spline 
 ## 
 ## 274 samples
 ##  51 predictor
 ## 
 ## No pre-processing
-## Resampling: Cross-Validated (10 fold, repeated 50 times) 
-## Summary of sample sizes: 247, 247, 246, 247, 246, 245, ... 
+## Resampling: Leave-One-Out Cross-Validation 
+## Summary of sample sizes: 273, 273, 273, 273, 273, 273, ... 
 ## Resampling results across tuning parameters:
 ## 
-##   degree  nprune  RMSE      Rsquared    MAE     
-##   1       2       4.418233  0.05036974  3.384833
-##   1       3       4.410074  0.06302883  3.348780
-##   1       4       4.338489  0.09519097  3.275891
-##   1       5       4.300901  0.11368059  3.246480
-##   1       6       4.375873  0.09810081  3.313028
-##   1       7       4.412169  0.09345659  3.346279
-##   1       8       4.470584  0.08664421  3.390465
-##   2       2       4.667784  0.04602229  3.464448
-##   2       3       4.772853  0.04627233  3.519607
-##   2       4       4.849307  0.04927904  3.554871
-##   2       5       4.948384  0.04627231  3.600726
-##   2       6       5.086690  0.04601391  3.660133
-##   2       7       5.204135  0.04610951  3.717773
-##   2       8       5.371936  0.04244528  3.799765
-##   3       2       4.483157  0.06192865  3.416468
-##   3       3       4.646819  0.05506877  3.489984
-##   3       4       4.745054  0.05135138  3.539784
-##   3       5       4.930259  0.05061488  3.618705
-##   3       6       5.055259  0.04892681  3.674142
-##   3       7       5.366321  0.04600681  3.777637
-##   3       8       5.457541  0.04373498  3.839231
+##   nprune  degree  RMSE      Rsquared      MAE     
+##    2      1       4.368384  3.797850e-02  3.306652
+##    2      2       4.480751  1.682845e-03  3.411642
+##    2      3       4.376631  3.644362e-02  3.329237
+##    3      1       4.506589  1.108744e-02  3.375671
+##    3      2       4.680459  1.002439e-02  3.541668
+##    3      3       4.430991  2.652310e-02  3.344351
+##    4      1       4.365685  5.225885e-02  3.303962
+##    4      2       4.634167  9.892086e-05  3.517387
+##    4      3       4.689664  1.777289e-02  3.461826
+##    5      1       4.246140  9.749025e-02  3.179190
+##    5      2       4.619831  7.491875e-03  3.418386
+##    5      3       4.690180  2.211782e-02  3.442098
+##    6      1       4.290732  8.321978e-02  3.199407
+##    6      2       4.720549  5.484975e-03  3.492137
+##    6      3       4.713808  2.333858e-02  3.386673
+##    7      1       4.299308  8.254588e-02  3.196060
+##    7      2       5.004758  1.173854e-03  3.685601
+##    7      3       4.806895  1.428249e-02  3.461804
+##    8      1       4.314136  8.849103e-02  3.256080
+##    8      2       5.171066  2.526670e-03  3.690156
+##    8      3       5.588508  3.433394e-03  3.661685
+##   10      1       4.387356  7.918000e-02  3.273834
+##   10      2       5.239252  3.670754e-03  3.762855
+##   10      3       5.865765  2.699826e-03  3.795237
+##   20      1       4.683530  4.209701e-02  3.503013
+##   20      2       7.209287  1.414714e-02  4.200088
+##   20      3       7.841644  1.074778e-02  4.357567
+##   30      1       4.796316  3.628903e-02  3.601891
+##   30      2       7.455225  1.543877e-02  4.306579
+##   30      3       8.785494  1.068305e-02  4.822067
+##   40      1       4.788828  3.629807e-02  3.619974
+##   40      2       7.496369  1.488179e-02  4.342358
+##   40      3       8.768120  7.755144e-03  5.086804
+##   50      1       4.787092  3.646535e-02  3.618447
+##   50      2       7.496439  1.487033e-02  4.343411
+##   50      3       8.780179  7.480996e-03  5.127157
 ## 
 ## RMSE was used to select the optimal model using the smallest value.
 ## The final values used for the model were nprune = 5 and degree = 1.
 ```
 
-```
-## Saving 7 x 7 in image
-## Saving 7 x 7 in image
-```
+![plot of chunk Y2Training](figures/Y2Training-1.png)
 
 ![figures/Y2Training.png](figures/Y2Training.png)
 
@@ -568,27 +596,27 @@ Train model over the tuning parameters.
 ## 
 ##   only 20 most important variables shown (out of 163)
 ## 
-##                                Overall
-## MAPS_POS                        100.00
-## zipcode97702                     79.97
-## SEPTI_r_clinical_cutoff          58.54
-## zipcode97267                      0.00
-## SEPTI_total                       0.00
-## ECBI_intensity_clinical_cutoff    0.00
-## income$80,000-$119,999            0.00
-## SEPTI_discipline                  0.00
-## ECBI_intensity_T_score            0.00
-## MAPS_SP                           0.00
-## visitTypeFollow-upappointment     0.00
-## parentAge                         0.00
-## parentEducationCollege            0.00
-## zipcode97227                      0.00
-## zipcode97201                      0.00
-## zipcode75502                      0.00
-## zipcode97233                      0.00
-## zipcode97213                      0.00
-## birthOrderMiddle                  0.00
-## ECBI_Inatt_Tot                    0.00
+##                                             Overall
+## MAPS_POS                                     100.00
+## zipcode97702                                  79.97
+## SEPTI_r_clinical_cutoff                       58.54
+## ECBI_Cond_Tot                                  0.00
+## zipcode97760                                   0.00
+## SEPTI_play                                     0.00
+## communityRural                                 0.00
+## income$120,000-$149,999                        0.00
+## zipcode91206                                   0.00
+## parentMaritalStatusRemarried                   0.00
+## parentMaritalStatusWidowed                     0.00
+## zipcode97123                                   0.00
+## zipcode97201                                   0.00
+## zipcode97062                                   0.00
+## zipcode97707                                   0.00
+## zipcode97267                                   0.00
+## parentEducationVocationalschool/somecollege    0.00
+## zipcode97203                                   0.00
+## zipcode97035                                   0.00
+## zipcode97222                                   0.00
 ```
 
 
@@ -638,18 +666,30 @@ Train model over the tuning parameters.
 |     10|      1|
 |     11|      1|
 |     12|      1|
+|     20|      1|
+|     30|      1|
+|     40|      1|
+|     50|      1|
 |      7|      2|
 |      8|      2|
 |      9|      2|
 |     10|      2|
 |     11|      2|
 |     12|      2|
+|     20|      2|
+|     30|      2|
+|     40|      2|
+|     50|      2|
 |      7|      3|
 |      8|      3|
 |      9|      3|
 |     10|      3|
 |     11|      3|
 |     12|      3|
+|     20|      3|
+|     30|      3|
+|     40|      3|
+|     50|      3|
 
 ```
 ## Multivariate Adaptive Regression Spline 
@@ -658,69 +698,81 @@ Train model over the tuning parameters.
 ##  51 predictor
 ## 
 ## No pre-processing
-## Resampling: Cross-Validated (10 fold, repeated 50 times) 
-## Summary of sample sizes: 247, 246, 247, 245, 247, 246, ... 
+## Resampling: Leave-One-Out Cross-Validation 
+## Summary of sample sizes: 273, 273, 273, 273, 273, 273, ... 
 ## Resampling results across tuning parameters:
 ## 
-##   degree  nprune  RMSE      Rsquared    MAE      
-##   1        7      11.38132  0.12775693   9.347546
-##   1        8      11.31965  0.13893535   9.278663
-##   1        9      11.32448  0.14403027   9.266579
-##   1       10      11.33809  0.14885610   9.262431
-##   1       11      11.38975  0.15037662   9.290773
-##   1       12      11.45324  0.14730584   9.322245
-##   2        7      12.10988  0.10386956   9.757157
-##   2        8      12.27120  0.10593401   9.825971
-##   2        9      12.49936  0.10708985   9.952391
-##   2       10      12.64214  0.10714884  10.009016
-##   2       11      12.77425  0.10749931  10.083628
-##   2       12      12.90093  0.10906841  10.143701
-##   3        7      12.13052  0.10042431   9.768990
-##   3        8      14.33433  0.09868374  10.261862
-##   3        9      14.70919  0.09862058  10.406614
-##   3       10      14.93276  0.09842126  10.531897
-##   3       11      15.24309  0.10014719  10.631220
-##   3       12      15.39052  0.10155342  10.690937
+##   nprune  degree  RMSE      Rsquared     MAE      
+##    7      1       11.70453  0.072147058   9.710537
+##    7      2       12.42722  0.045432273   9.991517
+##    7      3       12.71392  0.028196167  10.087757
+##    8      1       11.55472  0.091435279   9.513031
+##    8      2       12.54527  0.040051806   9.966195
+##    8      3       12.96045  0.024080626  10.232657
+##    9      1       11.52106  0.099193707   9.465558
+##    9      2       12.69862  0.034068349  10.091426
+##    9      3       14.51075  0.008800328  10.600236
+##   10      1       11.13647  0.143348768   9.143681
+##   10      2       12.87964  0.030139684  10.286174
+##   10      3       15.55924  0.024705189  10.911553
+##   11      1       11.09536  0.151304445   9.100319
+##   11      2       14.51557  0.015368274  10.762851
+##   11      3       15.56249  0.020987940  10.965857
+##   12      1       11.21765  0.138712626   9.239709
+##   12      2       14.59893  0.017977696  10.783736
+##   12      3       15.68379  0.027235158  10.906679
+##   20      1       11.63112  0.119418742   9.367256
+##   20      2       14.51071  0.037345487  11.044163
+##   20      3       16.15479  0.032296972  11.447146
+##   30      1       12.23299  0.084099834   9.733953
+##   30      2       15.85349  0.028061228  11.833118
+##   30      3       17.17734  0.036016421  12.049696
+##   40      1       12.33729  0.088615553   9.887005
+##   40      2       16.00370  0.028870122  11.961394
+##   40      3       17.85649  0.032920401  12.392192
+##   50      1       12.35434  0.088041010   9.886718
+##   50      2       16.02090  0.028195487  11.974502
+##   50      3       17.92229  0.030347782  12.435152
 ## 
 ## RMSE was used to select the optimal model using the smallest value.
-## The final values used for the model were nprune = 8 and degree = 1.
+## The final values used for the model were nprune = 11 and degree = 1.
 ```
 
-```
-## Saving 7 x 7 in image
-## Saving 7 x 7 in image
-```
+![plot of chunk Y3Training](figures/Y3Training-1.png)
 
 ![figures/Y3Training.png](figures/Y3Training.png)
 
 
 ```
-## Selected 8 of 122 terms, and 7 of 163 predictors
+## Selected 11 of 122 terms, and 8 of 163 predictors
 ## Termination condition: Reached nk 201
-## Importance: SEPTI_discipline, SEPTI_total, childAge, zipcode97702, ...
-## Number of terms at each degree of interaction: 1 7 (additive model)
-## GCV 113.9786    RSS 27904.36    GRSq 0.1858469    RSq 0.2672087
+## Importance: SEPTI_total, SEPTI_discipline-unused, childAge, ...
+## Number of terms at each degree of interaction: 1 10 (additive model)
+## GCV 110.1297    RSS 25727.34    GRSq 0.2133396    RSq 0.3243791
 ```
 
 ```
 ## Call: earth(x=matrix[274,163], y=c(58,54,64,41,5...), keepxy=TRUE,
-##             degree=1, nprune=8)
+##             degree=1, nprune=11)
 ## 
 ##                                                 coefficients
-## (Intercept)                                        46.694740
-## parentSituationCo-parentinginseparatehouseholds     9.399783
-## zipcode97702                                       -7.967396
-## h(childAge-0.00619587)                             -5.486517
-## h(-1.06097-ECBI_problem_raw_score)                 76.403589
-## h(-0.421301-ECBI_Cond_Tot)                         -8.168302
-## h(SEPTI_discipline- -1.27627)                       3.025683
-## h(-1.45385-SEPTI_total)                            16.916900
+## (Intercept)                                        38.826249
+## parentSituationCo-parentinginseparatehouseholds     9.275497
+## zipcode97229                                       12.618717
+## zipcode97734                                      -20.177892
+## h(childAge-1.12293)                               -13.410964
+## h(parentAge- -1.24675)                             -2.561029
+## h(-1.63029-ECBI_intensity_T_score)                 -5.349963
+## h(ECBI_intensity_T_score- -1.63029)                 3.294158
+## h(-1.06097-ECBI_problem_raw_score)                 95.515227
+## h(-1.45385-SEPTI_total)                            22.897959
+## h(SEPTI_total- -1.45385)                            3.958761
 ## 
-## Selected 8 of 122 terms, and 7 of 163 predictors
+## Selected 11 of 122 terms, and 8 of 163 predictors
 ## Termination condition: Reached nk 201
-## Importance: SEPTI_discipline, SEPTI_total, childAge, zipcode97702, ...
-## Number of terms at each degree of interaction: 1 7 (additive model)
-## GCV 113.9786    RSS 27904.36    GRSq 0.1858469    RSq 0.2672087
+## Importance: SEPTI_total, SEPTI_discipline-unused, childAge, ...
+## Number of terms at each degree of interaction: 1 10 (additive model)
+## GCV 110.1297    RSS 25727.34    GRSq 0.2133396    RSq 0.3243791
 ```
 
 ![plot of chunk Y3Training-finalModel](figures/Y3Training-finalModel-1.png)
@@ -731,38 +783,38 @@ Train model over the tuning parameters.
 ##   only 20 most important variables shown (out of 163)
 ## 
 ##                                                 Overall
-## SEPTI_discipline                                 100.00
-## SEPTI_total                                       87.23
-## childAge                                          74.90
-## zipcode97702                                      56.71
-## ECBI_problem_raw_score                            49.54
-## ECBI_Cond_Tot                                     42.09
-## parentSituationCo-parentinginseparatehouseholds   27.59
-## SEPTI_play                                         0.00
-## parentSexMale                                      0.00
+## SEPTI_total                                      100.00
+## childAge                                          88.32
+## ECBI_problem_raw_score                            65.34
+## parentSituationCo-parentinginseparatehouseholds   49.66
+## parentAge                                         32.61
+## zipcode97734                                      32.61
+## ECBI_intensity_T_score                            32.61
+## zipcode97229                                      32.61
+## zipcode97206                                       0.00
 ## zipcode97027                                       0.00
-## zipcode97210                                       0.00
-## parentRaceNoResp                                   0.00
-## zipcode97101                                       0.00
-## zipcode97215                                       0.00
+## parentEthnicityNotHispanic/Latino                  0.00
+## zipcode97213                                       0.00
+## zipcode97825                                       0.00
+## zipcode97086                                       0.00
+## parentEthnicityPrefernottorespond                  0.00
+## distance                                           0.00
+## zipcode97086-3615                                  0.00
+## zipcode90210                                       0.00
 ## zipcode97214                                       0.00
-## zipcode97141                                       0.00
-## zipcode97203                                       0.00
-## parentEthnicityUnknown                             0.00
-## zipcode97321                                       0.00
-## zipcode97230                                       0.00
+## MAPS_LC                                            0.00
 ```
 
 
 ```
-##       RMSE   Rsquared        MAE 
-## 10.0916174  0.2672087  8.1083143
+##      RMSE  Rsquared       MAE 
+## 9.6899639 0.3243791 7.9315828
 ```
 
 ```
 ##            Y3       hat
-## Y3  1.0000000 0.5169223
-## hat 0.5169223 1.0000000
+## Y3  1.0000000 0.5695429
+## hat 0.5695429 1.0000000
 ```
 
 ![plot of chunk Y3Training-predict](figures/Y3Training-predict-1.png)
@@ -771,14 +823,14 @@ Evaluate model on the validation sample.
 
 
 ```
-##       RMSE   Rsquared        MAE 
-## 11.8666417  0.1086082  9.2850770
+##         RMSE     Rsquared          MAE 
+## 14.147148035  0.002805804 10.870320503
 ```
 
 ```
-##            Y3       hat
-## Y3  1.0000000 0.3295577
-## hat 0.3295577 1.0000000
+##             Y3        hat
+## Y3  1.00000000 0.05296984
+## hat 0.05296984 1.00000000
 ```
 
 ![plot of chunk Y3Validation-predict](figures/Y3Validation-predict-1.png)

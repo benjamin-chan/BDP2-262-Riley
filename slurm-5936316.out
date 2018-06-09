@@ -77,10 +77,7 @@ List of 1
   ordinary text without R code
 
   |                                                                         |.................................                                |  51%
-label: Y1Training (with options) 
-List of 1
- $ fig.show: chr "hide"
-
+label: Y1Training
   |                                                                         |...................................                              |  53%
   ordinary text without R code
 
@@ -95,10 +92,7 @@ label: Y1Validation-predict
   ordinary text without R code
 
   |                                                                         |..........................................                       |  65%
-label: Y2Training (with options) 
-List of 1
- $ fig.show: chr "hide"
-
+label: Y2Training
   |                                                                         |............................................                     |  67%
   ordinary text without R code
 
@@ -118,10 +112,7 @@ label: Y2Validation-predict
   ordinary text without R code
 
   |                                                                         |......................................................           |  84%
-label: Y3Training (with options) 
-List of 1
- $ fig.show: chr "hide"
-
+label: Y3Training
   |                                                                         |........................................................         |  86%
   ordinary text without R code
 
