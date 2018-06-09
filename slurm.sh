@@ -1,5 +1,5 @@
 #!/usr/bin/bash
-#SBATCH --cpus-per-task=8
+#SBATCH --cpus-per-task=16
 #SBATCH --mem-per-cpu=1G
 #SBATCH --partition=exacloud
 #SBATCH --time=360

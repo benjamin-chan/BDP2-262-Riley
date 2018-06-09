@@ -4,8 +4,8 @@ Prediction model for `Y3`.
 
 Train model over the tuning parameters.
 
-```{r Y3Training, fig.show = "hide"}
-grid <- expand.grid(nprune = seq(7, 12, 1),
+```{r Y3Training}
+grid <- expand.grid(nprune = c(seq(7, 12, 1), seq(20, 50, 10)),
                     degree = seq(3))
 grid %>% kable()
 cl <- makeCluster(8)
@@ -24,10 +24,7 @@ trainingModel %>%
   geom_line() +
   geom_point() +
   theme_bw()
-ggsave("figures/Y3Training.png")
-ggsave("figures/Y3Training.svg")
 save(trainingModel, file = "output/Y3Training.RData")
-# load("output/Y3Training.RData")
 ```
 
 ![figures/Y3Training.png](figures/Y3Training.png)

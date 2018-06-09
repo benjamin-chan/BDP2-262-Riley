@@ -58,9 +58,7 @@ rm(dfTrainPreProc1, dfTrainPreProc2, dfTrainPreProc3)
 Set the control parameters.
 
 ```{r, echo = TRUE}
-ctrl <- trainControl(method = "repeatedcv",
-                     number = 10,
-                     repeats = 50,
+ctrl <- trainControl(method = "LOOCV",
                      savePredictions = TRUE,
                      allowParallel = TRUE,
                      search = "random")
@@ -72,7 +70,7 @@ Set the model and tuning parameter grid.
 library(earth)
 method <- "earth"
 modelLookup(method) %>% kable()
-grid <- expand.grid(nprune = seq(2, 8, 1),
+grid <- expand.grid(nprune = c(seq(2, 8, 1), seq(10, 50, 10)),
                     degree = seq(3))
 grid %>% kable()
 citation(method)

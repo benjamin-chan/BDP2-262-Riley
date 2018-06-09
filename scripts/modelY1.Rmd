@@ -4,7 +4,7 @@ Prediction model for `Y1`.
 
 Train model over the tuning parameters.
 
-```{r Y1Training, fig.show = "hide"}
+```{r Y1Training}
 cl <- makeCluster(8)
 registerDoParallel(cl)
 trainingModel <-
@@ -21,8 +21,6 @@ trainingModel %>%
   geom_line() +
   geom_point() +
   theme_bw()
-ggsave("figures/Y1Training.png")
-ggsave("figures/Y1Training.svg")
 save(trainingModel, file = "output/Y1Training.RData")
 ```
 
