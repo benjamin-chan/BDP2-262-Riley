@@ -60,7 +60,7 @@ Set the control parameters.
 ```{r, echo = TRUE}
 ctrl <- trainControl(method = "repeatedcv",
                      number = 10,
-                     repeats = 25,
+                     repeats = 50,
                      savePredictions = TRUE,
                      allowParallel = TRUE,
                      search = "random")
@@ -71,8 +71,9 @@ Set the model and tuning parameter grid.
 ```{r, echo = TRUE}
 library(earth)
 method <- "earth"
-modelLookup(method)
-grid <- expand.grid(nprune = seq(5, 25, 5),
+modelLookup(method) %>% kable()
+grid <- expand.grid(nprune = seq(2, 8, 1),
                     degree = seq(3))
 grid %>% kable()
+citation(method)
 ```

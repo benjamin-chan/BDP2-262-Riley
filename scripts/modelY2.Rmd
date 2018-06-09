@@ -29,9 +29,14 @@ save(trainingModel, file = "output/Y2Training.RData")
 
 ![figures/Y2Training.png](figures/Y2Training.png)
 
-```{r Y2Training-predict}
+```{r Y2Training-finalModel}
 trainingModel$finalModel
+summary(trainingModel$finalModel)
+plot(trainingModel$finalModel)
 varImp(trainingModel)
+```
+
+```{r Y2Training-predict}
 dfTrainPred <- 
   dfTrainPreProc %>% 
   mutate(hat = predict(trainingModel, dfTrainPreProc) %>% as.numeric())

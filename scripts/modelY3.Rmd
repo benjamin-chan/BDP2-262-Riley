@@ -5,6 +5,9 @@ Prediction model for `Y3`.
 Train model over the tuning parameters.
 
 ```{r Y3Training, fig.show = "hide"}
+grid <- expand.grid(nprune = seq(7, 12, 1),
+                    degree = seq(3))
+grid %>% kable()
 cl <- makeCluster(8)
 registerDoParallel(cl)
 trainingModel <-
@@ -29,9 +32,14 @@ save(trainingModel, file = "output/Y3Training.RData")
 
 ![figures/Y3Training.png](figures/Y3Training.png)
 
-```{r Y3Training-predict}
+```{r Y3Training-finalModel}
 trainingModel$finalModel
+summary(trainingModel$finalModel)
+plot(trainingModel$finalModel)
 varImp(trainingModel)
+```
+
+```{r Y3Training-predict}
 dfTrainPred <- 
   dfTrainPreProc %>% 
   mutate(hat = predict(trainingModel, dfTrainPreProc) %>% as.numeric())
