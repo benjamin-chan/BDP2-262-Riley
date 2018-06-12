@@ -7,20 +7,21 @@ Train model over the tuning parameters.
 ```{r Y1Training}
 cl <- makeCluster(cores)
 registerDoParallel(cl)
+require(checkpoint)
+checkpoint("2018-04-01")
 trainingModel <-
   dfTrainPreProc %>% 
-  select(-c(id, Y2, Y3)) %>% 
-  train(Y1 ~ ., data = ., method = method, trControl = ctrl, tuneGrid = grid)
+  dplyr::select(-c(id, Y2, Y3)) %>% 
+  train(Y1 ~ ., data = ., method = method, trControl = ctrl)
 stopCluster(cl)
 trainingModel
-trainingModel %>% 
-  .$results %>% 
-  mutate(degree = factor(degree)) %>% 
-  ggplot() + 
-  aes(x = nprune, y = RMSE, color = degree, group = degree) +
-  geom_line() +
-  geom_point() +
-  theme_bw()
+# trainingModel %>% 
+#   .$results %>% 
+#   ggplot() + 
+#   aes(x = nprune, y = RMSE, color = degree, group = degree) +
+#   geom_line() +
+#   geom_point() +
+#   theme_bw()
 save(trainingModel, file = "output/Y1Training.RData")
 ```
 

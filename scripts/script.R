@@ -10,9 +10,7 @@ files <- c("header.yaml",
            "preamble.Rmd",
            "importData.Rmd",
            "preprocess.Rmd",
-           "modelY1.Rmd",
-           "modelY2.Rmd",
-           "modelY3.Rmd")
+           "modelY1.Rmd")
 f <- file("master.Rmd", open = "w")
 for (i in 1:length(files)) {
     x <- readLines(file.path("scripts", files[i]))

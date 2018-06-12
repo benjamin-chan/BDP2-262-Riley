@@ -68,11 +68,10 @@ cores <- 24
 Set the model and tuning parameter grid.
 
 ```{r, echo = TRUE}
-library(earth)
-method <- "earth"
+library(MASS)
+method <- "lmStepAIC"
 modelLookup(method) %>% kable()
-grid <- expand.grid(nprune = c(seq(2, 8, 1), seq(10, 50, 10)),
-                    degree = seq(3))
-grid %>% kable()
-citation(method)
+# grid <- expand.grid(ncomp = seq(10, 20, 1))
+# grid %>% kable()
+citation("MASS")
 ```
