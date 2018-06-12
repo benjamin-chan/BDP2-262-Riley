@@ -15,9 +15,8 @@ stopCluster(cl)
 trainingModel
 trainingModel %>% 
   .$results %>% 
-  mutate(degree = factor(degree)) %>% 
   ggplot() + 
-  aes(x = nprune, y = RMSE, color = degree, group = degree) +
+  aes(x = nvmax, y = RMSE) +
   geom_line() +
   geom_point() +
   theme_bw()
