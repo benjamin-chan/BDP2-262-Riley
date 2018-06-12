@@ -1,0 +1,97 @@
+
+checkpoint: Part of the Reproducible R Toolkit from Microsoft
+https://mran.microsoft.com/documents/rro/reproducibility/
+
+
+processing file: master.Rmd
+  |                                                                         |                                                                 |   0%  |                                                                         |..                                                               |   4%
+   inline R code fragments
+
+  |                                                                         |.....                                                            |   7%
+label: unnamed-chunk-1 (with options) 
+List of 2
+ $ echo   : logi FALSE
+ $ include: logi FALSE
+
+  |                                                                         |.......                                                          |  11%
+  ordinary text without R code
+
+  |                                                                         |..........                                                       |  15%
+label: unnamed-chunk-2
+  |                                                                         |............                                                     |  19%
+  ordinary text without R code
+
+  |                                                                         |..............                                                   |  22%
+label: unnamed-chunk-3
+  |                                                                         |.................                                                |  26%
+  ordinary text without R code
+
+  |                                                                         |...................                                              |  30%
+label: unnamed-chunk-4
+  |                                                                         |......................                                           |  33%
+  ordinary text without R code
+
+  |                                                                         |........................                                         |  37%
+label: unnamed-chunk-5
+  |                                                                         |..........................                                       |  41%
+  ordinary text without R code
+
+  |                                                                         |.............................                                    |  44%
+label: unnamed-chunk-6 (with options) 
+List of 1
+ $ eval: logi FALSE
+
+  |                                                                         |...............................                                  |  48%
+  ordinary text without R code
+
+  |                                                                         |..................................                               |  52%
+label: unnamed-chunk-7 (with options) 
+List of 1
+ $ echo: logi TRUE
+
+  |                                                                         |....................................                             |  56%
+  ordinary text without R code
+
+  |                                                                         |.......................................                          |  59%
+label: unnamed-chunk-8 (with options) 
+List of 1
+ $ echo: logi TRUE
+
+  |                                                                         |.........................................                        |  63%
+  ordinary text without R code
+
+  |                                                                         |...........................................                      |  67%
+label: unnamed-chunk-9 (with options) 
+List of 1
+ $ echo: logi TRUE
+
+  |                                                                         |..............................................                   |  70%
+  ordinary text without R code
+
+  |                                                                         |................................................                 |  74%
+label: unnamed-chunk-10 (with options) 
+List of 1
+ $ echo: logi TRUE
+
+  |                                                                         |...................................................              |  78%
+  ordinary text without R code
+
+  |                                                                         |.....................................................            |  81%
+label: Y1Training
+  |                                                                         |.......................................................          |  85%
+  ordinary text without R code
+
+  |                                                                         |..........................................................       |  89%
+label: Y1Training-finalModel
+  |                                                                         |............................................................     |  93%
+  ordinary text without R code
+
+  |                                                                         |...............................................................  |  96%
+label: Y1Validation-predict
+  |                                                                         |.................................................................| 100%
+  ordinary text without R code
+
+
+output file: docs/BDP2-262_Riley.md
+
+[1] "docs/BDP2-262_Riley.md"
