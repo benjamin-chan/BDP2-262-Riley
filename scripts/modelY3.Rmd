@@ -27,7 +27,7 @@ trainingModel %>%
 save(trainingModel, file = "output/Y3Training.RData")
 ```
 
-![figures/Y3Training.png](figures/Y3Training.png)
+![../figures/Y3Training.png](../figures/Y3Training.png)
 
 ```{r Y3Training-finalModel}
 trainingModel$finalModel

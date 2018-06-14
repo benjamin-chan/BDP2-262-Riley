@@ -1,6 +1,6 @@
 ---
 title: "Parent and Provider Perceptions of Behavioral Healthcare in Pediatric Primary Care (PI: Andrew Riley; BDP2-262)"
-date: "2018-06-09"
+date: "2018-06-14"
 author: Benjamin Chan (chanb@ohsu.edu)
 output:
   html_document:
@@ -409,7 +409,7 @@ Train model over the tuning parameters.
 
 ![plot of chunk Y1Training](figures/Y1Training-1.png)
 
-![figures/Y1Training.png](figures/Y1Training.png)
+![../figures/Y1Training.png](../figures/Y1Training.png)
 
 
 ```
@@ -562,7 +562,7 @@ Train model over the tuning parameters.
 
 ![plot of chunk Y2Training](figures/Y2Training-1.png)
 
-![figures/Y2Training.png](figures/Y2Training.png)
+![../figures/Y2Training.png](../figures/Y2Training.png)
 
 
 ```
@@ -741,7 +741,7 @@ Train model over the tuning parameters.
 
 ![plot of chunk Y3Training](figures/Y3Training-1.png)
 
-![figures/Y3Training.png](figures/Y3Training.png)
+![../figures/Y3Training.png](../figures/Y3Training.png)
 
 
 ```
