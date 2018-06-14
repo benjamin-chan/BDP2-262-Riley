@@ -409,8 +409,6 @@ Train model over the tuning parameters.
 
 ![plot of chunk Y1Training](figures/Y1Training-1.png)
 
-![../figures/Y1Training-1.png](../figures/Y1Training-1.png)
-
 
 ```
 ## Selected 3 of 122 terms, and 2 of 163 predictors
@@ -561,8 +559,6 @@ Train model over the tuning parameters.
 ```
 
 ![plot of chunk Y2Training](figures/Y2Training-1.png)
-
-![../figures/Y2Training-1.png](../figures/Y2Training-1.png)
 
 
 ```
@@ -740,8 +736,6 @@ Train model over the tuning parameters.
 ```
 
 ![plot of chunk Y3Training](figures/Y3Training-1.png)
-
-![../figures/Y3Training-1.png](../figures/Y3Training-1.png)
 
 
 ```
