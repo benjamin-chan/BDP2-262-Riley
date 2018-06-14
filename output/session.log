@@ -1,8 +1,8 @@
 $completionDateTime
-[1] "2018-06-09 13:13:56 PDT"
+[1] "2018-06-14 10:18:17 PDT"
 
 $executionTime
-Time difference of 6.954197 mins
+Time difference of 43.33606 secs
 
 $sessionInfo
 R version 3.4.3 (2017-11-30)
@@ -13,42 +13,41 @@ Matrix products: default
 BLAS/LAPACK: /usr/lib64/R/lib/libRblas.so
 
 locale:
- [1] LC_CTYPE=en_US.ISO8859-1    LC_NUMERIC=C               
- [3] LC_TIME=en_US.ISO8859-1     LC_COLLATE=en_US.ISO8859-1 
- [5] LC_MONETARY=en_US.ISO8859-1 LC_MESSAGES=C              
- [7] LC_PAPER=en_US.UTF-8        LC_NAME=C                  
- [9] LC_ADDRESS=C                LC_TELEPHONE=C             
-[11] LC_MEASUREMENT=en_US.UTF-8  LC_IDENTIFICATION=C        
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+ [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
 
 attached base packages:
 [1] parallel  stats     graphics  grDevices utils     datasets  base     
 
 other attached packages:
- [1] earth_4.6.2        plotmo_3.3.6       TeachingDemos_2.10 plotrix_3.7       
- [5] bindrcpp_0.2.2     RANN_2.5.1         doParallel_1.0.11  iterators_1.0.9   
- [9] foreach_1.4.4      caret_6.0-79       lattice_0.20-35    svglite_1.2.1     
-[13] haven_1.1.1        forcats_0.3.0      stringr_1.3.0      dplyr_0.7.4       
-[17] purrr_0.2.4        readr_1.1.1        tidyr_0.8.0        tibble_1.4.2      
-[21] ggplot2_2.2.1      tidyverse_1.2.1    magrittr_1.5       rmarkdown_1.9     
-[25] knitr_1.20         checkpoint_0.4.2  
+ [1] leaps_3.0         bindrcpp_0.2.2    RANN_2.5.1        doParallel_1.0.11
+ [5] iterators_1.0.9   foreach_1.4.4     caret_6.0-79      lattice_0.20-35  
+ [9] svglite_1.2.1     haven_1.1.1       forcats_0.3.0     stringr_1.3.0    
+[13] dplyr_0.7.4       purrr_0.2.4       readr_1.1.1       tidyr_0.8.0      
+[17] tibble_1.4.2      ggplot2_2.2.1     tidyverse_1.2.1   magrittr_1.5     
+[21] rmarkdown_1.9     knitr_1.20        checkpoint_0.4.2 
 
 loaded via a namespace (and not attached):
- [1] nlme_3.1-131       lubridate_1.7.3    dimRed_0.1.0       httr_1.3.1        
- [5] rprojroot_1.3-2    tools_3.4.3        backports_1.1.2    R6_2.2.2          
- [9] rpart_4.1-11       lazyeval_0.2.1     colorspace_1.3-2   nnet_7.3-12       
-[13] withr_2.1.2        tidyselect_0.2.4   mnormt_1.5-5       compiler_3.4.3    
-[17] cli_1.0.0          rvest_0.3.2        xml2_1.2.0         labeling_0.3      
-[21] scales_0.5.0       sfsmisc_1.1-2      DEoptimR_1.0-8     psych_1.8.3.3     
-[25] robustbase_0.92-8  digest_0.6.15      foreign_0.8-69     pkgconfig_2.0.1   
-[29] htmltools_0.3.6    highr_0.6          rlang_0.2.0        readxl_1.0.0      
-[33] ddalpha_1.3.1.1    rstudioapi_0.7     bindr_0.1.1        jsonlite_1.5      
-[37] ModelMetrics_1.1.0 Matrix_1.2-12      Rcpp_0.12.16       munsell_0.4.3     
-[41] gdtools_0.1.7      stringi_1.1.7      MASS_7.3-47        plyr_1.8.4        
-[45] recipes_0.1.2      grid_3.4.3         crayon_1.3.4       methods_3.4.3     
-[49] splines_3.4.3      hms_0.4.2          pillar_1.2.1       reshape2_1.4.3    
-[53] codetools_0.2-15   stats4_3.4.3       CVST_0.2-1         glue_1.2.0        
-[57] evaluate_0.10.1    modelr_0.1.1       cellranger_1.1.0   gtable_0.2.0      
-[61] kernlab_0.9-25     assertthat_0.2.0   DRR_0.0.3          gower_0.1.2       
-[65] prodlim_1.6.1      broom_0.4.4        class_7.3-14       survival_2.41-3   
-[69] timeDate_3043.102  RcppRoll_0.2.2     lava_1.6.1         ipred_0.9-6       
+ [1] httr_1.3.1         ddalpha_1.3.1.1    sfsmisc_1.1-2      jsonlite_1.5      
+ [5] splines_3.4.3      prodlim_1.6.1      modelr_0.1.1       assertthat_0.2.0  
+ [9] highr_0.6          stats4_3.4.3       DRR_0.0.3          cellranger_1.1.0  
+[13] robustbase_0.92-8  gdtools_0.1.7      ipred_0.9-6        pillar_1.2.1      
+[17] backports_1.1.2    glue_1.2.0         digest_0.6.15      rvest_0.3.2       
+[21] colorspace_1.3-2   recipes_0.1.2      htmltools_0.3.6    Matrix_1.2-12     
+[25] plyr_1.8.4         psych_1.8.3.3      timeDate_3043.102  pkgconfig_2.0.1   
+[29] CVST_0.2-1         broom_0.4.4        scales_0.5.0       gower_0.1.2       
+[33] lava_1.6.1         withr_2.1.2        nnet_7.3-12        lazyeval_0.2.1    
+[37] cli_1.0.0          mnormt_1.5-5       survival_2.41-3    crayon_1.3.4      
+[41] readxl_1.0.0       evaluate_0.10.1    methods_3.4.3      nlme_3.1-131      
+[45] MASS_7.3-49        xml2_1.2.0         dimRed_0.1.0       foreign_0.8-69    
+[49] class_7.3-14       tools_3.4.3        hms_0.4.2          kernlab_0.9-25    
+[53] munsell_0.4.3      compiler_3.4.3     RcppRoll_0.2.2     rlang_0.2.0       
+[57] grid_3.4.3         rstudioapi_0.7     labeling_0.3       gtable_0.2.0      
+[61] ModelMetrics_1.1.0 codetools_0.2-15   reshape2_1.4.3     R6_2.2.2          
+[65] lubridate_1.7.3    bindr_0.1.1        rprojroot_1.3-2    stringi_1.1.7     
+[69] Rcpp_0.12.16       rpart_4.1-11       tidyselect_0.2.4   DEoptimR_1.0-8    
 
