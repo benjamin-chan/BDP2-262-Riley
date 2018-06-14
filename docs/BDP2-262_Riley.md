@@ -409,7 +409,7 @@ Train model over the tuning parameters.
 
 ![plot of chunk Y1Training](figures/Y1Training-1.png)
 
-![../figures/Y1Training.png](../figures/Y1Training.png)
+![../figures/Y1Training-1.png](../figures/Y1Training-1.png)
 
 
 ```
@@ -562,7 +562,7 @@ Train model over the tuning parameters.
 
 ![plot of chunk Y2Training](figures/Y2Training-1.png)
 
-![../figures/Y2Training.png](../figures/Y2Training.png)
+![../figures/Y2Training-1.png](../figures/Y2Training-1.png)
 
 
 ```
@@ -741,7 +741,7 @@ Train model over the tuning parameters.
 
 ![plot of chunk Y3Training](figures/Y3Training-1.png)
 
-![../figures/Y3Training.png](../figures/Y3Training.png)
+![../figures/Y3Training-1.png](../figures/Y3Training-1.png)
 
 
 ```
