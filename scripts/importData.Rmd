@@ -82,6 +82,13 @@ df <-
                                             "Not Hispanic/Latino", 
                                             "Unknown", 
                                             "Prefer not to respond"))) %>% 
+  mutate(childRaceWhite = factor(childRaceWhite),
+         childRaceAsian = factor(childRaceAsian),
+         childRaceAfrAm = factor(childRaceAfrAm),
+         childRaceAIAN = factor(childRaceAIAN),
+         childRaceNHPI = factor(childRaceNHPI),
+         childRaceOther = factor(childRaceOther),
+         childRaceNoResp = factor(childRaceNoResp)) %>% 
   mutate(childRelationship = factor(childRelationship,
                                     levels = seq(6),
                                     labels = c("Biological or adoptive mother",
@@ -106,6 +113,13 @@ df <-
                                              "Not Hispanic/Latino", 
                                              "Unknown", 
                                              "Prefer not to respond"))) %>% 
+  mutate(parentRaceWhite = factor(parentRaceWhite),
+         parentRaceAsian = factor(parentRaceAsian),
+         parentRaceAfrAm = factor(parentRaceAfrAm),
+         parentRaceAIAN = factor(parentRaceAIAN),
+         parentRaceNHPI = factor(parentRaceNHPI),
+         parentRaceOther = factor(parentRaceOther),
+         parentRaceNoResp = factor(parentRaceNoResp)) %>% 
   mutate(parentMaritalStatus = factor(parentMaritalStatus,
                                       levels = seq(6),
                                       labels = c("Married",

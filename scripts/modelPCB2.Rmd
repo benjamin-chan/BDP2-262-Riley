@@ -13,7 +13,7 @@ registerDoParallel(cl)
 trainingModel <-
   dfTrainPreProc %>% 
   select(-c(id, PCB1_Total, PCB1_CondEmo, PCB1_DevHab, PCB3_Total, PCB3_PCPonly, PCB3_Person, PCB3_Resource)) %>% 
-  train(PCB2_Tot ~ ., data = ., method = method, trControl = ctrl, tuneGrid = grid)
+  train(PCB2_Tot ~ ., data = ., method = method, trControl = ctrl, tuneGrid = grid, na.action = na.exclude)
 stopCluster(cl)
 trainingModel
 trainingModel %>% 
