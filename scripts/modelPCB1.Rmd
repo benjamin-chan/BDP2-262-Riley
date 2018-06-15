@@ -1,16 +1,19 @@
-# Model 2
+# Model PCB1
 
-Prediction model for `Y2`.
+
+## PCB1 Total
+
+Prediction model for `PCB1`.
 
 Train model over the tuning parameters.
 
-```{r Y2Training}
+```{r PCB1_Total_Training}
 cl <- makeCluster(cores)
 registerDoParallel(cl)
 trainingModel <-
   dfTrainPreProc %>% 
-  select(-c(id, Y1, Y3)) %>% 
-  train(Y2 ~ ., data = ., method = method, trControl = ctrl, tuneGrid = grid)
+  select(-c(id, PCB2_Tot, PCB3_Total, PCB3_PCPonly, PCB3_Person, PCB3_Resource) %>% 
+  train(PCB1_Total ~ ., data = ., method = method, trControl = ctrl, tuneGrid = grid)
 stopCluster(cl)
 trainingModel
 trainingModel %>% 
@@ -21,26 +24,26 @@ trainingModel %>%
   geom_line() +
   geom_point() +
   theme_bw()
-save(trainingModel, file = "output/Y2Training.RData")
+save(trainingModel, file = "output/PCB1_Total_Training.RData")
 ```
 
-```{r Y2Training-finalModel}
+```{r PCB1_Total_Training-finalModel}
 trainingModel$finalModel
 summary(trainingModel$finalModel)
 plot(trainingModel$finalModel)
 varImp(trainingModel)
 ```
 
-```{r Y2Training-predict}
+```{r PCB1_Total_Training-predict)
 dfTrainPred <- 
   dfTrainPreProc %>% 
   mutate(hat = predict(trainingModel, dfTrainPreProc) %>% as.numeric())
-postResample(pred = dfTrainPred$hat, obs = dfTrainPred$Y2)
-cor(dfTrainPred %>% select(Y2, hat))
+postResample(pred = dfTrainPred$hat, obs = dfTrainPred$PCB1_Total)
+cor(dfTrainPred %>% select(PCB1_Total, hat))
 dfTrainPred %>% 
   ggplot() +
-  ggtitle(sprintf("Correlation = %.03f", cor(dfTrainPred %>% select(Y2, hat)) %>% .[1, 2])) +
-  aes(x = hat, y = Y2) +
+  ggtitle(sprintf("Correlation = %.03f", cor(dfTrainPred %>% select(PCB1_Total, hat)) %>% .[1, 2])) +
+  aes(x = hat, y = PCB1_Total) +
   geom_abline(slope = 1, intercept = 0) +
   geom_smooth(method = "lm", formula = y ~ x - 1, color = rgb(0, 0, 1, 0.5), se = FALSE) +
   geom_smooth(method = "lm", formula = y ~ x, color = rgb(1, 0, 0, 0.5), se = FALSE) +
@@ -49,20 +52,20 @@ dfTrainPred %>%
 
 Evaluate model on the validation sample.
 
-```{r Y2Validation-predict}
+```{r PCB1_Total_Validation-predict}
 dfValidPred <- 
   dfValid %>% 
-  select(-c(id, Y1, Y3)) %>% 
+  select(-c(id, PCB2_Tot, PCB3_Total, PCB3_PCPonly, PCB3_Person, PCB3_Resource)) %>% 
   select(-one_of(nzv$varname)) %>%
   filter(complete.cases(.)) %>% 
   predict(preProc, .) %>% 
   mutate(hat = predict(trainingModel, .) %>% as.numeric())
-postResample(pred = dfValidPred$hat, obs = dfValidPred$Y2)
-cor(dfValidPred %>% select(Y2, hat))
+postResample(pred = dfValidPred$hat, obs = dfValidPred$PCB1_Total)
+cor(dfValidPred %>% select(PCB1_Total, hat))
 dfValidPred %>% 
   ggplot() +
-  ggtitle(sprintf("Correlation = %.03f", cor(dfValidPred %>% select(Y2, hat)) %>% .[1, 2])) +
-  aes(x = hat, y = Y2) +
+  ggtitle(sprintf("Correlation = %.03f", cor(dfValidPred %>% select(PCB1_Total, hat)) %>% .[1, 2])) +
+  aes(x = hat, y = PCB1_Total) +
   geom_abline(slope = 1, intercept = 0) +
   geom_smooth(method = "lm", formula = y ~ x - 1, color = rgb(0, 0, 1, 0.5), se = FALSE) +
   geom_smooth(method = "lm", formula = y ~ x, color = rgb(1, 0, 0, 0.5), se = FALSE) +

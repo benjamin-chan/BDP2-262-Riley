@@ -1,6 +1,6 @@
 # Preprocess data
 
-Initial preprocesssing that needs to be done that is common to `Y1`, `Y2`, and `Y3`.
+Initial preprocesssing that needs to be done that is common to `PCB1_Total`, `PCB2_Tot`, and `PCB3_Total`.
 
 Split data set into 70:30 training:validation samples.
 
@@ -20,7 +20,10 @@ message(sprintf("Number of complete cases before imputation = %d",
                 complete.cases(dfTrain) %>% sum()))
 nzv <- 
   dfTrain %>% 
-  select(-c(id, Y1, Y2, Y3)) %>% 
+  select(-c(id, 
+            PCB1_Total, PCB1_CondEmot, PCB1_DevHab, 
+            PCB2_Tot, 
+            PCB3_Total, PCB3_PCPonly, PCB3_Person, PCB3_Resource)) %>% 
   nearZeroVar(names = TRUE, saveMetric = TRUE) %>%
   mutate(varname = row.names(.)) %>% 
   filter(nzv == TRUE) %>% 
@@ -31,27 +34,25 @@ dfTrainPreProc1 <-
   select(-one_of(nzv$varname))
 dfOutcomes <- 
   dfTrainPreProc1 %>% 
-  select(c(id, Y1, Y2, Y3))
+  select(c(id,
+           PCB1_Total, PCB1_CondEmot, PCB1_DevHab, 
+           PCB2_Tot, 
+           PCB3_Total, PCB3_PCPonly, PCB3_Person, PCB3_Resource))
 dfTrainPreProc2 <- 
   dfTrainPreProc1 %>% 
-  select(-c(id, Y1, Y2, Y3))
+  select(-c(id,
+            PCB1_Total, PCB1_CondEmot, PCB1_DevHab, 
+            PCB2_Tot, 
+            PCB3_Total, PCB3_PCPonly, PCB3_Person, PCB3_Resource))
 preProc <-
   dfTrainPreProc2 %>% 
   preProcess(method = c("nzv", "corr", "knnImpute"), verbose = TRUE)
 preProc
-dfTrainPreProc3 <-  
-  predict(preProc, dfTrainPreProc2) %>% 
-  mutate(childAgeDichotomous = case_when(is.na(childAgeDichotomous) & childAge < 3 ~ 1,
-                                         is.na(childAgeDichotomous) & childAge >= 3 ~ 2,
-                                         TRUE ~ as.numeric(childAgeDichotomous))) %>% 
-  mutate(childAgeDichotomous = factor(childAgeDichotomous, 
-                                      levels = seq(2), 
-                                      labels = c("Under 3", "3 or older")))
+dfTrainPreProc3 <- predict(preProc, dfTrainPreProc2)
 dfTrainPreProc <- bind_cols(dfOutcomes, dfTrainPreProc3)
 message(sprintf("Number of complete cases after imputation = %d",
                 complete.cases(dfTrainPreProc) %>% sum()))
 save(dfTrainPreProc, dfValid, dfTrain, df, file = "data/processed/dataframes.RData")
-dfTrainPreProc %>% write.csv("data/processed/dfTrainPreProc.csv", row.names = FALSE)
 rm(dfTrainPreProc1, dfTrainPreProc2, dfTrainPreProc3)
 ```
 
