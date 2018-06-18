@@ -500,21 +500,29 @@ Train model over the tuning parameters.
 ## childAge                              0
 ```
 
-```{r PCB1_Total_Training-predict)
-dfTrainPred <- 
-  dfTrainPreProc %>% 
-  mutate(hat = predict(trainingModel, dfTrainPreProc, na.action = na.pass) %>% as.numeric())
-postResample(pred = dfTrainPred$hat, obs = dfTrainPred$PCB1_Total)
-cor(dfTrainPred %>% select(PCB2_Tot, hat), use = "complete.obs")
-dfTrainPred %>% 
-  ggplot() +
-  ggtitle(sprintf("Correlation = %.03f", cor(dfTrainPred %>% select(PCB1_Total, hat)) %>% .[1, 2])) +
-  aes(x = hat, y = PCB1_Total) +
-  geom_abline(slope = 1, intercept = 0) +
-  geom_smooth(method = "lm", formula = y ~ x - 1, color = rgb(0, 0, 1, 0.5), se = FALSE) +
-  geom_smooth(method = "lm", formula = y ~ x, color = rgb(1, 0, 0, 0.5), se = FALSE) +
-  geom_point(alpha = 1/2)
+
 ```
+##        RMSE    Rsquared         MAE 
+## 16.08180802  0.07281038 12.81580213
+```
+
+```
+##            PCB2_Tot        hat
+## PCB2_Tot 1.00000000 0.09767668
+## hat      0.09767668 1.00000000
+```
+
+```
+## Warning: Removed 1 rows containing non-finite values (stat_smooth).
+
+## Warning: Removed 1 rows containing non-finite values (stat_smooth).
+```
+
+```
+## Warning: Removed 1 rows containing missing values (geom_point).
+```
+
+![plot of chunk PCB1_Total_Training-predict](figures/PCB1_Total_Training-predict-1.png)
 
 Evaluate model on the validation sample.
 

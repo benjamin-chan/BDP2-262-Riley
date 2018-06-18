@@ -34,7 +34,7 @@ plot(trainingModel$finalModel)
 varImp(trainingModel)
 ```
 
-```{r PCB1_Total_Training-predict)
+```{r PCB1_Total_Training-predict}
 dfTrainPred <- 
   dfTrainPreProc %>% 
   mutate(hat = predict(trainingModel, dfTrainPreProc, na.action = na.pass) %>% as.numeric())
@@ -42,7 +42,7 @@ postResample(pred = dfTrainPred$hat, obs = dfTrainPred$PCB1_Total)
 cor(dfTrainPred %>% select(PCB2_Tot, hat), use = "complete.obs")
 dfTrainPred %>% 
   ggplot() +
-  ggtitle(sprintf("Correlation = %.03f", cor(dfTrainPred %>% select(PCB1_Total, hat)) %>% .[1, 2])) +
+  ggtitle(sprintf("Correlation = %.03f", cor(dfTrainPred %>% select(PCB1_Total, hat), use = "complete.obs") %>% .[1, 2])) +
   aes(x = hat, y = PCB1_Total) +
   geom_abline(slope = 1, intercept = 0) +
   geom_smooth(method = "lm", formula = y ~ x - 1, color = rgb(0, 0, 1, 0.5), se = FALSE) +
@@ -59,12 +59,12 @@ dfValidPred <-
   select(-one_of(nzv$varname)) %>%
   filter(complete.cases(.)) %>% 
   predict(preProc, .) %>% 
-  mutate(hat = predict(trainingModel, .) %>% as.numeric())
+  mutate(hat = predict(trainingModel, ., na.action = na.pass) %>% as.numeric())
 postResample(pred = dfValidPred$hat, obs = dfValidPred$PCB1_Total)
-cor(dfValidPred %>% select(PCB1_Total, hat))
+cor(dfValidPred %>% select(PCB1_Total, hat), use = "complete.obs")
 dfValidPred %>% 
   ggplot() +
-  ggtitle(sprintf("Correlation = %.03f", cor(dfValidPred %>% select(PCB1_Total, hat)) %>% .[1, 2])) +
+  ggtitle(sprintf("Correlation = %.03f", cor(dfValidPred %>% select(PCB1_Total, hat), use = "complete.obs") %>% .[1, 2])) +
   aes(x = hat, y = PCB1_Total) +
   geom_abline(slope = 1, intercept = 0) +
   geom_smooth(method = "lm", formula = y ~ x - 1, color = rgb(0, 0, 1, 0.5), se = FALSE) +
