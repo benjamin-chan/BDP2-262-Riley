@@ -1,6 +1,6 @@
 ---
 title: "Parent and Provider Perceptions of Behavioral Healthcare in Pediatric Primary Care (PI: Andrew Riley; BDP2-262)"
-date: "2018-06-15"
+date: "2018-06-18"
 author: Benjamin Chan (chanb@ohsu.edu)
 output:
   html_document:
@@ -503,9 +503,9 @@ Train model over the tuning parameters.
 ```{r PCB1_Total_Training-predict)
 dfTrainPred <- 
   dfTrainPreProc %>% 
-  mutate(hat = predict(trainingModel, dfTrainPreProc) %>% as.numeric())
+  mutate(hat = predict(trainingModel, dfTrainPreProc, na.action = na.pass) %>% as.numeric())
 postResample(pred = dfTrainPred$hat, obs = dfTrainPred$PCB1_Total)
-cor(dfTrainPred %>% select(PCB1_Total, hat))
+cor(dfTrainPred %>% select(PCB2_Tot, hat), use = "complete.obs")
 dfTrainPred %>% 
   ggplot() +
   ggtitle(sprintf("Correlation = %.03f", cor(dfTrainPred %>% select(PCB1_Total, hat)) %>% .[1, 2])) +
@@ -667,20 +667,27 @@ Train model over the tuning parameters.
 
 
 ```
-## Error in mutate_impl(.data, dots): Column `hat` must be length 273 (the number of rows) or one, not 271
+##       RMSE   Rsquared        MAE 
+## 4.52820018 0.07684678 3.43721192
 ```
 
 ```
-## Error in postResample(pred = dfTrainPred$hat, obs = dfTrainPred$PCB2_Tot): object 'dfTrainPred' not found
+##           PCB2_Tot       hat
+## PCB2_Tot 1.0000000 0.2772125
+## hat      0.2772125 1.0000000
 ```
 
 ```
-## Error in eval(lhs, parent, parent): object 'dfTrainPred' not found
+## Warning: Removed 1 rows containing non-finite values (stat_smooth).
+
+## Warning: Removed 1 rows containing non-finite values (stat_smooth).
 ```
 
 ```
-## Error in eval(lhs, parent, parent): object 'dfTrainPred' not found
+## Warning: Removed 1 rows containing missing values (geom_point).
 ```
+
+![plot of chunk PCB2_Tot_Training-predict](figures/PCB2_Tot_Training-predict-1.png)
 
 Evaluate model on the validation sample.
 
@@ -852,20 +859,17 @@ Train model over the tuning parameters.
 
 
 ```
-## Error in mutate_impl(.data, dots): Column `hat` must be length 273 (the number of rows) or one, not 271
+##      RMSE  Rsquared       MAE 
+## 10.752374  0.175924  8.627267
 ```
 
 ```
-## Error in postResample(pred = dfTrainPred$hat, obs = dfTrainPred$PCB3_Total): object 'dfTrainPred' not found
+##           PCB2_Tot       hat
+## PCB2_Tot 1.0000000 0.1812032
+## hat      0.1812032 1.0000000
 ```
 
-```
-## Error in eval(lhs, parent, parent): object 'dfTrainPred' not found
-```
-
-```
-## Error in eval(lhs, parent, parent): object 'dfTrainPred' not found
-```
+![plot of chunk PCB3_Total_Training-predict](figures/PCB3_Total_Training-predict-1.png)
 
 Evaluate model on the validation sample.
 
