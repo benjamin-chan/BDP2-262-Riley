@@ -12,7 +12,7 @@ cl <- makeCluster(cores)
 registerDoParallel(cl)
 trainingModel <-
   dfTrainPreProc %>% 
-  select(-c(id, PCB1_Total, PCB1_CondEmo, PCB1_DevHab, PCB3_Total, PCB3_PCPonly, PCB3_Person, PCB3_Resource)) %>% 
+  select(-c(id, PCB1_Total, PCB1_CondEmot, PCB1_DevHab, PCB3_Total, PCB3_PCPonly, PCB3_Person, PCB3_Resource)) %>% 
   train(PCB2_Tot ~ ., data = ., method = method, trControl = ctrl, tuneGrid = grid, na.action = na.exclude)
 stopCluster(cl)
 trainingModel
@@ -37,7 +37,7 @@ varImp(trainingModel)
 ```{r PCB2_Tot_Training-predict}
 dfTrainPred <- 
   dfTrainPreProc %>% 
-  mutate(hat = predict(trainingModel, dfTrainPreProc) %>% as.numeric())
+  mutate(hat = predict(trainingModel, dfTrainPreProc, na.action = na.exclude) %>% as.numeric())
 postResample(pred = dfTrainPred$hat, obs = dfTrainPred$PCB2_Tot)
 cor(dfTrainPred %>% select(PCB2_Tot, hat))
 dfTrainPred %>% 
@@ -55,7 +55,7 @@ Evaluate model on the validation sample.
 ```{r PCB2_Tot_Validation-predict}
 dfValidPred <- 
   dfValid %>% 
-  select(-c(id, PCB1_Total, PCB1_CondEmo, PCB1_DevHab, PCB3_Total, PCB3_PCPonly, PCB3_Person, PCB3_Resource)) %>% 
+  select(-c(id, PCB1_Total, PCB1_CondEmot, PCB1_DevHab, PCB3_Total, PCB3_PCPonly, PCB3_Person, PCB3_Resource)) %>% 
   select(-one_of(nzv$varname)) %>%
   filter(complete.cases(.)) %>% 
   predict(preProc, .) %>% 

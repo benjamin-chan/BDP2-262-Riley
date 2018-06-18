@@ -1,6 +1,6 @@
 ---
 title: "Parent and Provider Perceptions of Behavioral Healthcare in Pediatric Primary Care (PI: Andrew Riley; BDP2-262)"
-date: "2018-06-14"
+date: "2018-06-15"
 author: Benjamin Chan (chanb@ohsu.edu)
 output:
   html_document:
@@ -21,93 +21,104 @@ output:
 Map new names to variables.
 
 
-|oldnames                       |newnames                       |
-|:------------------------------|:------------------------------|
-|record_id                      |id                             |
-|eng_span                       |languageSurvey                 |
-|children_totv_1                |totalChildren                  |
-|oldest_middle_youngest         |birthOrder                     |
-|child_age_years                |childAge                       |
-|Age_Dichot                     |childAgeDichotomous            |
-|child_sexv_1                   |childSex                       |
-|child_ethnicity                |childEthnicity                 |
-|child_racev_1___1              |childRaceWhite                 |
-|child_racev_1___2              |childRaceAsian                 |
-|child_racev_1___3              |childRaceAfrAm                 |
-|child_racev_1___4              |childRaceAIAN                  |
-|child_racev_1___5              |childRaceNHPI                  |
-|child_racev_1___6              |childRaceOther                 |
-|child_racev_1___7              |childRaceNoResp                |
-|visit_typev_1                  |visitType                      |
-|related_child                  |childRelationship              |
-|gender                         |parentGender                   |
-|parent_sexv_1                  |parentSex                      |
-|parent_agev_1                  |parentAge                      |
-|parent_ethnicity               |parentEthnicity                |
-|parent_race___1                |parentRaceWhite                |
-|parent_race___2                |parentRaceAsian                |
-|parent_race___3                |parentRaceAfrAm                |
-|parent_race___4                |parentRaceAIAN                 |
-|parent_race___5                |parentRaceNHPI                 |
-|parent_race___6                |parentRaceOther                |
-|parent_race___7                |parentRaceNoResp               |
-|marital_status                 |parentMaritalStatus            |
-|parenting_situationv_1         |parentSituation                |
-|zipcode                        |zipcode                        |
-|community_type                 |community                      |
-|distance                       |distance                       |
-|parent_educationv_1            |parentEducation                |
-|annual_income                  |income                         |
-|internet                       |internet                       |
-|ECBI_intensity_raw_score       |ECBI_intensity_raw_score       |
-|ECBI_intensity_T_score         |ECBI_intensity_T_score         |
-|ECBI_intensity_clinical_cutoff |ECBI_intensity_clinical_cutoff |
-|ECBI_problem_raw_score         |ECBI_problem_raw_score         |
-|ECBI_problem_T_score           |ECBI_problem_T_score           |
-|ECBI_problem_clinical_cutoff   |ECBI_problem_clinical_cutoff   |
-|ECBI_OPP_Tot                   |ECBI_OPP_Tot                   |
-|ECBI_Inatt_Tot                 |ECBI_Inatt_Tot                 |
-|ECBI_Cond_Tot                  |ECBI_Cond_Tot                  |
-|MAPS_PP                        |MAPS_PP                        |
-|MAPS_PR                        |MAPS_PR                        |
-|MAPS_WM                        |MAPS_WM                        |
-|MAPS_SP                        |MAPS_SP                        |
-|MAPS_HS                        |MAPS_HS                        |
-|MAPS_LC                        |MAPS_LC                        |
-|MAPS_PC                        |MAPS_PC                        |
-|MAPS_POS                       |MAPS_POS                       |
-|MAPS_NEG                       |MAPS_NEG                       |
-|SEPTI_nurturance               |SEPTI_nurturance               |
-|SEPTI_n_clinical_cutoff        |SEPTI_n_clinical_cutoff        |
-|SEPTI_discipline               |SEPTI_discipline               |
-|SEPTI_d_clinical_cutoff        |SEPTI_d_clinical_cutoff        |
-|SEPTI_play                     |SEPTI_play                     |
-|SEPTI_p_clinical_cutoff        |SEPTI_p_clinical_cutoff        |
-|SEPTI_routine                  |SEPTI_routine                  |
-|SEPTI_r_clinical_cutoff        |SEPTI_r_clinical_cutoff        |
-|SEPTI_total                    |SEPTI_total                    |
-|SEPTI_total_clin_cutoff        |SEPTI_total_clin_cutoff        |
-|Y1                             |Y1                             |
-|Y2                             |Y2                             |
-|Y3                             |Y3                             |
+|oldnames                        |newnames                       |
+|:-------------------------------|:------------------------------|
+|record_id                       |id                             |
+|eng_span                        |languageSurvey                 |
+|children_totv_1                 |totalChildren                  |
+|oldest_middle_youngest          |birthOrder                     |
+|child_sexv_1                    |childSex                       |
+|child_age_years                 |childAge                       |
+|child_ethnicity                 |childEthnicity                 |
+|child_racev_1___1               |childRaceWhite                 |
+|child_racev_1___2               |childRaceAsian                 |
+|child_racev_1___3               |childRaceAfrAm                 |
+|child_racev_1___4               |childRaceAIAN                  |
+|child_racev_1___5               |childRaceNHPI                  |
+|child_racev_1___6               |childRaceOther                 |
+|child_racev_1___7               |childRaceNoResp                |
+|related_child                   |childRelationship              |
+|gender                          |parentGender                   |
+|parent_sexv_1                   |parentSex                      |
+|parent_agev_1                   |parentAge                      |
+|parent_ethnicity                |parentEthnicity                |
+|parent_race___1                 |parentRaceWhite                |
+|parent_race___2                 |parentRaceAsian                |
+|parent_race___3                 |parentRaceAfrAm                |
+|parent_race___4                 |parentRaceAIAN                 |
+|parent_race___5                 |parentRaceNHPI                 |
+|parent_race___6                 |parentRaceOther                |
+|parent_race___7                 |parentRaceNoResp               |
+|marital_status                  |parentMaritalStatus            |
+|parenting_situationv_1          |parentSituation                |
+|number_parents                  |parentsNumber                  |
+|parent_to_child_ratio           |parentChildRatio               |
+|zipcode_classification_combined |zipcodeClass                   |
+|zipcode                         |zipcode                        |
+|community_type                  |community                      |
+|distance                        |distance                       |
+|parent_educationv_1             |parentEducation                |
+|annual_income                   |income                         |
+|internet                        |internet                       |
+|ECBI_intensity_raw_score        |ECBI_intensity_raw_score       |
+|ECBI_intensity_T_score          |ECBI_intensity_T_score         |
+|ECBI_intensity_clinical_cutoff  |ECBI_intensity_clinical_cutoff |
+|ECBI_problem_raw_score          |ECBI_problem_raw_score         |
+|ECBI_problem_T_score            |ECBI_problem_T_score           |
+|ECBI_problem_clinical_cutoff    |ECBI_problem_clinical_cutoff   |
+|ECBI_Opp                        |ECBI_Opp                       |
+|ECBI_Inatt                      |ECBI_Inatt                     |
+|ECBI_Cond                       |ECBI_Cond                      |
+|MAPS_PP                         |MAPS_PP                        |
+|MAPS_PR                         |MAPS_PR                        |
+|MAPS_WM                         |MAPS_WM                        |
+|MAPS_SP                         |MAPS_SP                        |
+|MAPS_HS                         |MAPS_HS                        |
+|MAPS_LC                         |MAPS_LC                        |
+|MAPS_PC                         |MAPS_PC                        |
+|MAPS_POS                        |MAPS_POS                       |
+|MAPS_NEG                        |MAPS_NEG                       |
+|SEPTI_nurturance                |SEPTI_nurturance               |
+|SEPTI_n_clinical_cutoff         |SEPTI_n_clinical_cutoff        |
+|SEPTI_discipline                |SEPTI_discipline               |
+|SEPTI_d_clinical_cutoff         |SEPTI_d_clinical_cutoff        |
+|SEPTI_play                      |SEPTI_play                     |
+|SEPTI_p_clinical_cutoff         |SEPTI_p_clinical_cutoff        |
+|SEPTI_routine                   |SEPTI_routine                  |
+|SEPTI_r_clinical_cutoff         |SEPTI_r_clinical_cutoff        |
+|SEPTI_total                     |SEPTI_total                    |
+|SEPTI_total_clin_cutoff         |SEPTI_total_clin_cutoff        |
+|PCB1_Total                      |PCB1_Total                     |
+|PCB1_CondEmot                   |PCB1_CondEmot                  |
+|PCB1_DevHab                     |PCB1_DevHab                    |
+|PCB2_Tot                        |PCB2_Tot                       |
+|PCB3_Total                      |PCB3_Total                     |
+|PBC3_PCPonly                    |PCB3_PCPonly                   |
+|PCB3_Person                     |PCB3_Person                    |
+|PCB3_Resource                   |PCB3_Resource                  |
+
+
+
+
 
 
 
 Build analysis data set.
-Exclude if missing any dependent variable, `Y1`, `Y2`, `Y3`.
+Exclude if missing any dependent variable, `PCB1_Total`, `PCB2_Tot`, `PCB3_Total`.
+Exclude rows if there are a high proportion of row-wise `NA`.
+
+
+```
+##    PCB1_Total       PCB2_Tot       PCB3_Total  
+##  Min.   :18.00   Min.   : 6.00   Min.   :15.0  
+##  1st Qu.:58.00   1st Qu.:22.00   1st Qu.:39.0  
+##  Median :71.00   Median :25.00   Median :48.0  
+##  Mean   :67.89   Mean   :24.54   Mean   :47.6  
+##  3rd Qu.:81.00   3rd Qu.:28.00   3rd Qu.:57.0  
+##  Max.   :90.00   Max.   :30.00   Max.   :75.0
+```
 
 ![figures/flowChart.png](figures/flowChart.png)
-
-
-```
-##        Y1              Y2              Y3       
-##  Min.   :19.00   Min.   : 6.00   Min.   :15.00  
-##  1st Qu.:60.00   1st Qu.:22.00   1st Qu.:39.00  
-##  Median :75.00   Median :25.00   Median :48.00  
-##  Mean   :71.34   Mean   :24.53   Mean   :47.56  
-##  3rd Qu.:85.00   3rd Qu.:28.00   3rd Qu.:57.00  
-##  Max.   :95.00   Max.   :30.00   Max.   :75.00
-```
 
 
 
@@ -115,7 +126,7 @@ Exclude if missing any dependent variable, `Y1`, `Y2`, `Y3`.
 
 # Preprocess data
 
-Initial preprocesssing that needs to be done that is common to `Y1`, `Y2`, and `Y3`.
+Initial preprocesssing that needs to be done that is common to `PCB1_Total`, `PCB2_Tot`, and `PCB3_Total`.
 
 Split data set into 70:30 training:validation samples.
 
@@ -138,13 +149,16 @@ message(sprintf("Number of complete cases before imputation = %d",
 ```
 
 ```
-## Number of complete cases before imputation = 247
+## Number of complete cases before imputation = 245
 ```
 
 ```r
 nzv <- 
   dfTrain %>% 
-  select(-c(id, Y1, Y2, Y3)) %>% 
+  select(-c(id, 
+            PCB1_Total, PCB1_CondEmot, PCB1_DevHab, 
+            PCB2_Tot, 
+            PCB3_Total, PCB3_PCPonly, PCB3_Person, PCB3_Resource)) %>% 
   nearZeroVar(names = TRUE, saveMetric = TRUE) %>%
   mutate(varname = row.names(.)) %>% 
   filter(nzv == TRUE) %>% 
@@ -156,16 +170,14 @@ nzv %>% kable()
 
 |varname         | freqRatio| percentUnique|zeroVar |nzv  |
 |:---------------|---------:|-------------:|:-------|:----|
-|languageSurvey  |  53.80000|      0.729927|FALSE   |TRUE |
-|childRaceAfrAm  |  26.40000|      0.729927|FALSE   |TRUE |
-|childRaceAIAN   |  38.14286|      0.729927|FALSE   |TRUE |
-|childRaceNHPI   |  44.66667|      0.729927|FALSE   |TRUE |
-|childRaceOther  |  21.83333|      0.729927|FALSE   |TRUE |
-|parentRaceAfrAm |  44.66667|      0.729927|FALSE   |TRUE |
-|parentRaceAIAN  |  29.44444|      0.729927|FALSE   |TRUE |
-|parentRaceNHPI  |  44.66667|      0.729927|FALSE   |TRUE |
-|parentRaceOther |  20.07692|      0.729927|FALSE   |TRUE |
-|internet        |  33.25000|      0.729927|FALSE   |TRUE |
+|languageSurvey  |  67.25000|     0.7326007|FALSE   |TRUE |
+|childRaceAfrAm  |  23.72727|     0.7326007|FALSE   |TRUE |
+|childRaceAIAN   |  33.00000|     0.7326007|FALSE   |TRUE |
+|childRaceNHPI   |  44.33333|     0.7326007|FALSE   |TRUE |
+|parentRaceAfrAm |  37.85714|     0.7326007|FALSE   |TRUE |
+|parentRaceAIAN  |  37.85714|     0.7326007|FALSE   |TRUE |
+|parentRaceNHPI  |  44.33333|     0.7326007|FALSE   |TRUE |
+|internet        |  44.33333|     0.7326007|FALSE   |TRUE |
 
 ```r
 dfTrainPreProc1 <-
@@ -173,10 +185,16 @@ dfTrainPreProc1 <-
   select(-one_of(nzv$varname))
 dfOutcomes <- 
   dfTrainPreProc1 %>% 
-  select(c(id, Y1, Y2, Y3))
+  select(c(id,
+           PCB1_Total, PCB1_CondEmot, PCB1_DevHab, 
+           PCB2_Tot, 
+           PCB3_Total, PCB3_PCPonly, PCB3_Person, PCB3_Resource))
 dfTrainPreProc2 <- 
   dfTrainPreProc1 %>% 
-  select(-c(id, Y1, Y2, Y3))
+  select(-c(id,
+            PCB1_Total, PCB1_CondEmot, PCB1_DevHab, 
+            PCB2_Tot, 
+            PCB3_Total, PCB3_PCPonly, PCB3_Person, PCB3_Resource))
 preProc <-
   dfTrainPreProc2 %>% 
   preProcess(method = c("nzv", "corr", "knnImpute"), verbose = TRUE)
@@ -184,8 +202,8 @@ preProc <-
 
 ```
 ##   2 highly correlated predictors were removed.
-## Calculating 30 means for centering
-## Calculating 30 standard deviations for scaling
+## Calculating 32 means for centering
+## Calculating 32 standard deviations for scaling
 ```
 
 ```r
@@ -193,37 +211,29 @@ preProc
 ```
 
 ```
-## Created from 247 samples and 53 variables
+## Created from 245 samples and 56 variables
 ## 
 ## Pre-processing:
-##   - centered (30)
-##   - ignored (21)
-##   - 5 nearest neighbor imputation (30)
+##   - centered (32)
+##   - ignored (22)
+##   - 5 nearest neighbor imputation (32)
 ##   - removed (2)
-##   - scaled (30)
+##   - scaled (32)
 ```
 
 ```r
-dfTrainPreProc3 <-  
-  predict(preProc, dfTrainPreProc2) %>% 
-  mutate(childAgeDichotomous = case_when(is.na(childAgeDichotomous) & childAge < 3 ~ 1,
-                                         is.na(childAgeDichotomous) & childAge >= 3 ~ 2,
-                                         TRUE ~ as.numeric(childAgeDichotomous))) %>% 
-  mutate(childAgeDichotomous = factor(childAgeDichotomous, 
-                                      levels = seq(2), 
-                                      labels = c("Under 3", "3 or older")))
+dfTrainPreProc3 <- predict(preProc, dfTrainPreProc2)
 dfTrainPreProc <- bind_cols(dfOutcomes, dfTrainPreProc3)
 message(sprintf("Number of complete cases after imputation = %d",
                 complete.cases(dfTrainPreProc) %>% sum()))
 ```
 
 ```
-## Number of complete cases after imputation = 274
+## Number of complete cases after imputation = 271
 ```
 
 ```r
 save(dfTrainPreProc, dfValid, dfTrain, df, file = "data/processed/dataframes.RData")
-dfTrainPreProc %>% write.csv("data/processed/dfTrainPreProc.csv", row.names = FALSE)
 rm(dfTrainPreProc1, dfTrainPreProc2, dfTrainPreProc3)
 ```
 
@@ -258,6 +268,35 @@ library(earth)
 ```
 
 ```r
+citation("earth")
+```
+
+```
+## 
+## To cite package 'earth' in publications use:
+## 
+##   Stephen Milborrow. Derived from mda:mars by Trevor Hastie and
+##   Rob Tibshirani. Uses Alan Miller's Fortran utilities with Thomas
+##   Lumley's leaps wrapper. (2018). earth: Multivariate Adaptive
+##   Regression Splines. R package version 4.6.2.
+##   https://CRAN.R-project.org/package=earth
+## 
+## A BibTeX entry for LaTeX users is
+## 
+##   @Manual{,
+##     title = {earth: Multivariate Adaptive Regression Splines},
+##     author = {Stephen Milborrow. Derived from mda:mars by Trevor Hastie and Rob Tibshirani. Uses Alan Miller's Fortran utilities with Thomas Lumley's leaps wrapper.},
+##     year = {2018},
+##     note = {R package version 4.6.2},
+##     url = {https://CRAN.R-project.org/package=earth},
+##   }
+## 
+## ATTENTION: This citation information has been auto-generated from
+## the package DESCRIPTION file and may need manual editing, see
+## 'help("citation")'.
+```
+
+```r
 method <- "earth"
 modelLookup(method) %>% kable()
 ```
@@ -271,7 +310,7 @@ modelLookup(method) %>% kable()
 
 ```r
 grid <- expand.grid(nprune = c(seq(2, 8, 1), seq(10, 50, 10)),
-                    degree = seq(3))
+                    degree = seq(4))
 grid %>% kable()
 ```
 
@@ -315,41 +354,27 @@ grid %>% kable()
 |     30|      3|
 |     40|      3|
 |     50|      3|
-
-```r
-citation(method)
-```
-
-```
-## 
-## To cite package 'earth' in publications use:
-## 
-##   Stephen Milborrow. Derived from mda:mars by Trevor Hastie and
-##   Rob Tibshirani. Uses Alan Miller's Fortran utilities with Thomas
-##   Lumley's leaps wrapper. (2018). earth: Multivariate Adaptive
-##   Regression Splines. R package version 4.6.2.
-##   https://CRAN.R-project.org/package=earth
-## 
-## A BibTeX entry for LaTeX users is
-## 
-##   @Manual{,
-##     title = {earth: Multivariate Adaptive Regression Splines},
-##     author = {Stephen Milborrow. Derived from mda:mars by Trevor Hastie and Rob Tibshirani. Uses Alan Miller's Fortran utilities with Thomas Lumley's leaps wrapper.},
-##     year = {2018},
-##     note = {R package version 4.6.2},
-##     url = {https://CRAN.R-project.org/package=earth},
-##   }
-## 
-## ATTENTION: This citation information has been auto-generated from
-## the package DESCRIPTION file and may need manual editing, see
-## 'help("citation")'.
-```
+|      2|      4|
+|      3|      4|
+|      4|      4|
+|      5|      4|
+|      6|      4|
+|      7|      4|
+|      8|      4|
+|     10|      4|
+|     20|      4|
+|     30|      4|
+|     40|      4|
+|     50|      4|
 
 
 
-# Model 1
+# Model PCB1
 
-Prediction model for `Y1`.
+
+## PCB1 Total
+
+Prediction model for `PCB1`.
 
 Train model over the tuning parameters.
 
@@ -357,123 +382,134 @@ Train model over the tuning parameters.
 ```
 ## Multivariate Adaptive Regression Spline 
 ## 
-## 274 samples
-##  51 predictor
+## 273 samples
+##  54 predictor
 ## 
 ## No pre-processing
 ## Resampling: Leave-One-Out Cross-Validation 
-## Summary of sample sizes: 273, 273, 273, 273, 273, 273, ... 
+## Summary of sample sizes: 270, 270, 270, 270, 270, 270, ... 
 ## Resampling results across tuning parameters:
 ## 
 ##   nprune  degree  RMSE      Rsquared     MAE     
-##    2      1       17.01071  0.066389559  13.49196
-##    2      2       17.11130  0.056746018  13.52673
-##    2      3       17.94193  0.001591162  14.37905
-##    3      1       17.00095  0.071158964  13.44421
-##    3      2       19.27878  0.011430008  14.31089
-##    3      3       17.54470  0.022128835  13.95639
-##    4      1       17.09116  0.068487315  13.49252
-##    4      2       19.50641  0.007266362  14.68732
-##    4      3       17.87813  0.019773362  14.25694
-##    5      1       17.65130  0.034266093  13.94014
-##    5      2       20.30220  0.004463746  15.12980
-##    5      3       17.93490  0.020855849  14.23640
-##    6      1       17.53932  0.043273329  13.96819
-##    6      2       20.52897  0.003907908  15.32919
-##    6      3       18.13757  0.019411830  14.47820
-##    7      1       17.37497  0.060441465  13.59799
-##    7      2       20.65269  0.007363705  15.50435
-##    7      3       18.14849  0.022799821  14.53092
-##    8      1       17.82241  0.049180349  13.87009
-##    8      2       20.61689  0.009136240  15.44326
-##    8      3       18.18823  0.026907086  14.59668
-##   10      1       18.29080  0.029023368  14.33433
-##   10      2       20.37193  0.023463104  15.11353
-##   10      3       18.42004  0.028206489  14.70860
-##   20      1       19.22172  0.033087034  14.89624
-##   20      2       20.36811  0.059220540  14.96274
-##   20      3       19.20482  0.045929487  14.83053
-##   30      1       19.50963  0.039510878  15.04542
-##   30      2       20.65181  0.062933831  15.38412
-##   30      3       23.71532  0.041514668  16.27041
-##   40      1       19.56067  0.038722960  15.08410
-##   40      2       20.60930  0.066798344  15.42893
-##   40      3       31.63776  0.035199160  17.91783
-##   50      1       19.56067  0.038722960  15.08410
-##   50      2       20.61180  0.066644590  15.43571
-##   50      3       32.45119  0.031278783  18.89169
+##    2      1       16.20067  0.062699175  12.90537
+##    2      2       16.20067  0.062699175  12.90537
+##    2      3       16.68682  0.025391386  13.29963
+##    2      4       16.60798  0.026109805  13.32090
+##    3      1       16.35646  0.052370250  13.03570
+##    3      2       16.41255  0.051857148  13.08261
+##    3      3       17.25806  0.012134139  13.74201
+##    3      4       16.81878  0.034032785  13.49541
+##    4      1       16.63407  0.040927334  13.45923
+##    4      2       16.50871  0.049713615  13.14638
+##    4      3       17.20046  0.020130745  13.57525
+##    4      4       17.02655  0.030055598  13.51229
+##    5      1       16.84651  0.035532633  13.72202
+##    5      2       16.52789  0.052325422  13.03720
+##    5      3       17.70009  0.010562900  13.95441
+##    5      4       17.66054  0.015338781  13.82202
+##    6      1       16.97112  0.032192378  13.74024
+##    6      2       16.61792  0.059103469  13.14951
+##    6      3       17.70347  0.019170781  13.76193
+##    6      4       17.66695  0.015307940  13.74994
+##    7      1       17.05672  0.031988939  13.79038
+##    7      2       16.65343  0.066988027  12.99330
+##    7      3       18.37568  0.011499457  14.15330
+##    7      4       17.79673  0.017845614  13.69375
+##    8      1       17.27535  0.024627816  13.87490
+##    8      2       17.18170  0.038961373  13.59131
+##    8      3       18.37145  0.018938874  14.14801
+##    8      4       18.21069  0.007695410  14.10425
+##   10      1       18.21591  0.009890400  14.30153
+##   10      2       17.66397  0.037331969  13.93320
+##   10      3       18.61372  0.016756680  14.24491
+##   10      4       19.52552  0.003453360  14.81309
+##   20      1       18.82317  0.012777998  14.67125
+##   20      2       18.87256  0.050178782  14.78020
+##   20      3       19.15453  0.045283035  14.51852
+##   20      4       23.33419  0.013992489  16.93958
+##   30      1       19.23424  0.007772567  14.99711
+##   30      2       20.10002  0.046678612  15.83050
+##   30      3       21.31101  0.041161677  16.07388
+##   30      4       33.52405  0.014390996  19.14120
+##   40      1       19.36410  0.006820354  15.00978
+##   40      2       20.15331  0.049140455  16.04780
+##   40      3       23.70510  0.046843537  16.83290
+##   40      4       35.30708  0.011023769  19.97068
+##   50      1       19.42693  0.006053500  15.05409
+##   50      2       20.15859  0.048946745  16.05281
+##   50      3       23.74034  0.048125613  16.89629
+##   50      4       36.16640  0.008952167  20.66012
 ## 
 ## RMSE was used to select the optimal model using the smallest value.
-## The final values used for the model were nprune = 3 and degree = 1.
+## The final values used for the model were nprune = 2 and degree = 1.
 ```
 
-![plot of chunk Y1Training](figures/Y1Training-1.png)
+![plot of chunk PCB1_Total_Training](figures/PCB1_Total_Training-1.png)
 
 
 ```
-## Selected 3 of 122 terms, and 2 of 163 predictors
-## Termination condition: Reached nk 201
-## Importance: childRaceWhite, SEPTI_total, totalChildren-unused, ...
-## Number of terms at each degree of interaction: 1 2 (additive model)
-## GCV 285.8836    RSS 75499.36    GRSq 0.0838927    RSq 0.1105417
+## Selected 2 of 120 terms, and 1 of 161 predictors
+## Termination condition: GRSq -10 at 120 terms
+## Importance: parentRaceWhite1, totalChildren-unused, ...
+## Number of terms at each degree of interaction: 1 1 (additive model)
+## GCV 264.8591    RSS 70196.46    GRSq 0.06059551    RSq 0.07446106
 ```
 
 ```
-## Call: earth(x=matrix[274,163], y=c(77,79,80,40,7...), keepxy=TRUE,
-##             degree=1, nprune=3)
+## Call: earth(x=matrix[271,161], y=c(73,77,76,38,7...), keepxy=TRUE,
+##             degree=1, nprune=2)
 ## 
-##                          coefficients
-## (Intercept)                 75.972994
-## childRaceWhite             -11.755010
-## h(SEPTI_total- -1.22401)     3.583336
+##                  coefficients
+## (Intercept)          74.22368
+## parentRaceWhite1    -10.16215
 ## 
-## Selected 3 of 122 terms, and 2 of 163 predictors
-## Termination condition: Reached nk 201
-## Importance: childRaceWhite, SEPTI_total, totalChildren-unused, ...
-## Number of terms at each degree of interaction: 1 2 (additive model)
-## GCV 285.8836    RSS 75499.36    GRSq 0.0838927    RSq 0.1105417
+## Selected 2 of 120 terms, and 1 of 161 predictors
+## Termination condition: GRSq -10 at 120 terms
+## Importance: parentRaceWhite1, totalChildren-unused, ...
+## Number of terms at each degree of interaction: 1 1 (additive model)
+## GCV 264.8591    RSS 70196.46    GRSq 0.06059551    RSq 0.07446106
 ```
 
-![plot of chunk Y1Training-finalModel](figures/Y1Training-finalModel-1.png)
+![plot of chunk PCB1_Total_Training-finalModel](figures/PCB1_Total_Training-finalModel-1.png)
 
 ```
 ## earth variable importance
 ## 
-##   only 20 most important variables shown (out of 163)
+##   only 20 most important variables shown (out of 161)
 ## 
-##                                            Overall
-## childRaceWhite                              100.00
-## SEPTI_total                                  48.52
-## zipcode97232                                  0.00
-## zipcode97203                                  0.00
-## SEPTI_n_clinical_cutoff                       0.00
-## zipcode97759                                  0.00
-## visitTypeBehavioralordevelopmentalconcern     0.00
-## zipcode97266                                  0.00
-## parentRaceWhite                               0.00
-## zipcode97007                                  0.00
-## parentGenderPrefernottorespond                0.00
-## parentMaritalStatusRemarried                  0.00
-## zipcode97209                                  0.00
-## zipcode97753                                  0.00
-## parentMaritalStatusSeparated                  0.00
-## zipcode98685                                  0.00
-## parentMaritalStatusDivorced                   0.00
-## zipcode97140                                  0.00
-## parentEducationGraduate/professionalschool    0.00
-## zipcode97220                                  0.00
+##                                 Overall
+## parentRaceWhite1                    100
+## zipcode97215                          0
+## ECBI_intensity_T_score                0
+## MAPS_PR                               0
+## income$80,000-$119,999                0
+## parentMaritalStatusRemarried          0
+## zipcode97267                          0
+## zipcode97027                          0
+## parentMaritalStatusNevermarried       0
+## MAPS_SP                               0
+## zipcode97702                          0
+## birthOrderMiddle                      0
+## zipcode97203                          0
+## zipcode97086                          0
+## zipcode97210                          0
+## parentRaceNoResp1                     0
+## childRelationshipOther                0
+## zipcode97757                          0
+## ECBI_Opp                              0
+## childAge                              0
 ```
 
-```{r Y1Training-predict)
+```{r PCB1_Total_Training-predict)
 dfTrainPred <- 
   dfTrainPreProc %>% 
   mutate(hat = predict(trainingModel, dfTrainPreProc) %>% as.numeric())
-postResample(pred = dfTrainPred$hat, obs = dfTrainPred$Y1)
-cor(dfTrainPred %>% select(Y1, hat))
+postResample(pred = dfTrainPred$hat, obs = dfTrainPred$PCB1_Total)
+cor(dfTrainPred %>% select(PCB1_Total, hat))
 dfTrainPred %>% 
   ggplot() +
-  ggtitle(sprintf("Correlation = %.03f", cor(dfTrainPred %>% select(Y1, hat)) %>% .[1, 2])) +
-  aes(x = hat, y = Y1) +
+  ggtitle(sprintf("Correlation = %.03f", cor(dfTrainPred %>% select(PCB1_Total, hat)) %>% .[1, 2])) +
+  aes(x = hat, y = PCB1_Total) +
   geom_abline(slope = 1, intercept = 0) +
   geom_smooth(method = "lm", formula = y ~ x - 1, color = rgb(0, 0, 1, 0.5), se = FALSE) +
   geom_smooth(method = "lm", formula = y ~ x, color = rgb(1, 0, 0, 0.5), se = FALSE) +
@@ -485,22 +521,25 @@ Evaluate model on the validation sample.
 
 ```
 ##        RMSE    Rsquared         MAE 
-## 17.19504421  0.04047677 13.71400070
+## 15.70888010  0.03426741 12.44589271
 ```
 
 ```
-##            Y1       hat
-## Y1  1.0000000 0.2011884
-## hat 0.2011884 1.0000000
+##            PCB1_Total       hat
+## PCB1_Total  1.0000000 0.1851146
+## hat         0.1851146 1.0000000
 ```
 
-![plot of chunk Y1Validation-predict](figures/Y1Validation-predict-1.png)
+![plot of chunk PCB1_Total_Validation-predict](figures/PCB1_Total_Validation-predict-1.png)
 
 
 
-# Model 2
+# Model PCB2
 
-Prediction model for `Y2`.
+
+## Total PCB2
+
+Prediction model for `PCB2_Total`.
 
 Train model over the tuning parameters.
 
@@ -508,149 +547,165 @@ Train model over the tuning parameters.
 ```
 ## Multivariate Adaptive Regression Spline 
 ## 
-## 274 samples
-##  51 predictor
+## 273 samples
+##  54 predictor
 ## 
 ## No pre-processing
 ## Resampling: Leave-One-Out Cross-Validation 
-## Summary of sample sizes: 273, 273, 273, 273, 273, 273, ... 
+## Summary of sample sizes: 270, 270, 270, 270, 270, 270, ... 
 ## Resampling results across tuning parameters:
 ## 
 ##   nprune  degree  RMSE      Rsquared      MAE     
-##    2      1       4.368384  3.797850e-02  3.306652
-##    2      2       4.480751  1.682845e-03  3.411642
-##    2      3       4.376631  3.644362e-02  3.329237
-##    3      1       4.506589  1.108744e-02  3.375671
-##    3      2       4.680459  1.002439e-02  3.541668
-##    3      3       4.430991  2.652310e-02  3.344351
-##    4      1       4.365685  5.225885e-02  3.303962
-##    4      2       4.634167  9.892086e-05  3.517387
-##    4      3       4.689664  1.777289e-02  3.461826
-##    5      1       4.246140  9.749025e-02  3.179190
-##    5      2       4.619831  7.491875e-03  3.418386
-##    5      3       4.690180  2.211782e-02  3.442098
-##    6      1       4.290732  8.321978e-02  3.199407
-##    6      2       4.720549  5.484975e-03  3.492137
-##    6      3       4.713808  2.333858e-02  3.386673
-##    7      1       4.299308  8.254588e-02  3.196060
-##    7      2       5.004758  1.173854e-03  3.685601
-##    7      3       4.806895  1.428249e-02  3.461804
-##    8      1       4.314136  8.849103e-02  3.256080
-##    8      2       5.171066  2.526670e-03  3.690156
-##    8      3       5.588508  3.433394e-03  3.661685
-##   10      1       4.387356  7.918000e-02  3.273834
-##   10      2       5.239252  3.670754e-03  3.762855
-##   10      3       5.865765  2.699826e-03  3.795237
-##   20      1       4.683530  4.209701e-02  3.503013
-##   20      2       7.209287  1.414714e-02  4.200088
-##   20      3       7.841644  1.074778e-02  4.357567
-##   30      1       4.796316  3.628903e-02  3.601891
-##   30      2       7.455225  1.543877e-02  4.306579
-##   30      3       8.785494  1.068305e-02  4.822067
-##   40      1       4.788828  3.629807e-02  3.619974
-##   40      2       7.496369  1.488179e-02  4.342358
-##   40      3       8.768120  7.755144e-03  5.086804
-##   50      1       4.787092  3.646535e-02  3.618447
-##   50      2       7.496439  1.487033e-02  4.343411
-##   50      3       8.780179  7.480996e-03  5.127157
+##    2      1       4.738926  0.8475635985  3.557317
+##    2      2       4.765900  0.0035392603  3.574807
+##    2      3       4.723706  0.0071082414  3.522137
+##    2      4       4.720958  0.0047245785  3.521926
+##    3      1       5.061439  0.0655361908  3.796143
+##    3      2       4.800874  0.0028432392  3.609067
+##    3      3       4.687675  0.0280944209  3.515861
+##    3      4       4.789969  0.0036261228  3.633382
+##    4      1       4.964319  0.0099528456  3.628885
+##    4      2       4.709539  0.0312694189  3.516033
+##    4      3       5.039440  0.0171229210  3.539220
+##    4      4       5.167980  0.0007664401  3.685734
+##    5      1       5.083947  0.0132531273  3.760566
+##    5      2       4.845760  0.0276626751  3.554804
+##    5      3       4.954395  0.0270072426  3.474490
+##    5      4       5.147534  0.0022937414  3.680845
+##    6      1       5.208465  0.0235072815  3.871535
+##    6      2       4.913492  0.0229056037  3.591207
+##    6      3       5.242755  0.0165796295  3.618596
+##    6      4       5.519560  0.0001524131  3.839393
+##    7      1       5.219464  0.0120464306  3.798592
+##    7      2       5.023329  0.0091262531  3.721732
+##    7      3       5.173486  0.0198799100  3.622751
+##    7      4       5.301426  0.0001273598  3.794933
+##    8      1       5.140246  0.0015512469  3.712038
+##    8      2       5.327459  0.0132203933  3.915551
+##    8      3       5.333522  0.0188424339  3.801187
+##    8      4       5.363422  0.0001438160  3.861254
+##   10      1       5.154944  0.0003207424  3.836867
+##   10      2       5.155930  0.0214618780  3.858015
+##   10      3       5.524321  0.0119167548  3.880097
+##   10      4       5.323123  0.0022787916  3.899070
+##   20      1       5.294185  0.0087117884  3.961219
+##   20      2       6.225093  0.0213541537  4.109923
+##   20      3       5.799607  0.0159615990  4.175976
+##   20      4       6.221616  0.0028363320  4.399923
+##   30      1       5.477977  0.0070030137  4.156108
+##   30      2       6.303116  0.0301781216  4.252620
+##   30      3       6.075656  0.0184901149  4.343537
+##   30      4       6.892230  0.0002584523  4.834679
+##   40      1       5.499438  0.0068773190  4.186732
+##   40      2       6.348231  0.0297914733  4.301491
+##   40      3       6.204967  0.0163185364  4.463410
+##   40      4       7.130278  0.0036043641  5.053999
+##   50      1       5.502954  0.0067460377  4.196348
+##   50      2       6.347627  0.0298154889  4.300960
+##   50      3       6.281860  0.0129567561  4.520481
+##   50      4       7.407793  0.0067595084  5.213648
 ## 
 ## RMSE was used to select the optimal model using the smallest value.
-## The final values used for the model were nprune = 5 and degree = 1.
+## The final values used for the model were nprune = 3 and degree = 3.
 ```
 
-![plot of chunk Y2Training](figures/Y2Training-1.png)
+![plot of chunk PCB2_Tot_Training](figures/PCB2_Tot_Training-1.png)
 
 
 ```
-## Selected 4 of 122 terms, and 3 of 163 predictors
-## Termination condition: Reached nk 201
-## Importance: MAPS_POS, zipcode97702, SEPTI_r_clinical_cutoff, ...
-## Number of terms at each degree of interaction: 1 3 (additive model)
-## GCV 17.89015    RSS 4654.639    GRSq 0.1036596    RSq 0.1426262
+## Selected 2 of 69 terms, and 2 of 161 predictors
+## Termination condition: RSq changed by less than 0.001 at 69 terms
+## Importance: zipcode97702, communityRural, totalChildren-unused, ...
+## Number of terms at each degree of interaction: 1 0 1
+## GCV 21.09831    RSS 5570.907    GRSq 0.05969828    RSq 0.07703066
 ```
 
 ```
-## Call: earth(x=matrix[274,163], y=c(25,29,25,22,2...), keepxy=TRUE,
-##             degree=1, nprune=5)
+## Call: earth(x=matrix[271,161], y=c(25,29,25,22,2...), keepxy=TRUE,
+##             degree=3, nprune=3)
 ## 
-##                         coefficients
-## (Intercept)                23.609727
-## zipcode97702               -4.151507
-## SEPTI_r_clinical_cutoff    -1.000289
-## h(MAPS_POS- -0.636609)      1.636962
+##                               coefficients
+## (Intercept)                       24.51866
+## zipcode97702 * communityRural    -12.51866
 ## 
-## Selected 4 of 122 terms, and 3 of 163 predictors
-## Termination condition: Reached nk 201
-## Importance: MAPS_POS, zipcode97702, SEPTI_r_clinical_cutoff, ...
-## Number of terms at each degree of interaction: 1 3 (additive model)
-## GCV 17.89015    RSS 4654.639    GRSq 0.1036596    RSq 0.1426262
+## Selected 2 of 69 terms, and 2 of 161 predictors
+## Termination condition: RSq changed by less than 0.001 at 69 terms
+## Importance: zipcode97702, communityRural, totalChildren-unused, ...
+## Number of terms at each degree of interaction: 1 0 1
+## GCV 21.09831    RSS 5570.907    GRSq 0.05969828    RSq 0.07703066
 ```
 
-![plot of chunk Y2Training-finalModel](figures/Y2Training-finalModel-1.png)
+![plot of chunk PCB2_Tot_Training-finalModel](figures/PCB2_Tot_Training-finalModel-1.png)
 
 ```
 ## earth variable importance
 ## 
-##   only 20 most important variables shown (out of 163)
+##   only 20 most important variables shown (out of 161)
 ## 
-##                                             Overall
-## MAPS_POS                                     100.00
-## zipcode97702                                  79.97
-## SEPTI_r_clinical_cutoff                       58.54
-## ECBI_Cond_Tot                                  0.00
-## zipcode97760                                   0.00
-## SEPTI_play                                     0.00
-## communityRural                                 0.00
-## income$120,000-$149,999                        0.00
-## zipcode91206                                   0.00
-## parentMaritalStatusRemarried                   0.00
-## parentMaritalStatusWidowed                     0.00
-## zipcode97123                                   0.00
-## zipcode97201                                   0.00
-## zipcode97062                                   0.00
-## zipcode97707                                   0.00
-## zipcode97267                                   0.00
-## parentEducationVocationalschool/somecollege    0.00
-## zipcode97203                                   0.00
-## zipcode97035                                   0.00
-## zipcode97222                                   0.00
+##                                                 Overall
+## communityRural                                      100
+## zipcode97702                                        100
+## parentSituationCo-parentinginseparatehouseholds       0
+## parentGenderFemale                                    0
+## MAPS_PP                                               0
+## zipcode97140                                          0
+## ECBI_problem_T_score                                  0
+## zipcode97754                                          0
+## communitySuburban                                     0
+## SEPTI_discipline                                      0
+## income$150,000ormore                                  0
+## parentSexMale                                         0
+## childRaceWhite1                                       0
+## parentChildRatio                                      0
+## zipcode97023                                          0
+## MAPS_NEG                                              0
+## zipcode97325                                          0
+## income$25,001-$49,999                                 0
+## birthOrderYoungest                                    0
+## zipcode97003                                          0
 ```
 
 
 ```
-##      RMSE  Rsquared       MAE 
-## 4.1216177 0.1426262 3.0991466
+## Error in mutate_impl(.data, dots): Column `hat` must be length 273 (the number of rows) or one, not 271
 ```
 
 ```
-##            Y2       hat
-## Y2  1.0000000 0.3776588
-## hat 0.3776588 1.0000000
+## Error in postResample(pred = dfTrainPred$hat, obs = dfTrainPred$PCB2_Tot): object 'dfTrainPred' not found
 ```
 
-![plot of chunk Y2Training-predict](figures/Y2Training-predict-1.png)
+```
+## Error in eval(lhs, parent, parent): object 'dfTrainPred' not found
+```
+
+```
+## Error in eval(lhs, parent, parent): object 'dfTrainPred' not found
+```
 
 Evaluate model on the validation sample.
 
 
 ```
 ##       RMSE   Rsquared        MAE 
-## 4.92654917 0.01302418 3.45931558
+## 4.15448482 0.01646725 3.20589552
 ```
 
 ```
-##            Y2       hat
-## Y2  1.0000000 0.1141235
-## hat 0.1141235 1.0000000
+##           PCB2_Tot       hat
+## PCB2_Tot 1.0000000 0.1283248
+## hat      0.1283248 1.0000000
 ```
 
-![plot of chunk Y2Validation-predict](figures/Y2Validation-predict-1.png)
+![plot of chunk PCB2_Tot_Validation-predict](figures/PCB2_Tot_Validation-predict-1.png)
 
 
 
-# Model 3
+# Model PCB3
 
-Prediction model for `Y3`.
+
+## Total PCB3
+
+Prediction model for `PCB3_Total`.
 
 Train model over the tuning parameters.
 
@@ -691,144 +746,142 @@ Train model over the tuning parameters.
 ```
 ## Multivariate Adaptive Regression Spline 
 ## 
-## 274 samples
-##  51 predictor
+## 273 samples
+##  54 predictor
 ## 
 ## No pre-processing
 ## Resampling: Leave-One-Out Cross-Validation 
-## Summary of sample sizes: 273, 273, 273, 273, 273, 273, ... 
+## Summary of sample sizes: 270, 270, 270, 270, 270, 270, ... 
 ## Resampling results across tuning parameters:
 ## 
 ##   nprune  degree  RMSE      Rsquared     MAE      
-##    7      1       11.70453  0.072147058   9.710537
-##    7      2       12.42722  0.045432273   9.991517
-##    7      3       12.71392  0.028196167  10.087757
-##    8      1       11.55472  0.091435279   9.513031
-##    8      2       12.54527  0.040051806   9.966195
-##    8      3       12.96045  0.024080626  10.232657
-##    9      1       11.52106  0.099193707   9.465558
-##    9      2       12.69862  0.034068349  10.091426
-##    9      3       14.51075  0.008800328  10.600236
-##   10      1       11.13647  0.143348768   9.143681
-##   10      2       12.87964  0.030139684  10.286174
-##   10      3       15.55924  0.024705189  10.911553
-##   11      1       11.09536  0.151304445   9.100319
-##   11      2       14.51557  0.015368274  10.762851
-##   11      3       15.56249  0.020987940  10.965857
-##   12      1       11.21765  0.138712626   9.239709
-##   12      2       14.59893  0.017977696  10.783736
-##   12      3       15.68379  0.027235158  10.906679
-##   20      1       11.63112  0.119418742   9.367256
-##   20      2       14.51071  0.037345487  11.044163
-##   20      3       16.15479  0.032296972  11.447146
-##   30      1       12.23299  0.084099834   9.733953
-##   30      2       15.85349  0.028061228  11.833118
-##   30      3       17.17734  0.036016421  12.049696
-##   40      1       12.33729  0.088615553   9.887005
-##   40      2       16.00370  0.028870122  11.961394
-##   40      3       17.85649  0.032920401  12.392192
-##   50      1       12.35434  0.088041010   9.886718
-##   50      2       16.02090  0.028195487  11.974502
-##   50      3       17.92229  0.030347782  12.435152
+##    7      1       11.89024  0.046735782   9.697572
+##    7      2       12.98940  0.010998518  10.006925
+##    7      3       11.93928  0.060003219   9.499099
+##    8      1       12.25892  0.021609344   9.880644
+##    8      2       13.18927  0.010811400   9.983937
+##    8      3       12.01644  0.057286131   9.609710
+##    9      1       12.45805  0.021619001   9.982546
+##    9      2       13.44427  0.005227253  10.203121
+##    9      3       12.13227  0.056751108   9.729840
+##   10      1       12.39110  0.031686320   9.854439
+##   10      2       13.42530  0.005798694  10.319450
+##   10      3       12.53124  0.043148426   9.858555
+##   11      1       12.45640  0.028214457   9.933379
+##   11      2       13.46566  0.006875640  10.301301
+##   11      3       12.40648  0.053881842   9.776370
+##   12      1       12.57727  0.022711722  10.052099
+##   12      2       13.38588  0.011421295  10.170620
+##   12      3       12.44171  0.058961884   9.845559
+##   20      1       13.66106  0.005493263  10.773537
+##   20      2       13.69188  0.023534235  10.401977
+##   20      3       18.00410  0.026639776  11.040946
+##   30      1       14.21114  0.007861517  10.952900
+##   30      2       14.23533  0.013270453  10.839146
+##   30      3       19.51705  0.034879936  11.724791
+##   40      1       14.39845  0.006998174  11.096557
+##   40      2       14.25613  0.013470241  10.826069
+##   40      3       20.61056  0.043031753  12.314697
+##   50      1       14.38219  0.007624427  11.075679
+##   50      2       14.25613  0.013470241  10.826069
+##   50      3       20.72018  0.042367538  12.467801
 ## 
 ## RMSE was used to select the optimal model using the smallest value.
-## The final values used for the model were nprune = 11 and degree = 1.
+## The final values used for the model were nprune = 7 and degree = 1.
 ```
 
-![plot of chunk Y3Training](figures/Y3Training-1.png)
+![plot of chunk PCB3_Total_Training](figures/PCB3_Total_Training-1.png)
 
 
 ```
-## Selected 11 of 122 terms, and 8 of 163 predictors
-## Termination condition: Reached nk 201
-## Importance: SEPTI_total, SEPTI_discipline-unused, childAge, ...
-## Number of terms at each degree of interaction: 1 10 (additive model)
-## GCV 110.1297    RSS 25727.34    GRSq 0.2133396    RSq 0.3243791
+## Selected 6 of 119 terms, and 3 of 161 predictors
+## Termination condition: GRSq -10 at 119 terms
+## Importance: ECBI_intensity_T_score, MAPS_LC, SEPTI_nurturance, ...
+## Number of terms at each degree of interaction: 1 5 (additive model)
+## GCV 125.9221    RSS 31410.83    GRSq 0.1098164    RSq 0.1745348
 ```
 
 ```
-## Call: earth(x=matrix[274,163], y=c(58,54,64,41,5...), keepxy=TRUE,
-##             degree=1, nprune=11)
+## Call: earth(x=matrix[271,161], y=c(58,54,64,41,5...), keepxy=TRUE,
+##             degree=1, nprune=7)
 ## 
-##                                                 coefficients
-## (Intercept)                                        38.826249
-## parentSituationCo-parentinginseparatehouseholds     9.275497
-## zipcode97229                                       12.618717
-## zipcode97734                                      -20.177892
-## h(childAge-1.12293)                               -13.410964
-## h(parentAge- -1.24675)                             -2.561029
-## h(-1.63029-ECBI_intensity_T_score)                 -5.349963
-## h(ECBI_intensity_T_score- -1.63029)                 3.294158
-## h(-1.06097-ECBI_problem_raw_score)                 95.515227
-## h(-1.45385-SEPTI_total)                            22.897959
-## h(SEPTI_total- -1.45385)                            3.958761
+##                                    coefficients
+## (Intercept)                           40.979163
+## h(-1.4681-ECBI_intensity_T_score)     14.703186
+## h(ECBI_intensity_T_score- -1.4681)     2.787303
+## h(-0.460716-MAPS_LC)                  -8.930168
+## h(-0.0628444-SEPTI_nurturance)         3.361093
+## h(SEPTI_nurturance- -0.0628444)        5.706977
 ## 
-## Selected 11 of 122 terms, and 8 of 163 predictors
-## Termination condition: Reached nk 201
-## Importance: SEPTI_total, SEPTI_discipline-unused, childAge, ...
-## Number of terms at each degree of interaction: 1 10 (additive model)
-## GCV 110.1297    RSS 25727.34    GRSq 0.2133396    RSq 0.3243791
+## Selected 6 of 119 terms, and 3 of 161 predictors
+## Termination condition: GRSq -10 at 119 terms
+## Importance: ECBI_intensity_T_score, MAPS_LC, SEPTI_nurturance, ...
+## Number of terms at each degree of interaction: 1 5 (additive model)
+## GCV 125.9221    RSS 31410.83    GRSq 0.1098164    RSq 0.1745348
 ```
 
-![plot of chunk Y3Training-finalModel](figures/Y3Training-finalModel-1.png)
+![plot of chunk PCB3_Total_Training-finalModel](figures/PCB3_Total_Training-finalModel-1.png)
 
 ```
 ## earth variable importance
 ## 
-##   only 20 most important variables shown (out of 163)
+##   only 20 most important variables shown (out of 161)
 ## 
-##                                                 Overall
-## SEPTI_total                                      100.00
-## childAge                                          88.32
-## ECBI_problem_raw_score                            65.34
-## parentSituationCo-parentinginseparatehouseholds   49.66
-## parentAge                                         32.61
-## zipcode97734                                      32.61
-## ECBI_intensity_T_score                            32.61
-## zipcode97229                                      32.61
-## zipcode97206                                       0.00
-## zipcode97027                                       0.00
-## parentEthnicityNotHispanic/Latino                  0.00
-## zipcode97213                                       0.00
-## zipcode97825                                       0.00
-## zipcode97086                                       0.00
-## parentEthnicityPrefernottorespond                  0.00
-## distance                                           0.00
-## zipcode97086-3615                                  0.00
-## zipcode90210                                       0.00
-## zipcode97214                                       0.00
-## MAPS_LC                                            0.00
+##                                  Overall
+## ECBI_intensity_T_score            100.00
+## MAPS_LC                            79.06
+## SEPTI_nurturance                   48.27
+## childRelationshipRelative           0.00
+## MAPS_SP                             0.00
+## MAPS_POS                            0.00
+## childRaceAsian1                     0.00
+## zipcode97210                        0.00
+## communityRural                      0.00
+## ECBI_intensity_clinical_cutoff      0.00
+## zipcode97217                        0.00
+## zipcode97124                        0.00
+## zipcode97027                        0.00
+## childEthnicityNotHispanic/Latino    0.00
+## zipcode97220                        0.00
+## zipcode97032                        0.00
+## zipcode97086                        0.00
+## SEPTI_total_clin_cutoff             0.00
+## parentRaceNoResp1                   0.00
+## zipcode97140                        0.00
 ```
 
 
 ```
-##      RMSE  Rsquared       MAE 
-## 9.6899639 0.3243791 7.9315828
+## Error in mutate_impl(.data, dots): Column `hat` must be length 273 (the number of rows) or one, not 271
 ```
 
 ```
-##            Y3       hat
-## Y3  1.0000000 0.5695429
-## hat 0.5695429 1.0000000
+## Error in postResample(pred = dfTrainPred$hat, obs = dfTrainPred$PCB3_Total): object 'dfTrainPred' not found
 ```
 
-![plot of chunk Y3Training-predict](figures/Y3Training-predict-1.png)
+```
+## Error in eval(lhs, parent, parent): object 'dfTrainPred' not found
+```
+
+```
+## Error in eval(lhs, parent, parent): object 'dfTrainPred' not found
+```
 
 Evaluate model on the validation sample.
 
 
 ```
-##         RMSE     Rsquared          MAE 
-## 14.147148035  0.002805804 10.870320503
+##       RMSE   Rsquared        MAE 
+## 11.5940115  0.1472462  9.6520793
 ```
 
 ```
-##             Y3        hat
-## Y3  1.00000000 0.05296984
-## hat 0.05296984 1.00000000
+##            PCB3_Total       hat
+## PCB3_Total  1.0000000 0.3837267
+## hat         0.3837267 1.0000000
 ```
 
-![plot of chunk Y3Validation-predict](figures/Y3Validation-predict-1.png)
+![plot of chunk PCB3_TotalValidation-predict](figures/PCB3_TotalValidation-predict-1.png)
 
 
 
