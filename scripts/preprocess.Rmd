@@ -73,7 +73,7 @@ library(earth)
 citation("earth")
 method <- "earth"
 modelLookup(method) %>% kable()
-grid <- expand.grid(nprune = c(seq(2, 8, 1), seq(10, 50, 10)),
-                    degree = seq(4))
+grid <- expand.grid(nprune = c(seq(2, 9, 1), seq(10, 50, 10)),
+                    degree = seq(5))
 grid %>% kable()
 ```

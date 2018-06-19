@@ -8,8 +8,8 @@ Prediction model for `PCB3_Total`.
 Train model over the tuning parameters.
 
 ```{r PCB3_Total_Training}
-grid <- expand.grid(nprune = c(seq(7, 12, 1), seq(20, 50, 10)),
-                    degree = seq(3))
+grid <- expand.grid(nprune = c(seq(7, 15, 1), seq(20, 50, 10)),
+                    degree = seq(5))
 grid %>% kable()
 cl <- makeCluster(cores)
 registerDoParallel(cl)
