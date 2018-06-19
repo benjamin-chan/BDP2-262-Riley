@@ -2,10 +2,14 @@
 
 Initial preprocesssing that needs to be done that is common to `PCB1_Total`, `PCB2_Tot`, and `PCB3_Total`.
 
-Split data set into 70:30 training:validation samples.
+```{r, echo = TRUE}
+p <- 0.75
+```
+
+Split data set into `r sprintf("%.00f:%.00f", p * 100, (1 - p) * 100)` training:validation samples.
 
 ```{r, echo = TRUE}
-inTrain <- createDataPartition(df$id, p = 0.7)
+inTrain <- createDataPartition(df$id, p = p)
 dfTrain <- df[inTrain$Resample1, ]
 dfValid <- df[-inTrain$Resample1, ]
 ```
