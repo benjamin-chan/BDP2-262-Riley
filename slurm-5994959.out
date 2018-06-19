@@ -18,7 +18,7 @@ List of 2
 
   |                                                                         |.....                                                            |   8%
 label: unnamed-chunk-2
-  |                                                                         |.......                                                          |  10%
+  |                                                                         |......                                                           |  10%
   ordinary text without R code
 
   |                                                                         |........                                                         |  12%
@@ -26,110 +26,118 @@ label: unnamed-chunk-3
   |                                                                         |.........                                                        |  14%
   ordinary text without R code
 
-  |                                                                         |...........                                                      |  16%
+  |                                                                         |..........                                                       |  16%
 label: unnamed-chunk-4 (with options) 
 List of 1
  $ eval: logi FALSE
 
-  |                                                                         |............                                                     |  18%
+  |                                                                         |...........                                                      |  18%
   ordinary text without R code
 
   |                                                                         |.............                                                    |  20%
 label: unnamed-chunk-5
-  |                                                                         |...............                                                  |  22%
+  |                                                                         |..............                                                   |  22%
   ordinary text without R code
 
-  |                                                                         |................                                                 |  24%
+  |                                                                         |...............                                                  |  24%
 label: unnamed-chunk-6 (with options) 
 List of 1
  $ eval: logi FALSE
 
-  |                                                                         |.................                                                |  27%
+  |                                                                         |.................                                                |  25%
   ordinary text without R code
 
-  |                                                                         |...................                                              |  29%
+  |                                                                         |..................                                               |  27%
 label: unnamed-chunk-7
-  |                                                                         |....................                                             |  31%
+  |                                                                         |...................                                              |  29%
   ordinary text without R code
 
-  |                                                                         |.....................                                            |  33%
+  |                                                                         |....................                                             |  31%
 label: unnamed-chunk-8 (with options) 
 List of 1
  $ eval: logi FALSE
 
-  |                                                                         |.......................                                          |  35%
+  |                                                                         |......................                                           |  33%
   ordinary text without R code
 
-  |                                                                         |........................                                         |  37%
+  |                                                                         |.......................                                          |  35%
 label: unnamed-chunk-9 (with options) 
 List of 1
  $ echo: logi TRUE
 
-  |                                                                         |.........................                                        |  39%
-  ordinary text without R code
+  |                                                                         |........................                                         |  37%
+   inline R code fragments
 
-  |                                                                         |...........................                                      |  41%
+  |                                                                         |.........................                                        |  39%
 label: unnamed-chunk-10 (with options) 
 List of 1
  $ echo: logi TRUE
 
-  |                                                                         |............................                                     |  43%
+  |                                                                         |...........................                                      |  41%
   ordinary text without R code
 
-  |                                                                         |.............................                                    |  45%
+  |                                                                         |............................                                     |  43%
 label: unnamed-chunk-11 (with options) 
 List of 1
  $ echo: logi TRUE
 
-  |                                                                         |...............................                                  |  47%
+  |                                                                         |.............................                                    |  45%
   ordinary text without R code
 
-  |                                                                         |................................                                 |  49%
+  |                                                                         |...............................                                  |  47%
 label: unnamed-chunk-12 (with options) 
 List of 1
  $ echo: logi TRUE
 
-  |                                                                         |.................................                                |  51%
+  |                                                                         |................................                                 |  49%
   ordinary text without R code
+
+  |                                                                         |.................................                                |  51%
+label: unnamed-chunk-13 (with options) 
+List of 1
+ $ echo: logi TRUE
 
   |                                                                         |..................................                               |  53%
-label: PCB1_Total_Training
+  ordinary text without R code
+
   |                                                                         |....................................                             |  55%
-  ordinary text without R code
-
+label: PCB1_Total_Training
   |                                                                         |.....................................                            |  57%
-label: PCB1_Total_Training-finalModel
+  ordinary text without R code
+
   |                                                                         |......................................                           |  59%
-  ordinary text without R code
-
+label: PCB1_Total_Training-finalModel
   |                                                                         |........................................                         |  61%
-label: PCB1_Total_Training-predict
+  ordinary text without R code
+
   |                                                                         |.........................................                        |  63%
-  ordinary text without R code
-
+label: PCB1_Total_Training-predict
   |                                                                         |..........................................                       |  65%
+  ordinary text without R code
+
+  |                                                                         |...........................................                      |  67%
 label: PCB1_Total_Validation-predict
-  |                                                                         |............................................                     |  67%
-  ordinary text without R code
-
   |                                                                         |.............................................                    |  69%
-label: PCB2_Tot_Training
+  ordinary text without R code
+
   |                                                                         |..............................................                   |  71%
+label: PCB2_Tot_Training
+  |                                                                         |...............................................                  |  73%
   ordinary text without R code
 
-  |                                                                         |................................................                 |  73%
+  |                                                                         |................................................                 |  75%
 label: PCB2_Tot_Training-finalModel
-  |                                                                         |.................................................                |  76%
+  |                                                                         |..................................................               |  76%
   ordinary text without R code
 
-  |                                                                         |..................................................               |  78%
+  |                                                                         |...................................................              |  78%
 label: PCB2_Tot_Training-predict
   |                                                                         |....................................................             |  80%
   ordinary text without R code
 
-  |                                                                         |.....................................................            |  82%
+  |                                                                         |......................................................           |  82%
 label: PCB2_Tot_Validation-predict
-  |                                                                         |......................................................           |  84%
+  |                                                                         |.......................................................          |  84%
   ordinary text without R code
 
   |                                                                         |........................................................         |  86%
@@ -137,7 +145,7 @@ label: PCB3_Total_Training
   |                                                                         |.........................................................        |  88%
   ordinary text without R code
 
-  |                                                                         |..........................................................       |  90%
+  |                                                                         |...........................................................      |  90%
 label: PCB3_Total_Training-finalModel
   |                                                                         |............................................................     |  92%
   ordinary text without R code
