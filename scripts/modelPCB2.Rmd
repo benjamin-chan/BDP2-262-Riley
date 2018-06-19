@@ -18,9 +18,8 @@ stopCluster(cl)
 trainingModel
 trainingModel %>% 
   .$results %>% 
-  mutate(degree = factor(degree)) %>% 
   ggplot() + 
-  aes(x = nprune, y = RMSE, color = degree, group = degree) +
+  aes(x = mtry, y = RMSE) +
   geom_line() +
   geom_point() +
   theme_bw()
@@ -31,7 +30,7 @@ save(trainingModel, file = "output/PCB2_Tot_Training.RData")
 trainingModel$finalModel
 summary(trainingModel$finalModel)
 plot(trainingModel$finalModel)
-varImp(trainingModel)
+varImp(trainingModel$finalModel, scale = FALSE)
 ```
 
 ```{r PCB2_Tot_Training-predict}

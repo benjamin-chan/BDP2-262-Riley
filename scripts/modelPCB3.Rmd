@@ -8,9 +8,6 @@ Prediction model for `PCB3_Total`.
 Train model over the tuning parameters.
 
 ```{r PCB3_Total_Training}
-grid <- expand.grid(nprune = c(seq(7, 15, 1), seq(20, 50, 10)),
-                    degree = seq(5))
-grid %>% kable()
 cl <- makeCluster(cores)
 registerDoParallel(cl)
 trainingModel <-
@@ -21,9 +18,8 @@ stopCluster(cl)
 trainingModel
 trainingModel %>% 
   .$results %>% 
-  mutate(degree = factor(degree)) %>% 
   ggplot() + 
-  aes(x = nprune, y = RMSE, color = degree, group = degree) +
+  aes(x = mtry, y = RMSE) +
   geom_line() +
   geom_point() +
   theme_bw()
@@ -34,7 +30,7 @@ save(trainingModel, file = "output/PCB3_Total_Training.RData")
 trainingModel$finalModel
 summary(trainingModel$finalModel)
 plot(trainingModel$finalModel)
-varImp(trainingModel)
+varImp(trainingModel$finalModel, scale = FALSE)
 ```
 
 ```{r PCB3_Total_Training-predict}

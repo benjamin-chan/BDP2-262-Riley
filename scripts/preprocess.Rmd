@@ -3,7 +3,7 @@
 Initial preprocesssing that needs to be done that is common to `PCB1_Total`, `PCB2_Tot`, and `PCB3_Total`.
 
 ```{r, echo = TRUE}
-p <- 0.80
+p <- 0.70
 ```
 
 Split data set into `r sprintf("%.00f:%.00f", p * 100, (1 - p) * 100)` training:validation samples.
@@ -73,11 +73,10 @@ cores <- 24
 Set the model and tuning parameter grid.
 
 ```{r, echo = TRUE}
-library(earth)
-citation("earth")
-method <- "earth"
+library(randomForest)
+citation("randomForest")
+method <- "rf"
 modelLookup(method) %>% kable()
-grid <- expand.grid(nprune = c(seq(2, 9, 1), seq(10, 50, 10)),
-                    degree = seq(5))
+grid <- expand.grid(mtry = seq(5, 15, 2))
 grid %>% kable()
 ```
