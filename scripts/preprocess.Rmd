@@ -77,6 +77,6 @@ library(randomForest)
 citation("randomForest")
 method <- "rf"
 modelLookup(method) %>% kable()
-grid <- expand.grid(mtry = seq(5, 15, 2))
+grid <- expand.grid(mtry = seq(4, 20, 2))
 grid %>% kable()
 ```
