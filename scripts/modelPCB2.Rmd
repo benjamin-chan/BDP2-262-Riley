@@ -27,16 +27,20 @@ save(trainingModel, file = "output/PCB2_Tot_Training.RData")
 ```
 
 ```{r PCB2_Tot_Training-finalModel}
-trainingModel$finalModel
-summary(trainingModel$finalModel)
-plot(trainingModel$finalModel)
-varImp(trainingModel$finalModel, scale = FALSE)
+M <- trainingModel$finalModel
+imp <- 
+  importance(M) %>% 
+  data.frame() %>% 
+  mutate(feature = row.names(.)) %>% 
+  arrange(-IncNodePurity)
+imp %>% head(20)
+importance(M) %>% plot()
 ```
 
 ```{r PCB2_Tot_Training-predict}
 dfTrainPred <- 
   dfTrainPreProc %>% 
-  mutate(hat = predict(trainingModel, dfTrainPreProc, na.action = na.pass) %>% as.numeric())
+  mutate(hat = predict(trainingModel, dfTrainPreProc, na.action = na.roughfix) %>% as.numeric())
 postResample(pred = dfTrainPred$hat, obs = dfTrainPred$PCB2_Tot)
 cor(dfTrainPred %>% select(PCB2_Tot, hat), use = "complete.obs")
 dfTrainPred %>% 
