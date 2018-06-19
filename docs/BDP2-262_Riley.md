@@ -1,6 +1,6 @@
 ---
 title: "Parent and Provider Perceptions of Behavioral Healthcare in Pediatric Primary Care (PI: Andrew Riley; BDP2-262)"
-date: "2018-06-18"
+date: "2018-06-19"
 author: Benjamin Chan (chanb@ohsu.edu)
 output:
   html_document:
@@ -130,10 +130,10 @@ Initial preprocesssing that needs to be done that is common to `PCB1_Total`, `PC
 
 
 ```r
-p <- 0.75
+p <- 0.80
 ```
 
-Split data set into 75:25 training:validation samples.
+Split data set into 80:20 training:validation samples.
 
 
 ```r
@@ -154,7 +154,7 @@ message(sprintf("Number of complete cases before imputation = %d",
 ```
 
 ```
-## Number of complete cases before imputation = 264
+## Number of complete cases before imputation = 277
 ```
 
 ```r
@@ -175,16 +175,15 @@ nzv %>% kable()
 
 |varname         | freqRatio| percentUnique|zeroVar |nzv  |
 |:---------------|---------:|-------------:|:-------|:----|
-|languageSurvey  |  72.25000|     0.6825939|FALSE   |TRUE |
-|childRaceAfrAm  |  19.85714|     0.6825939|FALSE   |TRUE |
-|childRaceAIAN   |  35.50000|     0.6825939|FALSE   |TRUE |
-|childRaceNHPI   |  47.66667|     0.6825939|FALSE   |TRUE |
-|childRaceOther  |  21.46154|     0.6825939|FALSE   |TRUE |
-|parentRaceAfrAm |  40.71429|     0.6825939|FALSE   |TRUE |
-|parentRaceAIAN  |  35.50000|     0.6825939|FALSE   |TRUE |
-|parentRaceNHPI  |  57.40000|     0.6825939|FALSE   |TRUE |
-|parentRaceOther |  25.54545|     0.6825939|FALSE   |TRUE |
-|internet        |  35.50000|     0.6825939|FALSE   |TRUE |
+|languageSurvey  |  51.16667|     0.6389776|FALSE   |TRUE |
+|childRaceAfrAm  |  25.00000|     0.6389776|FALSE   |TRUE |
+|childRaceAIAN   |  33.66667|     0.6389776|FALSE   |TRUE |
+|childRaceNHPI   |  43.57143|     0.6389776|FALSE   |TRUE |
+|parentRaceAfrAm |  51.00000|     0.6389776|FALSE   |TRUE |
+|parentRaceAIAN  |  38.00000|     0.6389776|FALSE   |TRUE |
+|parentRaceNHPI  |  43.57143|     0.6389776|FALSE   |TRUE |
+|parentRaceOther |  21.28571|     0.6389776|FALSE   |TRUE |
+|internet        |  30.30000|     0.6389776|FALSE   |TRUE |
 
 ```r
 dfTrainPreProc1 <-
@@ -218,11 +217,11 @@ preProc
 ```
 
 ```
-## Created from 264 samples and 54 variables
+## Created from 277 samples and 55 variables
 ## 
 ## Pre-processing:
 ##   - centered (32)
-##   - ignored (20)
+##   - ignored (21)
 ##   - 5 nearest neighbor imputation (32)
 ##   - removed (2)
 ##   - scaled (32)
@@ -236,7 +235,7 @@ message(sprintf("Number of complete cases after imputation = %d",
 ```
 
 ```
-## Number of complete cases after imputation = 291
+## Number of complete cases after imputation = 309
 ```
 
 ```r
@@ -406,110 +405,109 @@ Train model over the tuning parameters.
 ```
 ## Multivariate Adaptive Regression Spline 
 ## 
-## 293 samples
-##  52 predictor
+## 313 samples
+##  53 predictor
 ## 
 ## No pre-processing
 ## Resampling: Leave-One-Out Cross-Validation 
-## Summary of sample sizes: 290, 290, 290, 290, 290, 290, ... 
+## Summary of sample sizes: 308, 308, 308, 308, 308, 308, ... 
 ## Resampling results across tuning parameters:
 ## 
-##   nprune  degree  RMSE      Rsquared      MAE     
-##    2      1       15.99799  8.624413e-04  13.00794
-##    2      2       16.94806  4.417104e-03  13.32211
-##    2      3       17.04075  8.967514e-03  13.47931
-##    2      4       18.01057  2.745886e-03  13.87793
-##    2      5       16.82776  9.797959e-03  13.54521
-##    3      1       16.00033  6.028004e-03  13.06611
-##    3      2       15.37573  6.266278e-02  12.33500
-##    3      3       17.08955  9.138638e-04  13.58053
-##    3      4       17.02980  4.517321e-03  13.42309
-##    3      5       17.81272  5.700830e-03  13.62939
-##    4      1       15.78126  2.505014e-02  12.77574
-##    4      2       15.32520  6.846124e-02  12.29220
-##    4      3       17.49705  3.845489e-03  13.73991
-##    4      4       18.62264  1.185477e-02  13.89637
-##    4      5       18.92075  3.279074e-03  14.00757
-##    5      1       16.25399  7.760380e-03  12.91845
-##    5      2       16.12274  2.888682e-02  12.64923
-##    5      3       18.13580  2.161441e-04  14.16894
-##    5      4       19.82068  2.756631e-03  14.42384
-##    5      5       20.00861  5.964235e-04  14.43709
-##    6      1       16.59016  3.240987e-03  13.16955
-##    6      2       15.57209  5.659922e-02  12.37108
-##    6      3       18.54143  2.129331e-04  14.33268
-##    6      4       19.90115  6.382900e-03  14.55836
-##    6      5       18.70277  1.044334e-02  14.20865
-##    7      1       16.62400  6.333705e-03  13.00835
-##    7      2       16.39524  2.908864e-02  12.64972
-##    7      3       18.51679  8.521210e-05  14.46584
-##    7      4       20.87844  3.788013e-03  15.00204
-##    7      5       19.61548  6.456004e-03  14.44733
-##    8      1       16.74449  4.168665e-03  13.18143
-##    8      2       16.70754  2.254753e-02  12.95847
-##    8      3       18.73619  1.397572e-04  14.59933
-##    8      4       21.75298  3.794464e-03  15.30456
-##    8      5       20.86409  2.081976e-03  14.95466
-##    9      1       17.06755  2.043189e-04  13.48347
-##    9      2       17.40115  8.548764e-03  13.41023
-##    9      3       19.41789  1.346769e-04  14.99258
-##    9      4       21.84937  3.532210e-03  15.40193
-##    9      5       21.18170  3.323902e-03  15.08462
-##   10      1       17.30815  5.909089e-05  13.71877
-##   10      2       17.33829  1.221904e-02  13.46850
-##   10      3       19.50481  2.371949e-04  15.03168
-##   10      4       21.99258  4.089378e-03  15.49541
-##   10      5       21.55128  2.448514e-03  15.23143
-##   20      1       18.09806  8.730018e-04  14.12948
-##   20      2       18.27738  1.784678e-02  13.88293
-##   20      3       23.06627  8.451192e-04  16.69054
-##   20      4       24.91908  4.032507e-03  17.42807
-##   20      5       23.39324  3.171643e-03  16.92375
-##   30      1       18.49078  2.846140e-03  14.47660
-##   30      2       18.21426  2.145115e-02  13.82205
-##   30      3       24.82077  6.006432e-04  17.75361
-##   30      4       28.61609  7.382017e-04  19.38110
-##   30      5       25.70542  3.416544e-05  18.28547
-##   40      1       18.53655  6.057773e-03  14.55362
-##   40      2       18.22531  2.157408e-02  13.82434
-##   40      3       24.96360  2.780889e-04  17.82838
-##   40      4       33.77927  5.842090e-04  21.17199
-##   40      5       31.89150  1.342958e-04  20.75186
-##   50      1       18.54012  6.799144e-03  14.53371
-##   50      2       18.22531  2.157408e-02  13.82434
-##   50      3       24.99084  4.078517e-04  17.95107
-##   50      4       33.84663  3.723473e-04  21.73750
-##   50      5       33.14195  7.653205e-04  21.78235
+##   nprune  degree  RMSE      Rsquared     MAE     
+##    2      1       15.92454  0.067032969  12.57080
+##    2      2       15.98261  0.061142989  12.60581
+##    2      3       16.60590  0.005985256  13.32830
+##    2      4       16.27955  0.032994846  12.92910
+##    2      5       16.14593  0.044617626  12.76228
+##    3      1       16.22772  0.043434974  12.90386
+##    3      2       16.72240  0.020324889  13.37143
+##    3      3       16.16350  0.051675404  12.88117
+##    3      4       16.40858  0.033663528  12.91014
+##    3      5       16.20376  0.048328344  12.81658
+##    4      1       15.93517  0.077326006  12.69682
+##    4      2       17.34232  0.012069759  13.61665
+##    4      3       16.29459  0.052206511  12.95805
+##    4      4       16.39269  0.051087908  13.00684
+##    4      5       16.52616  0.041142819  13.16052
+##    5      1       16.22527  0.058623264  12.78749
+##    5      2       17.47888  0.014710132  13.61606
+##    5      3       16.26854  0.066063031  12.86387
+##    5      4       16.28360  0.068004343  12.78995
+##    5      5       16.44680  0.058925808  12.91775
+##    6      1       16.20984  0.061938939  12.75561
+##    6      2       17.58815  0.013036231  13.66124
+##    6      3       16.27076  0.073506275  12.83615
+##    6      4       16.38123  0.067936697  12.91430
+##    6      5       16.45692  0.063394152  12.97206
+##    7      1       16.27937  0.055851572  12.93318
+##    7      2       17.69850  0.010541366  13.82404
+##    7      3       16.36701  0.073601367  12.89371
+##    7      4       16.46731  0.067794504  12.88343
+##    7      5       16.60302  0.065619287  13.01537
+##    8      1       16.35725  0.059111881  12.99098
+##    8      2       17.97157  0.007325150  14.04395
+##    8      3       15.97962  0.103859773  12.54691
+##    8      4       16.72423  0.059812029  13.11586
+##    8      5       16.61063  0.074707619  12.95977
+##    9      1       16.45512  0.058751735  13.03884
+##    9      2       17.87752  0.013210542  14.10384
+##    9      3       16.28512  0.087609826  12.71058
+##    9      4       16.84538  0.058749075  13.26841
+##    9      5       16.84138  0.068921643  13.06360
+##   10      1       16.49050  0.054281687  13.06064
+##   10      2       18.28572  0.006084533  14.32249
+##   10      3       21.08677  0.024426272  13.54579
+##   10      4       17.22752  0.055227234  13.35687
+##   10      5       17.01691  0.066771949  13.19732
+##   20      1       16.94695  0.050531558  13.34467
+##   20      2       20.37148  0.005000100  14.96142
+##   20      3       24.93887  0.008710402  15.70629
+##   20      4       18.47468  0.054510349  14.20702
+##   20      5       19.08868  0.041620062  14.29436
+##   30      1       17.13939  0.050877046  13.42179
+##   30      2       21.82702  0.007297141  15.95886
+##   30      3       24.94432  0.015777705  16.74826
+##   30      4       19.23653  0.058563203  14.59940
+##   30      5       19.79548  0.046854881  15.34046
+##   40      1       17.14524  0.051032381  13.42997
+##   40      2       22.10216  0.008112406  16.08216
+##   40      3       25.41509  0.015539509  17.37367
+##   40      4       20.64084  0.052171121  15.34168
+##   40      5       20.90740  0.040092914  16.09541
+##   50      1       17.21433  0.047869323  13.45636
+##   50      2       22.16303  0.008480110  16.09318
+##   50      3       25.57217  0.016734570  17.58460
+##   50      4       22.27896  0.030227127  16.24107
+##   50      5       21.04516  0.052501191  16.09417
 ## 
 ## RMSE was used to select the optimal model using the smallest value.
-## The final values used for the model were nprune = 4 and degree = 2.
+## The final values used for the model were nprune = 2 and degree = 1.
 ```
 
 ![plot of chunk PCB1_Total_Training](figures/PCB1_Total_Training-1.png)
 
 
 ```
-## Selected 3 of 44 terms, and 4 of 159 predictors
-## Termination condition: RSq changed by less than 0.001 at 44 terms
-## Importance: childRaceWhite1, parentEthnicityNotHispanic/Latino, ...
-## Number of terms at each degree of interaction: 1 0 2
-## GCV 232.5616    RSS 64913.47    GRSq 0.07896037    RSq 0.1104466
+## Selected 2 of 125 terms, and 1 of 160 predictors
+## Termination condition: Reached nk 201
+## Importance: childRaceWhite1, totalChildren-unused, ...
+## Number of terms at each degree of interaction: 1 1 (additive model)
+## GCV 253.6025    RSS 76848.95    GRSq 0.07198711    RSq 0.0840001
 ```
 
 ```
-## Call: earth(x=matrix[291,159], y=c(73,77,76,65,3...), keepxy=TRUE,
-##             degree=2, nprune=4)
+## Call: earth(x=matrix[309,160], y=c(73,77,76,65,3...), keepxy=TRUE,
+##             degree=1, nprune=2)
 ## 
-##                                                         coefficients
-## (Intercept)                                                72.714041
-## childRaceWhite1 * parentEthnicityNotHispanic/Latino        -8.704925
-## childEthnicityNotHispanic/Latino * h(-0.681607-MAPS_HS)    17.330516
+##                 coefficients
+## (Intercept)         75.76316
+## childRaceWhite1    -11.08934
 ## 
-## Selected 3 of 44 terms, and 4 of 159 predictors
-## Termination condition: RSq changed by less than 0.001 at 44 terms
-## Importance: childRaceWhite1, parentEthnicityNotHispanic/Latino, ...
-## Number of terms at each degree of interaction: 1 0 2
-## GCV 232.5616    RSS 64913.47    GRSq 0.07896037    RSq 0.1104466
+## Selected 2 of 125 terms, and 1 of 160 predictors
+## Termination condition: Reached nk 201
+## Importance: childRaceWhite1, totalChildren-unused, ...
+## Number of terms at each degree of interaction: 1 1 (additive model)
+## GCV 253.6025    RSS 76848.95    GRSq 0.07198711    RSq 0.0840001
 ```
 
 ![plot of chunk PCB1_Total_Training-finalModel](figures/PCB1_Total_Training-finalModel-1.png)
@@ -517,51 +515,41 @@ Train model over the tuning parameters.
 ```
 ## earth variable importance
 ## 
-##   only 20 most important variables shown (out of 159)
+##   only 20 most important variables shown (out of 160)
 ## 
-##                                   Overall
-## childRaceWhite1                    100.00
-## parentEthnicityNotHispanic/Latino  100.00
-## MAPS_HS                             77.31
-## childEthnicityNotHispanic/Latino    77.31
-## zipcode97035                         0.00
-## zipcode97267                         0.00
-## parentGenderPrefernottorespond       0.00
-## ECBI_intensity_clinical_cutoff       0.00
-## zipcode97325                         0.00
-## ECBI_problem_T_score                 0.00
-## childRaceNoResp1                     0.00
-## zipcode97034                         0.00
-## MAPS_SP                              0.00
-## zipcode97045                         0.00
-## zipcode91206                         0.00
-## zipcode97023                         0.00
-## zipcode97140                         0.00
-## income$120,000-$149,999              0.00
-## zipcode97051                         0.00
-## zipcode97221                         0.00
+##                                Overall
+## childRaceWhite1                    100
+## zipcode98632                         0
+## zipcode98685                         0
+## zipcode98660                         0
+## zipcode97760                         0
+## parentGenderPrefernottorespond       0
+## childSexMale                         0
+## zipcode91020                         0
+## zipcode97211                         0
+## SEPTI_p_clinical_cutoff              0
+## childAge                             0
+## zipcode97825                         0
+## zipcode97233                         0
+## zipcode97757                         0
+## zipcode97236                         0
+## zipcode97140                         0
+## zipcode97035                         0
+## SEPTI_r_clinical_cutoff              0
+## totalChildren                        0
+## zipcode97056                         0
 ```
 
 
 ```
-##       RMSE   Rsquared        MAE 
-## 14.9231199  0.1093606 11.9215600
+##        RMSE    Rsquared         MAE 
+## 15.73554153  0.08274256 12.40064886
 ```
 
 ```
 ##           PCB2_Tot       hat
-## PCB2_Tot 1.0000000 0.1889719
-## hat      0.1889719 1.0000000
-```
-
-```
-## Warning: Removed 1 rows containing non-finite values (stat_smooth).
-
-## Warning: Removed 1 rows containing non-finite values (stat_smooth).
-```
-
-```
-## Warning: Removed 1 rows containing missing values (geom_point).
+## PCB2_Tot 1.0000000 0.1524043
+## hat      0.1524043 1.0000000
 ```
 
 ![plot of chunk PCB1_Total_Training-predict](figures/PCB1_Total_Training-predict-1.png)
@@ -570,14 +558,14 @@ Evaluate model on the validation sample.
 
 
 ```
-##       RMSE   Rsquared        MAE 
-## 17.7707691  0.1003297 13.6095304
+##        RMSE    Rsquared         MAE 
+## 16.96490359  0.01250969 14.15213131
 ```
 
 ```
 ##            PCB1_Total       hat
-## PCB1_Total  1.0000000 0.3167486
-## hat         0.3167486 1.0000000
+## PCB1_Total  1.0000000 0.1118467
+## hat         0.1118467 1.0000000
 ```
 
 ![plot of chunk PCB1_Total_Validation-predict](figures/PCB1_Total_Validation-predict-1.png)
@@ -597,112 +585,110 @@ Train model over the tuning parameters.
 ```
 ## Multivariate Adaptive Regression Spline 
 ## 
-## 293 samples
-##  52 predictor
+## 313 samples
+##  53 predictor
 ## 
 ## No pre-processing
 ## Resampling: Leave-One-Out Cross-Validation 
-## Summary of sample sizes: 290, 290, 290, 290, 290, 290, ... 
+## Summary of sample sizes: 308, 308, 308, 308, 308, 308, ... 
 ## Resampling results across tuning parameters:
 ## 
-##   nprune  degree  RMSE      Rsquared      MAE     
-##    2      1       4.381690  8.059225e-01  3.304141
-##    2      2       4.385167  1.766151e-03  3.307422
-##    2      3       4.363747  1.093869e-03  3.283099
-##    2      4       4.382011  2.863382e-05  3.303260
-##    2      5       4.405349  7.582452e-05  3.326965
-##    3      1       4.551612  3.928288e-02  3.386132
-##    3      2       4.412085  5.705166e-04  3.304704
-##    3      3       4.518241  2.558562e-03  3.414259
-##    3      4       4.499053  5.708299e-04  3.411578
-##    3      5       4.508728  9.735215e-04  3.416962
-##    4      1       4.518402  1.621353e-05  3.368497
-##    4      2       4.466453  8.837670e-05  3.388707
-##    4      3       4.600258  1.115557e-02  3.481428
-##    4      4       4.582644  4.665179e-04  3.465791
-##    4      5       4.596814  3.358522e-03  3.502249
-##    5      1       4.355606  2.965141e-02  3.263084
-##    5      2       4.479709  1.326294e-03  3.378019
-##    5      3       4.656149  6.811764e-03  3.518942
-##    5      4       4.585433  5.300388e-04  3.479174
-##    5      5       4.608331  1.066683e-05  3.494853
-##    6      1       4.394914  2.507881e-02  3.285962
-##    6      2       4.588169  4.816088e-04  3.458870
-##    6      3       4.832355  4.145806e-03  3.584345
-##    6      4       4.721266  3.389270e-04  3.517178
-##    6      5       4.981022  1.125493e-07  3.636871
-##    7      1       4.465356  1.695313e-02  3.349072
-##    7      2       4.632050  4.900470e-04  3.478395
-##    7      3       4.791186  3.281859e-06  3.598258
-##    7      4       4.819119  6.364456e-04  3.609878
-##    7      5       5.051136  2.820953e-04  3.692528
-##    8      1       4.541387  1.174322e-02  3.421167
-##    8      2       4.671031  1.011057e-03  3.556960
-##    8      3       4.815520  5.593581e-04  3.645194
-##    8      4       4.844285  1.426684e-03  3.632480
-##    8      5       5.075278  7.166343e-04  3.716914
-##    9      1       4.468040  2.814415e-02  3.351514
-##    9      2       4.739306  2.422008e-09  3.574036
-##    9      3       4.813320  2.338736e-03  3.631147
-##    9      4       4.901241  1.157648e-03  3.657230
-##    9      5       5.075686  1.135358e-03  3.719954
-##   10      1       4.464884  3.760096e-02  3.323436
-##   10      2       4.658299  9.759270e-04  3.597252
-##   10      3       4.814904  4.310751e-03  3.614624
-##   10      4       4.935262  1.366923e-03  3.685902
-##   10      5       5.066523  2.110550e-03  3.697361
-##   20      1       4.571123  3.605222e-02  3.376862
-##   20      2       5.283591  2.100280e-03  3.898692
-##   20      3       5.012497  3.246629e-02  3.851928
-##   20      4       5.686406  5.153378e-03  4.093208
-##   20      5       5.828154  3.163268e-03  4.158699
-##   30      1       4.515620  4.515008e-02  3.331536
-##   30      2       5.730026  1.396595e-03  3.980172
-##   30      3       6.453195  3.352148e-02  4.457608
-##   30      4       6.772781  8.290413e-03  4.470310
-##   30      5       7.089224  4.622982e-03  4.709279
-##   40      1       4.520446  5.184274e-02  3.356328
-##   40      2       5.731307  1.380251e-03  3.984048
-##   40      3       7.049299  2.539393e-02  4.751061
-##   40      4       7.421649  3.274745e-03  4.872772
-##   40      5       7.465754  2.813551e-03  4.904628
-##   50      1       4.533024  4.962461e-02  3.372235
-##   50      2       5.731307  1.380251e-03  3.984048
-##   50      3       7.681619  2.260870e-02  4.895984
-##   50      4       8.054000  2.814064e-03  5.171437
-##   50      5       8.048160  3.625610e-03  5.120126
+##   nprune  degree  RMSE       Rsquared      MAE     
+##    2      1        4.541548  1.396504e-02  3.426615
+##    2      2        4.637935  8.452845e-04  3.519539
+##    2      3        4.750177  4.781843e-04  3.529885
+##    2      4        4.562875  1.240557e-02  3.451474
+##    2      5        4.588554  6.681589e-03  3.466323
+##    3      1        4.532558  2.361673e-02  3.365478
+##    3      2        4.710308  1.992027e-04  3.554124
+##    3      3        4.992101  1.447914e-04  3.678783
+##    3      4        4.704550  2.622016e-03  3.540420
+##    3      5        4.701059  4.114792e-03  3.532774
+##    4      1        4.606159  1.489942e-02  3.448684
+##    4      2        4.800496  4.285049e-05  3.635268
+##    4      3        5.103694  1.016126e-03  3.672405
+##    4      4        4.715807  7.826099e-03  3.531888
+##    4      5        4.725192  5.400989e-03  3.530732
+##    5      1        4.623701  1.721193e-02  3.457980
+##    5      2        4.821411  2.759087e-03  3.618525
+##    5      3        5.204580  1.669632e-03  3.734422
+##    5      4        4.874476  3.709290e-03  3.663735
+##    5      5        4.918105  1.533043e-03  3.673539
+##    6      1        4.669942  1.344937e-02  3.465731
+##    6      2        4.808147  8.873673e-03  3.604688
+##    6      3        5.271222  1.285406e-03  3.826329
+##    6      4        5.139545  3.155278e-03  3.762903
+##    6      5        5.222027  7.609215e-04  3.808545
+##    7      1        4.703869  1.314780e-02  3.505094
+##    7      2        4.947454  3.211666e-03  3.680416
+##    7      3        5.292187  1.634157e-03  3.806235
+##    7      4        5.316946  1.079626e-04  3.829426
+##    7      5        5.382165  1.283387e-03  3.886538
+##    8      1        4.720125  1.249062e-02  3.534380
+##    8      2        5.071139  2.651665e-03  3.776318
+##    8      3        5.346644  1.977755e-03  3.807814
+##    8      4        5.418488  2.498601e-04  3.898916
+##    8      5        5.480134  1.768147e-03  3.946997
+##    9      1        4.841929  4.003909e-03  3.629280
+##    9      2        8.740583  4.059007e-03  4.156616
+##    9      3        9.174076  2.462897e-03  4.292693
+##    9      4        5.500612  7.753725e-04  3.948766
+##    9      5        5.460352  7.498433e-04  3.911295
+##   10      1        4.840991  4.126671e-03  3.642904
+##   10      2        8.829655  4.648527e-03  4.181106
+##   10      3        9.255737  2.721047e-03  4.321060
+##   10      4        9.208065  1.431053e-03  4.366942
+##   10      5        9.184084  1.130391e-03  4.323448
+##   20      1        5.231573  1.235985e-05  3.951361
+##   20      2       10.157052  8.050955e-03  4.654752
+##   20      3        9.338299  4.796533e-03  4.640762
+##   20      4        9.435887  2.880728e-03  4.615030
+##   20      5        9.519402  2.572026e-03  4.623567
+##   30      1        5.322654  7.672353e-05  4.036974
+##   30      2       10.988753  8.628361e-03  4.969097
+##   30      3        9.199658  4.307881e-03  4.911792
+##   30      4        9.433274  4.621801e-03  4.913158
+##   30      5        8.952169  2.290344e-03  4.919107
+##   40      1        5.318651  1.039074e-04  4.037430
+##   40      2       10.972254  9.666619e-03  4.997250
+##   40      3        9.311729  4.229222e-03  4.997687
+##   40      4        9.062478  3.932921e-03  5.062360
+##   40      5        9.115903  3.296651e-03  5.157283
+##   50      1        5.318651  1.039074e-04  4.037430
+##   50      2       10.985409  9.910723e-03  5.020748
+##   50      3        9.380144  5.476386e-03  5.098890
+##   50      4        9.463634  2.647927e-03  5.328032
+##   50      5        9.398406  1.108209e-03  5.397391
 ## 
 ## RMSE was used to select the optimal model using the smallest value.
-## The final values used for the model were nprune = 5 and degree = 1.
+## The final values used for the model were nprune = 3 and degree = 1.
 ```
 
 ![plot of chunk PCB2_Tot_Training](figures/PCB2_Tot_Training-1.png)
 
 
 ```
-## Selected 5 of 21 terms, and 4 of 159 predictors
-## Termination condition: RSq changed by less than 0.001 at 21 terms
-## Importance: zipcode97210, SEPTI_discipline, SEPTI_total, zipcode97702, ...
-## Number of terms at each degree of interaction: 1 4 (additive model)
-## GCV 17.2069    RSS 4702.274    GRSq 0.1028649    RSq 0.1516793
+## Selected 3 of 125 terms, and 2 of 160 predictors
+## Termination condition: Reached nk 201
+## Importance: zipcode97702, MAPS_POS, totalChildren-unused, ...
+## Number of terms at each degree of interaction: 1 2 (additive model)
+## GCV 19.60483    RSS 5863.43    GRSq 0.058535    RSq 0.08282984
 ```
 
 ```
-## Call: earth(x=matrix[291,159], y=c(25,29,25,24,2...), keepxy=TRUE,
-##             degree=1, nprune=5)
+## Call: earth(x=matrix[309,160], y=c(25,29,25,24,2...), keepxy=TRUE,
+##             degree=1, nprune=3)
 ## 
-##                             coefficients
-## (Intercept)                    25.051661
-## zipcode97210                  -18.828904
-## zipcode97702                   -3.449768
-## h(SEPTI_discipline-1.13043)    -8.444283
-## h(SEPTI_total-1.05466)          7.693120
+##                      coefficients
+## (Intercept)             24.308053
+## zipcode97702            -5.103619
+## h(MAPS_POS-0.540427)     3.469822
 ## 
-## Selected 5 of 21 terms, and 4 of 159 predictors
-## Termination condition: RSq changed by less than 0.001 at 21 terms
-## Importance: zipcode97210, SEPTI_discipline, SEPTI_total, zipcode97702, ...
-## Number of terms at each degree of interaction: 1 4 (additive model)
-## GCV 17.2069    RSS 4702.274    GRSq 0.1028649    RSq 0.1516793
+## Selected 3 of 125 terms, and 2 of 160 predictors
+## Termination condition: Reached nk 201
+## Importance: zipcode97702, MAPS_POS, totalChildren-unused, ...
+## Number of terms at each degree of interaction: 1 2 (additive model)
+## GCV 19.60483    RSS 5863.43    GRSq 0.058535    RSq 0.08282984
 ```
 
 ![plot of chunk PCB2_Tot_Training-finalModel](figures/PCB2_Tot_Training-finalModel-1.png)
@@ -710,51 +696,51 @@ Train model over the tuning parameters.
 ```
 ## earth variable importance
 ## 
-##   only 20 most important variables shown (out of 159)
+##   only 20 most important variables shown (out of 160)
 ## 
-##                              Overall
-## zipcode97210                  100.00
-## SEPTI_total                    72.40
-## SEPTI_discipline               72.40
-## zipcode97702                   64.26
-## zipcode97219                    0.00
-## zipcode97227                    0.00
-## MAPS_PR                         0.00
-## zipcode97005                    0.00
-## ECBI_problem_clinical_cutoff    0.00
-## income$80,000-$119,999          0.00
-## zipcode97232                    0.00
-## parentSexMale                   0.00
-## zipcode97203                    0.00
-## childRelationshipOther          0.00
-## MAPS_SP                         0.00
-## zipcode91210                    0.00
-## zipcode97068                    0.00
-## zipcode97267                    0.00
-## zipcode97202                    0.00
-## zipcode97056                    0.00
+##                                   Overall
+## zipcode97702                       100.00
+## MAPS_POS                            58.98
+## totalChildren                        0.00
+## zipcode97760                         0.00
+## childRelationshipStepparent          0.00
+## zipcode97738                         0.00
+## income$150,000ormore                 0.00
+## zipcode97734                         0.00
+## SEPTI_total                          0.00
+## zipcode97703                         0.00
+## ECBI_intensity_T_score               0.00
+## zipcode91020                         0.00
+## MAPS_WM                              0.00
+## zipcode97213                         0.00
+## zipcode97032                         0.00
+## zipcode97068                         0.00
+## MAPS_NEG                             0.00
+## parentEthnicityPrefernottorespond    0.00
+## SEPTI_discipline                     0.00
+## zipcode97089                         0.00
 ```
 
 
 ```
-##      RMSE  Rsquared       MAE 
-## 4.0169105 0.1511992 3.0482525
+##       RMSE   Rsquared        MAE 
+## 4.34406578 0.08294009 3.27903612
 ```
 
 ```
 ##           PCB2_Tot       hat
-## PCB2_Tot 1.0000000 0.3888434
-## hat      0.3888434 1.0000000
+## PCB2_Tot 1.0000000 0.2879932
+## hat      0.2879932 1.0000000
 ```
 
 ```
-## Warning: Removed 1 rows containing non-finite values (stat_smooth).
+## Warning: Removed 2 rows containing non-finite values (stat_smooth).
 
-## Warning: Removed 1 rows containing non-finite values (stat_smooth).
+## Warning: Removed 2 rows containing non-finite values (stat_smooth).
 ```
 
 ```
-## Warning: Removed 1 rows containing missing values (geom_point).
+## Warning: Removed 2 rows containing missing values (geom_point).
 ```
 
 ![plot of chunk PCB2_Tot_Training-predict](figures/PCB2_Tot_Training-predict-1.png)
@@ -763,14 +749,14 @@ Evaluate model on the validation sample.
 
 
 ```
-##       RMSE   Rsquared        MAE 
-## 4.93309269 0.04381085 3.53335085
+##        RMSE    Rsquared         MAE 
+## 4.751960997 0.006793934 3.387031794
 ```
 
 ```
-##           PCB2_Tot       hat
-## PCB2_Tot 1.0000000 0.2093104
-## hat      0.2093104 1.0000000
+##            PCB2_Tot        hat
+## PCB2_Tot 1.00000000 0.08242532
+## hat      0.08242532 1.00000000
 ```
 
 ![plot of chunk PCB2_Tot_Validation-predict](figures/PCB2_Tot_Validation-predict-1.png)
@@ -858,114 +844,113 @@ Train model over the tuning parameters.
 ```
 ## Multivariate Adaptive Regression Spline 
 ## 
-## 293 samples
-##  52 predictor
+## 313 samples
+##  53 predictor
 ## 
 ## No pre-processing
 ## Resampling: Leave-One-Out Cross-Validation 
-## Summary of sample sizes: 290, 290, 290, 290, 290, 290, ... 
+## Summary of sample sizes: 308, 308, 308, 308, 308, 308, ... 
 ## Resampling results across tuning parameters:
 ## 
-##   nprune  degree  RMSE      Rsquared      MAE      
-##    7      1       12.32712  2.009430e-02  10.058696
-##    7      2       12.21896  4.317615e-02   9.636461
-##    7      3       12.37837  3.006925e-02   9.765708
-##    7      4       12.70828  2.935100e-02  10.146235
-##    7      5       12.71914  1.392728e-02  10.145365
-##    8      1       12.37030  1.794987e-02  10.034046
-##    8      2       12.23123  4.861387e-02   9.636687
-##    8      3       12.56989  2.568438e-02  10.029973
-##    8      4       12.63572  3.537606e-02  10.110007
-##    8      5       12.79594  1.475676e-02  10.202122
-##    9      1       12.43822  2.010606e-02  10.127254
-##    9      2       12.31161  4.336819e-02   9.613292
-##    9      3       12.69573  2.842659e-02  10.137293
-##    9      4       12.80944  3.004642e-02  10.211733
-##    9      5       13.12757  9.809694e-03  10.349492
-##   10      1       12.49666  1.977265e-02  10.147210
-##   10      2       12.50476  4.042990e-02   9.703454
-##   10      3       12.92316  2.586853e-02  10.221345
-##   10      4       13.28192  1.321945e-02  10.372328
-##   10      5       13.39544  9.230946e-03  10.531050
-##   11      1       12.53139  2.090911e-02  10.177918
-##   11      2       12.53346  4.167987e-02   9.701729
-##   11      3       12.94881  2.748159e-02  10.269900
-##   11      4       13.47318  1.010178e-02  10.526513
-##   11      5       13.51260  9.439470e-03  10.602335
-##   12      1       12.53451  2.339139e-02  10.235960
-##   12      2       13.23693  3.202573e-02  10.049339
-##   12      3       12.89794  2.987301e-02  10.205210
-##   12      4       14.01158  1.060978e-02  10.824663
-##   12      5       13.77300  5.866674e-03  10.771539
-##   13      1       12.44749  3.122845e-02  10.089581
-##   13      2       13.44061  3.359467e-02  10.179769
-##   13      3       13.40586  1.681598e-02  10.433033
-##   13      4       14.34384  7.027744e-03  11.025874
-##   13      5       13.80584  7.351555e-03  10.819936
-##   14      1       12.25705  4.396624e-02   9.867603
-##   14      2       13.65732  2.759229e-02  10.399833
-##   14      3       13.40003  1.441896e-02  10.575499
-##   14      4       14.48881  6.028837e-03  11.142070
-##   14      5       13.92394  6.800597e-03  10.955955
-##   15      1       12.37534  4.558418e-02   9.924832
-##   15      2       13.96899  2.010715e-02  10.760884
-##   15      3       13.26719  2.346080e-02  10.449836
-##   15      4       14.50945  6.812591e-03  11.131647
-##   15      5       13.86700  7.140333e-03  10.978423
-##   20      1       12.52026  4.918368e-02   9.983306
-##   20      2       14.06042  2.726452e-02  10.847855
-##   20      3       13.82238  2.244627e-02  10.905099
-##   20      4       15.43765  5.824365e-03  11.861205
-##   20      5       19.40864  4.437626e-03  12.132031
-##   30      1       13.06894  3.717178e-02  10.403372
-##   30      2       14.30008  2.300390e-02  11.036977
-##   30      3       15.34716  1.007147e-02  11.629751
-##   30      4       19.58483  6.077510e-05  12.135875
-##   30      5       22.23236  2.221242e-03  13.715273
-##   40      1       13.08981  3.666990e-02  10.417264
-##   40      2       14.36851  2.058011e-02  11.091417
-##   40      3       15.56124  1.137947e-02  11.653653
-##   40      4       19.93117  1.486863e-04  12.653679
-##   40      5       22.94263  2.497851e-03  14.178522
-##   50      1       13.11637  3.541812e-02  10.444405
-##   50      2       14.36538  2.066534e-02  11.089985
-##   50      3       15.55101  1.190112e-02  11.664168
-##   50      4       20.31558  5.675126e-05  12.885520
-##   50      5       23.12094  2.530371e-03  14.355351
+##   nprune  degree  RMSE       Rsquared     MAE      
+##    7      1        12.25809  0.032861943   9.765868
+##    7      2        12.57304  0.053111917   9.782459
+##    7      3        13.23303  0.017085486   9.926078
+##    7      4        12.54847  0.036799663   9.797720
+##    7      5        12.55646  0.046180451   9.858850
+##    8      1        12.29530  0.032501173   9.784480
+##    8      2        12.64184  0.051491778   9.784639
+##    8      3        13.08942  0.023189558   9.906610
+##    8      4        12.41917  0.047417832   9.714098
+##    8      5        12.56283  0.048466052   9.827087
+##    9      1        12.30662  0.033424297   9.817277
+##    9      2        12.79154  0.047248316   9.881404
+##    9      3        13.18005  0.027751942   9.897018
+##    9      4        12.53848  0.045876434   9.794338
+##    9      5        12.69643  0.048171446   9.937693
+##   10      1        12.47259  0.031615272  10.004555
+##   10      2        12.73206  0.050573858   9.830126
+##   10      3        13.45884  0.025774869   9.897238
+##   10      4        13.26012  0.031090985  10.026267
+##   10      5        12.73985  0.045392039   9.948808
+##   11      1        12.53084  0.035036386  10.065840
+##   11      2        12.98769  0.041308548  10.023772
+##   11      3        13.34721  0.030389835   9.884660
+##   11      4        13.34790  0.030197492  10.104084
+##   11      5        12.74606  0.047804977   9.994599
+##   12      1        12.64403  0.036142719  10.103660
+##   12      2        13.10650  0.038759679  10.041388
+##   12      3        13.30184  0.034022123   9.917948
+##   12      4        13.35860  0.030694835   9.995172
+##   12      5        12.87767  0.045596761  10.004254
+##   13      1        12.70745  0.038239506  10.193649
+##   13      2        13.12632  0.033710672  10.035960
+##   13      3        13.24654  0.042525134   9.859018
+##   13      4        13.38773  0.035986123   9.909382
+##   13      5        12.92645  0.046611979  10.016671
+##   14      1        12.73360  0.039270176  10.293989
+##   14      2        13.12369  0.039393245   9.972609
+##   14      3        13.27647  0.042818532   9.781081
+##   14      4        31.82487  0.004814939  11.645913
+##   14      5        31.65046  0.004891614  11.787915
+##   15      1        12.83376  0.036029041  10.358566
+##   15      2        13.09317  0.042990551   9.991400
+##   15      3        13.24331  0.045520656   9.758137
+##   15      4        32.11659  0.004551526  11.714862
+##   15      5       212.78487  0.005721525  23.806491
+##   20      1        13.04934  0.036120007  10.374992
+##   20      2        13.19741  0.051391497  10.139349
+##   20      3        13.94730  0.030112474  10.393658
+##   20      4       176.12804  0.005306590  21.642973
+##   20      5       219.40073  0.005832624  24.414292
+##   30      1        13.19958  0.039196918  10.545087
+##   30      2        15.12577  0.029942074  10.674887
+##   30      3        15.33600  0.016111128  10.945001
+##   30      4       193.29108  0.005517351  23.209361
+##   30      5       217.53164  0.005855084  24.715147
+##   40      1        13.29884  0.042195926  10.627378
+##   40      2        15.13838  0.029766245  10.691327
+##   40      3        16.07038  0.013978861  11.184455
+##   40      4       201.17879  0.005292169  23.907106
+##   40      5       201.55602  0.005413242  24.048149
+##   50      1        13.29554  0.043066379  10.614669
+##   50      2        15.13838  0.029766245  10.691327
+##   50      3        16.07363  0.014638455  11.224486
+##   50      4       210.52203  0.005311185  24.534087
+##   50      5       231.06804  0.005542658  26.184926
 ## 
 ## RMSE was used to select the optimal model using the smallest value.
-## The final values used for the model were nprune = 7 and degree = 2.
+## The final values used for the model were nprune = 7 and degree = 1.
 ```
 
 ![plot of chunk PCB3_Total_Training](figures/PCB3_Total_Training-1.png)
 
 
 ```
-## Selected 7 of 37 terms, and 7 of 159 predictors
-## Termination condition: RSq changed by less than 0.001 at 37 terms
-## Importance: MAPS_LC, MAPS_PC, SEPTI_nurturance, childAge, ECBI_Opp, ...
-## Number of terms at each degree of interaction: 1 2 4
-## GCV 117.6639    RSS 30578.46    GRSq 0.1664208    RSq 0.250423
+## Selected 6 of 125 terms, and 4 of 160 predictors
+## Termination condition: Reached nk 201
+## Importance: SEPTI_discipline, SEPTI_nurturance, zipcode97702, ...
+## Number of terms at each degree of interaction: 1 5 (additive model)
+## GCV 126.1607    RSS 36257.51    GRSq 0.1200511    RSq 0.1762631
 ```
 
 ```
-## Call: earth(x=matrix[291,159], y=c(58,54,64,53,4...), keepxy=TRUE,
-##             degree=2, nprune=7)
+## Call: earth(x=matrix[309,160], y=c(58,54,64,53,4...), keepxy=TRUE,
+##             degree=1, nprune=7)
 ## 
-##                                                       coefficients
-## (Intercept)                                              47.691807
-## h(-1.20749-parentAge)                                    14.329552
-## h(-1.22955-SEPTI_nurturance)                              7.569124
-## h(parentAge- -1.20749) * parentMaritalStatusSeparated    17.596539
-## h(childAge- -0.525913) * h(0.167133-MAPS_LC)             -3.567605
-## h(ECBI_Opp- -1.02458) * h(SEPTI_nurturance-0.170631)      5.158189
-## h(0.167133-MAPS_LC) * h(MAPS_PC- -0.375671)              -4.414231
+##                                      coefficients
+## (Intercept)                             37.563743
+## zipcode97702                            -8.786946
+## h(ECBI_intensity_T_score- -0.101729)     2.171136
+## h(SEPTI_nurturance- -1.51673)            5.624786
+## h(-0.0841729-SEPTI_nurturance)           6.901875
+## h(SEPTI_discipline-0.794477)           -10.933372
 ## 
-## Selected 7 of 37 terms, and 7 of 159 predictors
-## Termination condition: RSq changed by less than 0.001 at 37 terms
-## Importance: MAPS_LC, MAPS_PC, SEPTI_nurturance, childAge, ECBI_Opp, ...
-## Number of terms at each degree of interaction: 1 2 4
-## GCV 117.6639    RSS 30578.46    GRSq 0.1664208    RSq 0.250423
+## Selected 6 of 125 terms, and 4 of 160 predictors
+## Termination condition: Reached nk 201
+## Importance: SEPTI_discipline, SEPTI_nurturance, zipcode97702, ...
+## Number of terms at each degree of interaction: 1 5 (additive model)
+## GCV 126.1607    RSS 36257.51    GRSq 0.1200511    RSq 0.1762631
 ```
 
 ![plot of chunk PCB3_Total_Training-finalModel](figures/PCB3_Total_Training-finalModel-1.png)
@@ -973,51 +958,51 @@ Train model over the tuning parameters.
 ```
 ## earth variable importance
 ## 
-##   only 20 most important variables shown (out of 159)
+##   only 20 most important variables shown (out of 160)
 ## 
-##                                   Overall
-## MAPS_LC                            100.00
-## MAPS_PC                             85.56
-## SEPTI_nurturance                    85.23
-## childAge                            74.07
-## ECBI_Opp                            67.71
-## parentMaritalStatusSeparated        40.00
-## parentAge                           40.00
-## SEPTI_play                           0.00
-## zipcode97239                         0.00
-## parentGenderFemale                   0.00
-## zipcode97123                         0.00
-## MAPS_NEG                             0.00
-## zipcode97738                         0.00
-## parentRaceAsian1                     0.00
-## parentMaritalStatusNevermarried      0.00
-## zipcode97213                         0.00
-## zipcode97032                         0.00
-## parentEthnicityPrefernottorespond    0.00
-## SEPTI_p_clinical_cutoff              0.00
-## SEPTI_r_clinical_cutoff              0.00
+##                                             Overall
+## SEPTI_discipline                            100.000
+## SEPTI_nurturance                             73.094
+## zipcode97702                                 35.829
+## ECBI_intensity_T_score                        6.116
+## ECBI_Inatt                                    0.000
+## zipcode97220                                  0.000
+## zipcode97225                                  0.000
+## zipcode97034                                  0.000
+## childRelationshipStepparent                   0.000
+## SEPTI_n_clinical_cutoff                       0.000
+## communitySuburban                             0.000
+## zipcode97741                                  0.000
+## childRelationshipBiologicaloradoptivefather   0.000
+## MAPS_PR                                       0.000
+## zipcode97759                                  0.000
+## zipcode97027                                  0.000
+## parentEthnicityUnknown                        0.000
+## MAPS_HS                                       0.000
+## SEPTI_p_clinical_cutoff                       0.000
+## childAge                                      0.000
 ```
 
 
 ```
 ##       RMSE   Rsquared        MAE 
-## 10.2524982  0.2506547  8.3203397
+## 10.8579992  0.1793122  8.7998279
 ```
 
 ```
 ##           PCB2_Tot       hat
-## PCB2_Tot 1.0000000 0.2350039
-## hat      0.2350039 1.0000000
+## PCB2_Tot 1.0000000 0.2262749
+## hat      0.2262749 1.0000000
 ```
 
 ```
-## Warning: Removed 1 rows containing non-finite values (stat_smooth).
+## Warning: Removed 2 rows containing non-finite values (stat_smooth).
 
-## Warning: Removed 1 rows containing non-finite values (stat_smooth).
+## Warning: Removed 2 rows containing non-finite values (stat_smooth).
 ```
 
 ```
-## Warning: Removed 1 rows containing missing values (geom_point).
+## Warning: Removed 2 rows containing missing values (geom_point).
 ```
 
 ![plot of chunk PCB3_Total_Training-predict](figures/PCB3_Total_Training-predict-1.png)
@@ -1027,13 +1012,13 @@ Evaluate model on the validation sample.
 
 ```
 ##       RMSE   Rsquared        MAE 
-## 11.7977230  0.1799826  9.2805942
+## 11.9215783  0.1123261  9.7539097
 ```
 
 ```
 ##            PCB3_Total       hat
-## PCB3_Total  1.0000000 0.4242435
-## hat         0.4242435 1.0000000
+## PCB3_Total  1.0000000 0.3351509
+## hat         0.3351509 1.0000000
 ```
 
 ![plot of chunk PCB3_TotalValidation-predict](figures/PCB3_TotalValidation-predict-1.png)
