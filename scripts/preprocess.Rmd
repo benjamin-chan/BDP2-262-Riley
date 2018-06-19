@@ -56,7 +56,7 @@ dfTrainPreProc3 <- predict(preProc, dfTrainPreProc2)
 dfTrainPreProc <- bind_cols(dfOutcomes, dfTrainPreProc3)
 message(sprintf("Number of complete cases after imputation = %d",
                 complete.cases(dfTrainPreProc) %>% sum()))
-save(dfTrainPreProc, dfValid, dfTrain, df, file = "data/processed/dataframes.RData")
+save(dfTrainPreProc, dfValid, dfTrain, nzv, preProc, df, file = "data/processed/dataframes.RData")
 rm(dfTrainPreProc1, dfTrainPreProc2, dfTrainPreProc3)
 ```
 
