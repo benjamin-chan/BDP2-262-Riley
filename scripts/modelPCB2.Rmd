@@ -8,6 +8,8 @@ Prediction model for `PCB2_Total`.
 Train model over the tuning parameters.
 
 ```{r PCB2_Tot_Training}
+grid <- expand.grid(nprune = seq(2, 12, 1),
+                    degree = seq(5))
 cl <- makeCluster(cores)
 registerDoParallel(cl)
 trainingModel <-
