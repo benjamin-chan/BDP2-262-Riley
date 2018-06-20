@@ -31,10 +31,11 @@ save(trainingModel, file = "output/PCB3_Total_Training.RData")
 ```
 
 ```{r PCB3_Total_Training-finalModel}
-trainingModel$finalModel
-summary(trainingModel$finalModel)
-plot(trainingModel$finalModel)
-varImp(trainingModel)
+M <- trainingModel[["finalModel"]]
+summary(M)
+plot(M)
+evimp(M)
+plotmo(M)
 ```
 
 ```{r PCB3_Total_Training-predict}
