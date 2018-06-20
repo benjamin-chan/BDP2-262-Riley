@@ -63,7 +63,9 @@ rm(dfTrainPreProc1, dfTrainPreProc2, dfTrainPreProc3)
 Set the control parameters.
 
 ```{r, echo = TRUE}
-ctrl <- trainControl(method = "LOOCV",
+ctrl <- trainControl(method = "repeatedcv",
+                     number = 10,
+                     repeats = 20,
                      savePredictions = TRUE,
                      allowParallel = TRUE,
                      search = "random")
