@@ -75,9 +75,9 @@ Set the model and tuning parameter grid.
 ```{r, echo = TRUE}
 library(earth)
 citation("earth")
-method <- "earth"
+method <- "bagEarth"
 modelLookup(method) %>% kable()
-grid <- expand.grid(nprune = c(seq(2, 9, 1), seq(10, 50, 10)),
-                    degree = seq(5))
+grid <- expand.grid(nprune = seq(10, 100, 10),
+                    degree = seq(3))
 grid %>% kable()
 ```

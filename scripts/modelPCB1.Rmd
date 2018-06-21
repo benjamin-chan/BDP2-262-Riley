@@ -27,7 +27,18 @@ trainingModel %>%
 save(trainingModel, file = "output/PCB1_Total_Training.RData")
 ```
 
-```{r PCB1_Total_Training-finalModel}
+```{r PCB1_Total_Training-varImp}
+imp <- varImp(trainingModel)
+n <- imp[["importance"]] %>% filter(Overall > 0) %>% nrow()
+plot(imp, top = n)
+imp[["importance"]] %>% 
+  mutate(variable = row.names(.)) %>% 
+  filter(Overall > 0) %>% 
+  select(variable, Overall) %>%
+  kable()
+```
+
+```{r PCB1_Total_Training-finalModel, eval = FALSE}
 M <- trainingModel[["finalModel"]]
 summary(M)
 plot(M)

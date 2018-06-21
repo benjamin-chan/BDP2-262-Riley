@@ -8,8 +8,6 @@ Prediction model for `PCB2_Total`.
 Train model over the tuning parameters.
 
 ```{r PCB2_Tot_Training}
-grid <- expand.grid(nprune = seq(2, 12, 1),
-                    degree = seq(5))
 cl <- makeCluster(cores)
 registerDoParallel(cl)
 trainingModel <-
@@ -29,7 +27,18 @@ trainingModel %>%
 save(trainingModel, file = "output/PCB2_Tot_Training.RData")
 ```
 
-```{r PCB2_Tot_Training-finalModel}
+```{r PCB2_Total_Training-varImp}
+imp <- varImp(trainingModel)
+n <- imp[["importance"]] %>% filter(Overall > 0) %>% nrow()
+plot(imp, top = n)
+imp[["importance"]] %>% 
+  mutate(variable = row.names(.)) %>% 
+  filter(Overall > 0) %>% 
+  select(variable, Overall) %>%
+  kable()
+```
+
+```{r PCB2_Tot_Training-finalModel, eval = FALSE}
 M <- trainingModel[["finalModel"]]
 summary(M)
 plot(M)

@@ -8,9 +8,6 @@ Prediction model for `PCB3_Total`.
 Train model over the tuning parameters.
 
 ```{r PCB3_Total_Training}
-grid <- expand.grid(nprune = c(seq(7, 15, 1), seq(20, 50, 10)),
-                    degree = seq(5))
-grid %>% kable()
 cl <- makeCluster(cores)
 registerDoParallel(cl)
 trainingModel <-
@@ -30,7 +27,18 @@ trainingModel %>%
 save(trainingModel, file = "output/PCB3_Total_Training.RData")
 ```
 
-```{r PCB3_Total_Training-finalModel}
+```{r PCB3_Total_Training-varImp}
+imp <- varImp(trainingModel)
+n <- imp[["importance"]] %>% filter(Overall > 0) %>% nrow()
+plot(imp, top = n)
+imp[["importance"]] %>% 
+  mutate(variable = row.names(.)) %>% 
+  filter(Overall > 0) %>% 
+  select(variable, Overall) %>%
+  kable()
+```
+
+```{r PCB3_Tot_Training-finalModel, eval = FALSE}
 M <- trainingModel[["finalModel"]]
 summary(M)
 plot(M)
