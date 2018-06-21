@@ -3,7 +3,7 @@
 Initial preprocesssing that needs to be done that is common to `PCB1_Total`, `PCB2_Tot`, and `PCB3_Total`.
 
 ```{r, echo = TRUE}
-p <- 0.70
+p <- 0.75
 ```
 
 Split data set into `r sprintf("%.00f:%.00f", p * 100, (1 - p) * 100)` training:validation samples.
@@ -63,7 +63,9 @@ rm(dfTrainPreProc1, dfTrainPreProc2, dfTrainPreProc3)
 Set the control parameters.
 
 ```{r, echo = TRUE}
-ctrl <- trainControl(method = "oob",
+ctrl <- trainControl(method = "repeatedcv",
+                     number = 10,
+                     repeats = 10,
                      savePredictions = TRUE,
                      allowParallel = TRUE,
                      search = "random")
@@ -77,7 +79,7 @@ library(earth)
 citation("earth")
 method <- "bagEarth"
 modelLookup(method) %>% kable()
-grid <- expand.grid(nprune = seq(10, 100, 10),
+grid <- expand.grid(nprune = seq(10, 20, 5),
                     degree = seq(3))
 grid %>% kable()
 ```
