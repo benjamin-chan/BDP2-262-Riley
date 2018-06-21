@@ -56,16 +56,14 @@ dfTrainPreProc3 <- predict(preProc, dfTrainPreProc2)
 dfTrainPreProc <- bind_cols(dfOutcomes, dfTrainPreProc3)
 message(sprintf("Number of complete cases after imputation = %d",
                 complete.cases(dfTrainPreProc) %>% sum()))
-save(dfTrainPreProc, dfValid, dfTrain, df, file = "data/processed/dataframes.RData")
+save(dfTrainPreProc, dfValid, dfTrain, npz, preProc, df, file = "data/processed/dataframes.RData")
 rm(dfTrainPreProc1, dfTrainPreProc2, dfTrainPreProc3)
 ```
 
 Set the control parameters.
 
 ```{r, echo = TRUE}
-ctrl <- trainControl(method = "repeatedcv",
-                     number = 10,
-                     repeats = 20,
+ctrl <- trainControl(method = "oob",
                      savePredictions = TRUE,
                      allowParallel = TRUE,
                      search = "random")
