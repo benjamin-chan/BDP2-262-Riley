@@ -1,6 +1,6 @@
 ---
 title: "Parent and Provider Perceptions of Behavioral Healthcare in Pediatric Primary Care (PI: Andrew Riley; BDP2-262)"
-date: "2018-06-21"
+date: "2018-06-22"
 author: Benjamin Chan (chanb@ohsu.edu)
 output:
   html_document:
@@ -250,7 +250,7 @@ Set the control parameters.
 ```r
 ctrl <- trainControl(method = "repeatedcv",
                      number = 10,
-                     repeats = 10,
+                     repeats = 20,
                      savePredictions = TRUE,
                      allowParallel = TRUE,
                      search = "random")
@@ -306,36 +306,28 @@ citation("earth")
 ```
 
 ```r
-method <- "bagEarth"
+method <- "bagEarthGCV"
 modelLookup(method) %>% kable()
 ```
 
 
 
-|model    |parameter |label          |forReg |forClass |probModel |
-|:--------|:---------|:--------------|:------|:--------|:---------|
-|bagEarth |nprune    |#Terms         |TRUE   |TRUE     |TRUE      |
-|bagEarth |degree    |Product Degree |TRUE   |TRUE     |TRUE      |
+|model       |parameter |label          |forReg |forClass |probModel |
+|:-----------|:---------|:--------------|:------|:--------|:---------|
+|bagEarthGCV |degree    |Product Degree |TRUE   |TRUE     |TRUE      |
 
 ```r
-grid <- expand.grid(nprune = seq(10, 20, 5),
-                    degree = seq(3))
+grid <- expand.grid(degree = seq(3))
 grid %>% kable()
 ```
 
 
 
-| nprune| degree|
-|------:|------:|
-|     10|      1|
-|     15|      1|
-|     20|      1|
-|     10|      2|
-|     15|      2|
-|     20|      2|
-|     10|      3|
-|     15|      3|
-|     20|      3|
+| degree|
+|------:|
+|      1|
+|      2|
+|      3|
 
 
 
@@ -350,61 +342,117 @@ Train model over the tuning parameters.
 
 
 ```
-## Bagged MARS 
+## Bagged MARS using gCV Pruning 
 ## 
 ## 293 samples
 ##  52 predictor
 ## 
 ## No pre-processing
-## Resampling: Cross-Validated (10 fold, repeated 10 times) 
+## Resampling: Cross-Validated (10 fold, repeated 20 times) 
 ## Summary of sample sizes: 261, 263, 263, 261, 261, 262, ... 
 ## Resampling results across tuning parameters:
 ## 
-##   degree  nprune  RMSE          Rsquared    MAE         
-##   1       10      1.571885e+01  0.05996945  1.275101e+01
-##   1       15      1.582183e+01  0.06373775  1.274998e+01
-##   1       20      1.593687e+01  0.06469649  1.277748e+01
-##   2       10      1.588415e+01  0.04811756  1.291793e+01
-##   2       15      1.596281e+01  0.05917021  1.289269e+01
-##   2       20      1.627784e+01  0.05051353  1.307774e+01
-##   3       10      1.499890e+12  0.04422846  3.872698e+11
-##   3       15      1.616421e+01  0.04741627  1.308879e+01
-##   3       20      1.634456e+01  0.04983544  1.312992e+01
+##   degree  RMSE          Rsquared    MAE         
+##   1       1.821749e+01  0.06013124  1.430473e+01
+##   2       1.309577e+13  0.05276993  2.390950e+12
+##   3       2.482500e+12  0.05203416  4.532125e+11
 ## 
 ## RMSE was used to select the optimal model using the smallest value.
-## The final values used for the model were nprune = 10 and degree = 1.
+## The final value used for the model was degree = 1.
+```
+
+```
+## Error in FUN(X[[i]], ...): object 'nprune' not found
 ```
 
 ![plot of chunk PCB1_Total_Training](figures/PCB1_Total_Training-1.png)
 
 ![plot of chunk PCB1_Total_Training-varImp](figures/PCB1_Total_Training-varImp-1.png)
 
-|variable                |     Overall|
-|:-----------------------|-----------:|
-|SEPTI_discipline        | 100.0000000|
-|SEPTI_total             |  80.4034793|
-|SEPTI_r_clinical_cutoff |  74.5634750|
-|MAPS_NEG                |  64.6882762|
-|MAPS_HS                 |  51.0947502|
-|MAPS_PR                 |  34.2961700|
-|SEPTI_nurturance        |  27.0573834|
-|totalChildren           |  16.4343935|
-|birthOrderOldest        |   6.6010670|
-|birthOrderMiddle        |   1.7015245|
-|birthOrderYoungest      |   0.3031786|
+|variable                                    |     Overall|
+|:-------------------------------------------|-----------:|
+|zipcode97702                                | 100.0000000|
+|ECBI_Opp                                    |  95.1423362|
+|MAPS_WM                                     |  92.4490111|
+|MAPS_HS                                     |  89.4297151|
+|MAPS_POS                                    |  87.1489061|
+|ECBI_intensity_clinical_cutoff              |  85.1863429|
+|MAPS_LC                                     |  83.1627467|
+|MAPS_SP                                     |  82.0550661|
+|parentAge                                   |  79.7473137|
+|MAPS_PR                                     |  78.8376960|
+|zipcode97008                                |  76.7331070|
+|SEPTI_discipline                            |  74.3887637|
+|ECBI_problem_T_score                        |  72.4667590|
+|MAPS_PP                                     |  70.9275620|
+|zipcode97267                                |  69.4107696|
+|childAge                                    |  68.2812084|
+|SEPTI_total                                 |  67.3097773|
+|totalChildren                               |  65.9981372|
+|parentMaritalStatusWidowed                  |  64.9578470|
+|distance                                    |  64.2898984|
+|SEPTI_play                                  |  63.1540406|
+|SEPTI_routine                               |  62.0105772|
+|SEPTI_r_clinical_cutoff                     |  61.4179495|
+|zipcode97213                                |  60.9031193|
+|parentMaritalStatusDivorced                 |  59.4652257|
+|zipcode97034                                |  58.3724419|
+|parentRaceWhite1                            |  57.3063930|
+|zipcode97701                                |  56.1720885|
+|childRelationshipBiologicaloradoptivefather |  55.5863526|
+|MAPS_PC                                     |  54.8113188|
+|childRaceAsian1                             |  52.4017507|
+|parentRaceAsian1                            |  51.6165790|
+|parentEducationVocationalschool/somecollege |  50.1993797|
+|income$25,001-$49,999                       |  47.9269638|
+|parentMaritalStatusSeparated                |  46.6740546|
+|zipcode97217                                |  45.4044035|
+|ECBI_Inatt                                  |  42.1588746|
+|zipcode97209                                |  41.8974155|
+|zipcode97321                                |  37.9988214|
+|income$150,000ormore                        |  37.2586678|
+|zipcode97123                                |  35.4440682|
+|zipcode97007                                |  32.3387929|
+|communityRural                              |  29.5192926|
+|ECBI_Cond                                   |  27.8254979|
+|SEPTI_nurturance                            |  24.4732610|
+|ECBI_intensity_T_score                      |  23.1568006|
+|zipcode97741                                |  20.3365841|
+|income$120,000-$149,999                     |  16.8509702|
+|zipcode91204                                |  13.4967078|
+|zipcode97325                                |  10.2749457|
+|zipcode97202                                |  10.9584923|
+|parentGenderPrefernottorespond              |   7.1701510|
+|birthOrderOldest                            |   5.3182053|
+|birthOrderMiddle                            |   4.6201480|
+|birthOrderYoungest                          |   2.6401363|
+|childSexMale                                |   2.8809568|
+|childEthnicityNotHispanic/Latino            |   1.6331270|
+|childEthnicityUnknown                       |   1.0338433|
+|childEthnicityPrefernottorespond            |   0.1082749|
 
 
 
 
 ```
-##       RMSE   Rsquared        MAE 
-## 13.4710259  0.3753966 11.0183806
+##      RMSE  Rsquared       MAE 
+## 8.2604775 0.7443193 6.3972102
 ```
 
 ```
 ##           PCB2_Tot       hat
-## PCB2_Tot 1.0000000 0.4271217
-## hat      0.4271217 1.0000000
+## PCB2_Tot 1.0000000 0.6004739
+## hat      0.6004739 1.0000000
+```
+
+```
+## Warning: Removed 1 rows containing non-finite values (stat_smooth).
+
+## Warning: Removed 1 rows containing non-finite values (stat_smooth).
+```
+
+```
+## Warning: Removed 1 rows containing missing values (geom_point).
 ```
 
 ![plot of chunk PCB1_Total_Training-predict](figures/PCB1_Total_Training-predict-1.png)
@@ -413,14 +461,14 @@ Evaluate model on the validation sample.
 
 
 ```
-##       RMSE   Rsquared        MAE 
-## 17.7696990  0.1167261 13.7208645
+##        RMSE    Rsquared         MAE 
+## 21.10605401  0.04110692 16.48863797
 ```
 
 ```
-##            PCB1_Total      hat
-## PCB1_Total   1.000000 0.341652
-## hat          0.341652 1.000000
+##            PCB1_Total       hat
+## PCB1_Total  1.0000000 0.2027484
+## hat         0.2027484 1.0000000
 ```
 
 ![plot of chunk PCB1_Total_Validation-predict](figures/PCB1_Total_Validation-predict-1.png)
@@ -438,60 +486,120 @@ Train model over the tuning parameters.
 
 
 ```
-## Bagged MARS 
+## Bagged MARS using gCV Pruning 
 ## 
 ## 293 samples
 ##  52 predictor
 ## 
 ## No pre-processing
-## Resampling: Cross-Validated (10 fold, repeated 10 times) 
-## Summary of sample sizes: 261, 263, 263, 261, 260, 260, ... 
+## Resampling: Cross-Validated (10 fold, repeated 20 times) 
+## Summary of sample sizes: 261, 262, 262, 263, 261, 262, ... 
 ## Resampling results across tuning parameters:
 ## 
-##   degree  nprune  RMSE          Rsquared    MAE         
-##   1       10      4.288278e+00  0.06912790  3.269298e+00
-##   1       15      4.328109e+00  0.07278534  3.288822e+00
-##   1       20      4.393488e+00  0.07128532  3.343040e+00
-##   2       10      2.188196e+11  0.04264548  4.063377e+10
-##   2       15      4.406090e+00  0.05322091  3.402515e+00
-##   2       20      1.096660e+11  0.05034982  2.036446e+10
-##   3       10      4.416661e+00  0.04413874  3.404673e+00
-##   3       15      4.451808e+00  0.05111676  3.429102e+00
-##   3       20      7.983800e+11  0.04758688  1.482554e+11
+##   degree  RMSE          Rsquared    MAE         
+##   1       5.203604e+00  0.04784954  4.011785e+00
+##   2       5.749949e+12  0.05354628  1.159846e+12
+##   3       2.571461e+13  0.04490828  6.047834e+12
 ## 
 ## RMSE was used to select the optimal model using the smallest value.
-## The final values used for the model were nprune = 10 and degree = 1.
+## The final value used for the model was degree = 1.
+```
+
+```
+## Error in FUN(X[[i]], ...): object 'nprune' not found
 ```
 
 ![plot of chunk PCB2_Tot_Training](figures/PCB2_Tot_Training-1.png)
 
 ![plot of chunk PCB2_Total_Training-varImp](figures/PCB2_Total_Training-varImp-1.png)
 
-|variable         |     Overall|
-|:----------------|-----------:|
-|MAPS_PR          | 100.0000000|
-|zipcode97210     |  83.3938402|
-|SEPTI_play       |  70.2818956|
-|zipcode97702     |  58.0023619|
-|ECBI_Cond        |  43.4621445|
-|MAPS_HS          |  34.3397723|
-|ECBI_Opp         |  24.6665942|
-|SEPTI_discipline |  12.5197451|
-|SEPTI_total      |   5.9716309|
-|birthOrderOldest |   0.9462077|
+|variable                                        |     Overall|
+|:-----------------------------------------------|-----------:|
+|zipcode97210                                    | 100.0000000|
+|zipcode97702                                    |  94.2770055|
+|zipcode97123                                    |  90.0791049|
+|MAPS_POS                                        |  86.4804346|
+|MAPS_HS                                         |  83.4947988|
+|ECBI_intensity_T_score                          |  80.7756726|
+|MAPS_LC                                         |  78.8423767|
+|ECBI_Cond                                       |  76.7020680|
+|SEPTI_nurturance                                |  75.0327444|
+|SEPTI_play                                      |  72.2944827|
+|SEPTI_discipline                                |  70.0485301|
+|SEPTI_total                                     |  67.7753444|
+|SEPTI_routine                                   |  65.1535846|
+|zipcodeClass2                                   |  63.5829490|
+|parentEthnicityNotHispanic/Latino               |  61.5363124|
+|parentMaritalStatusDivorced                     |  60.6728621|
+|childRelationshipGrandparent                    |  59.8079635|
+|ECBI_problem_T_score                            |  58.9293405|
+|MAPS_PC                                         |  58.0230895|
+|parentAge                                       |  57.2415328|
+|zipcode97219                                    |  56.8178257|
+|parentGenderTransgender                         |  55.6132741|
+|parentEthnicityPrefernottorespond               |  54.7559882|
+|parentEducationCollege                          |  53.6997873|
+|totalChildren                                   |  52.2738312|
+|childRaceNoResp1                                |  51.3895271|
+|distance                                        |  50.5564658|
+|zipcode97051                                    |  49.7238935|
+|parentsNumber                                   |  48.7170190|
+|zipcode98683                                    |  47.4458389|
+|ECBI_Inatt                                      |  46.3317957|
+|MAPS_PP                                         |  45.2684518|
+|income$120,000-$149,999                         |  44.0542834|
+|MAPS_SP                                         |  42.8167100|
+|zipcode97202                                    |  41.5936568|
+|zipcode97760                                    |  39.9734729|
+|childRelationshipOther                          |  37.8928306|
+|zipcode97223                                    |  37.0629124|
+|zipcode97214                                    |  35.6678819|
+|zipcode97006                                    |  33.4299173|
+|zipcode97089                                    |  31.4163919|
+|MAPS_PR                                         |  29.3262442|
+|childAge                                        |  28.4863545|
+|zipcode97221                                    |  24.3200830|
+|zipcode97321                                    |  23.8481316|
+|parentSituationCo-parentinginseparatehouseholds |  22.0287152|
+|zipcode97023                                    |  19.3600558|
+|ECBI_Opp                                        |  17.0328955|
+|zipcode97224                                    |  12.6819585|
+|zipcode97008                                    |  12.2500076|
+|income$50,000-$79,999                           |  11.8281168|
+|communitySuburban                               |   9.0349903|
+|zipcode97741                                    |   6.6044786|
+|parentMaritalStatusSeparated                    |   4.4790082|
+|zipcode97034                                    |   3.9249143|
+|parentSexMale                                   |   3.8487219|
+|birthOrderOldest                                |   1.8346305|
+|birthOrderMiddle                                |   2.3619344|
+|birthOrderYoungest                              |   1.3983158|
+|childSexMale                                    |   0.6393080|
+|childEthnicityNotHispanic/Latino                |   0.3877540|
+|childEthnicityUnknown                           |   0.1531885|
 
 
 
 
 ```
-##      RMSE  Rsquared       MAE 
-## 3.6768978 0.3548545 2.8346904
+##     RMSE Rsquared      MAE 
+## 2.438999 0.704847 1.823458
 ```
 
 ```
 ##           PCB2_Tot       hat
-## PCB2_Tot 1.0000000 0.5956967
-## hat      0.5956967 1.0000000
+## PCB2_Tot 1.0000000 0.8395517
+## hat      0.8395517 1.0000000
+```
+
+```
+## Warning: Removed 1 rows containing non-finite values (stat_smooth).
+
+## Warning: Removed 1 rows containing non-finite values (stat_smooth).
+```
+
+```
+## Warning: Removed 1 rows containing missing values (geom_point).
 ```
 
 ![plot of chunk PCB2_Tot_Training-predict](figures/PCB2_Tot_Training-predict-1.png)
@@ -501,13 +609,13 @@ Evaluate model on the validation sample.
 
 ```
 ##       RMSE   Rsquared        MAE 
-## 4.90429787 0.05793291 3.48051802
+## 6.13500929 0.01165006 4.32610263
 ```
 
 ```
 ##           PCB2_Tot       hat
-## PCB2_Tot 1.0000000 0.2406926
-## hat      0.2406926 1.0000000
+## PCB2_Tot 1.0000000 0.1079355
+## hat      0.1079355 1.0000000
 ```
 
 ![plot of chunk PCB2_Tot_Validation-predict](figures/PCB2_Tot_Validation-predict-1.png)
@@ -525,29 +633,27 @@ Train model over the tuning parameters.
 
 
 ```
-## Bagged MARS 
+## Bagged MARS using gCV Pruning 
 ## 
 ## 293 samples
 ##  52 predictor
 ## 
 ## No pre-processing
-## Resampling: Cross-Validated (10 fold, repeated 10 times) 
-## Summary of sample sizes: 262, 262, 261, 260, 264, 263, ... 
+## Resampling: Cross-Validated (10 fold, repeated 20 times) 
+## Summary of sample sizes: 262, 263, 260, 262, 261, 261, ... 
 ## Resampling results across tuning parameters:
 ## 
-##   degree  nprune  RMSE          Rsquared    MAE         
-##   1       10      1.152058e+01  0.09284743  9.458325e+00
-##   1       15      1.162932e+01  0.09130670  9.493463e+00
-##   1       20      1.180795e+01  0.08500503  9.612823e+00
-##   2       10      1.158265e+01  0.09530778  9.469467e+00
-##   2       15      1.167098e+01  0.09193467  9.537216e+00
-##   2       20      1.195410e+01  0.08140250  9.670153e+00
-##   3       10      1.148070e+01  0.10053591  9.442864e+00
-##   3       15      5.963888e+12  0.08876341  1.412189e+12
-##   3       20      1.393804e+12  0.08196187  2.634042e+11
+##   degree  RMSE          Rsquared    MAE         
+##   1       1.377037e+01  0.05950812  1.093594e+01
+##   2       1.635159e+13  0.06762401  3.065754e+12
+##   3       3.425513e+13  0.05969303  8.591612e+12
 ## 
 ## RMSE was used to select the optimal model using the smallest value.
-## The final values used for the model were nprune = 10 and degree = 3.
+## The final value used for the model was degree = 1.
+```
+
+```
+## Error in FUN(X[[i]], ...): object 'nprune' not found
 ```
 
 ![plot of chunk PCB3_Total_Training](figures/PCB3_Total_Training-1.png)
@@ -557,33 +663,89 @@ Train model over the tuning parameters.
 |variable                                    |     Overall|
 |:-------------------------------------------|-----------:|
 |MAPS_LC                                     | 100.0000000|
-|childAge                                    |  90.4246273|
-|MAPS_PC                                     |  84.9766897|
-|SEPTI_play                                  |  76.7549698|
-|SEPTI_nurturance                            |  68.3133085|
-|ECBI_problem_T_score                        |  61.4321538|
-|ECBI_intensity_T_score                      |  52.4256719|
-|SEPTI_total                                 |  43.0750179|
-|SEPTI_discipline                            |  34.5599782|
-|ECBI_Cond                                   |  24.5795443|
-|childRelationshipBiologicaloradoptivefather |  13.9902976|
-|totalChildren                               |   6.0847992|
-|birthOrderOldest                            |   1.6027230|
-|birthOrderMiddle                            |   0.6177325|
-|birthOrderYoungest                          |   0.4149566|
+|SEPTI_discipline                            |  94.7698039|
+|childAge                                    |  90.3350188|
+|ECBI_Inatt                                  |  87.3059386|
+|ECBI_Opp                                    |  85.1910836|
+|SEPTI_routine                               |  82.5497646|
+|MAPS_PR                                     |  80.1544259|
+|zipcode97202                                |  78.4746759|
+|SEPTI_total                                 |  76.0143511|
+|MAPS_PP                                     |  74.4211925|
+|MAPS_POS                                    |  72.7445423|
+|ECBI_intensity_T_score                      |  68.6770592|
+|ECBI_Cond                                   |  66.8087703|
+|MAPS_NEG                                    |  66.4242894|
+|zipcode97266                                |  65.1194527|
+|parentAge                                   |  64.5093317|
+|zipcode97209                                |  63.4821848|
+|parentEthnicityNotHispanic/Latino           |  62.6936089|
+|zipcode97201                                |  62.2175955|
+|zipcode97703                                |  61.2644158|
+|distance                                    |  59.8924751|
+|communitySuburban                           |  58.7696829|
+|parentChildRatio                            |  58.0976540|
+|parentRaceAsian1                            |  57.3629138|
+|income$80,000-$119,999                      |  56.5102117|
+|zipcode97003                                |  55.6086620|
+|zipcode91204                                |  54.6050507|
+|ECBI_problem_T_score                        |  53.3552243|
+|zipcode97233                                |  51.9360304|
+|zipcode97203                                |  51.3454445|
+|parentEducationCollege                      |  49.5358292|
+|zipcode98660                                |  48.3502390|
+|SEPTI_nurturance                            |  45.8499052|
+|zipcode97232                                |  44.6735622|
+|zipcode97123                                |  43.5845863|
+|zipcode97325                                |  43.0615160|
+|zipcode97219                                |  41.1219460|
+|MAPS_WM                                     |  41.0191994|
+|parentMaritalStatusDivorced                 |  38.2216714|
+|zipcode91205                                |  37.0512783|
+|SEPTI_play                                  |  35.1243533|
+|SEPTI_r_clinical_cutoff                     |  32.6905957|
+|ECBI_intensity_clinical_cutoff              |  29.0039060|
+|zipcode97008                                |  28.4338639|
+|zipcode97213                                |  24.5179857|
+|zipcode97741                                |  23.8154752|
+|zipcode97825                                |  22.0631724|
+|zipcode97734                                |  17.6372818|
+|zipcode97760                                |  16.1195880|
+|childRelationshipGrandparent                |  14.0174338|
+|zipcode97321                                |   9.8484310|
+|income$50,000-$79,999                       |   8.1574550|
+|totalChildren                               |   6.6001494|
+|birthOrderOldest                            |   3.4549929|
+|birthOrderMiddle                            |   2.6835196|
+|birthOrderYoungest                          |   1.7058454|
+|childSexMale                                |   1.2787802|
+|childEthnicityNotHispanic/Latino            |   1.0535724|
+|childEthnicityUnknown                       |   0.6330885|
+|childEthnicityPrefernottorespond            |   0.5533964|
+|childRelationshipBiologicaloradoptivefather |   0.0876785|
 
 
 
 
 ```
 ##      RMSE  Rsquared       MAE 
-## 9.2186131 0.5104357 7.6301099
+## 6.1983649 0.7443709 4.8424723
 ```
 
 ```
 ##           PCB2_Tot       hat
-## PCB2_Tot 1.0000000 0.3850631
-## hat      0.3850631 1.0000000
+## PCB2_Tot 1.0000000 0.4498716
+## hat      0.4498716 1.0000000
+```
+
+```
+## Warning: Removed 1 rows containing non-finite values (stat_smooth).
+
+## Warning: Removed 1 rows containing non-finite values (stat_smooth).
+```
+
+```
+## Warning: Removed 1 rows containing missing values (geom_point).
 ```
 
 ![plot of chunk PCB3_Total_Training-predict](figures/PCB3_Total_Training-predict-1.png)
@@ -592,14 +754,14 @@ Evaluate model on the validation sample.
 
 
 ```
-##       RMSE   Rsquared        MAE 
-## 11.4030585  0.2433539  8.9905001
+##        RMSE    Rsquared         MAE 
+## 15.01872645  0.02567384 11.48049500
 ```
 
 ```
 ##            PCB3_Total       hat
-## PCB3_Total  1.0000000 0.4933091
-## hat         0.4933091 1.0000000
+## PCB3_Total  1.0000000 0.1602306
+## hat         0.1602306 1.0000000
 ```
 
 ![plot of chunk PCB3_TotalValidation-predict](figures/PCB3_TotalValidation-predict-1.png)
