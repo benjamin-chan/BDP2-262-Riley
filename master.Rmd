@@ -1,0 +1,594 @@
+---
+title: "Parent and Provider Perceptions of Behavioral Healthcare in Pediatric Primary Care (PI: Andrew Riley; BDP2-262)"
+date: "`r Sys.Date()`"
+author: Benjamin Chan (chanb@ohsu.edu)
+output:
+  html_document:
+    toc: true
+    theme: simplex
+---
+
+
+
+```{r, echo = FALSE, include = FALSE}
+library(checkpoint)
+checkpoint("2018-04-01", use.knitr = TRUE, verbose = FALSE)
+
+library(magrittr)
+library(tidyverse)
+library(haven)
+# library(DiagrammeR)
+# library(DiagrammeRsvg)
+library(svglite)
+library(caret)
+library(parallel)
+library(doParallel)
+library(RANN)
+library(knitr)
+
+set.seed(as.integer(as.Date("2018-06-04")))
+
+theme_set(theme_bw())
+theme_update(plot.title = element_text(hjust = 0.5))
+
+# sapply(list.files("lib", full.names = TRUE), source)
+```
+
+
+
+# Import Andrew's SPSS data
+
+```{r}
+df <-
+  "data/raw/corrected 6.15.sav" %>% 
+  read_sav() 
+oldnames <- names(df)
+newnames <- c("id",
+              "languageSurvey",
+              "totalChildren",
+              "birthOrder",
+              "childSex",
+              "childAge",
+              "childEthnicity",
+              "childRaceWhite",
+              "childRaceAsian",
+              "childRaceAfrAm",
+              "childRaceAIAN",
+              "childRaceNHPI",
+              "childRaceOther",
+              "childRaceNoResp",
+              "childRelationship",
+              "parentGender",
+              "parentSex",
+              "parentAge",
+              "parentEthnicity",
+              "parentRaceWhite",
+              "parentRaceAsian",
+              "parentRaceAfrAm",
+              "parentRaceAIAN",
+              "parentRaceNHPI",
+              "parentRaceOther",
+              "parentRaceNoResp",
+              "parentMaritalStatus",
+              "parentSituation",
+              "parentsNumber",
+              "parentChildRatio",
+              "zipcodeClass",
+              "zipcode",
+              "community",
+              "distance",
+              "parentEducation",
+              "income",
+              "internet")
+newnames <- c(newnames, oldnames[(1 + length(newnames)):length(oldnames)])
+newnames <- gsub("^PBC", "PCB", newnames)
+names(df) <- newnames
+```
+
+Map new names to variables.
+
+```{r}
+data.frame(oldnames, newnames) %>% kable()
+```
+
+```{r, eval = FALSE}
+df %>% group_by(childRaceWhite) %>% dplyr::summarize(n = n())
+df %>% group_by(parentsNumber) %>% dplyr::summarize(n = n())
+df %>% group_by(parentChildRatio) %>% dplyr::summarize(n = n())
+df %>% group_by(zipcodeClass) %>% dplyr::summarize(n = n())
+df %>% group_by(zipcode) %>% dplyr::summarize(n = n())
+df %>% group_by(community) %>% dplyr::summarize(n = n())
+```
+
+```{r}
+df <- 
+  df %>%
+  mutate(languageSurvey = factor(languageSurvey,
+                                 levels = seq(2), 
+                                 labels = c("English", "Spanish"))) %>% 
+  mutate(birthOrder = case_when(totalChildren == 1 ~ 0,
+                                TRUE ~ as.numeric(birthOrder)) %>% 
+                      factor(., 
+                             levels = 0:3, 
+                             labels = c("Only child", "Oldest", "Middle", "Youngest"))) %>% 
+  mutate(childSex = factor(childSex, 
+                           levels = seq(2), 
+                           labels = c("Female", "Male"))) %>% 
+  mutate(childEthnicity = factor(childEthnicity, 
+                                 levels = seq(4), 
+                                 labels = c("Hispanic/Latino", 
+                                            "Not Hispanic/Latino", 
+                                            "Unknown", 
+                                            "Prefer not to respond"))) %>% 
+  mutate(childRaceWhite = factor(childRaceWhite),
+         childRaceAsian = factor(childRaceAsian),
+         childRaceAfrAm = factor(childRaceAfrAm),
+         childRaceAIAN = factor(childRaceAIAN),
+         childRaceNHPI = factor(childRaceNHPI),
+         childRaceOther = factor(childRaceOther),
+         childRaceNoResp = factor(childRaceNoResp)) %>% 
+  mutate(childRelationship = factor(childRelationship,
+                                    levels = seq(6),
+                                    labels = c("Biological or adoptive mother",
+                                               "Biological or adoptive father",
+                                               "Step parent",
+                                               "Grandparent",
+                                               "Relative",
+                                               "Other"))) %>% 
+  mutate(parentGender = factor(parentGender,
+                               levels = seq(5),
+                               labels = c("Male",
+                                          "Female",
+                                          "Transgender",
+                                          "Other",
+                                          "Prefer not to respond"))) %>% 
+  mutate(parentSex = factor(parentSex, 
+                            levels = seq(2), 
+                            labels = c("Female", "Male"))) %>% 
+  mutate(parentEthnicity = factor(parentEthnicity, 
+                                  levels = seq(4), 
+                                  labels = c("Hispanic/Latino", 
+                                             "Not Hispanic/Latino", 
+                                             "Unknown", 
+                                             "Prefer not to respond"))) %>% 
+  mutate(parentRaceWhite = factor(parentRaceWhite),
+         parentRaceAsian = factor(parentRaceAsian),
+         parentRaceAfrAm = factor(parentRaceAfrAm),
+         parentRaceAIAN = factor(parentRaceAIAN),
+         parentRaceNHPI = factor(parentRaceNHPI),
+         parentRaceOther = factor(parentRaceOther),
+         parentRaceNoResp = factor(parentRaceNoResp)) %>% 
+  mutate(parentMaritalStatus = factor(parentMaritalStatus,
+                                      levels = seq(6),
+                                      labels = c("Married",
+                                                 "Widowed",
+                                                 "Divorced",
+                                                 "Separated",
+                                                 "Remarried",
+                                                 "Never married"))) %>% 
+  mutate(parentSituation = factor(parentSituation,
+                                  levels = seq(3),
+                                  labels = c("Single parenting",
+                                             "Couple parenting with spouse or partner in the same household",
+                                             "Co-parenting in separate households"))) %>% 
+  mutate(zipcodeClass = factor(zipcodeClass)) %>% 
+  mutate(zipcode = factor(zipcode)) %>% 
+  mutate(community = factor(community, levels = seq(3), labels = c("Urban", "Suburban", "Rural"))) %>% 
+  mutate(parentEducation = factor(parentEducation,
+                                  levels = seq(4),
+                                  labels = c("High school or less",
+                                             "Vocational school/some college",
+                                             "College",
+                                             "Graduate/professional school"))) %>% 
+  mutate(income = factor(income,
+                         levels = seq(6),
+                         labels = c("$25,000 or less",
+                                    "$25,001-$49,999",
+                                    "$50,000-$79,999",
+                                    "$80,000-$119,999",
+                                    "$120,000-$149,999",
+                                    "$150,000 or more")))
+```
+
+```{r, eval = FALSE}
+library(dataMaid)
+makeCodebook(df, file = "output/codebook.Rmd", replace = TRUE)
+df %>% write.csv("data/processed/df.csv", row.names = FALSE)
+```
+
+Build analysis data set.
+Exclude if missing any dependent variable, `PCB1_Total`, `PCB2_Tot`, `PCB3_Total`.
+Exclude rows if there are a high proportion of row-wise `NA`.
+
+```{r}
+n0 <- nrow(df)
+threshold <- 0.85
+df <-
+  df %>%
+  mutate(propNA = rowSums(is.na(.)) / ncol(.)) %>% 
+  filter(propNA < threshold) %>% 
+  select(-propNA)
+summary(df[, c("PCB1_Total", "PCB2_Tot", "PCB3_Total")])
+```
+
+![figures/flowChart.png](figures/flowChart.png)
+
+```{r, eval = FALSE}
+label <- sprintf("%s\nN = %d", 
+                 c("Initial sample", 
+                   sprintf("Excluded\n%d%% missing data", threshold * 100), 
+                   "Analysis sample"), 
+                 c(n0, 
+                   n0 - nrow(df), 
+                   nrow(df)))
+nodes <- data.frame(text = label)
+edges <- 
+  create_edge_df(from = c(1, 1),
+                 to   = c(2, 3))
+G <-
+  create_graph() %>% 
+  add_nodes_from_table(table = nodes, label_col = "text") %>%
+  add_edge_df(edges) %>% 
+  add_global_graph_attrs("layout", "dot", "graph") %>%
+  add_global_graph_attrs("shape", "oval", "node") %>%
+  add_global_graph_attrs("width", "2", "node") %>%
+  add_global_graph_attrs("height", "0.8", "node") %>%
+  add_global_graph_attrs("fontcolor", "black", "node")
+# render_graph(G)
+G %>% export_graph(file_name = "figures/flowChart.png", file_type = "png")
+G %>% export_graph(file_name = "figures/flowChart.svg", file_type = "svg")
+```
+
+
+
+# Preprocess data
+
+Initial preprocesssing that needs to be done that is common to `PCB1_Total`, `PCB2_Tot`, and `PCB3_Total`.
+
+```{r, echo = TRUE}
+p <- 0.75
+```
+
+Split data set into `r sprintf("%.00f:%.00f", p * 100, (1 - p) * 100)` training:validation samples.
+
+```{r, echo = TRUE}
+inTrain <- createDataPartition(df$id, p = p)
+dfTrain <- df[inTrain$Resample1, ]
+dfValid <- df[-inTrain$Resample1, ]
+```
+
+Preprocess the training sample.
+
+1. Exclude near-zero variance predictors
+2. Impute missing values using k-nearest neighbor
+
+```{r, echo = TRUE}
+message(sprintf("Number of complete cases before imputation = %d",
+                complete.cases(dfTrain) %>% sum()))
+nzv <- 
+  dfTrain %>% 
+  select(-c(id, 
+            PCB1_Total, PCB1_CondEmot, PCB1_DevHab, 
+            PCB2_Tot, 
+            PCB3_Total, PCB3_PCPonly, PCB3_Person, PCB3_Resource)) %>% 
+  nearZeroVar(names = TRUE, saveMetric = TRUE) %>%
+  mutate(varname = row.names(.)) %>% 
+  filter(nzv == TRUE) %>% 
+  select(varname, freqRatio, percentUnique, zeroVar, nzv) 
+nzv %>% kable()
+dfTrainPreProc1 <-
+  dfTrain %>% 
+  select(-one_of(nzv$varname))
+dfOutcomes <- 
+  dfTrainPreProc1 %>% 
+  select(c(id,
+           PCB1_Total, PCB1_CondEmot, PCB1_DevHab, 
+           PCB2_Tot, 
+           PCB3_Total, PCB3_PCPonly, PCB3_Person, PCB3_Resource))
+dfTrainPreProc2 <- 
+  dfTrainPreProc1 %>% 
+  select(-c(id,
+            PCB1_Total, PCB1_CondEmot, PCB1_DevHab, 
+            PCB2_Tot, 
+            PCB3_Total, PCB3_PCPonly, PCB3_Person, PCB3_Resource))
+preProc <-
+  dfTrainPreProc2 %>% 
+  preProcess(method = c("nzv", "corr", "knnImpute"), verbose = TRUE)
+preProc
+dfTrainPreProc3 <- predict(preProc, dfTrainPreProc2)
+dfTrainPreProc <- bind_cols(dfOutcomes, dfTrainPreProc3)
+message(sprintf("Number of complete cases after imputation = %d",
+                complete.cases(dfTrainPreProc) %>% sum()))
+save(dfTrainPreProc, dfValid, dfTrain, nzv, preProc, df, file = "data/processed/dataframes.RData")
+rm(dfTrainPreProc1, dfTrainPreProc2, dfTrainPreProc3)
+```
+
+Set the control parameters.
+
+```{r, echo = TRUE}
+ctrl <- trainControl(method = "repeatedcv",
+                     number = 10,
+                     repeats = 20,
+                     savePredictions = TRUE,
+                     allowParallel = TRUE,
+                     search = "random")
+cores <- 24
+```
+
+Set the model and tuning parameter grid.
+
+```{r, echo = TRUE}
+library(earth)
+citation("earth")
+method <- "bagEarthGCV"
+modelLookup(method) %>% kable()
+grid <- expand.grid(degree = seq(3))
+grid %>% kable()
+```
+
+
+
+# Model PCB1
+
+
+## PCB1 Total
+
+Prediction model for `PCB1`.
+
+Train model over the tuning parameters.
+
+```{r PCB1_Total_Training}
+cl <- makeCluster(cores)
+registerDoParallel(cl)
+trainingModel <-
+  dfTrainPreProc %>% 
+  select(-c(id, PCB1_CondEmot, PCB1_DevHab, PCB2_Tot, PCB3_Total, PCB3_PCPonly, PCB3_Person, PCB3_Resource)) %>% 
+  train(PCB1_Total ~ ., data = ., method = method, trControl = ctrl, tuneGrid = grid, na.action = na.exclude)
+stopCluster(cl)
+trainingModel
+trainingModel %>% 
+  .$results %>% 
+  mutate(degree = factor(degree)) %>% 
+  ggplot() + 
+  aes(x = nprune, y = RMSE, color = degree, group = degree) +
+  geom_line() +
+  geom_point() +
+  theme_bw()
+save(trainingModel, file = "output/PCB1_Total_Training.RData")
+```
+
+```{r PCB1_Total_Training-varImp}
+imp <- varImp(trainingModel)
+n <- imp[["importance"]] %>% filter(Overall > 0) %>% nrow()
+plot(imp, top = n)
+imp[["importance"]] %>% 
+  mutate(variable = row.names(.)) %>% 
+  filter(Overall > 0) %>% 
+  select(variable, Overall) %>%
+  kable()
+```
+
+```{r PCB1_Total_Training-finalModel, eval = FALSE}
+M <- trainingModel[["finalModel"]]
+summary(M)
+plot(M)
+evimp(M)
+plotmo(M)
+```
+
+```{r PCB1_Total_Training-predict}
+dfTrainPred <- 
+  dfTrainPreProc %>% 
+  mutate(hat = predict(trainingModel, dfTrainPreProc, na.action = na.pass) %>% as.numeric())
+postResample(pred = dfTrainPred$hat, obs = dfTrainPred$PCB1_Total)
+cor(dfTrainPred %>% select(PCB2_Tot, hat), use = "complete.obs")
+dfTrainPred %>% 
+  ggplot() +
+  ggtitle(sprintf("Correlation = %.03f", cor(dfTrainPred %>% select(PCB1_Total, hat), use = "complete.obs") %>% .[1, 2])) +
+  aes(x = hat, y = PCB1_Total) +
+  geom_abline(slope = 1, intercept = 0) +
+  geom_smooth(method = "lm", formula = y ~ x - 1, color = rgb(0, 0, 1, 0.5), se = FALSE) +
+  geom_smooth(method = "lm", formula = y ~ x, color = rgb(1, 0, 0, 0.5), se = FALSE) +
+  geom_point(alpha = 1/2)
+```
+
+Evaluate model on the validation sample.
+
+```{r PCB1_Total_Validation-predict}
+dfValidPred <- 
+  dfValid %>% 
+  select(-c(id, PCB2_Tot, PCB3_Total, PCB3_PCPonly, PCB3_Person, PCB3_Resource)) %>% 
+  select(-one_of(nzv$varname)) %>%
+  filter(complete.cases(.)) %>% 
+  predict(preProc, .) %>% 
+  mutate(hat = predict(trainingModel, ., na.action = na.pass) %>% as.numeric())
+postResample(pred = dfValidPred$hat, obs = dfValidPred$PCB1_Total)
+cor(dfValidPred %>% select(PCB1_Total, hat), use = "complete.obs")
+dfValidPred %>% 
+  ggplot() +
+  ggtitle(sprintf("Correlation = %.03f", cor(dfValidPred %>% select(PCB1_Total, hat), use = "complete.obs") %>% .[1, 2])) +
+  aes(x = hat, y = PCB1_Total) +
+  geom_abline(slope = 1, intercept = 0) +
+  geom_smooth(method = "lm", formula = y ~ x - 1, color = rgb(0, 0, 1, 0.5), se = FALSE) +
+  geom_smooth(method = "lm", formula = y ~ x, color = rgb(1, 0, 0, 0.5), se = FALSE) +
+  geom_point(alpha = 1/2)
+```
+
+
+
+# Model PCB2
+
+
+## Total PCB2
+
+Prediction model for `PCB2_Total`.
+
+Train model over the tuning parameters.
+
+```{r PCB2_Tot_Training}
+cl <- makeCluster(cores)
+registerDoParallel(cl)
+trainingModel <-
+  dfTrainPreProc %>% 
+  select(-c(id, PCB1_Total, PCB1_CondEmot, PCB1_DevHab, PCB3_Total, PCB3_PCPonly, PCB3_Person, PCB3_Resource)) %>% 
+  train(PCB2_Tot ~ ., data = ., method = method, trControl = ctrl, tuneGrid = grid, na.action = na.exclude)
+stopCluster(cl)
+trainingModel
+trainingModel %>% 
+  .$results %>% 
+  mutate(degree = factor(degree)) %>% 
+  ggplot() + 
+  aes(x = nprune, y = RMSE, color = degree, group = degree) +
+  geom_line() +
+  geom_point() +
+  theme_bw()
+save(trainingModel, file = "output/PCB2_Tot_Training.RData")
+```
+
+```{r PCB2_Total_Training-varImp}
+imp <- varImp(trainingModel)
+n <- imp[["importance"]] %>% filter(Overall > 0) %>% nrow()
+plot(imp, top = n)
+imp[["importance"]] %>% 
+  mutate(variable = row.names(.)) %>% 
+  filter(Overall > 0) %>% 
+  select(variable, Overall) %>%
+  kable()
+```
+
+```{r PCB2_Tot_Training-finalModel, eval = FALSE}
+M <- trainingModel[["finalModel"]]
+summary(M)
+plot(M)
+evimp(M)
+plotmo(M)
+```
+
+```{r PCB2_Tot_Training-predict}
+dfTrainPred <- 
+  dfTrainPreProc %>% 
+  mutate(hat = predict(trainingModel, dfTrainPreProc, na.action = na.pass) %>% as.numeric())
+postResample(pred = dfTrainPred$hat, obs = dfTrainPred$PCB2_Tot)
+cor(dfTrainPred %>% select(PCB2_Tot, hat), use = "complete.obs")
+dfTrainPred %>% 
+  ggplot() +
+  ggtitle(sprintf("Correlation = %.03f", cor(dfTrainPred %>% select(PCB2_Tot, hat), use = "complete.obs") %>% .[1, 2])) +
+  aes(x = hat, y = PCB2_Tot) +
+  geom_abline(slope = 1, intercept = 0) +
+  geom_smooth(method = "lm", formula = y ~ x - 1, color = rgb(0, 0, 1, 0.5), se = FALSE) +
+  geom_smooth(method = "lm", formula = y ~ x, color = rgb(1, 0, 0, 0.5), se = FALSE) +
+  geom_point(alpha = 1/2)
+```
+
+Evaluate model on the validation sample.
+
+```{r PCB2_Tot_Validation-predict}
+dfValidPred <- 
+  dfValid %>% 
+  select(-c(id, PCB1_Total, PCB1_CondEmot, PCB1_DevHab, PCB3_Total, PCB3_PCPonly, PCB3_Person, PCB3_Resource)) %>% 
+  select(-one_of(nzv$varname)) %>%
+  filter(complete.cases(.)) %>% 
+  predict(preProc, .) %>% 
+  mutate(hat = predict(trainingModel, ., na.action = na.pass) %>% as.numeric())
+postResample(pred = dfValidPred$hat, obs = dfValidPred$PCB2_Tot)
+cor(dfValidPred %>% select(PCB2_Tot, hat), use = "complete.obs")
+dfValidPred %>% 
+  ggplot() +
+  ggtitle(sprintf("Correlation = %.03f", cor(dfValidPred %>% select(PCB2_Tot, hat), use = "complete.obs") %>% .[1, 2])) +
+  aes(x = hat, y = PCB2_Tot) +
+  geom_abline(slope = 1, intercept = 0) +
+  geom_smooth(method = "lm", formula = y ~ x - 1, color = rgb(0, 0, 1, 0.5), se = FALSE) +
+  geom_smooth(method = "lm", formula = y ~ x, color = rgb(1, 0, 0, 0.5), se = FALSE) +
+  geom_point(alpha = 1/2)
+```
+
+
+
+# Model PCB3
+
+
+## Total PCB3
+
+Prediction model for `PCB3_Total`.
+
+Train model over the tuning parameters.
+
+```{r PCB3_Total_Training}
+cl <- makeCluster(cores)
+registerDoParallel(cl)
+trainingModel <-
+  dfTrainPreProc %>% 
+  select(-c(id, PCB1_Total, PCB1_CondEmot, PCB1_DevHab, PCB2_Tot, PCB3_PCPonly, PCB3_Person, PCB3_Resource)) %>% 
+  train(PCB3_Total ~ ., data = ., method = method, trControl = ctrl, tuneGrid = grid, na.action = na.exclude)
+stopCluster(cl)
+trainingModel
+trainingModel %>% 
+  .$results %>% 
+  mutate(degree = factor(degree)) %>% 
+  ggplot() + 
+  aes(x = nprune, y = RMSE, color = degree, group = degree) +
+  geom_line() +
+  geom_point() +
+  theme_bw()
+save(trainingModel, file = "output/PCB3_Total_Training.RData")
+```
+
+```{r PCB3_Total_Training-varImp}
+imp <- varImp(trainingModel)
+n <- imp[["importance"]] %>% filter(Overall > 0) %>% nrow()
+plot(imp, top = n)
+imp[["importance"]] %>% 
+  mutate(variable = row.names(.)) %>% 
+  filter(Overall > 0) %>% 
+  select(variable, Overall) %>%
+  kable()
+```
+
+```{r PCB3_Tot_Training-finalModel, eval = FALSE}
+M <- trainingModel[["finalModel"]]
+summary(M)
+plot(M)
+evimp(M)
+plotmo(M)
+```
+
+```{r PCB3_Total_Training-predict}
+dfTrainPred <- 
+  dfTrainPreProc %>% 
+  mutate(hat = predict(trainingModel, dfTrainPreProc, na.action = na.pass) %>% as.numeric())
+postResample(pred = dfTrainPred$hat, obs = dfTrainPred$PCB3_Total)
+cor(dfTrainPred %>% select(PCB2_Tot, hat), use = "complete.obs")
+dfTrainPred %>% 
+  ggplot() +
+  ggtitle(sprintf("Correlation = %.03f", cor(dfTrainPred %>% select(PCB3_Total, hat), use = "complete.obs") %>% .[1, 2])) +
+  aes(x = hat, y = PCB3_Total) +
+  geom_abline(slope = 1, intercept = 0) +
+  geom_smooth(method = "lm", formula = y ~ x - 1, color = rgb(0, 0, 1, 0.5), se = FALSE) +
+  geom_smooth(method = "lm", formula = y ~ x, color = rgb(1, 0, 0, 0.5), se = FALSE) +
+  geom_point(alpha = 1/2)
+```
+
+Evaluate model on the validation sample.
+
+```{r PCB3_TotalValidation-predict}
+dfValidPred <- 
+  dfValid %>% 
+  select(-c(id, PCB1_Total, PCB1_CondEmot, PCB1_DevHab, PCB2_Tot, PCB3_PCPonly, PCB3_Person, PCB3_Resource)) %>% 
+  select(-one_of(nzv$varname)) %>%
+  filter(complete.cases(.)) %>% 
+  predict(preProc, .) %>% 
+  mutate(hat = predict(trainingModel, ., na.action = na.pass) %>% as.numeric())
+postResample(pred = dfValidPred$hat, obs = dfValidPred$PCB3_Total)
+cor(dfValidPred %>% select(PCB3_Total, hat), use = "complete.obs")
+dfValidPred %>% 
+  ggplot() +
+  ggtitle(sprintf("Correlation = %.03f", cor(dfValidPred %>% select(PCB3_Total, hat), use = "complete.obs") %>% .[1, 2])) +
+  aes(x = hat, y = PCB3_Total) +
+  geom_abline(slope = 1, intercept = 0) +
+  geom_smooth(method = "lm", formula = y ~ x - 1, color = rgb(0, 0, 1, 0.5), se = FALSE) +
+  geom_smooth(method = "lm", formula = y ~ x, color = rgb(1, 0, 0, 0.5), se = FALSE) +
+  geom_point(alpha = 1/2)
+```
+
+
+
