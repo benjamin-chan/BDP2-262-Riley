@@ -23,6 +23,7 @@ trainingModel %>%
   aes(x = nprune, y = RMSE, color = degree, group = degree) +
   geom_line() +
   geom_point() +
+  scale_y_log10(limits = c(1, 100)) +
   theme_bw()
 save(trainingModel, file = "output/PCB3_Total_Training.RData")
 ```
