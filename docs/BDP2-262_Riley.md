@@ -1,6 +1,6 @@
 ---
 title: "Parent and Provider Perceptions of Behavioral Healthcare in Pediatric Primary Care (PI: Andrew Riley; BDP2-262)"
-date: "2018-06-22"
+date: "2018-06-27"
 author: Benjamin Chan (chanb@ohsu.edu)
 output:
   html_document:
@@ -250,7 +250,7 @@ Set the control parameters.
 ```r
 ctrl <- trainControl(method = "repeatedcv",
                      number = 10,
-                     repeats = 20,
+                     repeats = 10,
                      savePredictions = TRUE,
                      allowParallel = TRUE,
                      search = "random")
@@ -318,8 +318,8 @@ modelLookup(method) %>% kable()
 |bagEarth |degree    |Product Degree |TRUE   |TRUE     |TRUE      |
 
 ```r
-grid <- expand.grid(nprune = seq(10, 25, 5),
-                    degree = seq(1, 3))
+grid <- expand.grid(nprune = c(seq(2, 9, 1), seq(10, 20, 5)),
+                    degree = 1)
 grid %>% kable()
 ```
 
@@ -327,18 +327,17 @@ grid %>% kable()
 
 | nprune| degree|
 |------:|------:|
+|      2|      1|
+|      3|      1|
+|      4|      1|
+|      5|      1|
+|      6|      1|
+|      7|      1|
+|      8|      1|
+|      9|      1|
 |     10|      1|
 |     15|      1|
 |     20|      1|
-|     25|      1|
-|     10|      2|
-|     15|      2|
-|     20|      2|
-|     25|      2|
-|     10|      3|
-|     15|      3|
-|     20|      3|
-|     25|      3|
 
 
 
@@ -359,60 +358,54 @@ Train model over the tuning parameters.
 ##  52 predictor
 ## 
 ## No pre-processing
-## Resampling: Cross-Validated (10 fold, repeated 20 times) 
+## Resampling: Cross-Validated (10 fold, repeated 10 times) 
 ## Summary of sample sizes: 261, 263, 263, 261, 261, 262, ... 
 ## Resampling results across tuning parameters:
 ## 
-##   degree  nprune  RMSE          Rsquared    MAE         
-##   1       10      1.574837e+01  0.05540989  1.277689e+01
-##   1       15      1.582314e+01  0.06192035  1.274687e+01
-##   1       20      1.595397e+01  0.06159687  1.277567e+01
-##   1       25      1.606208e+01  0.06689421  1.281447e+01
-##   2       10      1.601275e+01  0.04520621  1.297763e+01
-##   2       15      1.600149e+01  0.05416004  1.292555e+01
-##   2       20      1.616206e+01  0.05657127  1.300913e+01
-##   2       25      1.929541e+11  0.05203315  3.522843e+10
-##   3       10      7.499448e+11  0.04540263  1.936349e+11
-##   3       15      1.616257e+01  0.05010961  1.308101e+01
-##   3       20      1.817331e+01  0.04919533  1.354397e+01
-##   3       25      1.657542e+01  0.04905873  1.324094e+01
+##   nprune  RMSE      Rsquared    MAE     
+##    2      15.74837  0.04075392  12.87834
+##    3      15.67317  0.04823170  12.77305
+##    4      15.66999  0.05079536  12.76927
+##    5      15.62701  0.05904268  12.73300
+##    6      15.67466  0.05568217  12.77803
+##    7      15.66848  0.06020719  12.73589
+##    8      15.73151  0.05595855  12.80302
+##    9      15.72864  0.05860294  12.77428
+##   10      15.73144  0.06245847  12.75535
+##   15      15.85905  0.06046205  12.79040
+##   20      15.92524  0.06566826  12.79684
 ## 
+## Tuning parameter 'degree' was held constant at a value of 1
 ## RMSE was used to select the optimal model using the smallest value.
-## The final values used for the model were nprune = 10 and degree = 1.
+## The final values used for the model were nprune = 5 and degree = 1.
 ```
 
 ![plot of chunk PCB1_Total_Training](figures/PCB1_Total_Training-1.png)
 
 ![plot of chunk PCB1_Total_Training-varImp](figures/PCB1_Total_Training-varImp-1.png)
 
-|variable                       |     Overall|
-|:------------------------------|-----------:|
-|zipcode97702                   | 100.0000000|
-|ECBI_Opp                       |  81.0025383|
-|MAPS_WM                        |  66.2294309|
-|MAPS_HS                        |  57.6780858|
-|MAPS_POS                       |  48.6745282|
-|ECBI_intensity_clinical_cutoff |  33.1093798|
-|MAPS_LC                        |  27.3342886|
-|parentAge                      |  15.7049687|
-|parentRaceWhite1               |   8.6255846|
-|totalChildren                  |   4.1695164|
-|birthOrderOldest               |   2.6075872|
-|birthOrderMiddle               |   1.1134081|
-|birthOrderYoungest             |   0.8267947|
+|variable                     |    Overall|
+|:----------------------------|----------:|
+|childRaceWhite1              | 100.000000|
+|MAPS_HS                      |  78.278812|
+|MAPS_SP                      |  48.261261|
+|zipcode97325                 |  26.312871|
+|parentMaritalStatusSeparated |   6.953803|
+|SEPTI_discipline             |   2.109540|
+|SEPTI_total                  |   0.937654|
 
 
 
 
 ```
 ##       RMSE   Rsquared        MAE 
-## 13.5539683  0.3783157 11.0601165
+## 14.4209179  0.2551321 11.7697091
 ```
 
 ```
-##            PCB1_Total       hat
-## PCB1_Total  1.0000000 0.6150737
-## hat         0.6150737 1.0000000
+##            PCB1_Total      hat
+## PCB1_Total   1.000000 0.505106
+## hat          0.505106 1.000000
 ```
 
 ![plot of chunk PCB1_Total_Training-predict](figures/PCB1_Total_Training-predict-1.png)
@@ -422,13 +415,13 @@ Evaluate model on the validation sample.
 
 ```
 ##       RMSE   Rsquared        MAE 
-## 17.9171796  0.1064851 13.7003319
+## 17.9851222  0.1039878 13.8753277
 ```
 
 ```
 ##            PCB1_Total       hat
-## PCB1_Total  1.0000000 0.3263205
-## hat         0.3263205 1.0000000
+## PCB1_Total  1.0000000 0.3224714
+## hat         0.3224714 1.0000000
 ```
 
 ![plot of chunk PCB1_Total_Validation-predict](figures/PCB1_Total_Validation-predict-1.png)
@@ -452,57 +445,53 @@ Train model over the tuning parameters.
 ##  52 predictor
 ## 
 ## No pre-processing
-## Resampling: Cross-Validated (10 fold, repeated 20 times) 
-## Summary of sample sizes: 261, 262, 263, 262, 263, 262, ... 
+## Resampling: Cross-Validated (10 fold, repeated 10 times) 
+## Summary of sample sizes: 263, 261, 263, 262, 261, 262, ... 
 ## Resampling results across tuning parameters:
 ## 
-##   degree  nprune  RMSE          Rsquared    MAE         
-##   1       10      4.314444e+00  0.06145722  3.275995e+00
-##   1       15      4.357480e+00  0.06227722  3.301836e+00
-##   1       20      4.403159e+00  0.06321870  3.336516e+00
-##   1       25      4.450431e+00  0.06555312  3.368793e+00
-##   2       10      1.276642e+13  0.04261745  2.330818e+12
-##   2       15      4.408622e+00  0.05147890  3.375237e+00
-##   2       20      1.744382e+11  0.04323992  3.133002e+10
-##   2       25      2.566624e+11  0.04606110  4.831126e+10
-##   3       10      9.577125e+10  0.04666273  1.748536e+10
-##   3       15      8.086093e+12  0.04827366  1.546580e+12
-##   3       20      1.212802e+13  0.05141696  2.243370e+12
-##   3       25      1.424427e+13  0.04407816  2.645094e+12
+##   nprune  RMSE      Rsquared    MAE     
+##    2      4.319944  0.05273309  3.294298
+##    3      4.314337  0.05819237  3.284545
+##    4      4.305675  0.05651808  3.275975
+##    5      4.305110  0.05401634  3.276022
+##    6      4.305036  0.05800955  3.267395
+##    7      4.311454  0.05720017  3.273882
+##    8      4.313036  0.05651665  3.274898
+##    9      4.315909  0.05702546  3.278187
+##   10      4.312015  0.06007262  3.275315
+##   15      4.365279  0.05661681  3.309819
+##   20      4.405090  0.05862837  3.339554
 ## 
+## Tuning parameter 'degree' was held constant at a value of 1
 ## RMSE was used to select the optimal model using the smallest value.
-## The final values used for the model were nprune = 10 and degree = 1.
+## The final values used for the model were nprune = 6 and degree = 1.
 ```
 
 ![plot of chunk PCB2_Tot_Training](figures/PCB2_Tot_Training-1.png)
 
 ![plot of chunk PCB2_Total_Training-varImp](figures/PCB2_Total_Training-varImp-1.png)
 
-|variable           |    Overall|
-|:------------------|----------:|
-|zipcode97210       | 100.000000|
-|ECBI_Cond          |  85.661391|
-|communityRural     |  74.217498|
-|SEPTI_nurturance   |  61.788831|
-|MAPS_POS           |  49.209089|
-|SEPTI_total        |  33.451459|
-|totalChildren      |  22.707848|
-|birthOrderOldest   |  13.048498|
-|birthOrderMiddle   |   5.538213|
-|birthOrderYoungest |   1.621724|
+|variable         |    Overall|
+|:----------------|----------:|
+|SEPTI_discipline | 100.000000|
+|SEPTI_total      |  75.556611|
+|zipcode97702     |  63.379081|
+|zipcode97210     |  44.409026|
+|MAPS_POS         |  17.512654|
+|totalChildren    |   8.708317|
 
 
 
 
 ```
 ##      RMSE  Rsquared       MAE 
-## 3.7050576 0.3599573 2.8418667
+## 3.8654487 0.2714033 2.9648018
 ```
 
 ```
 ##           PCB2_Tot       hat
-## PCB2_Tot 1.0000000 0.5999645
-## hat      0.5999645 1.0000000
+## PCB2_Tot 1.0000000 0.5209638
+## hat      0.5209638 1.0000000
 ```
 
 ![plot of chunk PCB2_Tot_Training-predict](figures/PCB2_Tot_Training-predict-1.png)
@@ -511,14 +500,14 @@ Evaluate model on the validation sample.
 
 
 ```
-##      RMSE  Rsquared       MAE 
-## 4.9412675 0.0480414 3.5182813
+##       RMSE   Rsquared        MAE 
+## 4.93520927 0.05291807 3.48080867
 ```
 
 ```
 ##           PCB2_Tot       hat
-## PCB2_Tot 1.0000000 0.2191835
-## hat      0.2191835 1.0000000
+## PCB2_Tot 1.0000000 0.2300393
+## hat      0.2300393 1.0000000
 ```
 
 ![plot of chunk PCB2_Tot_Validation-predict](figures/PCB2_Tot_Validation-predict-1.png)
@@ -542,58 +531,51 @@ Train model over the tuning parameters.
 ##  52 predictor
 ## 
 ## No pre-processing
-## Resampling: Cross-Validated (10 fold, repeated 20 times) 
-## Summary of sample sizes: 263, 262, 261, 263, 263, 261, ... 
+## Resampling: Cross-Validated (10 fold, repeated 10 times) 
+## Summary of sample sizes: 262, 262, 262, 263, 261, 261, ... 
 ## Resampling results across tuning parameters:
 ## 
-##   degree  nprune  RMSE          Rsquared    MAE         
-##   1       10      1.150010e+01  0.10240232  9.417835e+00
-##   1       15      1.162266e+01  0.09831686  9.467367e+00
-##   1       20      1.178623e+01  0.09134015  9.564054e+00
-##   1       25      1.191416e+01  0.08962617  9.657502e+00
-##   2       10      1.153440e+01  0.09899232  9.428406e+00
-##   2       15      1.172502e+01  0.08887191  9.537490e+00
-##   2       20      1.024595e+13  0.08785431  1.870646e+12
-##   2       25      1.204480e+01  0.08155880  9.717507e+00
-##   3       10      1.159758e+01  0.09474052  9.469746e+00
-##   3       15      3.787058e+12  0.08801546  7.045800e+11
-##   3       20      2.225477e+12  0.08324888  5.132930e+11
-##   3       25      1.295005e+13  0.07760038  2.447330e+12
+##   nprune  RMSE      Rsquared    MAE     
+##    2      11.53176  0.09508904  9.570356
+##    3      11.46565  0.10178068  9.500293
+##    4      11.41050  0.11083703  9.437381
+##    5      11.41801  0.10699896  9.425560
+##    6      11.42676  0.10372935  9.411713
+##    7      11.43381  0.10551998  9.404470
+##    8      11.44510  0.10373924  9.400230
+##    9      11.49922  0.10271975  9.425596
+##   10      11.48670  0.10735322  9.406348
+##   15      11.63536  0.10202053  9.500001
+##   20      11.79091  0.09035788  9.600144
 ## 
+## Tuning parameter 'degree' was held constant at a value of 1
 ## RMSE was used to select the optimal model using the smallest value.
-## The final values used for the model were nprune = 10 and degree = 1.
+## The final values used for the model were nprune = 4 and degree = 1.
 ```
 
 ![plot of chunk PCB3_Total_Training](figures/PCB3_Total_Training-1.png)
 
 ![plot of chunk PCB3_Total_Training-varImp](figures/PCB3_Total_Training-varImp-1.png)
 
-|variable                |     Overall|
-|:-----------------------|-----------:|
-|MAPS_LC                 | 100.0000000|
-|zipcode97702            |  80.0381388|
-|SEPTI_nurturance        |  68.1961196|
-|parentAge               |  53.3490979|
-|SEPTI_total_clin_cutoff |  44.1289882|
-|ECBI_Opp                |  36.7076313|
-|totalChildren           |  18.3447327|
-|birthOrderOldest        |  13.5358150|
-|birthOrderMiddle        |   5.8617013|
-|birthOrderYoungest      |   4.3517408|
-|childSexMale            |   0.9039616|
+|variable                |    Overall|
+|:-----------------------|----------:|
+|SEPTI_d_clinical_cutoff | 100.000000|
+|SEPTI_nurturance        |  57.507706|
+|zipcode97702            |  24.510919|
+|totalChildren           |   5.975344|
 
 
 
 
 ```
 ##      RMSE  Rsquared       MAE 
-## 9.8301596 0.3697493 8.1257636
+## 10.804803  0.220301  8.957826
 ```
 
 ```
 ##            PCB3_Total       hat
-## PCB3_Total  1.0000000 0.6080701
-## hat         0.6080701 1.0000000
+## PCB3_Total  1.0000000 0.4693624
+## hat         0.4693624 1.0000000
 ```
 
 ![plot of chunk PCB3_Total_Training-predict](figures/PCB3_Total_Training-predict-1.png)
@@ -602,14 +584,14 @@ Evaluate model on the validation sample.
 
 
 ```
-##      RMSE  Rsquared       MAE 
-## 11.845462  0.188794  9.549438
+##       RMSE   Rsquared        MAE 
+## 11.9969623  0.2258918  9.6100738
 ```
 
 ```
 ##            PCB3_Total       hat
-## PCB3_Total  1.0000000 0.4345043
-## hat         0.4345043 1.0000000
+## PCB3_Total  1.0000000 0.4752808
+## hat         0.4752808 1.0000000
 ```
 
 ![plot of chunk PCB3_TotalValidation-predict](figures/PCB3_TotalValidation-predict-1.png)
