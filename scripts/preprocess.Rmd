@@ -16,8 +16,7 @@ dfValid <- df[-inTrain$Resample1, ]
 
 Preprocess the training sample.
 
-1. Exclude near-zero variance predictors
-2. Impute missing values using k-nearest neighbor
+1. Impute missing values using k-nearest neighbor
 
 ```{r, echo = TRUE}
 message(sprintf("Number of complete cases before imputation = %d",
@@ -34,8 +33,7 @@ nzv <-
   select(varname, freqRatio, percentUnique, zeroVar, nzv) 
 nzv %>% kable()
 dfTrainPreProc1 <-
-  dfTrain %>% 
-  select(-one_of(nzv$varname))
+  dfTrain
 dfOutcomes <- 
   dfTrainPreProc1 %>% 
   select(c(id,
@@ -50,7 +48,7 @@ dfTrainPreProc2 <-
             PCB3_Total, PCB3_PCPonly, PCB3_Person, PCB3_Resource))
 preProc <-
   dfTrainPreProc2 %>% 
-  preProcess(method = c("nzv", "corr", "knnImpute"), verbose = TRUE)
+  preProcess(method = c("corr", "knnImpute"), verbose = TRUE)
 preProc
 dfTrainPreProc3 <- predict(preProc, dfTrainPreProc2)
 dfTrainPreProc <- bind_cols(dfOutcomes, dfTrainPreProc3)
