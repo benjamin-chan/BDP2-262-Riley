@@ -181,7 +181,7 @@ Exclude rows if there are a high proportion of row-wise `NA`.
 
 ```{r}
 n0 <- nrow(df)
-threshold <- 0.85
+threshold <- 0.70
 df <-
   df %>%
   mutate(propNA = rowSums(is.na(.)) / ncol(.)) %>% 
