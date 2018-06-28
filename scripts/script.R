@@ -10,9 +10,9 @@ files <- c("header.yaml",
            "preamble.Rmd",
            "importData.Rmd",
            "preprocess.Rmd",
-           "modelPCB1.Rmd",
-           "modelPCB2.Rmd",
-           "modelPCB3.Rmd")
+           "modelSupervisedPCB1.Rmd",
+           "modelSupervisedPCB2.Rmd",
+           "modelSupervisedPCB3.Rmd")
 f <- file("master.Rmd", open = "w")
 for (i in 1:length(files)) {
     x <- readLines(file.path("scripts", files[i]))
