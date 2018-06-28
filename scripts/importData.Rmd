@@ -152,6 +152,23 @@ df <-
                                     "$150,000 or more")))
 ```
 
+Remove certain predictor variables:
+
+* Clinical cutoffs
+* Raw scores
+* Total scores
+
+```{r}
+varToRemove <- 
+  df %>% 
+  names() %>% 
+  grep("((cutoff)|(raw_score)|(total))$", ., value = TRUE)
+varToRemove
+df <- 
+  df %>% 
+  select(-one_of(varToRemove))
+```
+
 ```{r, eval = FALSE}
 library(dataMaid)
 makeCodebook(df, file = "output/codebook.Rmd", replace = TRUE)
