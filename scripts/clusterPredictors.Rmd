@@ -1,0 +1,95 @@
+[https://uc-r.github.io/hc_clustering](https://uc-r.github.io/hc_clustering)
+[http://www.sthda.com/english/wiki/factoextra-r-package-easy-multivariate-data-analyses-and-elegant-visualization](http://www.sthda.com/english/wiki/factoextra-r-package-easy-multivariate-data-analyses-and-elegant-visualization)
+
+```{r}
+library(cluster)
+library(ggdendro)
+library(factoextra)
+library(dendextend)
+```
+
+```{r}
+dfX <- 
+  df %>% 
+  select(-id) %>% 
+  select(-starts_with("PCB")) %>% 
+  na.omit() %>% 
+  droplevels()
+mat <- model.matrix(~ - 1 + ., data = dfX)
+matScaled <- mat %>% scale()
+dim(mat)
+dfNonMissing <- 
+  df %>% 
+  na.omit()
+```
+
+```{r}
+mat %>% fviz_nbclust(FUN = hcut, k.max = 10, method = "wss")
+mat %>% fviz_nbclust(FUN = hcut, k.max = 10, method = "silhouette")
+mat %>% fviz_nbclust(FUN = hcut, k.max = 10, method = "gap_stat", nboot = 50)
+k <- 3
+pal <- brewer.pal(k, "Set1")
+# pal <- lacroix_palette("Mango", type = "discrete")
+```
+
+
+## K-means clustering
+
+```{r kmeans}
+km <- kmeans(matScaled, k)
+km %>% .$cluster %>% table()
+km %>% fviz_cluster(data = mat, palette = pal, labelsize = 8, ggtheme = theme_minimal(), main = ac)
+```
+
+
+## Hierarchical clustering
+
+```{r hclust}
+hcHClust <- 
+  mat %>% 
+  hcut(k = k, hc_func = "hclust", hc_method = "ward.D", hc_metric = "euclidean")
+hcHClust %>% .$cluster %>% table()
+hcHClust %>% fviz_cluster(palette = pal, labelsize = 8, ggtheme = theme_minimal())
+hcHClust %>% fviz_dend(rect = TRUE, cex = 0.5, k_colors = pal)
+hcHClust %>% fviz_silhouette(palette = pal, ggtheme = theme_minimal())
+```
+
+
+## Agglomerative hierarchical clustering
+
+```{r agnes}
+hcAgnes <- 
+  mat %>% 
+  hcut(k = k, hc_func = "agnes", hc_method = "ward.D", hc_metric = "euclidean")
+ac <- sprintf("Agglomerative coefficient = %.03f (%s method)", hcAgnes$ac, hcAgnes$method)
+ac %>% message()
+hcAgnes %>% .$cluster %>% table()
+hcAgnes %>% fviz_cluster(palette = pal, labelsize = 8, ggtheme = theme_minimal(), main = ac)
+hcAgnes %>% fviz_dend(rect = TRUE, cex = 0.5, k_colors = pal, main = ac)
+hcAgnes %>% fviz_silhouette(palette = pal, ggtheme = theme_minimal())
+```
+
+
+## Divisive hierarchical clustering
+
+```{r diana}
+hcDiana <- 
+  mat %>% 
+  hcut(k = k, hc_func = "diana")
+ac <- sprintf("Divisive coefficient = %.03f", hcDiana$dc)
+ac %>% message()
+hcDiana %>% .$cluster %>% table()
+hcDiana %>% fviz_cluster(palette = pal, labelsize = 8, ggtheme = theme_minimal(), main = ac)
+hcDiana %>% fviz_dend(rect = TRUE, cex = 0.5, k_colors = pal, main = ac)
+hcDiana %>% fviz_silhouette(palette = pal, ggtheme = theme_minimal())            
+```
+
+
+## Compare
+
+```{r tanglegram}
+dendlist(as.dendrogram(hcAgnes), as.dendrogram(hcDiana)) %>% 
+  tanglegram(main_left = "Agnes",
+             main_right = "Diana",
+             common_subtrees_color_branches = TRUE)
+```
