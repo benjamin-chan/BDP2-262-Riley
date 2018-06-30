@@ -9,14 +9,16 @@ library(dendextend)
 ```
 
 ```{r}
+load("data/processed/dataframes.RData")
 dfX <- 
   df %>% 
   select(-id) %>% 
   select(-starts_with("PCB")) %>% 
   na.omit() %>% 
   droplevels()
-mat <- model.matrix(~ - 1 + ., data = dfX)
-matScaled <- mat %>% scale()
+mat <- 
+  model.matrix(~ - 1 + ., data = dfX) %>% 
+  scale()
 dim(mat)
 dfNonMissing <- 
   df %>% 
@@ -24,21 +26,24 @@ dfNonMissing <-
 ```
 
 ```{r}
-mat %>% fviz_nbclust(FUN = hcut, k.max = 10, method = "wss")
+mat %>% fviz_nbclust(FUN = hcut, k.max = 30, method = "wss")
 mat %>% fviz_nbclust(FUN = hcut, k.max = 10, method = "silhouette")
 mat %>% fviz_nbclust(FUN = hcut, k.max = 10, method = "gap_stat", nboot = 50)
-k <- 3
+mat %>% get_dist(method = "euclidean") %>% fviz_dist()
+mat %>% get_dist(method = "manhattan") %>% fviz_dist()
+mat %>% get_dist(method = "maximum") %>% fviz_dist()
+k <- 8
 pal <- brewer.pal(k, "Set1")
-# pal <- lacroix_palette("Mango", type = "discrete")
+# pal <- lacroix_palette("PommeBaya", type = "discrete")
 ```
 
 
 ## K-means clustering
 
 ```{r kmeans}
-km <- kmeans(matScaled, k)
+km <- kmeans(mat, k)
 km %>% .$cluster %>% table()
-km %>% fviz_cluster(data = mat, palette = pal, labelsize = 8, ggtheme = theme_minimal(), main = ac)
+km %>% fviz_cluster(data = mat, palette = pal, labelsize = 8, ggtheme = theme_minimal())
 ```
 
 
@@ -47,7 +52,7 @@ km %>% fviz_cluster(data = mat, palette = pal, labelsize = 8, ggtheme = theme_mi
 ```{r hclust}
 hcHClust <- 
   mat %>% 
-  hcut(k = k, hc_func = "hclust", hc_method = "ward.D", hc_metric = "euclidean")
+  hcut(k = k, hc_func = "hclust", hc_method = "ward.D2", hc_metric = "euclidean")
 hcHClust %>% .$cluster %>% table()
 hcHClust %>% fviz_cluster(palette = pal, labelsize = 8, ggtheme = theme_minimal())
 hcHClust %>% fviz_dend(rect = TRUE, cex = 0.5, k_colors = pal)
@@ -60,7 +65,7 @@ hcHClust %>% fviz_silhouette(palette = pal, ggtheme = theme_minimal())
 ```{r agnes}
 hcAgnes <- 
   mat %>% 
-  hcut(k = k, hc_func = "agnes", hc_method = "ward.D", hc_metric = "euclidean")
+  hcut(k = k, hc_func = "agnes", hc_method = "ward.D2", hc_metric = "euclidean", stand = TRUE)
 ac <- sprintf("Agglomerative coefficient = %.03f (%s method)", hcAgnes$ac, hcAgnes$method)
 ac %>% message()
 hcAgnes %>% .$cluster %>% table()
@@ -75,7 +80,7 @@ hcAgnes %>% fviz_silhouette(palette = pal, ggtheme = theme_minimal())
 ```{r diana}
 hcDiana <- 
   mat %>% 
-  hcut(k = k, hc_func = "diana")
+  hcut(k = k, hc_func = "diana", isdiss = FALSE, scaled = TRUE)
 ac <- sprintf("Divisive coefficient = %.03f", hcDiana$dc)
 ac %>% message()
 hcDiana %>% .$cluster %>% table()
