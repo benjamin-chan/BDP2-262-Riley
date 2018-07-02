@@ -6,6 +6,10 @@ library(cluster)
 library(ggdendro)
 library(factoextra)
 library(dendextend)
+library(NbClust)
+citation("factoextra")
+pal <- brewer.pal(9, "Set1")
+# pal <- lacroix_palette("PommeBaya", type = "discrete")
 ```
 
 ```{r}
@@ -26,7 +30,7 @@ plotClusters <- function (df, title = "Cluster plot") {
 ```
 
 ```{r}
-load("data/processed/dataframes.RData")
+# load("data/processed/dataframes.RData")
 dfX <- 
   df %>% 
   select(-id) %>% 
@@ -40,16 +44,13 @@ dim(mat)
 dist <- mat %>% dist(method = "manhattan")
 ```
 
-```{r}
+```{r, eval = FALSE}
 mat %>% fviz_nbclust(FUN = hcut, k.max = 30, method = "wss")
 mat %>% fviz_nbclust(FUN = hcut, k.max = 10, method = "silhouette")
-mat %>% fviz_nbclust(FUN = hcut, k.max = 10, method = "gap_stat", nboot = 50)
+mat %>% fviz_nbclust(FUN = cluster::pam, k.max = 10, method = "gap_stat", nboot = 500)
 mat %>% get_dist(method = "euclidean") %>% fviz_dist()
 mat %>% get_dist(method = "manhattan") %>% fviz_dist()
 mat %>% get_dist(method = "maximum") %>% fviz_dist()
-k <- 8
-pal <- brewer.pal(k, "Set1")
-# pal <- lacroix_palette("PommeBaya", type = "discrete")
 ```
 
 
@@ -123,7 +124,7 @@ method is
 foo <- function(k) {
   hcut <-
     dist %>% 
-  hcut(k = k, hc_func = "agnes", hc_method = "ward.D2", hc_metric = "manhattan")
+    hcut(k = k, hc_func = "agnes", hc_method = "ward.D2", hc_metric = "manhattan")
   tab <- hcut$cluster %>% table()
   dend <- 
     agnes %>% 
