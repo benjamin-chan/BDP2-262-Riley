@@ -291,3 +291,31 @@ dendlist(as.dendrogram(agnes), as.dendrogram(diana)) %>%
              main_right = "DIANA",
              common_subtrees_color_branches = TRUE)
 ```
+
+## Examine clusters
+
+* $k = 2$ clusters seems optimal using AGNES
+* $k = 3$ clusters seems optimal using DIANA
+
+```{r PCB}
+dfCluster <-
+  bind_cols(dfY,
+            agnes_k2[["hcut"]][["cluster"]] %>% data.frame(agnes = .),
+            diana_k3[["hcut"]][["cluster"]] %>% data.frame(diana = .))
+table(dfCluster$agnes, dfCluster$diana)
+dfCluster %>%
+  ggplot() +
+  aes(x = PCB1_Total) +
+  geom_histogram(alpha = 1/2) +
+  facet_grid(agnes ~ diana)
+dfCluster %>%
+  ggplot() +
+  aes(x = PCB2_Tot) +
+  geom_histogram(alpha = 1/2) +
+  facet_grid(agnes ~ diana)
+dfCluster %>%
+  ggplot() +
+  aes(x = PCB3_Total) +
+  geom_histogram(alpha = 1/2) +
+  facet_grid(agnes ~ diana)
+```
