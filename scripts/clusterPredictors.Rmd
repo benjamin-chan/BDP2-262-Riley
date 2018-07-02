@@ -110,15 +110,23 @@ hcHClust %>% fviz_silhouette(palette = pal, ggtheme = theme_minimal())
 ## Agglomerative hierarchical clustering
 
 ```{r agnes}
-hcAgnes <- 
+k <- 8
+agnes <- 
   mat %>% 
   hcut(k = k, hc_func = "agnes", hc_method = "ward.D2", hc_metric = "euclidean", stand = TRUE)
 ac <- sprintf("Agglomerative coefficient = %.03f (%s method)", hcAgnes$ac, hcAgnes$method)
 ac %>% message()
-hcAgnes %>% .$cluster %>% table()
-hcAgnes %>% fviz_cluster(palette = pal, labelsize = 8, ggtheme = theme_minimal(), main = ac)
-hcAgnes %>% fviz_dend(rect = TRUE, cex = 0.5, k_colors = pal, main = ac)
-hcAgnes %>% fviz_silhouette(palette = pal, ggtheme = theme_minimal())
+agnes$cluster %>% table()
+agnes %>% 
+  fviz_cluster(data = mat, 
+               palette = pal, 
+               labelsize = 8, 
+               ellipse.type = "none",
+               star.plot = TRUE) + 
+  ggtitle(ac) +
+  theme(panel.grid.minor = element_blank())
+agnes %>% fviz_dend(rect = TRUE, cex = 0.5, k_colors = pal, main = ac)
+agnes %>% fviz_silhouette(palette = pal, ggtheme = theme_minimal())
 ```
 
 
