@@ -41,9 +41,31 @@ pal <- brewer.pal(k, "Set1")
 ## K-means clustering
 
 ```{r kmeans}
+mat %>% fviz_nbclust(FUN = kmeans, k.max = 20, method = "wss")
+k <- 2
 km <- kmeans(mat, k)
 km %>% .$cluster %>% table()
-km %>% fviz_cluster(data = mat, palette = pal, labelsize = 8, ggtheme = theme_minimal())
+km %>% 
+  fviz_cluster(data = mat, 
+               palette = pal, 
+               labelsize = 8, 
+               ellipse.type = "none",
+               star.plot = TRUE) + 
+  ggtitle("K-means clustering") +
+  theme(panel.grid.minor = element_blank())
+long <-
+  km$centers %>% 
+  data.frame() %>%
+  mutate(cluster = 1:k) %>%
+  gather(var, value, -cluster)
+merge(long %>% filter(cluster == 1) %>% select(-cluster) %>% rename(cluster = value),
+      long %>% filter(cluster == 2) %>% select(-cluster) %>% rename(cluster = value),
+      by = c("var"),
+      suffixes = c("1", "2")) %>%
+  kable()
+```
+
+
 ```
 
 
