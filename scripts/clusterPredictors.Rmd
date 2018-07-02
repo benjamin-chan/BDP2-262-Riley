@@ -77,12 +77,16 @@ long <-
   km$centers %>% 
   data.frame() %>%
   mutate(cluster = 1:k) %>%
-  gather(var, value, -cluster)
-merge(long %>% filter(cluster == 1) %>% select(-cluster) %>% rename(cluster = value),
-      long %>% filter(cluster == 2) %>% select(-cluster) %>% rename(cluster = value),
-      by = c("var"),
-      suffixes = c("1", "2")) %>%
-  kable()
+  gather(var, value, -cluster) %>%
+  arrange(var, cluster)
+bind_cols(long %>% filter(cluster == 1) %>% select(-cluster) %>% rename(cluster1 = value),
+          long %>% filter(cluster == 2) %>% select(-cluster) %>% rename(cluster2 = value) %>% select(-var),
+          long %>% filter(cluster == 3) %>% select(-cluster) %>% rename(cluster3 = value) %>% select(-var),
+          long %>% filter(cluster == 4) %>% select(-cluster) %>% rename(cluster4 = value) %>% select(-var),
+          long %>% filter(cluster == 5) %>% select(-cluster) %>% rename(cluster5 = value) %>% select(-var),
+          long %>% filter(cluster == 6) %>% select(-cluster) %>% rename(cluster6 = value) %>% select(-var),
+          long %>% filter(cluster == 7) %>% select(-cluster) %>% rename(cluster7 = value) %>% select(-var)) %>%
+  kable(digits = 2)
 ```
 
 
@@ -92,20 +96,20 @@ merge(long %>% filter(cluster == 1) %>% select(-cluster) %>% rename(cluster = va
 mat %>% fviz_nbclust(FUN = cluster::pam, method = "wss", k.max = 40)
 mat %>% fviz_nbclust(FUN = cluster::pam, method = "silhouette")
 mat %>% fviz_nbclust(FUN = cluster::pam, method = "gap_stat", k.max = 25, nboot = 500)
-k <- 2
-pam <- pam(mat, k, metric = "euclidean", stand = FALSE)
+k <- 3
+pam <- pam(mat, k, metric = "manhattan", stand = FALSE)
 pam %>% .$cluster %>% table()
 pam %>% plotClusters(sprintf("PAM\nk = %d", k))
 long <-
   pam$medoids %>% 
   data.frame() %>%
   mutate(cluster = 1:k) %>%
-  gather(var, value, -cluster)
-merge(long %>% filter(cluster == 1) %>% select(-cluster) %>% rename(cluster = value),
-      long %>% filter(cluster == 2) %>% select(-cluster) %>% rename(cluster = value),
-      by = c("var"),
-      suffixes = c("1", "2")) %>%
-  kable()
+  gather(var, value, -cluster) %>%
+  arrange(var, cluster)
+bind_cols(long %>% filter(cluster == 1) %>% select(-cluster) %>% rename(cluster1 = value),
+          long %>% filter(cluster == 2) %>% select(-cluster) %>% rename(cluster2 = value) %>% select(-var),
+          long %>% filter(cluster == 3) %>% select(-cluster) %>% rename(cluster3 = value) %>% select(-var)) %>%
+  kable(digits = 2)
 ```
 
 
