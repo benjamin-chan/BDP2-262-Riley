@@ -1,6 +1,6 @@
 ---
 title: "Parent and Provider Perceptions of Behavioral Healthcare in Pediatric Primary Care (PI: Andrew Riley; BDP2-262)"
-date: "2018-06-27"
+date: "2018-07-02"
 author: Benjamin Chan (chanb@ohsu.edu)
 output:
   html_document:
@@ -101,6 +101,21 @@ Map new names to variables.
 
 
 
+Remove certain predictor variables:
+
+* Clinical cutoffs
+* Raw scores
+* Total scores
+
+
+```
+##  [1] "ECBI_intensity_raw_score"       "ECBI_intensity_clinical_cutoff"
+##  [3] "ECBI_problem_raw_score"         "ECBI_problem_clinical_cutoff"  
+##  [5] "SEPTI_n_clinical_cutoff"        "SEPTI_d_clinical_cutoff"       
+##  [7] "SEPTI_p_clinical_cutoff"        "SEPTI_r_clinical_cutoff"       
+##  [9] "SEPTI_total"                    "SEPTI_total_clin_cutoff"
+```
+
 
 
 Build analysis data set.
@@ -109,13 +124,13 @@ Exclude rows if there are a high proportion of row-wise `NA`.
 
 
 ```
-##    PCB1_Total       PCB2_Tot       PCB3_Total  
-##  Min.   :18.00   Min.   : 6.00   Min.   :15.0  
-##  1st Qu.:58.00   1st Qu.:22.00   1st Qu.:39.0  
-##  Median :71.00   Median :25.00   Median :48.0  
-##  Mean   :67.89   Mean   :24.54   Mean   :47.6  
-##  3rd Qu.:81.00   3rd Qu.:28.00   3rd Qu.:57.0  
-##  Max.   :90.00   Max.   :30.00   Max.   :75.0
+##    PCB1_Total       PCB2_Tot       PCB3_Total   
+##  Min.   :18.00   Min.   : 6.00   Min.   :15.00  
+##  1st Qu.:58.00   1st Qu.:22.00   1st Qu.:39.00  
+##  Median :71.00   Median :25.00   Median :48.00  
+##  Mean   :67.85   Mean   :24.53   Mean   :47.58  
+##  3rd Qu.:81.00   3rd Qu.:28.00   3rd Qu.:57.00  
+##  Max.   :90.00   Max.   :30.00   Max.   :75.00
 ```
 
 ![figures/flowChart.png](figures/flowChart.png)
@@ -124,612 +139,660 @@ Exclude rows if there are a high proportion of row-wise `NA`.
 
 
 
-# Preprocess data
+[https://uc-r.github.io/hc_clustering](https://uc-r.github.io/hc_clustering)
+[http://www.sthda.com/english/wiki/factoextra-r-package-easy-multivariate-data-analyses-and-elegant-visualization](http://www.sthda.com/english/wiki/factoextra-r-package-easy-multivariate-data-analyses-and-elegant-visualization)
 
-Initial preprocesssing that needs to be done that is common to `PCB1_Total`, `PCB2_Tot`, and `PCB3_Total`.
-
-
-```r
-p <- 0.75
-```
-
-Split data set into 75:25 training:validation samples.
-
-
-```r
-inTrain <- createDataPartition(df$id, p = p)
-dfTrain <- df[inTrain$Resample1, ]
-dfValid <- df[-inTrain$Resample1, ]
-```
-
-Preprocess the training sample.
-
-1. Exclude near-zero variance predictors
-2. Impute missing values using k-nearest neighbor
-
-
-```r
-message(sprintf("Number of complete cases before imputation = %d",
-                complete.cases(dfTrain) %>% sum()))
-```
-
-```
-## Number of complete cases before imputation = 264
-```
-
-```r
-nzv <- 
-  dfTrain %>% 
-  select(-c(id, 
-            PCB1_Total, PCB1_CondEmot, PCB1_DevHab, 
-            PCB2_Tot, 
-            PCB3_Total, PCB3_PCPonly, PCB3_Person, PCB3_Resource)) %>% 
-  nearZeroVar(names = TRUE, saveMetric = TRUE) %>%
-  mutate(varname = row.names(.)) %>% 
-  filter(nzv == TRUE) %>% 
-  select(varname, freqRatio, percentUnique, zeroVar, nzv) 
-nzv %>% kable()
-```
-
-
-
-|varname         | freqRatio| percentUnique|zeroVar |nzv  |
-|:---------------|---------:|-------------:|:-------|:----|
-|languageSurvey  |  72.25000|     0.6825939|FALSE   |TRUE |
-|childRaceAfrAm  |  19.85714|     0.6825939|FALSE   |TRUE |
-|childRaceAIAN   |  35.50000|     0.6825939|FALSE   |TRUE |
-|childRaceNHPI   |  47.66667|     0.6825939|FALSE   |TRUE |
-|childRaceOther  |  21.46154|     0.6825939|FALSE   |TRUE |
-|parentRaceAfrAm |  40.71429|     0.6825939|FALSE   |TRUE |
-|parentRaceAIAN  |  35.50000|     0.6825939|FALSE   |TRUE |
-|parentRaceNHPI  |  57.40000|     0.6825939|FALSE   |TRUE |
-|parentRaceOther |  25.54545|     0.6825939|FALSE   |TRUE |
-|internet        |  35.50000|     0.6825939|FALSE   |TRUE |
-
-```r
-dfTrainPreProc1 <-
-  dfTrain %>% 
-  select(-one_of(nzv$varname))
-dfOutcomes <- 
-  dfTrainPreProc1 %>% 
-  select(c(id,
-           PCB1_Total, PCB1_CondEmot, PCB1_DevHab, 
-           PCB2_Tot, 
-           PCB3_Total, PCB3_PCPonly, PCB3_Person, PCB3_Resource))
-dfTrainPreProc2 <- 
-  dfTrainPreProc1 %>% 
-  select(-c(id,
-            PCB1_Total, PCB1_CondEmot, PCB1_DevHab, 
-            PCB2_Tot, 
-            PCB3_Total, PCB3_PCPonly, PCB3_Person, PCB3_Resource))
-preProc <-
-  dfTrainPreProc2 %>% 
-  preProcess(method = c("nzv", "corr", "knnImpute"), verbose = TRUE)
-```
-
-```
-##   2 highly correlated predictors were removed.
-## Calculating 32 means for centering
-## Calculating 32 standard deviations for scaling
-```
-
-```r
-preProc
-```
-
-```
-## Created from 264 samples and 54 variables
-## 
-## Pre-processing:
-##   - centered (32)
-##   - ignored (20)
-##   - 5 nearest neighbor imputation (32)
-##   - removed (2)
-##   - scaled (32)
-```
-
-```r
-dfTrainPreProc3 <- predict(preProc, dfTrainPreProc2)
-dfTrainPreProc <- bind_cols(dfOutcomes, dfTrainPreProc3)
-message(sprintf("Number of complete cases after imputation = %d",
-                complete.cases(dfTrainPreProc) %>% sum()))
-```
-
-```
-## Number of complete cases after imputation = 291
-```
-
-```r
-save(dfTrainPreProc, dfValid, dfTrain, nzv, preProc, df, file = "data/processed/dataframes.RData")
-rm(dfTrainPreProc1, dfTrainPreProc2, dfTrainPreProc3)
-```
-
-Set the control parameters.
-
-
-```r
-ctrl <- trainControl(method = "repeatedcv",
-                     number = 10,
-                     repeats = 10,
-                     savePredictions = TRUE,
-                     allowParallel = TRUE,
-                     search = "random")
-cores <- 24
-```
-
-Set the model and tuning parameter grid.
-
-
-```r
-library(earth)
-```
-
-```
-## Loading required package: plotmo
-```
-
-```
-## Loading required package: plotrix
-```
-
-```
-## Loading required package: TeachingDemos
-```
-
-```r
-citation("earth")
-```
 
 ```
 ## 
-## To cite package 'earth' in publications use:
+## To cite package 'factoextra' in publications use:
 ## 
-##   Stephen Milborrow. Derived from mda:mars by Trevor Hastie and
-##   Rob Tibshirani. Uses Alan Miller's Fortran utilities with Thomas
-##   Lumley's leaps wrapper. (2018). earth: Multivariate Adaptive
-##   Regression Splines. R package version 4.6.2.
-##   https://CRAN.R-project.org/package=earth
+##   Alboukadel Kassambara and Fabian Mundt (2017). factoextra:
+##   Extract and Visualize the Results of Multivariate Data Analyses.
+##   R package version 1.0.5.
+##   https://CRAN.R-project.org/package=factoextra
 ## 
 ## A BibTeX entry for LaTeX users is
 ## 
 ##   @Manual{,
-##     title = {earth: Multivariate Adaptive Regression Splines},
-##     author = {Stephen Milborrow. Derived from mda:mars by Trevor Hastie and Rob Tibshirani. Uses Alan Miller's Fortran utilities with Thomas Lumley's leaps wrapper.},
-##     year = {2018},
-##     note = {R package version 4.6.2},
-##     url = {https://CRAN.R-project.org/package=earth},
+##     title = {factoextra: Extract and Visualize the Results of Multivariate Data Analyses},
+##     author = {Alboukadel Kassambara and Fabian Mundt},
+##     year = {2017},
+##     note = {R package version 1.0.5},
+##     url = {https://CRAN.R-project.org/package=factoextra},
 ##   }
-## 
-## ATTENTION: This citation information has been auto-generated from
-## the package DESCRIPTION file and may need manual editing, see
-## 'help("citation")'.
 ```
-
-```r
-method <- "bagEarth"
-modelLookup(method) %>% kable()
-```
-
-
-
-|model    |parameter |label          |forReg |forClass |probModel |
-|:--------|:---------|:--------------|:------|:--------|:---------|
-|bagEarth |nprune    |#Terms         |TRUE   |TRUE     |TRUE      |
-|bagEarth |degree    |Product Degree |TRUE   |TRUE     |TRUE      |
-
-```r
-grid <- expand.grid(nprune = c(seq(2, 9, 1), seq(10, 30, 5)),
-                    degree = seq(1, 3))
-grid %>% kable()
-```
-
-
-
-| nprune| degree|
-|------:|------:|
-|      2|      1|
-|      3|      1|
-|      4|      1|
-|      5|      1|
-|      6|      1|
-|      7|      1|
-|      8|      1|
-|      9|      1|
-|     10|      1|
-|     15|      1|
-|     20|      1|
-|     25|      1|
-|     30|      1|
-|      2|      2|
-|      3|      2|
-|      4|      2|
-|      5|      2|
-|      6|      2|
-|      7|      2|
-|      8|      2|
-|      9|      2|
-|     10|      2|
-|     15|      2|
-|     20|      2|
-|     25|      2|
-|     30|      2|
-|      2|      3|
-|      3|      3|
-|      4|      3|
-|      5|      3|
-|      6|      3|
-|      7|      3|
-|      8|      3|
-|      9|      3|
-|     10|      3|
-|     15|      3|
-|     20|      3|
-|     25|      3|
-|     30|      3|
-
-
-
-# Model PCB1
-
-
-## PCB1 Total
-
-Prediction model for `PCB1`.
-
-Train model over the tuning parameters.
-
-
-```
-## Bagged MARS 
-## 
-## 293 samples
-##  52 predictor
-## 
-## No pre-processing
-## Resampling: Cross-Validated (10 fold, repeated 10 times) 
-## Summary of sample sizes: 261, 263, 263, 261, 261, 262, ... 
-## Resampling results across tuning parameters:
-## 
-##   degree  nprune  RMSE          Rsquared    MAE         
-##   1        2      1.571482e+01  0.04320407  1.284548e+01
-##   1        3      1.567991e+01  0.05145719  1.278524e+01
-##   1        4      1.562755e+01  0.05651002  1.274021e+01
-##   1        5      1.566533e+01  0.05541351  1.277778e+01
-##   1        6      1.568706e+01  0.05517188  1.277360e+01
-##   1        7      1.569454e+01  0.05885924  1.277500e+01
-##   1        8      1.566087e+01  0.06245054  1.274509e+01
-##   1        9      1.570695e+01  0.05630420  1.276691e+01
-##   1       10      1.572521e+01  0.05725950  1.274594e+01
-##   1       15      1.581852e+01  0.06600275  1.275550e+01
-##   1       20      1.589211e+01  0.06726229  1.272955e+01
-##   1       25      1.616667e+01  0.06474451  1.290041e+01
-##   1       30      1.622059e+01  0.06578394  1.292120e+01
-##   2        2      1.576334e+01  0.04481756  1.292294e+01
-##   2        3      1.574651e+01  0.04180724  1.288224e+01
-##   2        4      1.578125e+01  0.04323332  1.291120e+01
-##   2        5      1.582187e+01  0.04828768  1.292781e+01
-##   2        6      1.580352e+01  0.04944371  1.290291e+01
-##   2        7      1.585343e+01  0.04745533  1.293071e+01
-##   2        8      1.588597e+01  0.04639400  1.293602e+01
-##   2        9      1.594741e+01  0.04281639  1.297088e+01
-##   2       10      1.589872e+01  0.05401455  1.291907e+01
-##   2       15      1.612759e+01  0.04880661  1.298727e+01
-##   2       20      1.614137e+01  0.05576970  1.295629e+01
-##   2       25      1.633253e+01  0.05678335  1.309085e+01
-##   2       30      2.746094e+13  0.05023996  5.013660e+12
-##   3        2      1.581464e+01  0.03933084  1.296712e+01
-##   3        3      1.581118e+01  0.03953727  1.292969e+01
-##   3        4      1.586520e+01  0.03681780  1.298052e+01
-##   3        5      1.580509e+01  0.04897981  1.292875e+01
-##   3        6      1.771734e+12  0.04255419  3.234729e+11
-##   3        7      1.593850e+01  0.04323598  1.303057e+01
-##   3        8      1.597212e+01  0.05078073  1.299998e+01
-##   3        9      1.715234e+01  0.04101746  1.340192e+01
-##   3       10      1.597406e+01  0.04571486  1.294588e+01
-##   3       15      1.621960e+01  0.04910649  1.307904e+01
-##   3       20      1.636452e+01  0.05537843  1.312913e+01
-##   3       25      1.653522e+01  0.05590162  1.320590e+01
-##   3       30      1.664848e+01  0.05316593  1.330270e+01
-## 
-## RMSE was used to select the optimal model using the smallest value.
-## The final values used for the model were nprune = 4 and degree = 1.
-```
-
-```
-## Warning: Removed 1 rows containing missing values (geom_path).
-```
-
-```
-## Warning: Removed 2 rows containing missing values (geom_point).
-```
-
-![plot of chunk PCB1_Total_Training](figures/PCB1_Total_Training-1.png)
-
-![plot of chunk PCB1_Total_Training-varImp](figures/PCB1_Total_Training-varImp-1.png)
-
-|variable                |    Overall|
-|:-----------------------|----------:|
-|SEPTI_discipline        | 100.000000|
-|SEPTI_total             |  65.646693|
-|SEPTI_r_clinical_cutoff |  27.254022|
-|totalChildren           |   4.260233|
 
 
 
 
 ```
-##       RMSE   Rsquared        MAE 
-## 14.6958975  0.2222885 11.9854896
+## [1] 345  63
 ```
 
 ```
-##            PCB1_Total       hat
-## PCB1_Total  1.0000000 0.4714748
-## hat         0.4714748 1.0000000
-```
-
-![plot of chunk PCB1_Total_Training-predict](figures/PCB1_Total_Training-predict-1.png)
-
-Evaluate model on the validation sample.
-
-
-```
-##       RMSE   Rsquared        MAE 
-## 17.8941724  0.1298564 13.8599137
+## [1] 345  54
 ```
 
 ```
-##            PCB1_Total       hat
-## PCB1_Total  1.0000000 0.3603559
-## hat         0.3603559 1.0000000
-```
-
-![plot of chunk PCB1_Total_Validation-predict](figures/PCB1_Total_Validation-predict-1.png)
-
-
-
-# Model PCB2
-
-
-## Total PCB2
-
-Prediction model for `PCB2_Total`.
-
-Train model over the tuning parameters.
-
-
-```
-## Bagged MARS 
-## 
-## 293 samples
-##  52 predictor
-## 
-## No pre-processing
-## Resampling: Cross-Validated (10 fold, repeated 10 times) 
-## Summary of sample sizes: 263, 262, 262, 262, 262, 262, ... 
-## Resampling results across tuning parameters:
-## 
-##   degree  nprune  RMSE          Rsquared    MAE         
-##   1        2      4.326906e+00  0.03340834  3.298945e+00
-##   1        3      4.319109e+00  0.04858244  3.290790e+00
-##   1        4      4.322637e+00  0.05248578  3.284097e+00
-##   1        5      4.317835e+00  0.05373481  3.287895e+00
-##   1        6      4.317654e+00  0.05590818  3.282685e+00
-##   1        7      4.317478e+00  0.05946571  3.277796e+00
-##   1        8      4.316295e+00  0.06109812  3.275342e+00
-##   1        9      4.315981e+00  0.06059385  3.282386e+00
-##   1       10      4.329833e+00  0.05518009  3.279910e+00
-##   1       15      4.362482e+00  0.06387532  3.313125e+00
-##   1       20      4.399549e+00  0.06267637  3.335373e+00
-##   1       25      4.452408e+00  0.06088870  3.379584e+00
-##   1       30      4.511364e+00  0.06107648  3.430025e+00
-##   2        2      4.320572e+00  0.04109506  3.301124e+00
-##   2        3      4.354108e+00  0.04046534  3.328897e+00
-##   2        4      9.201627e+11  0.04217304  2.128289e+11
-##   2        5      4.369004e+00  0.04602975  3.342857e+00
-##   2        6      4.376198e+00  0.04619965  3.347672e+00
-##   2        7      4.429904e+00  0.03776036  3.368047e+00
-##   2        8      4.381312e+00  0.05053456  3.350606e+00
-##   2        9      4.395099e+00  0.04939043  3.359015e+00
-##   2       10      3.025465e+11  0.04295402  5.822511e+10
-##   2       15      4.458666e+00  0.04639679  3.412187e+00
-##   2       20      4.483655e+00  0.05107595  3.435342e+00
-##   2       25      4.032199e+10  0.04290887  7.487606e+09
-##   2       30      4.565993e+00  0.04949845  3.498730e+00
-##   3        2      4.328941e+00  0.04847328  3.301778e+00
-##   3        3      4.344888e+00  0.04161013  3.328367e+00
-##   3        4      4.378336e+00  0.04015509  3.349420e+00
-##   3        5      4.405762e+00  0.04231529  3.367112e+00
-##   3        6      1.119803e+13  0.05011717  2.116229e+12
-##   3        7      8.174627e+11  0.03181318  1.492476e+11
-##   3        8      5.967251e+11  0.03735934  1.545755e+11
-##   3        9      4.451882e+00  0.04306249  3.410233e+00
-##   3       10      3.912912e+11  0.04308901  7.266094e+10
-##   3       15      4.505070e+00  0.04236338  3.461924e+00
-##   3       20      4.571760e+00  0.05546553  3.487775e+00
-##   3       25      9.023605e+11  0.04262326  1.675641e+11
-##   3       30      3.343157e+11  0.04375086  6.203404e+10
-## 
-## RMSE was used to select the optimal model using the smallest value.
-## The final values used for the model were nprune = 9 and degree = 1.
+## [1] 345   8
 ```
 
 ```
-## Warning: Removed 2 rows containing missing values (geom_path).
+## [1] 345 154
 ```
 
 ```
-## Warning: Removed 9 rows containing missing values (geom_point).
+## NULL
 ```
 
-![plot of chunk PCB2_Tot_Training](figures/PCB2_Tot_Training-1.png)
-
-![plot of chunk PCB2_Total_Training-varImp](figures/PCB2_Total_Training-varImp-1.png)
-
-|variable         |    Overall|
-|:----------------|----------:|
-|SEPTI_discipline | 100.000000|
-|SEPTI_nurturance |  85.061688|
-|parentRaceWhite1 |  71.614498|
-|MAPS_POS         |  56.040444|
-|zipcode97741     |  43.142712|
-|ECBI_Inatt       |  31.176062|
-|zipcodeClass2    |  19.364705|
-|zipcode97702     |   9.444855|
-|MAPS_PR          |   3.852440|
 
 
 
+## K-means clustering
+
+![plot of chunk kmeans](figures/kmeans-1.png)![plot of chunk kmeans](figures/kmeans-2.png)
 
 ```
-##      RMSE  Rsquared       MAE 
-## 3.7239749 0.3586612 2.8582647
+## Clustering k = 1,2,..., K.max (= 10): .. done
+## Bootstrapping, b = 1,2,..., B (= 500)  [one "." per sample]:
+## ...................
 ```
 
 ```
-##           PCB2_Tot       hat
-## PCB2_Tot 1.0000000 0.5988833
-## hat      0.5988833 1.0000000
-```
-
-![plot of chunk PCB2_Tot_Training-predict](figures/PCB2_Tot_Training-predict-1.png)
-
-Evaluate model on the validation sample.
-
-
-```
-##       RMSE   Rsquared        MAE 
-## 4.92728210 0.04714749 3.46159461
+## Warning: did not converge in 10 iterations
 ```
 
 ```
-##           PCB2_Tot       hat
-## PCB2_Tot 1.0000000 0.2171347
-## hat      0.2171347 1.0000000
-```
-
-![plot of chunk PCB2_Tot_Validation-predict](figures/PCB2_Tot_Validation-predict-1.png)
-
-
-
-# Model PCB3
-
-
-## Total PCB3
-
-Prediction model for `PCB3_Total`.
-
-Train model over the tuning parameters.
-
-
-```
-## Bagged MARS 
-## 
-## 293 samples
-##  52 predictor
-## 
-## No pre-processing
-## Resampling: Cross-Validated (10 fold, repeated 10 times) 
-## Summary of sample sizes: 264, 263, 262, 260, 261, 262, ... 
-## Resampling results across tuning parameters:
-## 
-##   degree  nprune  RMSE          Rsquared    MAE         
-##   1        2      1.155186e+01  0.09121569  9.588241e+00
-##   1        3      1.151347e+01  0.09007050  9.547837e+00
-##   1        4      1.144426e+01  0.09854393  9.457875e+00
-##   1        5      1.144068e+01  0.09668763  9.440352e+00
-##   1        6      1.147772e+01  0.09406201  9.459848e+00
-##   1        7      1.144264e+01  0.09994678  9.417214e+00
-##   1        8      1.148913e+01  0.09800851  9.442785e+00
-##   1        9      1.151576e+01  0.09819661  9.444117e+00
-##   1       10      1.154247e+01  0.09462947  9.464077e+00
-##   1       15      1.166429e+01  0.09344122  9.509728e+00
-##   1       20      1.183185e+01  0.08898440  9.614596e+00
-##   1       25      1.199443e+01  0.08601278  9.723684e+00
-##   1       30      1.211864e+01  0.08069752  9.781465e+00
-##   2        2      1.156130e+01  0.09276383  9.594094e+00
-##   2        3      1.153483e+01  0.09197486  9.543339e+00
-##   2        4      1.149728e+01  0.08670606  9.511574e+00
-##   2        5      1.145706e+01  0.09452997  9.457835e+00
-##   2        6      1.147918e+01  0.09197558  9.465717e+00
-##   2        7      1.151060e+01  0.09177462  9.466222e+00
-##   2        8      1.151764e+01  0.08771254  9.442970e+00
-##   2        9      1.159369e+01  0.08525993  9.508488e+00
-##   2       10      4.619929e+13  0.08733468  1.205624e+13
-##   2       15      1.173873e+01  0.08515665  9.557688e+00
-##   2       20      1.190960e+01  0.07983226  9.652294e+00
-##   2       25      1.208812e+01  0.06810859  9.780269e+00
-##   2       30      1.229209e+01  0.06640448  9.884609e+00
-##   3        2      1.156140e+01  0.09291263  9.606094e+00
-##   3        3      1.149704e+01  0.09230624  9.552309e+00
-##   3        4      1.146244e+01  0.09168361  9.487952e+00
-##   3        5      1.152220e+01  0.08458671  9.512262e+00
-##   3        6      1.155166e+01  0.08828323  9.509047e+00
-##   3        7      1.151648e+01  0.09632282  9.486651e+00
-##   3        8      1.157512e+13  0.09071222  2.149446e+12
-##   3        9      1.156105e+01  0.08395228  9.489769e+00
-##   3       10      1.155130e+01  0.08751224  9.469815e+00
-##   3       15      1.179592e+01  0.08367928  9.590294e+00
-##   3       20      1.188937e+01  0.08213511  9.631434e+00
-##   3       25      1.285698e+01  0.07132946  9.974221e+00
-##   3       30      5.918788e+12  0.06450496  1.121730e+12
-## 
-## RMSE was used to select the optimal model using the smallest value.
-## The final values used for the model were nprune = 5 and degree = 1.
+## ............................... 50 
+## .................................................. 100 
+## .................................................. 150 
+## .................................................. 200 
+## .................................................. 250 
+## .................................................. 300 
+## .................................................. 350 
+## .................................................. 400 
+## ......
 ```
 
 ```
-## Warning: Removed 1 rows containing missing values (geom_path).
+## Warning: did not converge in 10 iterations
 ```
 
 ```
-## Warning: Removed 3 rows containing missing values (geom_point).
+## ............................................ 450 
+## .................................................. 500
 ```
 
-![plot of chunk PCB3_Total_Training](figures/PCB3_Total_Training-1.png)
+![plot of chunk kmeans](figures/kmeans-3.png)
 
-![plot of chunk PCB3_Total_Training-varImp](figures/PCB3_Total_Training-varImp-1.png)
+```
+## .
+##   1   2   3   4   5   6   7 
+##  41  35  66 101  69   5  28
+```
 
-|variable         |    Overall|
-|:----------------|----------:|
-|zipcode97702     | 100.000000|
-|SEPTI_discipline |  72.920401|
-|SEPTI_nurturance |  38.219334|
-|totalChildren    |  21.012094|
-|birthOrderOldest |   9.172569|
-|birthOrderMiddle |   1.325648|
+![plot of chunk kmeans](figures/kmeans-4.png)
+
+|var                                                                          | cluster1| cluster2| cluster3| cluster4| cluster5| cluster6| cluster7|
+|:----------------------------------------------------------------------------|--------:|--------:|--------:|--------:|--------:|--------:|--------:|
+|birthOrderMiddle                                                             |    -0.01|    -0.03|     0.22|    -0.17|     0.11|    -0.38|    -0.05|
+|birthOrderOldest                                                             |     0.36|    -0.17|     0.09|    -0.20|     0.25|    -0.62|    -0.30|
+|birthOrderYoungest                                                           |    -0.12|     0.22|    -0.07|    -0.03|    -0.06|    -0.61|     0.43|
+|childAge                                                                     |     0.21|     0.21|     0.11|    -0.45|     0.51|    -1.34|    -0.24|
+|childEthnicityNot.Hispanic.Latino                                            |     0.43|    -0.47|     0.15|     0.31|     0.13|     0.07|    -1.83|
+|childEthnicityPrefer.not.to.respond                                          |    -0.29|    -0.18|    -0.23|    -0.25|    -0.29|    -0.29|     2.82|
+|childEthnicityUnknown                                                        |    -0.13|     0.52|    -0.13|     0.02|    -0.13|     1.39|    -0.13|
+|childRaceAfrAm1                                                              |     0.31|     0.10|    -0.20|    -0.04|     0.11|    -0.20|    -0.20|
+|childRaceAIAN1                                                               |    -0.15|     0.41|    -0.05|    -0.02|     0.04|    -0.15|    -0.15|
+|childRaceAsian1                                                              |     0.14|    -0.25|    -0.34|    -0.02|     0.42|    -0.34|     0.01|
+|childRaceNHPI1                                                               |     0.03|     0.06|     0.07|    -0.14|     0.16|    -0.14|    -0.14|
+|childRaceNoResp1                                                             |    -0.18|    -0.27|    -0.27|    -0.23|    -0.27|    -0.27|     2.81|
+|childRaceOther1                                                              |    -0.21|    -0.07|     0.01|    -0.02|     0.21|    -0.21|    -0.04|
+|childRaceWhite1                                                              |     0.00|     0.42|     0.34|     0.24|    -0.17|     0.49|    -1.85|
+|childRelationshipBiological.or.adoptive.father                               |     2.51|    -0.30|    -0.39|    -0.39|    -0.39|    -0.39|     0.04|
+|childRelationshipGrandparent                                                 |    -0.05|     0.48|    -0.05|    -0.05|    -0.05|    -0.05|    -0.05|
+|childRelationshipOther                                                       |    -0.08|    -0.08|    -0.08|    -0.08|     0.30|    -0.08|    -0.08|
+|childSexMale                                                                 |     0.18|    -0.11|     0.04|    -0.03|    -0.01|    -0.28|    -0.01|
+|communityRural                                                               |    -0.11|     0.10|     0.91|    -0.35|    -0.15|    -0.48|    -0.39|
+|communitySuburban                                                            |     0.16|     0.06|    -0.37|     0.13|    -0.16|     0.28|     0.44|
+|distance                                                                     |    -0.16|     0.01|     0.55|    -0.31|     0.10|    -0.20|    -0.19|
+|ECBI_Cond                                                                    |    -0.11|     0.04|    -0.30|    -0.39|     0.85|    -0.76|     0.28|
+|ECBI_Inatt                                                                   |    -0.20|    -0.14|    -0.37|    -0.07|     0.58|     0.36|     0.09|
+|ECBI_intensity_T_score                                                       |    -0.04|     0.01|    -0.54|    -0.29|     0.88|    -0.41|     0.28|
+|ECBI_Opp                                                                     |     0.05|     0.15|    -0.45|    -0.29|     0.71|    -0.85|     0.21|
+|ECBI_problem_T_score                                                         |     0.04|     0.01|    -0.35|    -0.35|     0.89|    -0.81|    -0.03|
+|income.120.000..149.999                                                      |     0.18|    -0.32|    -0.16|     0.06|     0.13|     0.37|    -0.07|
+|income.150.000.or.more                                                       |    -0.12|    -0.40|    -0.31|     0.46|    -0.15|    -0.40|     0.22|
+|income.25.001..49.999                                                        |    -0.05|     0.44|     0.08|    -0.40|     0.25|    -0.09|     0.19|
+|income.50.000..79.999                                                        |     0.18|    -0.08|     0.36|    -0.15|    -0.11|    -0.60|    -0.11|
+|income.80.000..119.999                                                       |    -0.04|    -0.44|     0.05|     0.31|    -0.16|     0.10|    -0.25|
+|internet                                                                     |     0.16|    -0.37|    -0.12|     0.16|    -0.11|     0.16|     0.16|
+|languageSurveyEnglish                                                        |     0.05|     0.05|     0.05|     0.05|     0.05|    -3.66|     0.05|
+|languageSurveySpanish                                                        |    -0.05|    -0.05|    -0.05|    -0.05|    -0.05|     3.66|    -0.05|
+|MAPS_HS                                                                      |     0.10|    -0.33|    -0.18|    -0.43|     0.90|    -1.19|     0.23|
+|MAPS_LC                                                                      |     0.24|     0.33|    -0.48|    -0.29|     0.53|    -0.82|     0.25|
+|MAPS_NEG                                                                     |     0.16|    -0.03|    -0.22|    -0.49|     0.83|    -1.17|     0.25|
+|MAPS_PC                                                                      |     0.02|    -0.07|     0.15|    -0.39|     0.47|    -0.67|     0.11|
+|MAPS_POS                                                                     |    -0.44|    -0.01|     0.47|     0.41|    -0.56|    -0.06|    -0.56|
+|MAPS_PP                                                                      |    -0.42|    -0.39|     0.48|     0.32|    -0.30|     0.12|    -0.44|
+|MAPS_PR                                                                      |    -0.28|     0.17|     0.40|     0.20|    -0.37|    -0.46|    -0.48|
+|MAPS_SP                                                                      |    -0.36|     0.04|     0.31|     0.39|    -0.49|     0.01|    -0.46|
+|MAPS_WM                                                                      |    -0.31|     0.18|     0.28|     0.40|    -0.60|     0.13|    -0.40|
+|parentAge                                                                    |     0.47|    -0.18|    -0.30|     0.14|    -0.16|    -0.89|     0.31|
+|parentChildRatio                                                             |    -0.07|    -0.96|    -0.13|     0.48|    -0.12|     1.12|    -0.04|
+|parentEducationCollege                                                       |    -0.12|    -0.35|    -0.07|     0.13|     0.04|    -0.41|     0.28|
+|parentEducationGraduate.professional.school                                  |     0.35|    -0.31|    -0.32|     0.37|    -0.17|     0.26|    -0.31|
+|parentEducationVocational.school.some.college                                |    -0.13|     0.37|     0.42|    -0.42|     0.12|    -0.49|     0.04|
+|parentEthnicityNot.Hispanic.Latino                                           |     0.41|    -0.04|     0.17|     0.27|     0.03|    -0.04|    -2.00|
+|parentEthnicityPrefer.not.to.respond                                         |    -0.26|    -0.26|    -0.26|    -0.22|    -0.26|    -0.26|     2.80|
+|parentEthnicityUnknown                                                       |    -0.13|     0.09|    -0.13|    -0.06|    -0.02|     1.39|     0.41|
+|parentGenderFemale                                                           |    -2.24|     0.29|     0.44|     0.44|     0.25|    -0.63|    -0.23|
+|parentGenderOther                                                            |    -0.05|    -0.05|    -0.05|    -0.05|     0.22|    -0.05|    -0.05|
+|parentGenderPrefer.not.to.respond                                            |    -0.09|     0.21|    -0.09|    -0.09|     0.06|    -0.09|     0.29|
+|parentGenderTransgender                                                      |    -0.05|    -0.05|    -0.05|    -0.05|    -0.05|     3.66|    -0.05|
+|parentMaritalStatusDivorced                                                  |    -0.10|     1.00|    -0.22|    -0.22|    -0.15|    -0.22|     0.63|
+|parentMaritalStatusNever.married                                             |    -0.16|     0.90|    -0.10|    -0.10|    -0.11|     0.12|    -0.04|
+|parentMaritalStatusRemarried                                                 |     0.35|    -0.11|    -0.11|    -0.11|     0.16|    -0.11|    -0.11|
+|parentMaritalStatusSeparated                                                 |    -0.13|     0.74|    -0.13|    -0.13|    -0.02|     1.39|    -0.13|
+|parentMaritalStatusWidowed                                                   |    -0.05|     0.48|    -0.05|    -0.05|    -0.05|    -0.05|    -0.05|
+|parentRaceAfrAm1                                                             |     0.24|     0.09|    -0.13|     0.02|    -0.02|    -0.13|    -0.13|
+|parentRaceAIAN1                                                              |    -0.15|     0.41|    -0.15|    -0.02|     0.04|    -0.15|     0.08|
+|parentRaceAsian1                                                             |     0.12|    -0.26|    -0.30|     0.00|     0.39|    -0.35|    -0.01|
+|parentRaceNHPI1                                                              |     0.20|     0.06|     0.07|    -0.07|    -0.04|    -0.14|    -0.14|
+|parentRaceNoResp1                                                            |    -0.17|    -0.27|    -0.21|    -0.23|    -0.27|    -0.27|     2.59|
+|parentRaceOther1                                                             |    -0.06|    -0.19|     0.06|    -0.08|     0.21|    -0.19|     0.01|
+|parentRaceWhite1                                                             |    -0.04|     0.40|     0.32|     0.16|    -0.12|     0.54|    -1.59|
+|parentSexMale                                                                |     2.36|    -0.33|    -0.41|    -0.38|    -0.33|     0.16|     0.10|
+|parentSituationCo.parenting.in.separate.households                           |    -0.20|     1.30|    -0.20|    -0.20|    -0.20|    -0.20|     0.36|
+|parentSituationCouple.parenting.with.spouse.or.partner.in.the.same.household |     0.31|    -2.61|     0.38|     0.38|     0.30|    -0.22|    -0.15|
+|parentsNumber                                                                |     0.31|    -2.61|     0.38|     0.38|     0.30|    -0.22|    -0.15|
+|SEPTI_discipline                                                             |    -0.07|    -0.13|     0.43|     0.30|    -0.78|     0.97|    -0.07|
+|SEPTI_nurturance                                                             |    -0.38|     0.16|     0.37|     0.40|    -0.67|     0.62|    -0.43|
+|SEPTI_play                                                                   |     0.20|     0.17|     0.15|     0.29|    -0.74|     0.64|    -0.20|
+|SEPTI_routine                                                                |    -0.30|     0.09|     0.27|     0.47|    -0.65|    -0.12|    -0.40|
+|totalChildren                                                                |     0.01|     0.10|     0.34|    -0.30|     0.14|    -0.99|    -0.03|
+|zipcode91020                                                                 |    -0.05|    -0.05|    -0.05|    -0.05|     0.22|    -0.05|    -0.05|
+|zipcode91204                                                                 |    -0.05|    -0.05|    -0.05|    -0.05|    -0.05|    -0.05|     0.61|
+|zipcode91206                                                                 |    -0.05|    -0.05|    -0.05|     0.13|    -0.05|    -0.05|    -0.05|
+|zipcode91210                                                                 |    -0.05|    -0.05|    -0.05|    -0.05|    -0.05|    -0.05|     0.61|
+|zipcode91402                                                                 |    -0.05|    -0.05|    -0.05|    -0.05|     0.22|    -0.05|    -0.05|
+|zipcode97003                                                                 |    -0.09|    -0.09|    -0.09|    -0.09|     0.37|    -0.09|    -0.09|
+|zipcode97006                                                                 |    -0.07|     0.10|    -0.20|    -0.04|     0.11|    -0.20|     0.36|
+|zipcode97007                                                                 |    -0.08|    -0.08|    -0.08|     0.05|    -0.08|    -0.08|     0.39|
+|zipcode97008                                                                 |     0.05|    -0.13|    -0.13|     0.09|     0.09|    -0.13|    -0.13|
+|zipcode97023                                                                 |    -0.05|    -0.05|     0.23|    -0.05|    -0.05|    -0.05|    -0.05|
+|zipcode97027                                                                 |    -0.08|    -0.08|     0.32|    -0.08|    -0.08|    -0.08|    -0.08|
+|zipcode97032                                                                 |    -0.05|    -0.05|     0.23|    -0.05|    -0.05|    -0.05|    -0.05|
+|zipcode97034                                                                 |    -0.08|     0.30|    -0.08|     0.05|    -0.08|    -0.08|    -0.08|
+|zipcode97035                                                                 |    -0.05|    -0.05|    -0.05|    -0.05|     0.22|    -0.05|    -0.05|
+|zipcode97045                                                                 |    -0.05|    -0.05|    -0.05|     0.13|    -0.05|    -0.05|    -0.05|
+|zipcode97056                                                                 |    -0.05|    -0.05|     0.23|    -0.05|    -0.05|    -0.05|    -0.05|
+|zipcode97060                                                                 |    -0.05|    -0.05|    -0.05|    -0.05|     0.22|    -0.05|    -0.05|
+|zipcode97062                                                                 |    -0.05|    -0.05|    -0.05|    -0.05|     0.22|    -0.05|    -0.05|
+|zipcode97068                                                                 |    -0.05|    -0.05|    -0.05|     0.13|    -0.05|    -0.05|    -0.05|
+|zipcode97071                                                                 |    -0.08|    -0.08|     0.32|    -0.08|    -0.08|    -0.08|    -0.08|
+|zipcode97078                                                                 |     0.24|     0.30|    -0.08|    -0.08|    -0.08|    -0.08|    -0.08|
+|zipcode97086                                                                 |    -0.05|    -0.05|     0.23|    -0.05|    -0.05|    -0.05|    -0.05|
+|zipcode97089                                                                 |    -0.08|    -0.08|    -0.08|    -0.08|     0.30|    -0.08|    -0.08|
+|zipcode97101                                                                 |    -0.05|     0.48|    -0.05|    -0.05|    -0.05|    -0.05|    -0.05|
+|zipcode97116                                                                 |    -0.08|    -0.08|    -0.08|     0.05|     0.11|    -0.08|    -0.08|
+|zipcode97123                                                                 |     0.17|    -0.09|    -0.09|    -0.09|     0.22|    -0.09|    -0.09|
+|zipcode97124                                                                 |    -0.12|     0.12|    -0.12|    -0.12|     0.24|    -0.12|     0.18|
+|zipcode97140                                                                 |    -0.08|     0.30|    -0.08|    -0.08|    -0.08|    -0.08|     0.39|
+|zipcode97141                                                                 |    -0.05|    -0.05|    -0.05|    -0.05|     0.22|    -0.05|    -0.05|
+|zipcode97201                                                                 |     0.12|    -0.11|    -0.11|     0.08|    -0.11|    -0.11|     0.22|
+|zipcode97202                                                                 |    -0.08|    -0.06|    -0.21|    -0.06|     0.31|    -0.21|     0.16|
+|zipcode97203                                                                 |    -0.05|    -0.05|    -0.05|    -0.05|    -0.05|    -0.05|     0.61|
+|zipcode97206                                                                 |     0.20|    -0.14|    -0.14|     0.14|    -0.04|    -0.14|    -0.14|
+|zipcode97209                                                                 |    -0.09|    -0.09|    -0.09|     0.12|    -0.09|    -0.09|     0.29|
+|zipcode97210                                                                 |    -0.05|     0.48|    -0.05|    -0.05|    -0.05|    -0.05|    -0.05|
+|zipcode97211                                                                 |     0.12|    -0.11|    -0.11|     0.08|     0.03|    -0.11|    -0.11|
+|zipcode97212                                                                 |    -0.11|    -0.11|    -0.11|     0.08|     0.03|    -0.11|     0.22|
+|zipcode97213                                                                 |     0.17|    -0.09|    -0.09|     0.12|    -0.09|    -0.09|    -0.09|
+|zipcode97214                                                                 |    -0.12|    -0.12|    -0.12|    -0.04|     0.36|    -0.12|    -0.12|
+|zipcode97215                                                                 |    -0.05|    -0.05|    -0.05|    -0.05|    -0.05|     3.66|    -0.05|
+|zipcode97217                                                                 |    -0.09|    -0.09|    -0.09|    -0.09|     0.37|    -0.09|    -0.09|
+|zipcode97219                                                                 |    -0.04|    -0.02|    -0.18|     0.04|     0.23|    -0.18|    -0.18|
+|zipcode97220                                                                 |    -0.08|    -0.08|     0.32|    -0.08|    -0.08|    -0.08|    -0.08|
+|zipcode97221                                                                 |     0.24|    -0.08|    -0.08|    -0.08|    -0.08|    -0.08|     0.39|
+|zipcode97222                                                                 |    -0.09|     0.21|    -0.09|     0.12|    -0.09|    -0.09|    -0.09|
+|zipcode97223                                                                 |     0.29|    -0.12|    -0.12|     0.04|     0.00|    -0.12|    -0.12|
+|zipcode97224                                                                 |    -0.08|    -0.08|    -0.08|    -0.08|     0.30|    -0.08|    -0.08|
+|zipcode97225                                                                 |     0.29|     0.12|    -0.12|    -0.04|     0.00|    -0.12|    -0.12|
+|zipcode97227                                                                 |    -0.05|    -0.05|    -0.05|    -0.05|    -0.05|    -0.05|     0.61|
+|zipcode97229                                                                 |     0.19|    -0.20|    -0.20|    -0.09|     0.03|    -0.20|     0.74|
+|zipcode97230                                                                 |    -0.08|    -0.08|    -0.08|     0.05|    -0.08|    -0.08|     0.39|
+|zipcode97232                                                                 |    -0.08|     0.30|    -0.08|     0.05|    -0.08|    -0.08|    -0.08|
+|zipcode97233                                                                 |     0.24|    -0.08|    -0.08|    -0.08|     0.11|    -0.08|    -0.08|
+|zipcode97236                                                                 |     0.40|    -0.05|    -0.05|    -0.05|    -0.05|    -0.05|    -0.05|
+|zipcode97239                                                                 |    -0.04|    -0.18|    -0.18|     0.27|    -0.10|     0.96|    -0.18|
+|zipcode97266                                                                 |    -0.05|    -0.05|    -0.05|     0.13|    -0.05|    -0.05|    -0.05|
+|zipcode97267                                                                 |    -0.09|    -0.09|    -0.09|    -0.09|    -0.09|     6.36|    -0.09|
+|zipcode97321                                                                 |    -0.05|    -0.05|    -0.05|     0.13|    -0.05|    -0.05|    -0.05|
+|zipcode97325                                                                 |    -0.05|    -0.05|    -0.05|     0.13|    -0.05|    -0.05|    -0.05|
+|zipcode97429                                                                 |    -0.05|    -0.05|    -0.05|    -0.05|     0.22|    -0.05|    -0.05|
+|zipcode97527                                                                 |     0.24|    -0.08|     0.12|    -0.08|    -0.08|    -0.08|    -0.08|
+|zipcode97701                                                                 |     0.01|     0.25|    -0.37|     0.40|    -0.23|    -0.37|    -0.26|
+|zipcode97702                                                                 |     0.14|    -0.26|    -0.20|     0.22|    -0.08|    -0.26|     0.03|
+|zipcode97703                                                                 |    -0.03|    -0.17|    -0.17|     0.18|     0.00|    -0.17|     0.04|
+|zipcode97707                                                                 |    -0.05|    -0.05|     0.23|    -0.05|    -0.05|    -0.05|    -0.05|
+|zipcode97734                                                                 |    -0.09|    -0.09|     0.40|    -0.09|    -0.09|    -0.09|    -0.09|
+|zipcode97738                                                                 |    -0.05|    -0.05|     0.23|    -0.05|    -0.05|    -0.05|    -0.05|
+|zipcode97741                                                                 |    -0.03|     0.34|     0.28|    -0.17|    -0.09|    -0.17|    -0.17|
+|zipcode97753                                                                 |    -0.09|     0.21|     0.23|    -0.09|    -0.09|    -0.09|    -0.09|
+|zipcode97754                                                                 |     0.17|     0.04|     0.25|    -0.15|    -0.06|    -0.15|    -0.15|
+|zipcode97756                                                                 |    -0.16|     0.29|     0.96|    -0.34|    -0.35|    -0.43|    -0.23|
+|zipcode97759                                                                 |    -0.08|    -0.08|     0.32|    -0.08|    -0.08|    -0.08|    -0.08|
+|zipcode97760                                                                 |     0.17|    -0.09|     0.23|    -0.09|    -0.09|    -0.09|    -0.09|
+|zipcode98632                                                                 |    -0.05|    -0.05|     0.23|    -0.05|    -0.05|    -0.05|    -0.05|
+|zipcode98660                                                                 |    -0.05|    -0.05|    -0.05|    -0.05|     0.22|    -0.05|    -0.05|
+|zipcode98683                                                                 |    -0.05|     0.48|    -0.05|    -0.05|    -0.05|    -0.05|    -0.05|
+|zipcode98685                                                                 |    -0.05|    -0.05|    -0.05|     0.13|    -0.05|    -0.05|    -0.05|
+|zipcodeClass2                                                                |    -0.12|     0.34|     1.38|    -0.53|    -0.42|    -0.62|    -0.46|
 
 
+## Partitioning around medoids (PAM)
+
+![plot of chunk pam](figures/pam-1.png)![plot of chunk pam](figures/pam-2.png)
+
+```
+## Clustering k = 1,2,..., K.max (= 25): .. done
+## Bootstrapping, b = 1,2,..., B (= 500)  [one "." per sample]:
+## .................................................. 50 
+## .................................................. 100 
+## .................................................. 150 
+## .................................................. 200 
+## .................................................. 250 
+## .................................................. 300 
+## .................................................. 350 
+## .................................................. 400 
+## .................................................. 450 
+## .................................................. 500
+```
+
+![plot of chunk pam](figures/pam-3.png)
+
+```
+## .
+##   1   2   3 
+## 140 120  85
+```
+
+![plot of chunk pam](figures/pam-4.png)
+
+|var                                                                          | cluster1| cluster2| cluster3|
+|:----------------------------------------------------------------------------|--------:|--------:|--------:|
+|birthOrderMiddle                                                             |    -0.38|    -0.38|    -0.38|
+|birthOrderOldest                                                             |    -0.62|     1.61|    -0.62|
+|birthOrderYoungest                                                           |    -0.61|    -0.61|     1.63|
+|childAge                                                                     |    -1.25|    -0.25|    -0.10|
+|childEthnicityNot.Hispanic.Latino                                            |     0.54|     0.54|     0.54|
+|childEthnicityPrefer.not.to.respond                                          |    -0.29|    -0.29|    -0.29|
+|childEthnicityUnknown                                                        |    -0.13|    -0.13|    -0.13|
+|childRaceAfrAm1                                                              |    -0.20|    -0.20|    -0.20|
+|childRaceAIAN1                                                               |    -0.15|    -0.15|    -0.15|
+|childRaceAsian1                                                              |    -0.34|    -0.34|    -0.34|
+|childRaceNHPI1                                                               |    -0.14|    -0.14|    -0.14|
+|childRaceNoResp1                                                             |    -0.27|    -0.27|    -0.27|
+|childRaceOther1                                                              |    -0.21|    -0.21|    -0.21|
+|childRaceWhite1                                                              |     0.49|     0.49|     0.49|
+|childRelationshipBiological.or.adoptive.father                               |    -0.39|    -0.39|    -0.39|
+|childRelationshipGrandparent                                                 |    -0.05|    -0.05|    -0.05|
+|childRelationshipOther                                                       |    -0.08|    -0.08|    -0.08|
+|childSexMale                                                                 |     0.92|    -1.09|     0.92|
+|communityRural                                                               |    -0.48|    -0.48|    -0.48|
+|communitySuburban                                                            |     1.09|    -0.92|     1.09|
+|distance                                                                     |     0.01|     0.01|    -0.34|
+|ECBI_Cond                                                                    |    -0.54|     0.83|    -0.39|
+|ECBI_Inatt                                                                   |     0.36|     0.60|    -0.12|
+|ECBI_intensity_T_score                                                       |     0.47|     0.61|    -0.38|
+|ECBI_Opp                                                                     |     0.49|     0.71|    -0.06|
+|ECBI_problem_T_score                                                         |     0.23|     0.44|    -0.71|
+|income.120.000..149.999                                                      |    -0.32|    -0.32|    -0.32|
+|income.150.000.or.more                                                       |    -0.40|    -0.40|    -0.40|
+|income.25.001..49.999                                                        |    -0.56|    -0.56|    -0.56|
+|income.50.000..79.999                                                        |     1.67|     1.67|    -0.60|
+|income.80.000..119.999                                                       |    -0.44|    -0.44|     2.27|
+|internet                                                                     |     0.16|     0.16|     0.16|
+|languageSurveyEnglish                                                        |     0.05|     0.05|     0.05|
+|languageSurveySpanish                                                        |    -0.05|    -0.05|    -0.05|
+|MAPS_HS                                                                      |    -0.42|     0.27|    -0.42|
+|MAPS_LC                                                                      |     0.21|    -0.65|    -0.22|
+|MAPS_NEG                                                                     |    -0.43|    -0.53|    -0.62|
+|MAPS_PC                                                                      |    -0.74|    -0.74|    -0.74|
+|MAPS_POS                                                                     |    -0.26|     0.81|     0.95|
+|MAPS_PP                                                                      |    -0.70|    -0.11|     0.77|
+|MAPS_PR                                                                      |     0.47|     0.94|     0.47|
+|MAPS_SP                                                                      |    -0.10|     0.97|     0.97|
+|MAPS_WM                                                                      |    -0.52|     0.78|     0.78|
+|parentAge                                                                    |    -0.76|     0.72|     0.39|
+|parentChildRatio                                                             |     1.47|    -0.26|    -0.83|
+|parentEducationCollege                                                       |     1.22|    -0.82|    -0.82|
+|parentEducationGraduate.professional.school                                  |    -0.62|     1.60|    -0.62|
+|parentEducationVocational.school.some.college                                |    -0.49|    -0.49|     2.02|
+|parentEthnicityNot.Hispanic.Latino                                           |     0.48|     0.48|     0.48|
+|parentEthnicityPrefer.not.to.respond                                         |    -0.26|    -0.26|    -0.26|
+|parentEthnicityUnknown                                                       |    -0.13|    -0.13|    -0.13|
+|parentGenderFemale                                                           |     0.44|     0.44|     0.44|
+|parentGenderOther                                                            |    -0.05|    -0.05|    -0.05|
+|parentGenderPrefer.not.to.respond                                            |    -0.09|    -0.09|    -0.09|
+|parentGenderTransgender                                                      |    -0.05|    -0.05|    -0.05|
+|parentMaritalStatusDivorced                                                  |    -0.22|    -0.22|    -0.22|
+|parentMaritalStatusNever.married                                             |    -0.43|    -0.43|    -0.43|
+|parentMaritalStatusRemarried                                                 |    -0.11|    -0.11|    -0.11|
+|parentMaritalStatusSeparated                                                 |    -0.13|    -0.13|    -0.13|
+|parentMaritalStatusWidowed                                                   |    -0.05|    -0.05|    -0.05|
+|parentRaceAfrAm1                                                             |    -0.13|    -0.13|    -0.13|
+|parentRaceAIAN1                                                              |    -0.15|    -0.15|    -0.15|
+|parentRaceAsian1                                                             |    -0.35|    -0.35|    -0.35|
+|parentRaceNHPI1                                                              |    -0.14|    -0.14|    -0.14|
+|parentRaceNoResp1                                                            |    -0.27|    -0.27|    -0.27|
+|parentRaceOther1                                                             |    -0.19|    -0.19|    -0.19|
+|parentRaceWhite1                                                             |     0.54|     0.54|     0.54|
+|parentSexMale                                                                |    -0.41|    -0.41|    -0.41|
+|parentSituationCo.parenting.in.separate.households                           |    -0.20|    -0.20|    -0.20|
+|parentSituationCouple.parenting.with.spouse.or.partner.in.the.same.household |     0.38|     0.38|     0.38|
+|parentsNumber                                                                |     0.38|     0.38|     0.38|
+|SEPTI_discipline                                                             |    -0.42|     0.08|     0.90|
+|SEPTI_nurturance                                                             |    -0.60|     0.67|     0.42|
+|SEPTI_play                                                                   |     0.46|     0.18|    -0.82|
+|SEPTI_routine                                                                |    -0.71|     0.87|     0.08|
+|totalChildren                                                                |    -0.99|    -0.06|     0.87|
+|zipcode91020                                                                 |    -0.05|    -0.05|    -0.05|
+|zipcode91204                                                                 |    -0.05|    -0.05|    -0.05|
+|zipcode91206                                                                 |    -0.05|    -0.05|    -0.05|
+|zipcode91210                                                                 |    -0.05|    -0.05|    -0.05|
+|zipcode91402                                                                 |    -0.05|    -0.05|    -0.05|
+|zipcode97003                                                                 |    -0.09|    -0.09|    -0.09|
+|zipcode97006                                                                 |    -0.20|    -0.20|    -0.20|
+|zipcode97007                                                                 |    -0.08|    -0.08|    -0.08|
+|zipcode97008                                                                 |    -0.13|    -0.13|    -0.13|
+|zipcode97023                                                                 |    -0.05|    -0.05|    -0.05|
+|zipcode97027                                                                 |    -0.08|    -0.08|    -0.08|
+|zipcode97032                                                                 |    -0.05|    -0.05|    -0.05|
+|zipcode97034                                                                 |    -0.08|    -0.08|    -0.08|
+|zipcode97035                                                                 |    -0.05|    -0.05|    -0.05|
+|zipcode97045                                                                 |    -0.05|    -0.05|    -0.05|
+|zipcode97056                                                                 |    -0.05|    -0.05|    -0.05|
+|zipcode97060                                                                 |    -0.05|    -0.05|    -0.05|
+|zipcode97062                                                                 |    -0.05|    -0.05|    -0.05|
+|zipcode97068                                                                 |    -0.05|    -0.05|    -0.05|
+|zipcode97071                                                                 |    -0.08|    -0.08|    -0.08|
+|zipcode97078                                                                 |    -0.08|    -0.08|    -0.08|
+|zipcode97086                                                                 |    -0.05|    -0.05|    -0.05|
+|zipcode97089                                                                 |    -0.08|    -0.08|    -0.08|
+|zipcode97101                                                                 |    -0.05|    -0.05|    -0.05|
+|zipcode97116                                                                 |    -0.08|    -0.08|    -0.08|
+|zipcode97123                                                                 |    -0.09|    -0.09|    -0.09|
+|zipcode97124                                                                 |    -0.12|    -0.12|    -0.12|
+|zipcode97140                                                                 |    -0.08|    -0.08|    -0.08|
+|zipcode97141                                                                 |    -0.05|    -0.05|    -0.05|
+|zipcode97201                                                                 |    -0.11|    -0.11|    -0.11|
+|zipcode97202                                                                 |    -0.21|    -0.21|    -0.21|
+|zipcode97203                                                                 |    -0.05|    -0.05|    -0.05|
+|zipcode97206                                                                 |    -0.14|    -0.14|    -0.14|
+|zipcode97209                                                                 |    -0.09|    -0.09|    -0.09|
+|zipcode97210                                                                 |    -0.05|    -0.05|    -0.05|
+|zipcode97211                                                                 |    -0.11|    -0.11|    -0.11|
+|zipcode97212                                                                 |    -0.11|    -0.11|    -0.11|
+|zipcode97213                                                                 |    -0.09|    -0.09|    -0.09|
+|zipcode97214                                                                 |    -0.12|    -0.12|    -0.12|
+|zipcode97215                                                                 |    -0.05|    -0.05|    -0.05|
+|zipcode97217                                                                 |    -0.09|    -0.09|    -0.09|
+|zipcode97219                                                                 |    -0.18|    -0.18|    -0.18|
+|zipcode97220                                                                 |    -0.08|    -0.08|    -0.08|
+|zipcode97221                                                                 |    -0.08|    -0.08|    -0.08|
+|zipcode97222                                                                 |    -0.09|    -0.09|    -0.09|
+|zipcode97223                                                                 |    -0.12|    -0.12|    -0.12|
+|zipcode97224                                                                 |    -0.08|    -0.08|    -0.08|
+|zipcode97225                                                                 |    -0.12|    -0.12|    -0.12|
+|zipcode97227                                                                 |    -0.05|    -0.05|    -0.05|
+|zipcode97229                                                                 |    -0.20|    -0.20|    -0.20|
+|zipcode97230                                                                 |    -0.08|    -0.08|    -0.08|
+|zipcode97232                                                                 |    -0.08|    -0.08|    -0.08|
+|zipcode97233                                                                 |    -0.08|    -0.08|    -0.08|
+|zipcode97236                                                                 |    -0.05|    -0.05|    -0.05|
+|zipcode97239                                                                 |    -0.18|    -0.18|    -0.18|
+|zipcode97266                                                                 |    -0.05|    -0.05|    -0.05|
+|zipcode97267                                                                 |    -0.09|    -0.09|    -0.09|
+|zipcode97321                                                                 |    -0.05|    -0.05|    -0.05|
+|zipcode97325                                                                 |    -0.05|    -0.05|    -0.05|
+|zipcode97429                                                                 |    -0.05|    -0.05|    -0.05|
+|zipcode97527                                                                 |    -0.08|    -0.08|    -0.08|
+|zipcode97701                                                                 |     2.72|     2.72|    -0.37|
+|zipcode97702                                                                 |    -0.26|    -0.26|    -0.26|
+|zipcode97703                                                                 |    -0.17|    -0.17|    -0.17|
+|zipcode97707                                                                 |    -0.05|    -0.05|    -0.05|
+|zipcode97734                                                                 |    -0.09|    -0.09|    -0.09|
+|zipcode97738                                                                 |    -0.05|    -0.05|    -0.05|
+|zipcode97741                                                                 |    -0.17|    -0.17|    -0.17|
+|zipcode97753                                                                 |    -0.09|    -0.09|    -0.09|
+|zipcode97754                                                                 |    -0.15|    -0.15|    -0.15|
+|zipcode97756                                                                 |    -0.43|    -0.43|     2.34|
+|zipcode97759                                                                 |    -0.08|    -0.08|    -0.08|
+|zipcode97760                                                                 |    -0.09|    -0.09|    -0.09|
+|zipcode98632                                                                 |    -0.05|    -0.05|    -0.05|
+|zipcode98660                                                                 |    -0.05|    -0.05|    -0.05|
+|zipcode98683                                                                 |    -0.05|    -0.05|    -0.05|
+|zipcode98685                                                                 |    -0.05|    -0.05|    -0.05|
+|zipcodeClass2                                                                |    -0.62|    -0.62|     1.62|
+
+
+## Agglomerative hierarchical clustering (AGNES)
+
+![plot of chunk agnes](figures/agnes-1.png)
+
+Correlation between cophenetic distance and the original distance is
+0.383.
+
+> The closer the value of the correlation coefficient is to 1, the more accurately the clustering solution reflects your data.
+> Values above 0.75 are felt to be good.
+
+Agglomerative coeffficient using the
+Ward
+method is
+0.887.
+
+
+
+### $k = 2$ clusters
 
 
 ```
-##      RMSE  Rsquared       MAE 
-## 10.574054  0.257276  8.803982
+##   cluster size ave.sil.width
+## 1       1  324          0.27
+## 2       2   21          0.14
 ```
 
 ```
-##            PCB3_Total       hat
-## PCB3_Total  1.0000000 0.5072239
-## hat         0.5072239 1.0000000
+## .
+##   1   2 
+## 324  21
 ```
 
-![plot of chunk PCB3_Total_Training-predict](figures/PCB3_Total_Training-predict-1.png)
+![plot of chunk agnes_k2](figures/agnes_k2-1.png)![plot of chunk agnes_k2](figures/agnes_k2-2.png)![plot of chunk agnes_k2](figures/agnes_k2-3.png)
 
-Evaluate model on the validation sample.
+### $k = 3$ clusters
+
+
+```
+##   cluster size ave.sil.width
+## 1       1  190          0.08
+## 2       2  134          0.03
+## 3       3   21          0.12
+```
+
+```
+## .
+##   1   2   3 
+## 190 134  21
+```
+
+![plot of chunk agnes_k3](figures/agnes_k3-1.png)![plot of chunk agnes_k3](figures/agnes_k3-2.png)![plot of chunk agnes_k3](figures/agnes_k3-3.png)
+
+### $k = 4$ clusters
 
 
 ```
-##       RMSE   Rsquared        MAE 
-## 11.7605361  0.2433116  9.4118031
+##   cluster size ave.sil.width
+## 1       1  144          0.14
+## 2       2  134         -0.01
+## 3       3   46         -0.03
+## 4       4   21          0.10
 ```
 
 ```
-##            PCB3_Total       hat
-## PCB3_Total  1.0000000 0.4932663
-## hat         0.4932663 1.0000000
+## .
+##   1   2   3   4 
+## 144 134  46  21
 ```
 
-![plot of chunk PCB3_TotalValidation-predict](figures/PCB3_TotalValidation-predict-1.png)
+![plot of chunk agnes_k4](figures/agnes_k4-1.png)![plot of chunk agnes_k4](figures/agnes_k4-2.png)![plot of chunk agnes_k4](figures/agnes_k4-3.png)
+
+### $k = 5$ clusters
+
+
+```
+##   cluster size ave.sil.width
+## 1       1  144          0.09
+## 2       2  106          0.02
+## 3       3   46         -0.04
+## 4       4   28          0.00
+## 5       5   21          0.09
+```
+
+```
+## .
+##   1   2   3   4   5 
+## 144 106  46  28  21
+```
+
+![plot of chunk agnes_k5](figures/agnes_k5-1.png)![plot of chunk agnes_k5](figures/agnes_k5-2.png)![plot of chunk agnes_k5](figures/agnes_k5-3.png)
+
+
+## Divisive hierarchical clustering (DIANA)
+
+![plot of chunk diana](figures/diana-1.png)
+
+Divisive coeffficient is
+0.727.
+
+
+
+### $k = 2$ clusters
+
+
+```
+##   cluster size ave.sil.width
+## 1       1  330          0.30
+## 2       2   15          0.11
+```
+
+```
+## .
+##   1   2 
+## 330  15
+```
+
+![plot of chunk diana_k2](figures/diana_k2-1.png)![plot of chunk diana_k2](figures/diana_k2-2.png)![plot of chunk diana_k2](figures/diana_k2-3.png)
+
+### $k = 3$ clusters
+
+
+```
+##   cluster size ave.sil.width
+## 1       1  329          0.30
+## 2       2   15          0.11
+## 3       3    1          0.00
+```
+
+```
+## .
+##   1   2   3 
+## 329  15   1
+```
+
+![plot of chunk diana_k3](figures/diana_k3-1.png)![plot of chunk diana_k3](figures/diana_k3-2.png)![plot of chunk diana_k3](figures/diana_k3-3.png)
+
+### $k = 4$ clusters
+
+
+```
+##   cluster size ave.sil.width
+## 1       1  307          0.22
+## 2       2   15          0.06
+## 3       3   22          0.16
+## 4       4    1          0.00
+```
+
+```
+## .
+##   1   2   3   4 
+## 307  15  22   1
+```
+
+![plot of chunk diana_k4](figures/diana_k4-1.png)![plot of chunk diana_k4](figures/diana_k4-2.png)![plot of chunk diana_k4](figures/diana_k4-3.png)
+
+### $k = 5$ clusters
+
+
+```
+##   cluster size ave.sil.width
+## 1       1  289          0.20
+## 2       2   18          0.05
+## 3       3   15          0.05
+## 4       4   22          0.15
+## 5       5    1          0.00
+```
+
+```
+## .
+##   1   2   3   4   5 
+## 289  18  15  22   1
+```
+
+![plot of chunk diana_k5](figures/diana_k5-1.png)![plot of chunk diana_k5](figures/diana_k5-2.png)![plot of chunk diana_k5](figures/diana_k5-3.png)
+
+
+## Compare
+
+Comparison between `agnes` and `diana` doesn't give much insight.
+
+*Do not evaluate*
+
+
+
+## Examine clusters
+
+* $k = 2$ clusters seems optimal using AGNES
+* $k = 3$ clusters seems optimal using DIANA
+
+
+```
+##    
+##       1   2   3
+##   1 315   8   1
+##   2  14   7   0
+```
+
+```
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+```
+
+![plot of chunk PCB](figures/PCB-1.png)
+
+```
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+```
+
+![plot of chunk PCB](figures/PCB-2.png)
+
+```
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+```
+
+![plot of chunk PCB](figures/PCB-3.png)
 
 
 
