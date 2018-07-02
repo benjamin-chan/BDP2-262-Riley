@@ -256,6 +256,28 @@ diana_k3[["clusters2d"]]
 diana_k3[["silhouette"]]
 ```
 
+### $k = 4$ clusters
+
+```{r diana_k4}
+k <- 4
+diana_k4 <- foo(k)
+diana_k4[["table"]]
+diana_k4[["dendrogram"]]
+diana_k4[["clusters2d"]]
+diana_k4[["silhouette"]]
+```
+
+### $k = 5$ clusters
+
+```{r diana_k5}
+k <- 5
+diana_k5 <- foo(k)
+diana_k5[["table"]]
+diana_k5[["dendrogram"]]
+diana_k5[["clusters2d"]]
+diana_k5[["silhouette"]]
+```
+
 
 ## Compare
 
