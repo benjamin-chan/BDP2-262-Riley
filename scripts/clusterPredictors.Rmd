@@ -36,9 +36,7 @@ mat <-
   model.matrix(~ - 1 + ., data = dfX) %>% 
   scale()
 dim(mat)
-dfNonMissing <- 
-  df %>% 
-  na.omit()
+dist <- mat %>% dist(method = "manhattan")
 ```
 
 ```{r}
@@ -99,32 +97,147 @@ merge(long %>% filter(cluster == 1) %>% select(-cluster) %>% rename(cluster = va
 ## Agglomerative hierarchical clustering (AGNES)
 
 ```{r agnes}
-k <- 8
-agnes <- 
-  mat %>% 
-  hcut(k = k, hc_func = "agnes", hc_method = "ward.D2", hc_metric = "manhattan")
-ac <- sprintf("Agglomerative coefficient = %.03f (%s method)", agnes$ac, agnes$method)
-ac %>% message()
-agnes$cluster %>% table()
-agnes %>% plotClusters(sprintf("AGNES\n%s", ac))
-agnes %>% fviz_dend(rect = TRUE, cex = 0.5, k_colors = pal, main = ac)
-agnes %>% fviz_silhouette(palette = pal, ggtheme = theme_minimal())
+hc <- hclust(d = dist, method = "ward.D2")
+coph <- hc %>% cophenetic()
+agnes <- dist %>% agnes(metric = "manhattan", method = "ward")
+agnes %>% fviz_dend(cex = 0.25, main = "AGNES")
 ```
+
+Correlation between cophenetic distance and the original distance is
+`r sprintf("%.03f", cor(dist, coph))`.
+
+> The closer the value of the correlation coefficient is to 1, the more accurately the clustering solution reflects your data.
+> Values above 0.75 are felt to be good.
+
+Agglomerative coeffficient using the
+`r sprintf("%s", tools::toTitleCase(agnes$method))`
+method is
+`r sprintf("%.03f", agnes$ac)`.
+
+```{r}
+foo <- function(k) {
+  hcut <-
+    dist %>% 
+  hcut(k = k, hc_func = "agnes", hc_method = "ward.D2", hc_metric = "manhattan")
+  tab <- hcut$cluster %>% table()
+  dend <- 
+    agnes %>% 
+    fviz_dend(k = k, 
+              type = "circular",
+              rect = TRUE, 
+              rect_fill = TRUE,
+              cex = 0.25, 
+              k_colors = pal[1:k], 
+              main = sprintf("AGNES\nk = %d", k))
+  clust <- hcut %>% plotClusters(sprintf("AGNES\nk = %d", k))
+  silh <- hcut %>% fviz_silhouette(palette = pal[1:k], ggtheme = theme_minimal())
+  list(table = tab,
+       dendrogram = dend,
+       clusters2d = clust,
+       silhouette = silh)
+}
+```
+
+### $k = 2$ clusters
+
+```{r agnes_k2}
+k <- 2
+agnes_k2 <- foo(k)
+agnes_k2[["table"]]
+agnes_k2[["dendrogram"]]
+agnes_k2[["clusters2d"]]
+agnes_k2[["silhouette"]]
+```
+
+### $k = 3$ clusters
+
+```{r agnes_k3}
+k <- 3
+agnes_k3 <- foo(k)
+agnes_k3[["table"]]
+agnes_k3[["dendrogram"]]
+agnes_k3[["clusters2d"]]
+agnes_k3[["silhouette"]]
+```
+
+### $k = 4$ clusters
+
+```{r agnes_k34
+k <- 4
+agnes_k4 <- foo(k)
+agnes_k4[["table"]]
+agnes_k4[["dendrogram"]]
+agnes_k4[["clusters2d"]]
+agnes_k4[["silhouette"]]
+```
+
+### $k = 5$ clusters
+
+```{r agnes_k5}
+k <- 5
+agnes_k5 <- foo(k)
+agnes_k5[["table"]]
+agnes_k5[["dendrogram"]]
+agnes_k5[["clusters2d"]]
+agnes_k5[["silhouette"]]
+```
+
 
 
 ## Divisive hierarchical clustering (DIANA)
 
 ```{r diana}
-k <- 6
-diana <- 
-  mat %>% 
-  hcut(k = k, hc_func = "diana", hc_method = "ward.D2", hc_metric = "manhattan")
-dc <- sprintf("Divisive coefficient = %.03f", diana$dc)
-dc %>% message()
-diana %>% .$cluster %>% table()
-diana %>% plotClusters(sprintf("DIANA\n%s", dc))
-diana %>% fviz_dend(rect = TRUE, cex = 0.5, k_colors = pal, main = dc)
-diana %>% fviz_silhouette(palette = pal, ggtheme = theme_minimal())
+diana <- dist %>% diana(metric = "manhattan")
+diana %>% fviz_dend(cex = 0.25, main = "DIANA")
+```
+
+Divisive coeffficient is
+`r sprintf("%.03f", diana$dc)`.
+
+```{r}
+foo <- function(k) {
+  hcut <-
+    dist %>% 
+    hcut(k = k, hc_func = "diana", hc_metric = "manhattan")
+  tab <- hcut$cluster %>% table()
+  dend <- 
+    diana %>% 
+    fviz_dend(k = k, 
+              type = "circular",
+              rect = TRUE, 
+              rect_fill = TRUE,
+              cex = 0.25, 
+              k_colors = pal[1:k], 
+              main = sprintf("DIANA\nk = %d", k))
+  clust <- hcut %>% plotClusters(sprintf("DIANA\nk = %d", k))
+  silh <- hcut %>% fviz_silhouette(palette = pal[1:k], ggtheme = theme_minimal())
+  list(table = tab,
+       dendrogram = dend,
+       clusters2d = clust,
+       silhouette = silh)
+}
+```
+
+### $k = 2$ clusters
+
+```{r diana_k2}
+k <- 2
+diana_k2 <- foo(k)
+diana_k2[["table"]]
+diana_k2[["dendrogram"]]
+diana_k2[["clusters2d"]]
+diana_k2[["silhouette"]]
+```
+
+### $k = 3$ clusters
+
+```{r diana_k3}
+k <- 3
+diana_k3 <- foo(k)
+diana_k3[["table"]]
+diana_k3[["dendrogram"]]
+diana_k3[["clusters2d"]]
+diana_k3[["silhouette"]]
 ```
 
 
@@ -136,7 +249,7 @@ Comparison between `agnes` and `diana` doesn't give much insight.
 
 ```{r tanglegram, eval = FALSE}
 dendlist(as.dendrogram(agnes), as.dendrogram(diana)) %>% 
-  tanglegram(main_left = "Agnes",
-             main_right = "Diana",
+  tanglegram(main_left = "AGNES",
+             main_right = "DIANA",
              common_subtrees_color_branches = TRUE)
 ```
