@@ -31,17 +31,26 @@ plotClusters <- function (df, title = "Cluster plot") {
 
 ```{r}
 # load("data/processed/dataframes.RData")
-dfX <- 
+dfNonMissing <- 
   df %>% 
+  na.omit()
+dfX <- 
+  dfNonMissing %>% 
   select(-id) %>% 
   select(-starts_with("PCB")) %>% 
-  na.omit() %>% 
   droplevels()
+dfY <- 
+  dfNonMissing %>% 
+  select(starts_with("PCB"))
 mat <- 
   model.matrix(~ - 1 + ., data = dfX) %>% 
   scale()
-dim(mat)
 dist <- mat %>% dist(method = "manhattan")
+dim(dfNonMissing)
+dim(dfX)
+dim(dfY)
+dim(mat)
+dim(dist)
 ```
 
 ```{r, eval = FALSE}
@@ -168,7 +177,7 @@ agnes_k3[["silhouette"]]
 
 ### $k = 4$ clusters
 
-```{r agnes_k34
+```{r agnes_k4}
 k <- 4
 agnes_k4 <- foo(k)
 agnes_k4[["table"]]
