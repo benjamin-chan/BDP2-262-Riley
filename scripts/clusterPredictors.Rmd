@@ -96,19 +96,6 @@ merge(long %>% filter(cluster == 1) %>% select(-cluster) %>% rename(cluster = va
 ```
 
 
-## Hierarchical clustering
-
-```{r hclust}
-hclust <- 
-  mat %>% 
-  hcut(k = k, hc_func = "hclust", hc_method = "ward.D2", hc_metric = "manhattan")
-hclust %>% .$cluster %>% table()
-hclust %>% plotClusters("Hierarchical clustering")
-hclust %>% fviz_dend(rect = TRUE, cex = 0.5, k_colors = pal)
-hclust %>% fviz_silhouette(palette = pal, ggtheme = theme_minimal())
-```
-
-
 ## Agglomerative hierarchical clustering (AGNES)
 
 ```{r agnes}
