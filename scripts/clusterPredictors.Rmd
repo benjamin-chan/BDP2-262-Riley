@@ -146,7 +146,8 @@ foo <- function(k) {
               main = sprintf("AGNES\nk = %d", k))
   clust <- hcut %>% plotClusters(sprintf("AGNES\nk = %d", k))
   silh <- hcut %>% fviz_silhouette(palette = pal[1:k], ggtheme = theme_minimal())
-  list(table = tab,
+  list(hcut = hcut,
+       table = tab,
        dendrogram = dend,
        clusters2d = clust,
        silhouette = silh)
@@ -198,7 +199,6 @@ agnes_k5[["silhouette"]]
 ```
 
 
-
 ## Divisive hierarchical clustering (DIANA)
 
 ```{r diana}
@@ -226,7 +226,8 @@ foo <- function(k) {
               main = sprintf("DIANA\nk = %d", k))
   clust <- hcut %>% plotClusters(sprintf("DIANA\nk = %d", k))
   silh <- hcut %>% fviz_silhouette(palette = pal[1:k], ggtheme = theme_minimal())
-  list(table = tab,
+  list(hcut = hcut,
+       table = tab,
        dendrogram = dend,
        clusters2d = clust,
        silhouette = silh)
