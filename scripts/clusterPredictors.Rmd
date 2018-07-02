@@ -145,8 +145,10 @@ diana %>% fviz_silhouette(palette = pal, ggtheme = theme_minimal())
 
 Comparison between `agnes` and `diana` doesn't give much insight.
 
-```{r tanglegram}
-dendlist(as.dendrogram(hcAgnes), as.dendrogram(hcDiana)) %>% 
+*Do not evaluate*
+
+```{r tanglegram, eval = FALSE}
+dendlist(as.dendrogram(agnes), as.dendrogram(diana)) %>% 
   tanglegram(main_left = "Agnes",
              main_right = "Diana",
              common_subtrees_color_branches = TRUE)
