@@ -15,7 +15,8 @@ plotClusters <- function (df, title = "Cluster plot") {
   require(factoextra)
   df %>% 
   fviz_cluster(data = mat, 
-               palette = pal, 
+               palette = sprintf("%s7F", pal), 
+               geom = c("points"),
                labelsize = 8, 
                ellipse.type = "none",
                star.plot = TRUE) + 
