@@ -55,11 +55,13 @@ pal <- brewer.pal(k, "Set1")
 ## K-means clustering
 
 ```{r kmeans}
-mat %>% fviz_nbclust(FUN = kmeans, k.max = 20, method = "wss")
-k <- 2
+mat %>% fviz_nbclust(FUN = kmeans, method = "wss", k.max = 40)
+mat %>% fviz_nbclust(FUN = kmeans, method = "silhouette")
+mat %>% fviz_nbclust(FUN = kmeans, method = "gap_stat", k.max = 10, nboot = 500)
+k <- 7
 km <- kmeans(mat, k)
 km %>% .$cluster %>% table()
-km %>% plotClusters("K-means clustering")
+km %>% plotClusters(sprintf("K-means clustering\nk = %d", k))
 long <-
   km$centers %>% 
   data.frame() %>%
@@ -76,11 +78,13 @@ merge(long %>% filter(cluster == 1) %>% select(-cluster) %>% rename(cluster = va
 ## Partitioning around medoids (PAM)
 
 ```{r pam}
+mat %>% fviz_nbclust(FUN = cluster::pam, method = "wss", k.max = 40)
 mat %>% fviz_nbclust(FUN = cluster::pam, method = "silhouette")
+mat %>% fviz_nbclust(FUN = cluster::pam, method = "gap_stat", k.max = 25, nboot = 500)
 k <- 2
 pam <- pam(mat, k, metric = "euclidean", stand = FALSE)
 pam %>% .$cluster %>% table()
-pam %>% plotClusters("PAM")
+pam %>% plotClusters(sprintf("PAM\nk = %d", k))
 long <-
   pam$medoids %>% 
   data.frame() %>%
