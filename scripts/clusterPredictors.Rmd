@@ -9,6 +9,22 @@ library(dendextend)
 ```
 
 ```{r}
+plotClusters <- function (df, title = "Cluster plot") {
+  require(magrittr)
+  require(ggplot2)
+  require(factoextra)
+  df %>% 
+  fviz_cluster(data = mat, 
+               palette = pal, 
+               labelsize = 8, 
+               ellipse.type = "none",
+               star.plot = TRUE) + 
+  ggtitle(title) +
+  theme(panel.grid.minor = element_blank())
+}
+```
+
+```{r}
 load("data/processed/dataframes.RData")
 dfX <- 
   df %>% 
@@ -45,14 +61,7 @@ mat %>% fviz_nbclust(FUN = kmeans, k.max = 20, method = "wss")
 k <- 2
 km <- kmeans(mat, k)
 km %>% .$cluster %>% table()
-km %>% 
-  fviz_cluster(data = mat, 
-               palette = pal, 
-               labelsize = 8, 
-               ellipse.type = "none",
-               star.plot = TRUE) + 
-  ggtitle("K-means clustering") +
-  theme(panel.grid.minor = element_blank())
+km %>% plotClusters("K-means clustering")
 long <-
   km$centers %>% 
   data.frame() %>%
@@ -73,14 +82,7 @@ mat %>% fviz_nbclust(FUN = cluster::pam, method = "silhouette")
 k <- 2
 pam <- pam(mat, k, metric = "euclidean", stand = FALSE)
 pam %>% .$cluster %>% table()
-pam %>% 
-  fviz_cluster(data = mat, 
-               palette = pal, 
-               labelsize = 8, 
-               ellipse.type = "none",
-               star.plot = TRUE) + 
-  ggtitle("PAM") +
-  theme(panel.grid.minor = element_blank())
+pam %>% plotClusters("PAM")
 long <-
   pam$medoids %>% 
   data.frame() %>%
@@ -99,11 +101,8 @@ merge(long %>% filter(cluster == 1) %>% select(-cluster) %>% rename(cluster = va
 ```{r hclust}
 hcHClust <- 
   mat %>% 
-  hcut(k = k, hc_func = "hclust", hc_method = "ward.D2", hc_metric = "euclidean")
-hcHClust %>% .$cluster %>% table()
-hcHClust %>% fviz_cluster(palette = pal, labelsize = 8, ggtheme = theme_minimal())
-hcHClust %>% fviz_dend(rect = TRUE, cex = 0.5, k_colors = pal)
-hcHClust %>% fviz_silhouette(palette = pal, ggtheme = theme_minimal())
+  hcut(k = k, hc_func = "hclust", hc_method = "ward.D2", hc_metric = "manhattan")
+hclust %>% plotClusters("Hierarchical clustering")
 ```
 
 
@@ -113,18 +112,10 @@ hcHClust %>% fviz_silhouette(palette = pal, ggtheme = theme_minimal())
 k <- 8
 agnes <- 
   mat %>% 
-  hcut(k = k, hc_func = "agnes", hc_method = "ward.D2", hc_metric = "euclidean", stand = TRUE)
-ac <- sprintf("Agglomerative coefficient = %.03f (%s method)", hcAgnes$ac, hcAgnes$method)
+  hcut(k = k, hc_func = "agnes", hc_method = "ward.D2", hc_metric = "manhattan")
 ac %>% message()
 agnes$cluster %>% table()
-agnes %>% 
-  fviz_cluster(data = mat, 
-               palette = pal, 
-               labelsize = 8, 
-               ellipse.type = "none",
-               star.plot = TRUE) + 
-  ggtitle(ac) +
-  theme(panel.grid.minor = element_blank())
+agnes %>% plotClusters(sprintf("AGNES\n%s", ac))
 agnes %>% fviz_dend(rect = TRUE, cex = 0.5, k_colors = pal, main = ac)
 agnes %>% fviz_silhouette(palette = pal, ggtheme = theme_minimal())
 ```
@@ -135,13 +126,8 @@ agnes %>% fviz_silhouette(palette = pal, ggtheme = theme_minimal())
 ```{r diana}
 hcDiana <- 
   mat %>% 
-  hcut(k = k, hc_func = "diana", isdiss = FALSE, scaled = TRUE)
-ac <- sprintf("Divisive coefficient = %.03f", hcDiana$dc)
-ac %>% message()
-hcDiana %>% .$cluster %>% table()
-hcDiana %>% fviz_cluster(palette = pal, labelsize = 8, ggtheme = theme_minimal(), main = ac)
-hcDiana %>% fviz_dend(rect = TRUE, cex = 0.5, k_colors = pal, main = ac)
-hcDiana %>% fviz_silhouette(palette = pal, ggtheme = theme_minimal())            
+  hcut(k = k, hc_func = "diana", hc_method = "ward.D2", hc_metric = "manhattan")
+diana %>% plotClusters(sprintf("DIANA\n%s", dc))
 ```
 
 
