@@ -75,7 +75,7 @@ merge(long %>% filter(cluster == 1) %>% select(-cluster) %>% rename(cluster = va
 ```
 
 
-## PAM
+## Partitioning around medoids (PAM)
 
 ```{r pam}
 mat %>% fviz_nbclust(FUN = cluster::pam, method = "silhouette")
@@ -99,20 +99,24 @@ merge(long %>% filter(cluster == 1) %>% select(-cluster) %>% rename(cluster = va
 ## Hierarchical clustering
 
 ```{r hclust}
-hcHClust <- 
+hclust <- 
   mat %>% 
   hcut(k = k, hc_func = "hclust", hc_method = "ward.D2", hc_metric = "manhattan")
+hclust %>% .$cluster %>% table()
 hclust %>% plotClusters("Hierarchical clustering")
+hclust %>% fviz_dend(rect = TRUE, cex = 0.5, k_colors = pal)
+hclust %>% fviz_silhouette(palette = pal, ggtheme = theme_minimal())
 ```
 
 
-## Agglomerative hierarchical clustering
+## Agglomerative hierarchical clustering (AGNES)
 
 ```{r agnes}
 k <- 8
 agnes <- 
   mat %>% 
   hcut(k = k, hc_func = "agnes", hc_method = "ward.D2", hc_metric = "manhattan")
+ac <- sprintf("Agglomerative coefficient = %.03f (%s method)", agnes$ac, agnes$method)
 ac %>% message()
 agnes$cluster %>% table()
 agnes %>% plotClusters(sprintf("AGNES\n%s", ac))
@@ -121,17 +125,25 @@ agnes %>% fviz_silhouette(palette = pal, ggtheme = theme_minimal())
 ```
 
 
-## Divisive hierarchical clustering
+## Divisive hierarchical clustering (DIANA)
 
 ```{r diana}
-hcDiana <- 
+k <- 6
+diana <- 
   mat %>% 
   hcut(k = k, hc_func = "diana", hc_method = "ward.D2", hc_metric = "manhattan")
+dc <- sprintf("Divisive coefficient = %.03f", diana$dc)
+dc %>% message()
+diana %>% .$cluster %>% table()
 diana %>% plotClusters(sprintf("DIANA\n%s", dc))
+diana %>% fviz_dend(rect = TRUE, cex = 0.5, k_colors = pal, main = dc)
+diana %>% fviz_silhouette(palette = pal, ggtheme = theme_minimal())
 ```
 
 
 ## Compare
+
+Comparison between `agnes` and `diana` doesn't give much insight.
 
 ```{r tanglegram}
 dendlist(as.dendrogram(hcAgnes), as.dendrogram(hcDiana)) %>% 
