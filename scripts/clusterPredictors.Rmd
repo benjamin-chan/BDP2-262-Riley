@@ -137,7 +137,7 @@ method is
 foo <- function(k) {
   hcut <-
     dist %>% 
-    hcut(k = k, hc_func = "agnes", hc_method = "ward.D2", hc_metric = "manhattan")
+    hcut(k = k, hc_func = "agnes", hc_method = "complete", hc_metric = "manhattan")
   tab <- hcut$cluster %>% table()
   dend <- 
     agnes %>% 
