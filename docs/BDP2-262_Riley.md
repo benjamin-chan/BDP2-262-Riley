@@ -1,6 +1,6 @@
 ---
 title: "Parent and Provider Perceptions of Behavioral Healthcare in Pediatric Primary Care (PI: Andrew Riley; BDP2-262)"
-date: "2018-07-02"
+date: "2018-07-03"
 author: Benjamin Chan (chanb@ohsu.edu)
 output:
   html_document:
@@ -584,15 +584,15 @@ Exclude rows if there are a high proportion of row-wise `NA`.
 ![plot of chunk agnes](figures/agnes-1.png)
 
 Correlation between cophenetic distance and the original distance is
-0.383.
+0.577.
 
 > The closer the value of the correlation coefficient is to 1, the more accurately the clustering solution reflects your data.
 > Values above 0.75 are felt to be good.
 
 Agglomerative coeffficient using the
-Ward
+Complete
 method is
-0.887.
+0.758.
 
 
 
@@ -601,14 +601,14 @@ method is
 
 ```
 ##   cluster size ave.sil.width
-## 1       1  324          0.27
-## 2       2   21          0.14
+## 1       1  344          0.42
+## 2       2    1          0.00
 ```
 
 ```
 ## .
 ##   1   2 
-## 324  21
+## 344   1
 ```
 
 ![plot of chunk agnes_k2](figures/agnes_k2-1.png)![plot of chunk agnes_k2](figures/agnes_k2-2.png)![plot of chunk agnes_k2](figures/agnes_k2-3.png)
@@ -618,15 +618,15 @@ method is
 
 ```
 ##   cluster size ave.sil.width
-## 1       1  190          0.08
-## 2       2  134          0.03
-## 3       3   21          0.12
+## 1       1  334          0.27
+## 2       2   10          0.11
+## 3       3    1          0.00
 ```
 
 ```
 ## .
 ##   1   2   3 
-## 190 134  21
+## 334  10   1
 ```
 
 ![plot of chunk agnes_k3](figures/agnes_k3-1.png)![plot of chunk agnes_k3](figures/agnes_k3-2.png)![plot of chunk agnes_k3](figures/agnes_k3-3.png)
@@ -636,16 +636,16 @@ method is
 
 ```
 ##   cluster size ave.sil.width
-## 1       1  144          0.14
-## 2       2  134         -0.01
-## 3       3   46         -0.03
-## 4       4   21          0.10
+## 1       1  258          0.19
+## 2       2   76         -0.07
+## 3       3   10          0.09
+## 4       4    1          0.00
 ```
 
 ```
 ## .
 ##   1   2   3   4 
-## 144 134  46  21
+## 258  76  10   1
 ```
 
 ![plot of chunk agnes_k4](figures/agnes_k4-1.png)![plot of chunk agnes_k4](figures/agnes_k4-2.png)![plot of chunk agnes_k4](figures/agnes_k4-3.png)
@@ -655,17 +655,17 @@ method is
 
 ```
 ##   cluster size ave.sil.width
-## 1       1  144          0.09
-## 2       2  106          0.02
-## 3       3   46         -0.04
-## 4       4   28          0.00
-## 5       5   21          0.09
+## 1       1  258          0.16
+## 2       2   47         -0.05
+## 3       3   29         -0.02
+## 4       4   10          0.08
+## 5       5    1          0.00
 ```
 
 ```
 ## .
 ##   1   2   3   4   5 
-## 144 106  46  28  21
+## 258  47  29  10   1
 ```
 
 ![plot of chunk agnes_k5](figures/agnes_k5-1.png)![plot of chunk agnes_k5](figures/agnes_k5-2.png)![plot of chunk agnes_k5](figures/agnes_k5-3.png)
@@ -766,14 +766,14 @@ Comparison between `agnes` and `diana` doesn't give much insight.
 ## Examine clusters
 
 * $k = 2$ clusters seems optimal using AGNES
-* $k = 3$ clusters seems optimal using DIANA
+* $k = 2$ clusters seems optimal using DIANA
 
 
 ```
 ##    
-##       1   2   3
-##   1 315   8   1
-##   2  14   7   0
+##       1   2
+##   1 329  15
+##   2   1   0
 ```
 
 ```
