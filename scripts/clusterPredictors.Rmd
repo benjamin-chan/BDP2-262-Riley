@@ -299,13 +299,13 @@ dendlist(as.dendrogram(agnes), as.dendrogram(diana)) %>%
 ## Examine clusters
 
 * $k = 2$ clusters seems optimal using AGNES
-* $k = 3$ clusters seems optimal using DIANA
+* $k = 2$ clusters seems optimal using DIANA
 
 ```{r PCB}
 dfCluster <-
   bind_cols(dfY,
             agnes_k2[["hcut"]][["cluster"]] %>% data.frame(agnes = .),
-            diana_k3[["hcut"]][["cluster"]] %>% data.frame(diana = .))
+            diana_k2[["hcut"]][["cluster"]] %>% data.frame(diana = .))
 table(dfCluster$agnes, dfCluster$diana)
 dfCluster %>%
   ggplot() +
