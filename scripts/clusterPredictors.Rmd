@@ -65,7 +65,7 @@ mat %>% get_dist(method = "maximum") %>% fviz_dist()
 
 ## K-means clustering
 
-```{r kmeans}
+```{r predictors_kmeans}
 mat %>% fviz_nbclust(FUN = kmeans, method = "wss", k.max = 40)
 mat %>% fviz_nbclust(FUN = kmeans, method = "silhouette")
 mat %>% fviz_nbclust(FUN = kmeans, method = "gap_stat", k.max = 10, nboot = 500)
@@ -87,7 +87,7 @@ km[["centers"]] %>% t() %>% kable(digits = 2)
 
 ## Partitioning around medoids (PAM)
 
-```{r pam}
+```{r predictors_pam}
 mat %>% fviz_nbclust(FUN = cluster::pam, method = "wss", k.max = 40)
 mat %>% fviz_nbclust(FUN = cluster::pam, method = "silhouette")
 mat %>% fviz_nbclust(FUN = cluster::pam, method = "gap_stat", k.max = 25, nboot = 500)
@@ -102,7 +102,7 @@ pam[["medoids"]] %>% t() %>% kable(digits = 2)
 
 ## Agglomerative hierarchical clustering (AGNES)
 
-```{r agnes}
+```{r predictors_agnes}
 method1 <- "ward.D2"  # "complete"
 method2 <- "ward"     # "complete"
 hc <- hclust(d = dist, method = method1)
@@ -152,7 +152,7 @@ foo <- function(k) {
 
 ### $k = 2$ clusters
 
-```{r agnes_k2}
+```{r predictors_agnes_k2}
 k <- 2
 agnes_k2 <- foo(k)
 agnes_k2[["table"]]
@@ -163,7 +163,7 @@ agnes_k2[["silhouette"]]
 
 ### $k = 3$ clusters
 
-```{r agnes_k3}
+```{r predictors_agnes_k3}
 k <- 3
 agnes_k3 <- foo(k)
 agnes_k3[["table"]]
@@ -174,7 +174,7 @@ agnes_k3[["silhouette"]]
 
 ### $k = 4$ clusters
 
-```{r agnes_k4}
+```{r predictors_agnes_k4}
 k <- 4
 agnes_k4 <- foo(k)
 agnes_k4[["table"]]
@@ -185,7 +185,7 @@ agnes_k4[["silhouette"]]
 
 ### $k = 5$ clusters
 
-```{r agnes_k5}
+```{r predictors_agnes_k5}
 k <- 5
 agnes_k5 <- foo(k)
 agnes_k5[["table"]]
@@ -197,7 +197,7 @@ agnes_k5[["silhouette"]]
 
 ## Divisive hierarchical clustering (DIANA)
 
-```{r diana}
+```{r predictors_diana}
 diana <- dist %>% diana(metric = "manhattan")
 diana %>% fviz_dend(cex = 0.25, type = "circular", main = "DIANA")
 ```
@@ -235,7 +235,7 @@ foo <- function(k) {
 
 ### $k = 2$ clusters
 
-```{r diana_k2}
+```{r predictors_diana_k2}
 k <- 2
 diana_k2 <- foo(k)
 diana_k2[["table"]]
@@ -246,7 +246,7 @@ diana_k2[["silhouette"]]
 
 ### $k = 3$ clusters
 
-```{r diana_k3}
+```{r predictors_diana_k3}
 k <- 3
 diana_k3 <- foo(k)
 diana_k3[["table"]]
@@ -257,7 +257,7 @@ diana_k3[["silhouette"]]
 
 ### $k = 4$ clusters
 
-```{r diana_k4}
+```{r predictors_diana_k4}
 k <- 4
 diana_k4 <- foo(k)
 diana_k4[["table"]]
@@ -268,7 +268,7 @@ diana_k4[["silhouette"]]
 
 ### $k = 5$ clusters
 
-```{r diana_k5}
+```{r predictors_diana_k5}
 k <- 5
 diana_k5 <- foo(k)
 diana_k5[["table"]]
@@ -284,7 +284,7 @@ Comparison between `agnes` and `diana` doesn't give much insight.
 
 *Do not evaluate*
 
-```{r tanglegram, eval = FALSE}
+```{r predictors_tanglegram, eval = FALSE}
 dendlist(as.dendrogram(agnes), as.dendrogram(diana)) %>% 
   tanglegram(main_left = "AGNES",
              main_right = "DIANA",
@@ -296,7 +296,7 @@ dendlist(as.dendrogram(agnes), as.dendrogram(diana)) %>%
 * $k = 2$ clusters seems optimal using AGNES
 * $k = 2$ clusters seems optimal using DIANA
 
-```{r PCB}
+```{r predictors_PCB}
 dfCluster <-
   bind_cols(dfY,
             agnes_k2[["hcut"]][["cluster"]] %>% data.frame(agnes = .),

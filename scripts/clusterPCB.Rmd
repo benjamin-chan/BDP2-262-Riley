@@ -57,7 +57,7 @@ dim(dist)
 
 ## K-means clustering
 
-```{r kmeans}
+```{r PCB_kmeans}
 mat %>% fviz_nbclust(FUN = kmeans, method = "wss", k.max = 10)
 mat %>% fviz_nbclust(FUN = kmeans, method = "silhouette")
 mat %>% fviz_nbclust(FUN = kmeans, method = "gap_stat", k.max = 10, nboot = 500)
@@ -79,7 +79,7 @@ km[["centers"]] %>% t() %>% kable(digits = 2)
 
 ## Partitioning around medoids (PAM)
 
-```{r pam}
+```{r PCB_pam}
 mat %>% fviz_nbclust(FUN = cluster::pam, method = "wss", k.max = 10)
 mat %>% fviz_nbclust(FUN = cluster::pam, method = "silhouette")
 mat %>% fviz_nbclust(FUN = cluster::pam, method = "gap_stat", k.max = 10, nboot = 500)
@@ -94,7 +94,7 @@ pam[["medoids"]] %>% t() %>% kable(digits = 2)
 
 ## Agglomerative hierarchical clustering (AGNES)
 
-```{r agnes}
+```{r PCB_agnes}
 method1 <- "ward.D2"  # "complete"
 method2 <- "ward"     # "complete"
 hc <- hclust(d = dist, method = method1)
@@ -144,7 +144,7 @@ foo <- function(k) {
 
 ### $k = 2$ clusters
 
-```{r agnes_k2}
+```{r PCB_agnes_k2}
 k <- 2
 agnes_k2 <- foo(k)
 agnes_k2[["table"]]
@@ -155,7 +155,7 @@ agnes_k2[["silhouette"]]
 
 ### $k = 3$ clusters
 
-```{r agnes_k2}
+```{r PCB_agnes_k3}
 k <- 3
 agnes_k3 <- foo(k)
 agnes_k3[["table"]]
@@ -167,7 +167,7 @@ agnes_k3[["silhouette"]]
 
 ## Divisive hierarchical clustering (DIANA)
 
-```{r diana}
+```{r PCB_diana}
 diana <- dist %>% diana(metric = "manhattan")
 diana %>% fviz_dend(cex = 0.25, type = "circular", main = "DIANA")
 ```
@@ -205,7 +205,7 @@ foo <- function(k) {
 
 ### $k = 2$ clusters
 
-```{r diana_k2}
+```{r PCB_diana_k2}
 k <- 2
 diana_k2 <- foo(k)
 diana_k2[["table"]]
@@ -216,7 +216,7 @@ diana_k2[["silhouette"]]
 
 ### $k = 3$ clusters
 
-```{r diana_k3}
+```{r PCB_diana_k3}
 k <- 3
 diana_k3 <- foo(k)
 diana_k3[["table"]]
