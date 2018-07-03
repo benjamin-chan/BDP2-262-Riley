@@ -116,9 +116,11 @@ bind_cols(long %>% filter(cluster == 1) %>% select(-cluster) %>% rename(cluster1
 ## Agglomerative hierarchical clustering (AGNES)
 
 ```{r agnes}
-hc <- hclust(d = dist, method = "ward.D2")
+method1 <- "complete"  # "ward.D2"
+method2 <- "complete"  # "ward"
+hc <- hclust(d = dist, method = method1)
 coph <- hc %>% cophenetic()
-agnes <- dist %>% agnes(metric = "manhattan", method = "ward")
+agnes <- dist %>% agnes(metric = "manhattan", method = method2)
 agnes %>% fviz_dend(cex = 0.25, type = "circular", main = "AGNES")
 ```
 
@@ -137,7 +139,7 @@ method is
 foo <- function(k) {
   hcut <-
     dist %>% 
-    hcut(k = k, hc_func = "agnes", hc_method = "complete", hc_metric = "manhattan")
+    hcut(k = k, hc_func = "agnes", hc_method = method1, hc_metric = "manhattan")
   tab <- hcut$cluster %>% table()
   dend <- 
     agnes %>% 
