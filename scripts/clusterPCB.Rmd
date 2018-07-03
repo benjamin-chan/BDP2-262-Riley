@@ -132,7 +132,7 @@ foo <- function(k) {
   clust <- hcut %>% plotClusters(sprintf("AGNES\nk = %d", k))
   silh <- 
     hcut %>% 
-    fviz_silhouette(palette = pal[1:k], ggtheme = theme_minimal()) + 
+    fviz_silhouette(palette = sprintf("%s3F", pal[1:k]), ggtheme = theme_minimal()) + 
     theme(panel.grid.major.x = element_blank())
   list(hcut = hcut,
        table = tab,

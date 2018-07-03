@@ -8,8 +8,8 @@ library(factoextra)
 library(dendextend)
 library(NbClust)
 citation("factoextra")
-pal <- brewer.pal(9, "Set1")
-# pal <- lacroix_palette("PommeBaya", type = "discrete")
+# pal <- brewer.pal(9, "Set1")
+pal <- lacroix_palette("PommeBaya", type = "discrete")
 ```
 
 ```{r}
@@ -140,7 +140,7 @@ foo <- function(k) {
   clust <- hcut %>% plotClusters(sprintf("AGNES\nk = %d", k))
   silh <- 
     hcut %>% 
-    fviz_silhouette(palette = pal[1:k], ggtheme = theme_minimal()) + 
+    fviz_silhouette(palette = sprintf("%s3F", pal[1:k]), ggtheme = theme_minimal()) + 
     theme(panel.grid.major.x = element_blank())
   list(hcut = hcut,
        table = tab,
@@ -223,7 +223,7 @@ foo <- function(k) {
   clust <- hcut %>% plotClusters(sprintf("DIANA\nk = %d", k))
   silh <- 
     hcut %>% 
-    fviz_silhouette(palette = pal[1:k], ggtheme = theme_minimal()) + 
+    fviz_silhouette(palette = sprintf("%s3F", pal[1:k]), ggtheme = theme_minimal()) + 
     theme(panel.grid.major.x = element_blank())
   list(hcut = hcut,
        table = tab,
