@@ -22,7 +22,7 @@ plotClusters <- function (df, title = "Cluster plot") {
                palette = sprintf("%s7F", pal), 
                geom = c("points"),
                labelsize = 8, 
-               ellipse.type = "none",
+               ellipse.type = "convex",
                star.plot = TRUE) + 
   ggtitle(title) +
   theme(panel.grid.minor = element_blank())
@@ -119,7 +119,7 @@ bind_cols(long %>% filter(cluster == 1) %>% select(-cluster) %>% rename(cluster1
 hc <- hclust(d = dist, method = "ward.D2")
 coph <- hc %>% cophenetic()
 agnes <- dist %>% agnes(metric = "manhattan", method = "ward")
-agnes %>% fviz_dend(cex = 0.25, main = "AGNES")
+agnes %>% fviz_dend(cex = 0.25, type = "circular", main = "AGNES")
 ```
 
 Correlation between cophenetic distance and the original distance is
@@ -207,7 +207,7 @@ agnes_k5[["silhouette"]]
 
 ```{r diana}
 diana <- dist %>% diana(metric = "manhattan")
-diana %>% fviz_dend(cex = 0.25, main = "DIANA")
+diana %>% fviz_dend(cex = 0.25, type = "circular", main = "DIANA")
 ```
 
 Divisive coeffficient is
