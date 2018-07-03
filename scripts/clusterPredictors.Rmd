@@ -116,8 +116,8 @@ bind_cols(long %>% filter(cluster == 1) %>% select(-cluster) %>% rename(cluster1
 ## Agglomerative hierarchical clustering (AGNES)
 
 ```{r agnes}
-method1 <- "complete"  # "ward.D2"
-method2 <- "complete"  # "ward"
+method1 <- "ward.D2"  # "complete"
+method2 <- "ward"     # "complete"
 hc <- hclust(d = dist, method = method1)
 coph <- hc %>% cophenetic()
 agnes <- dist %>% agnes(metric = "manhattan", method = method2)
