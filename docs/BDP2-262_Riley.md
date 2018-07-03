@@ -100,9 +100,6 @@ Map new names to variables.
 
 
 
-```
-## Warning: package 'bindrcpp' was built under R version 3.4.4
-```
 
 Remove certain predictor variables:
 
@@ -145,59 +142,6 @@ Exclude rows if there are a high proportion of row-wise `NA`.
 [https://uc-r.github.io/hc_clustering](https://uc-r.github.io/hc_clustering)
 [http://www.sthda.com/english/wiki/factoextra-r-package-easy-multivariate-data-analyses-and-elegant-visualization](http://www.sthda.com/english/wiki/factoextra-r-package-easy-multivariate-data-analyses-and-elegant-visualization)
 
-
-```
-## Warning: package 'cluster' was built under R version 3.4.4
-```
-
-```
-## Warning: package 'ggdendro' was built under R version 3.4.4
-```
-
-```
-## Warning: package 'factoextra' was built under R version 3.4.4
-```
-
-```
-## Welcome! Related Books: `Practical Guide To Cluster Analysis in R` at https://goo.gl/13EFCZ
-```
-
-```
-## Warning: package 'dendextend' was built under R version 3.4.4
-```
-
-```
-## 
-## ---------------------
-## Welcome to dendextend version 1.8.0
-## Type citation('dendextend') for how to cite the package.
-## 
-## Type browseVignettes(package = 'dendextend') for the package vignette.
-## The github page is: https://github.com/talgalili/dendextend/
-## 
-## Suggestions and bug-reports can be submitted at: https://github.com/talgalili/dendextend/issues
-## Or contact: <tal.galili@gmail.com>
-## 
-## 	To suppress this message use:  suppressPackageStartupMessages(library(dendextend))
-## ---------------------
-```
-
-```
-## 
-## Attaching package: 'dendextend'
-```
-
-```
-## The following object is masked from 'package:ggdendro':
-## 
-##     theme_dendro
-```
-
-```
-## The following object is masked from 'package:stats':
-## 
-##     cutree
-```
 
 ```
 ## 
@@ -874,6 +818,20 @@ Comparison between `agnes` and `diana` doesn't give much insight.
 ![plot of chunk predictors_PCB](figures/predictors_PCB-3.png)
 
 
+## Final cluster identification
+
+Use DIANA, $k = 2$
+
+
+```
+## .
+##   1   2 
+## 330  15
+```
+
+![plot of chunk unnamed-chunk-16](figures/unnamed-chunk-16-1.png)![plot of chunk unnamed-chunk-16](figures/unnamed-chunk-16-2.png)![plot of chunk unnamed-chunk-16](figures/unnamed-chunk-16-3.png)
+
+
 
 [https://uc-r.github.io/hc_clustering](https://uc-r.github.io/hc_clustering)
 [http://www.sthda.com/english/wiki/factoextra-r-package-easy-multivariate-data-analyses-and-elegant-visualization](http://www.sthda.com/english/wiki/factoextra-r-package-easy-multivariate-data-analyses-and-elegant-visualization)
@@ -1122,6 +1080,39 @@ Divisive coeffficient is
 ```
 
 ![plot of chunk PCB_diana_k3](figures/PCB_diana_k3-1.png)![plot of chunk PCB_diana_k3](figures/PCB_diana_k3-2.png)![plot of chunk PCB_diana_k3](figures/PCB_diana_k3-3.png)
+
+### $k = 4$ clusters
+
+
+```
+##   cluster size ave.sil.width
+## 1       1  134          0.14
+## 2       2  130          0.25
+## 3       3   59          0.18
+## 4       4   22          0.23
+```
+
+```
+## .
+##   1   2   3   4 
+## 134 130  59  22
+```
+
+![plot of chunk PCB_diana_k4](figures/PCB_diana_k4-1.png)![plot of chunk PCB_diana_k4](figures/PCB_diana_k4-2.png)![plot of chunk PCB_diana_k4](figures/PCB_diana_k4-3.png)
+
+
+## Final cluster identification
+
+Use DIANA, $k = 2$
+
+
+```
+## .
+##   1   2 
+## 264  81
+```
+
+![plot of chunk unnamed-chunk-22](figures/unnamed-chunk-22-1.png)![plot of chunk unnamed-chunk-22](figures/unnamed-chunk-22-2.png)![plot of chunk unnamed-chunk-22](figures/unnamed-chunk-22-3.png)
 
 
 
