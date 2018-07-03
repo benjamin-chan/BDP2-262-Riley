@@ -100,6 +100,9 @@ Map new names to variables.
 
 
 
+```
+## Warning: package 'bindrcpp' was built under R version 3.4.4
+```
 
 Remove certain predictor variables:
 
@@ -142,6 +145,59 @@ Exclude rows if there are a high proportion of row-wise `NA`.
 [https://uc-r.github.io/hc_clustering](https://uc-r.github.io/hc_clustering)
 [http://www.sthda.com/english/wiki/factoextra-r-package-easy-multivariate-data-analyses-and-elegant-visualization](http://www.sthda.com/english/wiki/factoextra-r-package-easy-multivariate-data-analyses-and-elegant-visualization)
 
+
+```
+## Warning: package 'cluster' was built under R version 3.4.4
+```
+
+```
+## Warning: package 'ggdendro' was built under R version 3.4.4
+```
+
+```
+## Warning: package 'factoextra' was built under R version 3.4.4
+```
+
+```
+## Welcome! Related Books: `Practical Guide To Cluster Analysis in R` at https://goo.gl/13EFCZ
+```
+
+```
+## Warning: package 'dendextend' was built under R version 3.4.4
+```
+
+```
+## 
+## ---------------------
+## Welcome to dendextend version 1.8.0
+## Type citation('dendextend') for how to cite the package.
+## 
+## Type browseVignettes(package = 'dendextend') for the package vignette.
+## The github page is: https://github.com/talgalili/dendextend/
+## 
+## Suggestions and bug-reports can be submitted at: https://github.com/talgalili/dendextend/issues
+## Or contact: <tal.galili@gmail.com>
+## 
+## 	To suppress this message use:  suppressPackageStartupMessages(library(dendextend))
+## ---------------------
+```
+
+```
+## 
+## Attaching package: 'dendextend'
+```
+
+```
+## The following object is masked from 'package:ggdendro':
+## 
+##     theme_dendro
+```
+
+```
+## The following object is masked from 'package:stats':
+## 
+##     cutree
+```
 
 ```
 ## 
@@ -584,15 +640,15 @@ Exclude rows if there are a high proportion of row-wise `NA`.
 ![plot of chunk agnes](figures/agnes-1.png)
 
 Correlation between cophenetic distance and the original distance is
-0.577.
+0.383.
 
 > The closer the value of the correlation coefficient is to 1, the more accurately the clustering solution reflects your data.
 > Values above 0.75 are felt to be good.
 
 Agglomerative coeffficient using the
-Complete
+Ward
 method is
-0.758.
+0.887.
 
 
 
@@ -601,14 +657,14 @@ method is
 
 ```
 ##   cluster size ave.sil.width
-## 1       1  344          0.42
-## 2       2    1          0.00
+## 1       1  324          0.27
+## 2       2   21          0.14
 ```
 
 ```
 ## .
 ##   1   2 
-## 344   1
+## 324  21
 ```
 
 ![plot of chunk agnes_k2](figures/agnes_k2-1.png)![plot of chunk agnes_k2](figures/agnes_k2-2.png)![plot of chunk agnes_k2](figures/agnes_k2-3.png)
@@ -618,15 +674,15 @@ method is
 
 ```
 ##   cluster size ave.sil.width
-## 1       1  334          0.27
-## 2       2   10          0.11
-## 3       3    1          0.00
+## 1       1  190          0.08
+## 2       2  134          0.03
+## 3       3   21          0.12
 ```
 
 ```
 ## .
 ##   1   2   3 
-## 334  10   1
+## 190 134  21
 ```
 
 ![plot of chunk agnes_k3](figures/agnes_k3-1.png)![plot of chunk agnes_k3](figures/agnes_k3-2.png)![plot of chunk agnes_k3](figures/agnes_k3-3.png)
@@ -636,16 +692,16 @@ method is
 
 ```
 ##   cluster size ave.sil.width
-## 1       1  258          0.19
-## 2       2   76         -0.07
-## 3       3   10          0.09
-## 4       4    1          0.00
+## 1       1  144          0.14
+## 2       2  134         -0.01
+## 3       3   46         -0.03
+## 4       4   21          0.10
 ```
 
 ```
 ## .
 ##   1   2   3   4 
-## 258  76  10   1
+## 144 134  46  21
 ```
 
 ![plot of chunk agnes_k4](figures/agnes_k4-1.png)![plot of chunk agnes_k4](figures/agnes_k4-2.png)![plot of chunk agnes_k4](figures/agnes_k4-3.png)
@@ -655,17 +711,17 @@ method is
 
 ```
 ##   cluster size ave.sil.width
-## 1       1  258          0.16
-## 2       2   47         -0.05
-## 3       3   29         -0.02
-## 4       4   10          0.08
-## 5       5    1          0.00
+## 1       1  144          0.09
+## 2       2  106          0.02
+## 3       3   46         -0.04
+## 4       4   28          0.00
+## 5       5   21          0.09
 ```
 
 ```
 ## .
 ##   1   2   3   4   5 
-## 258  47  29  10   1
+## 144 106  46  28  21
 ```
 
 ![plot of chunk agnes_k5](figures/agnes_k5-1.png)![plot of chunk agnes_k5](figures/agnes_k5-2.png)![plot of chunk agnes_k5](figures/agnes_k5-3.png)
@@ -772,8 +828,8 @@ Comparison between `agnes` and `diana` doesn't give much insight.
 ```
 ##    
 ##       1   2
-##   1 329  15
-##   2   1   0
+##   1 316   8
+##   2  14   7
 ```
 
 ```
