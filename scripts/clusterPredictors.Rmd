@@ -318,3 +318,16 @@ dfCluster %>%
   geom_histogram(alpha = 1/2) +
   facet_grid(agnes ~ diana)
 ```
+
+
+## Final cluster identification
+
+Use DIANA, $k = 2$
+
+```{r}
+diana_k2[["table"]]
+diana_k2[["dendrogram"]]
+diana_k2[["clusters2d"]]
+diana_k2[["silhouette"]]
+save(diana_k2, file = "data/processed/predictor_clusters.RData")
+```

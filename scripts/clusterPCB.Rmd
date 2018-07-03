@@ -224,3 +224,27 @@ diana_k3[["dendrogram"]]
 diana_k3[["clusters2d"]]
 diana_k3[["silhouette"]]
 ```
+
+### $k = 4$ clusters
+
+```{r PCB_diana_k4}
+k <- 4
+diana_k4 <- foo(k)
+diana_k4[["table"]]
+diana_k4[["dendrogram"]]
+diana_k4[["clusters2d"]]
+diana_k4[["silhouette"]]
+```
+
+
+## Final cluster identification
+
+Use DIANA, $k = 2$
+
+```{r}
+diana_k2[["table"]]
+diana_k2[["dendrogram"]]
+diana_k2[["clusters2d"]]
+diana_k2[["silhouette"]]
+save(diana_k2, file = "data/processed/PCB_clusters.RData")
+```
