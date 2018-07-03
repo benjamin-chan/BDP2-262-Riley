@@ -65,6 +65,14 @@ k <- 5
 km <- kmeans(mat, k)
 km %>% .$cluster %>% table()
 km %>% plotClusters(sprintf("K-means clustering\nk = %d", k))
+message(sprintf("Within cluster sum of squares, cluster %d: %.02f\n", 
+                1:k, 
+                km[["withinss"]]))
+message(sprintf("Between SS / Total SS: %.02f / %.02f = %.02f%%", 
+                km[["betweenss"]],
+                km[["totss"]],
+                km[["betweenss"]] / km[["totss"]] * 100))
+message(sprintf("Total within SS: %.02f", km[["tot.withinss"]]))
 km[["centers"]] %>% t() %>% kable(digits = 2)
 ```
 
@@ -79,8 +87,8 @@ k <- 2
 pam <- pam(mat, k, metric = "manhattan", stand = FALSE)
 pam %>% .$cluster %>% table()
 pam %>% plotClusters(sprintf("PAM\nk = %d", k))
-pam[["medoids"]] %>% t() %>% kable(digits = 2)
 pam[["clusinfo"]] %>% kable(digits = 2)
+pam[["medoids"]] %>% t() %>% kable(digits = 2)
 ```
 
 

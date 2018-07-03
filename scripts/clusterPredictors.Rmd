@@ -69,24 +69,19 @@ mat %>% get_dist(method = "maximum") %>% fviz_dist()
 mat %>% fviz_nbclust(FUN = kmeans, method = "wss", k.max = 40)
 mat %>% fviz_nbclust(FUN = kmeans, method = "silhouette")
 mat %>% fviz_nbclust(FUN = kmeans, method = "gap_stat", k.max = 10, nboot = 500)
-k <- 7
+k <- 3
 km <- kmeans(mat, k)
 km %>% .$cluster %>% table()
 km %>% plotClusters(sprintf("K-means clustering\nk = %d", k))
-long <-
-  km$centers %>% 
-  data.frame() %>%
-  mutate(cluster = 1:k) %>%
-  gather(var, value, -cluster) %>%
-  arrange(var, cluster)
-bind_cols(long %>% filter(cluster == 1) %>% select(-cluster) %>% rename(cluster1 = value),
-          long %>% filter(cluster == 2) %>% select(-cluster) %>% rename(cluster2 = value) %>% select(-var),
-          long %>% filter(cluster == 3) %>% select(-cluster) %>% rename(cluster3 = value) %>% select(-var),
-          long %>% filter(cluster == 4) %>% select(-cluster) %>% rename(cluster4 = value) %>% select(-var),
-          long %>% filter(cluster == 5) %>% select(-cluster) %>% rename(cluster5 = value) %>% select(-var),
-          long %>% filter(cluster == 6) %>% select(-cluster) %>% rename(cluster6 = value) %>% select(-var),
-          long %>% filter(cluster == 7) %>% select(-cluster) %>% rename(cluster7 = value) %>% select(-var)) %>%
-  kable(digits = 2)
+message(sprintf("Within cluster sum of squares, cluster %d: %.02f\n", 
+                1:k, 
+                km[["withinss"]]))
+message(sprintf("Between SS / Total SS: %.02f / %.02f = %.02f%%", 
+                km[["betweenss"]],
+                km[["totss"]],
+                km[["betweenss"]] / km[["totss"]] * 100))
+message(sprintf("Total within SS: %.02f", km[["tot.withinss"]]))
+km[["centers"]] %>% t() %>% kable(digits = 2)
 ```
 
 
@@ -96,20 +91,12 @@ bind_cols(long %>% filter(cluster == 1) %>% select(-cluster) %>% rename(cluster1
 mat %>% fviz_nbclust(FUN = cluster::pam, method = "wss", k.max = 40)
 mat %>% fviz_nbclust(FUN = cluster::pam, method = "silhouette")
 mat %>% fviz_nbclust(FUN = cluster::pam, method = "gap_stat", k.max = 25, nboot = 500)
-k <- 3
+k <- 2
 pam <- pam(mat, k, metric = "manhattan", stand = FALSE)
 pam %>% .$cluster %>% table()
 pam %>% plotClusters(sprintf("PAM\nk = %d", k))
-long <-
-  pam$medoids %>% 
-  data.frame() %>%
-  mutate(cluster = 1:k) %>%
-  gather(var, value, -cluster) %>%
-  arrange(var, cluster)
-bind_cols(long %>% filter(cluster == 1) %>% select(-cluster) %>% rename(cluster1 = value),
-          long %>% filter(cluster == 2) %>% select(-cluster) %>% rename(cluster2 = value) %>% select(-var),
-          long %>% filter(cluster == 3) %>% select(-cluster) %>% rename(cluster3 = value) %>% select(-var)) %>%
-  kable(digits = 2)
+pam[["clusinfo"]] %>% kable(digits = 2)
+pam[["medoids"]] %>% t() %>% kable(digits = 2)
 ```
 
 
@@ -151,7 +138,10 @@ foo <- function(k) {
               k_colors = pal[1:k], 
               main = sprintf("AGNES\nk = %d", k))
   clust <- hcut %>% plotClusters(sprintf("AGNES\nk = %d", k))
-  silh <- hcut %>% fviz_silhouette(palette = pal[1:k], ggtheme = theme_minimal())
+  silh <- 
+    hcut %>% 
+    fviz_silhouette(palette = pal[1:k], ggtheme = theme_minimal()) + 
+    theme(panel.grid.major.x = element_blank())
   list(hcut = hcut,
        table = tab,
        dendrogram = dend,
@@ -231,7 +221,10 @@ foo <- function(k) {
               k_colors = pal[1:k], 
               main = sprintf("DIANA\nk = %d", k))
   clust <- hcut %>% plotClusters(sprintf("DIANA\nk = %d", k))
-  silh <- hcut %>% fviz_silhouette(palette = pal[1:k], ggtheme = theme_minimal())
+  silh <- 
+    hcut %>% 
+    fviz_silhouette(palette = pal[1:k], ggtheme = theme_minimal()) + 
+    theme(panel.grid.major.x = element_blank())
   list(hcut = hcut,
        table = tab,
        dendrogram = dend,
