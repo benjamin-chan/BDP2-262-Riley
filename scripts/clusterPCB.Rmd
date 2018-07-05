@@ -129,11 +129,15 @@ foo <- function(k) {
               cex = 0.25, 
               k_colors = pal[1:k], 
               main = sprintf("AGNES\nk = %d", k))
-  clust <- hcut %>% plotClusters(sprintf("AGNES\nk = %d", k))
+  clust <- hcut %>% plotClusters(sprintf("AGNES\nAgglomerative coefficient = %.03f\nk = %d", agnes$ac, k))
   silh <- 
     hcut %>% 
     fviz_silhouette(palette = sprintf("%s3F", pal[1:k]), ggtheme = theme_minimal()) + 
-    theme(panel.grid.major.x = element_blank())
+    theme(panel.grid.major.x = element_blank()) +
+    ggtitle(sprintf("AGNES\nk = %d\nAverage silhouette width = %.03f\nCluster average silhouette widths = %s",
+                    k,
+                    hcut[["silinfo"]][["avg.width"]],
+                    hcut[["silinfo"]][["clus.avg.widths"]] %>% round(3) %>% paste(collapse = ", ")))
   list(hcut = hcut,
        table = tab,
        dendrogram = dend,
@@ -172,7 +176,7 @@ diana <- dist %>% diana(metric = "manhattan")
 diana %>% fviz_dend(cex = 0.25, type = "circular", main = "DIANA")
 ```
 
-Divisive coeffficient is
+Divisive coefficient is
 `r sprintf("%.03f", diana$dc)`.
 
 ```{r}
@@ -190,11 +194,15 @@ foo <- function(k) {
               cex = 0.25, 
               k_colors = pal[1:k], 
               main = sprintf("DIANA\nk = %d", k))
-  clust <- hcut %>% plotClusters(sprintf("DIANA\nk = %d", k))
+  clust <- hcut %>% plotClusters(sprintf("DIANA\nDivisive coefficient = %.03f\nk = %d", diana$dc, k))
   silh <- 
     hcut %>% 
     fviz_silhouette(palette = sprintf("%s3F", pal[1:k]), ggtheme = theme_minimal()) + 
-    theme(panel.grid.major.x = element_blank())
+    theme(panel.grid.major.x = element_blank()) +
+    ggtitle(sprintf("DIANA\nk = %d\nAverage silhouette width = %.03f\nCluster average silhouette widths = %s",
+                    k,
+                    hcut[["silinfo"]][["avg.width"]],
+                    hcut[["silinfo"]][["clus.avg.widths"]] %>% round(3) %>% paste(collapse = ", ")))
   list(hcut = hcut,
        table = tab,
        dendrogram = dend,
