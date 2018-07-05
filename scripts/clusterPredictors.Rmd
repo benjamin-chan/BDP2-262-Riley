@@ -280,12 +280,12 @@ dendlist(as.dendrogram(agnes), as.dendrogram(diana)) %>%
 
 ## Final cluster identification
 
-Use DIANA, $k = 2$
+Use DIANA, $k = 3$
 
 ```{r predictors_final_clustering}
-diana_k2[["table"]]
-diana_k2[["dendrogram"]]
-diana_k2[["clusters2d"]]
-diana_k2[["silhouette"]]
-save(diana_k2, file = "data/processed/predictor_clusters.RData")
+diana_k3[["table"]]
+diana_k3[["dendrogram"]]
+diana_k3[["clusters2d"]]
+diana_k3[["silhouette"]]
+save(diana_k3, file = "data/processed/predictor_clusters.RData")
 ```
