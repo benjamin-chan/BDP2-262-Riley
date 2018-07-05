@@ -37,7 +37,7 @@ dfNonMissing <-
 dfX <- 
   dfNonMissing %>% 
   select(-id) %>% 
-  select(-starts_with("PCB")) %>% 
+  select(matches("ECBI|MAPS|SEPTI")) %>% 
   droplevels()
 dfY <- 
   dfNonMissing %>% 
@@ -66,10 +66,10 @@ mat %>% get_dist(method = "maximum") %>% fviz_dist()
 ## K-means clustering
 
 ```{r predictors_kmeans}
-mat %>% fviz_nbclust(FUN = kmeans, method = "wss", k.max = 40)
+mat %>% fviz_nbclust(FUN = kmeans, method = "wss", k.max = 10)
 mat %>% fviz_nbclust(FUN = kmeans, method = "silhouette")
 mat %>% fviz_nbclust(FUN = kmeans, method = "gap_stat", k.max = 10, nboot = 500)
-k <- 3
+k <- 2
 km <- kmeans(mat, k)
 km %>% .$cluster %>% table()
 km %>% plotClusters(sprintf("K-means clustering\nk = %d", k))
@@ -88,9 +88,9 @@ km[["centers"]] %>% t() %>% kable(digits = 2)
 ## Partitioning around medoids (PAM)
 
 ```{r predictors_pam}
-mat %>% fviz_nbclust(FUN = cluster::pam, method = "wss", k.max = 40)
+mat %>% fviz_nbclust(FUN = cluster::pam, method = "wss", k.max = 10)
 mat %>% fviz_nbclust(FUN = cluster::pam, method = "silhouette")
-mat %>% fviz_nbclust(FUN = cluster::pam, method = "gap_stat", k.max = 25, nboot = 500)
+mat %>% fviz_nbclust(FUN = cluster::pam, method = "gap_stat", k.max = 10, nboot = 500)
 k <- 2
 pam <- pam(mat, k, metric = "manhattan", stand = FALSE)
 pam %>% .$cluster %>% table()
@@ -174,28 +174,6 @@ agnes_k3[["table"]]
 agnes_k3[["dendrogram"]]
 agnes_k3[["clusters2d"]]
 agnes_k3[["silhouette"]]
-```
-
-### $k = 4$ clusters
-
-```{r predictors_agnes_k4}
-k <- 4
-agnes_k4 <- foo(k)
-agnes_k4[["table"]]
-agnes_k4[["dendrogram"]]
-agnes_k4[["clusters2d"]]
-agnes_k4[["silhouette"]]
-```
-
-### $k = 5$ clusters
-
-```{r predictors_agnes_k5}
-k <- 5
-agnes_k5 <- foo(k)
-agnes_k5[["table"]]
-agnes_k5[["dendrogram"]]
-agnes_k5[["clusters2d"]]
-agnes_k5[["silhouette"]]
 ```
 
 
