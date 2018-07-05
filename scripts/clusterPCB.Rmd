@@ -249,7 +249,7 @@ diana_k4[["silhouette"]]
 
 Use DIANA, $k = 2$
 
-```{r}
+```{r PCB_final_clustering}
 diana_k2[["table"]]
 diana_k2[["dendrogram"]]
 diana_k2[["clusters2d"]]

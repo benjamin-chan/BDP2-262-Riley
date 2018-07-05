@@ -304,7 +304,7 @@ dendlist(as.dendrogram(agnes), as.dendrogram(diana)) %>%
 
 Use DIANA, $k = 2$
 
-```{r}
+```{r predictors_final_clustering}
 diana_k2[["table"]]
 diana_k2[["dendrogram"]]
 diana_k2[["clusters2d"]]
