@@ -264,6 +264,12 @@ Use the **manhattan** metric.
 * Average silhouette width is 0.394
 
 
+|cluster |   n| PCB1_Total_mean| PCB1_CondEmot_mean| PCB1_DevHab_mean| PCB2_Tot_mean| PCB3_Total_mean| PCB3_PCPonly_mean| PCB3_Person_mean| PCB3_Resource_mean|
+|:-------|---:|---------------:|------------------:|----------------:|-------------:|---------------:|-----------------:|----------------:|------------------:|
+|1       | 253|            74.0|               53.7|             20.3|          25.9|            51.7|               4.4|             17.4|                 30|
+|2       |  92|            47.1|               33.6|             13.5|          20.0|            34.2|               3.3|             11.9|                 19|
+
+
 ## Cluster on ECBI, MAPS, SEPTI metrics
 
 
@@ -306,6 +312,64 @@ Use the **manhattan** metric.
 * Analysis identified $k = 3$ clusters
 * Divisive coefficient is 0.853
 * Average silhouette width is 0.340
+
+
+```
+## # A tibble: 3 x 7
+##   cluster     n ECBI_intensity_T_score~ ECBI_problem_T_scor~ ECBI_Opp_mean
+##   <fct>   <int>                   <dbl>                <dbl>         <dbl>
+## 1 1         297                    52.5                 52.2          32.3
+## 2 2          45                    62.3                 64.6          43.2
+## 3 3           3                    37.7                 44.3          17.7
+## # ... with 2 more variables: ECBI_Inatt_mean <dbl>, ECBI_Cond_mean <dbl>
+```
+
+```
+## Error in inherits(x, "list"): argument "x" is missing, with no default
+```
+
+```
+## # A tibble: 3 x 7
+##   cluster     n ECBI_intensity_T_score~ ECBI_problem_T_scor~ ECBI_Opp_mean
+##   <fct>   <int>                   <dbl>                <dbl>         <dbl>
+## 1 1         297                    52.5                 52.2          32.3
+## 2 2          45                    62.3                 64.6          43.2
+## 3 3           3                    37.7                 44.3          17.7
+## # ... with 2 more variables: ECBI_Inatt_mean <dbl>, ECBI_Cond_mean <dbl>
+```
+
+```
+## Error in inherits(x, "list"): argument "x" is missing, with no default
+```
+
+```
+## # A tibble: 3 x 11
+##   cluster     n MAPS_PP_mean MAPS_PR_mean MAPS_WM_mean MAPS_SP_mean
+##   <fct>   <int>        <dbl>        <dbl>        <dbl>        <dbl>
+## 1 1         297         4.14         4.59         4.69         4.53
+## 2 2          45         3.65         3.96         4.07         3.64
+## 3 3           3         2.39         2.92         3.22         2.11
+## # ... with 5 more variables: MAPS_HS_mean <dbl>, MAPS_LC_mean <dbl>,
+## #   MAPS_PC_mean <dbl>, MAPS_POS_mean <dbl>, MAPS_NEG_mean <dbl>
+```
+
+```
+## Error in inherits(x, "list"): argument "x" is missing, with no default
+```
+
+```
+## # A tibble: 3 x 6
+##   cluster     n SEPTI_nurturance_mean SEPTI_discipline_me~ SEPTI_play_mean
+##   <fct>   <int>                 <dbl>                <dbl>           <dbl>
+## 1 1         297                  38.1                 24.3            32.8
+## 2 2          45                  33.4                 18.8            25.0
+## 3 3           3                  26.3                 19.3            25.7
+## # ... with 1 more variable: SEPTI_routine_mean <dbl>
+```
+
+```
+## Error in inherits(x, "list"): argument "x" is missing, with no default
+```
 
 
 ## Cluster on parent/child factors
@@ -393,38 +457,21 @@ Use the **manhattan** metric.
 
 
 
-|cluster | totalChildren|birthOrder |  n|
-|:-------|-------------:|:----------|--:|
-|1       |             1|Only child | 92|
-|1       |             2|Oldest     | 70|
-|1       |             2|Middle     |  3|
-|1       |             2|Youngest   | 49|
-|1       |             3|Oldest     | 14|
-|1       |             3|Middle     | 18|
-|1       |             3|Youngest   | 10|
-|1       |             4|Middle     |  9|
-|1       |             4|Youngest   |  6|
-|1       |             5|Middle     |  6|
-|1       |             5|Youngest   |  1|
-|1       |             6|Middle     |  2|
-|1       |             7|Youngest   |  1|
-|2       |             1|Only child | 11|
-|2       |             2|Oldest     |  8|
-|2       |             2|Youngest   |  6|
-|2       |             3|Oldest     |  1|
-|2       |             3|Middle     |  2|
-|2       |             3|Youngest   |  5|
-|2       |             4|Middle     |  2|
-|2       |             4|Youngest   |  1|
-|2       |             6|Youngest   |  1|
-|3       |             1|Only child |  9|
-|3       |             2|Oldest     |  2|
-|3       |             2|Middle     |  1|
-|3       |             2|Youngest   | 11|
-|3       |             3|Youngest   |  1|
-|3       |             5|Oldest     |  1|
-|3       |             5|Youngest   |  1|
-|4       |             5|Youngest   |  1|
+|cluster |birthOrder |  n| totalChildren_mean| totalChildren_median|
+|:-------|:----------|--:|------------------:|--------------------:|
+|1       |Only child | 92|                1.0|                  1.0|
+|1       |Oldest     | 84|                2.2|                  2.0|
+|1       |Middle     | 38|                3.6|                  3.0|
+|1       |Youngest   | 67|                2.4|                  2.0|
+|2       |Only child | 11|                1.0|                  1.0|
+|2       |Oldest     |  9|                2.1|                  2.0|
+|2       |Middle     |  4|                3.5|                  3.5|
+|2       |Youngest   | 13|                2.8|                  3.0|
+|3       |Only child |  9|                1.0|                  1.0|
+|3       |Oldest     |  3|                3.0|                  2.0|
+|3       |Middle     |  1|                2.0|                  2.0|
+|3       |Youngest   | 13|                2.3|                  2.0|
+|4       |Youngest   |  1|                5.0|                  5.0|
 
 
 ## Cluster on demographic factors
@@ -558,7 +605,7 @@ Use the **manhattan** metric.
 ##                                          size isdir mode
 ## data/processed/clusterAnalysis.RData 10004125 FALSE  666
 ##                                                    mtime
-## data/processed/clusterAnalysis.RData 2018-07-06 15:36:38
+## data/processed/clusterAnalysis.RData 2018-07-06 16:14:09
 ##                                                    ctime
 ## data/processed/clusterAnalysis.RData 2018-07-06 12:14:44
 ##                                                    atime exe

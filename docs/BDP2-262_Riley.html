@@ -461,6 +461,60 @@ SOFTWARE.
 <li>Divisive coefficient is 0.929</li>
 <li>Average silhouette width is 0.394</li>
 </ul>
+<table>
+<colgroup>
+<col style="width: 5%"></col>
+<col style="width: 2%"></col>
+<col style="width: 10%"></col>
+<col style="width: 12%"></col>
+<col style="width: 11%"></col>
+<col style="width: 9%"></col>
+<col style="width: 10%"></col>
+<col style="width: 12%"></col>
+<col style="width: 11%"></col>
+<col style="width: 12%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">cluster</th>
+<th style="text-align: right;">n</th>
+<th style="text-align: right;">PCB1_Total_mean</th>
+<th style="text-align: right;">PCB1_CondEmot_mean</th>
+<th style="text-align: right;">PCB1_DevHab_mean</th>
+<th style="text-align: right;">PCB2_Tot_mean</th>
+<th style="text-align: right;">PCB3_Total_mean</th>
+<th style="text-align: right;">PCB3_PCPonly_mean</th>
+<th style="text-align: right;">PCB3_Person_mean</th>
+<th style="text-align: right;">PCB3_Resource_mean</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1</td>
+<td style="text-align: right;">253</td>
+<td style="text-align: right;">74.0</td>
+<td style="text-align: right;">53.7</td>
+<td style="text-align: right;">20.3</td>
+<td style="text-align: right;">25.9</td>
+<td style="text-align: right;">51.7</td>
+<td style="text-align: right;">4.4</td>
+<td style="text-align: right;">17.4</td>
+<td style="text-align: right;">30</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2</td>
+<td style="text-align: right;">92</td>
+<td style="text-align: right;">47.1</td>
+<td style="text-align: right;">33.6</td>
+<td style="text-align: right;">13.5</td>
+<td style="text-align: right;">20.0</td>
+<td style="text-align: right;">34.2</td>
+<td style="text-align: right;">3.3</td>
+<td style="text-align: right;">11.9</td>
+<td style="text-align: right;">19</td>
+</tr>
+</tbody>
+</table>
 <h2 id="cluster-on-ecbi-maps-septi-metrics">Cluster on ECBI, MAPS, SEPTI metrics</h2>
 <pre><code>## [1] 345  18</code></pre>
 <pre><code>## NULL</code></pre>
@@ -487,6 +541,39 @@ SOFTWARE.
 <li>Divisive coefficient is 0.853</li>
 <li>Average silhouette width is 0.340</li>
 </ul>
+<pre><code>## # A tibble: 3 x 7
+##   cluster     n ECBI_intensity_T_score~ ECBI_problem_T_scor~ ECBI_Opp_mean
+##   &lt;fct&gt;   &lt;int&gt;                   &lt;dbl&gt;                &lt;dbl&gt;         &lt;dbl&gt;
+## 1 1         297                    52.5                 52.2          32.3
+## 2 2          45                    62.3                 64.6          43.2
+## 3 3           3                    37.7                 44.3          17.7
+## # ... with 2 more variables: ECBI_Inatt_mean &lt;dbl&gt;, ECBI_Cond_mean &lt;dbl&gt;</code></pre>
+<pre><code>## Error in inherits(x, &quot;list&quot;): argument &quot;x&quot; is missing, with no default</code></pre>
+<pre><code>## # A tibble: 3 x 7
+##   cluster     n ECBI_intensity_T_score~ ECBI_problem_T_scor~ ECBI_Opp_mean
+##   &lt;fct&gt;   &lt;int&gt;                   &lt;dbl&gt;                &lt;dbl&gt;         &lt;dbl&gt;
+## 1 1         297                    52.5                 52.2          32.3
+## 2 2          45                    62.3                 64.6          43.2
+## 3 3           3                    37.7                 44.3          17.7
+## # ... with 2 more variables: ECBI_Inatt_mean &lt;dbl&gt;, ECBI_Cond_mean &lt;dbl&gt;</code></pre>
+<pre><code>## Error in inherits(x, &quot;list&quot;): argument &quot;x&quot; is missing, with no default</code></pre>
+<pre><code>## # A tibble: 3 x 11
+##   cluster     n MAPS_PP_mean MAPS_PR_mean MAPS_WM_mean MAPS_SP_mean
+##   &lt;fct&gt;   &lt;int&gt;        &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;
+## 1 1         297         4.14         4.59         4.69         4.53
+## 2 2          45         3.65         3.96         4.07         3.64
+## 3 3           3         2.39         2.92         3.22         2.11
+## # ... with 5 more variables: MAPS_HS_mean &lt;dbl&gt;, MAPS_LC_mean &lt;dbl&gt;,
+## #   MAPS_PC_mean &lt;dbl&gt;, MAPS_POS_mean &lt;dbl&gt;, MAPS_NEG_mean &lt;dbl&gt;</code></pre>
+<pre><code>## Error in inherits(x, &quot;list&quot;): argument &quot;x&quot; is missing, with no default</code></pre>
+<pre><code>## # A tibble: 3 x 6
+##   cluster     n SEPTI_nurturance_mean SEPTI_discipline_me~ SEPTI_play_mean
+##   &lt;fct&gt;   &lt;int&gt;                 &lt;dbl&gt;                &lt;dbl&gt;           &lt;dbl&gt;
+## 1 1         297                  38.1                 24.3            32.8
+## 2 2          45                  33.4                 18.8            25.0
+## 3 3           3                  26.3                 19.3            25.7
+## # ... with 1 more variable: SEPTI_routine_mean &lt;dbl&gt;</code></pre>
+<pre><code>## Error in inherits(x, &quot;list&quot;): argument &quot;x&quot; is missing, with no default</code></pre>
 <h2 id="cluster-on-parentchild-factors">Cluster on parent/child factors</h2>
 <pre><code>## [1] 345  48</code></pre>
 <pre><code>## NULL</code></pre>
@@ -557,191 +644,103 @@ SOFTWARE.
 <thead>
 <tr class="header">
 <th style="text-align: left;">cluster</th>
-<th style="text-align: right;">totalChildren</th>
 <th style="text-align: left;">birthOrder</th>
 <th style="text-align: right;">n</th>
+<th style="text-align: right;">totalChildren_mean</th>
+<th style="text-align: right;">totalChildren_median</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">1</td>
-<td style="text-align: right;">1</td>
 <td style="text-align: left;">Only child</td>
 <td style="text-align: right;">92</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1.0</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">1</td>
-<td style="text-align: right;">2</td>
 <td style="text-align: left;">Oldest</td>
-<td style="text-align: right;">70</td>
+<td style="text-align: right;">84</td>
+<td style="text-align: right;">2.2</td>
+<td style="text-align: right;">2.0</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">1</td>
-<td style="text-align: right;">2</td>
 <td style="text-align: left;">Middle</td>
-<td style="text-align: right;">3</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: right;">3.6</td>
+<td style="text-align: right;">3.0</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">1</td>
-<td style="text-align: right;">2</td>
 <td style="text-align: left;">Youngest</td>
-<td style="text-align: right;">49</td>
+<td style="text-align: right;">67</td>
+<td style="text-align: right;">2.4</td>
+<td style="text-align: right;">2.0</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">1</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: left;">Oldest</td>
-<td style="text-align: right;">14</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">1</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: left;">Middle</td>
-<td style="text-align: right;">18</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">1</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: left;">Youngest</td>
-<td style="text-align: right;">10</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">1</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: left;">Middle</td>
-<td style="text-align: right;">9</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">1</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: left;">Youngest</td>
-<td style="text-align: right;">6</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">1</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: left;">Middle</td>
-<td style="text-align: right;">6</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">1</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: left;">Youngest</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">1</td>
-<td style="text-align: right;">6</td>
-<td style="text-align: left;">Middle</td>
-<td style="text-align: right;">2</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">1</td>
-<td style="text-align: right;">7</td>
-<td style="text-align: left;">Youngest</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="even">
 <td style="text-align: left;">2</td>
-<td style="text-align: right;">1</td>
 <td style="text-align: left;">Only child</td>
 <td style="text-align: right;">11</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1.0</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">2</td>
-<td style="text-align: right;">2</td>
 <td style="text-align: left;">Oldest</td>
-<td style="text-align: right;">8</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">2</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: left;">Youngest</td>
-<td style="text-align: right;">6</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">2.1</td>
+<td style="text-align: right;">2.0</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">2</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: left;">Oldest</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">2</td>
-<td style="text-align: right;">3</td>
 <td style="text-align: left;">Middle</td>
-<td style="text-align: right;">2</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">2</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: left;">Youngest</td>
-<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3.5</td>
+<td style="text-align: right;">3.5</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">2</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: left;">Middle</td>
-<td style="text-align: right;">2</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">2</td>
-<td style="text-align: right;">4</td>
 <td style="text-align: left;">Youngest</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">2</td>
-<td style="text-align: right;">6</td>
-<td style="text-align: left;">Youngest</td>
-<td style="text-align: right;">1</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">2.8</td>
+<td style="text-align: right;">3.0</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">3</td>
-<td style="text-align: right;">1</td>
 <td style="text-align: left;">Only child</td>
 <td style="text-align: right;">9</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1.0</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">3</td>
-<td style="text-align: right;">2</td>
 <td style="text-align: left;">Oldest</td>
-<td style="text-align: right;">2</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.0</td>
+<td style="text-align: right;">2.0</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">3</td>
-<td style="text-align: right;">2</td>
 <td style="text-align: left;">Middle</td>
 <td style="text-align: right;">1</td>
+<td style="text-align: right;">2.0</td>
+<td style="text-align: right;">2.0</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">3</td>
-<td style="text-align: right;">2</td>
 <td style="text-align: left;">Youngest</td>
-<td style="text-align: right;">11</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">2.3</td>
+<td style="text-align: right;">2.0</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">3</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: left;">Youngest</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">3</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: left;">Oldest</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">3</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: left;">Youngest</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="even">
 <td style="text-align: left;">4</td>
-<td style="text-align: right;">5</td>
 <td style="text-align: left;">Youngest</td>
 <td style="text-align: right;">1</td>
+<td style="text-align: right;">5.0</td>
+<td style="text-align: right;">5.0</td>
 </tr>
 </tbody>
 </table>
@@ -1037,7 +1036,7 @@ SOFTWARE.
 <pre><code>##                                          size isdir mode
 ## data/processed/clusterAnalysis.RData 10004125 FALSE  666
 ##                                                    mtime
-## data/processed/clusterAnalysis.RData 2018-07-06 15:36:38
+## data/processed/clusterAnalysis.RData 2018-07-06 16:14:09
 ##                                                    ctime
 ## data/processed/clusterAnalysis.RData 2018-07-06 12:14:44
 ##                                                    atime exe
