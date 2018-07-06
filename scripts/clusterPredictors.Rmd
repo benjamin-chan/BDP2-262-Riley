@@ -37,7 +37,8 @@ dfNonMissing <-
 dfX <- 
   dfNonMissing %>% 
   select(-id) %>% 
-  select(matches("ECBI|MAPS|SEPTI")) %>% 
+  select(-matches("ECBI|MAPS|SEPTI")) %>% 
+  select(-starts_with("PCB")) %>% 
   droplevels()
 dfY <- 
   dfNonMissing %>% 
