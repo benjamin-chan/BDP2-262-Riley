@@ -94,6 +94,7 @@ dist <- mat %>% dist(method = metric)
 dim(mat)
 dim(dist)
 colnames(mat)
+hopkins <- get_clust_tendency(mat, n = nrow(mat) - 1, graph = FALSE)
 diana <- dist %>% diana(metric = metric)
 k <- 2
 dianaYPCB <- hcDIANA(k)
@@ -103,13 +104,10 @@ dianaYPCB[["clusters2d"]]
 dianaYPCB[["silhouette"]]
 ```
 
-Analysis identified $k = `r k`$ clusters.
-
-Divisive coefficient is
-`r sprintf("%.03f", diana$dc)`.
-
-Average silhouette width is 
-`r sprintf("%.03f", dianaYPCB[["hcut"]][["silinfo"]][["avg.width"]])`.
+* Hopkins statistic is `r sprintf("%.03f", hopkins$hopkins_stat)`
+* Analysis identified $k = `r k`$ clusters
+* Divisive coefficient is `r sprintf("%.03f", diana$dc)`
+* Average silhouette width is `r sprintf("%.03f", dianaXMetrics[["hcut"]][["silinfo"]][["avg.width"]])`
 
 
 ## Cluster on ECBI, MAPS, SEPTI metrics
@@ -120,6 +118,7 @@ dist <- mat %>% dist(method = metric)
 dim(mat)
 dim(dist)
 colnames(mat)
+hopkins <- get_clust_tendency(mat, n = nrow(mat) - 1, graph = FALSE)
 diana <- dist %>% diana(metric = metric)
 k <- 3
 dianaXMetrics <- hcDIANA(k)
@@ -129,13 +128,10 @@ dianaXMetrics[["clusters2d"]]
 dianaXMetrics[["silhouette"]]
 ```
 
-Analysis identified $k = `r k`$ clusters.
-
-Divisive coefficient is
-`r sprintf("%.03f", diana$dc)`.
-
-Average silhouette width is 
-`r sprintf("%.03f", dianaXMetrics[["hcut"]][["silinfo"]][["avg.width"]])`.
+* Hopkins statistic is `r sprintf("%.03f", hopkins$hopkins_stat)`
+* Analysis identified $k = `r k`$ clusters
+* Divisive coefficient is `r sprintf("%.03f", diana$dc)`
+* Average silhouette width is `r sprintf("%.03f", dianaXMetrics[["hcut"]][["silinfo"]][["avg.width"]])`
 
 
 ## Cluster on parent/child factors
@@ -146,6 +142,7 @@ dist <- mat %>% dist(method = metric)
 dim(mat)
 dim(dist)
 colnames(mat)
+hopkins <- get_clust_tendency(mat, n = nrow(mat) - 1, graph = FALSE)
 diana <- dist %>% diana(metric = metric)
 k <- 4
 dianaXParentChild <- hcDIANA(k)
@@ -155,13 +152,10 @@ dianaXParentChild[["clusters2d"]]
 dianaXParentChild[["silhouette"]]
 ```
 
-Analysis identified $k = `r k`$ clusters.
-
-Divisive coefficient is
-`r sprintf("%.03f", diana$dc)`.
-
-Average silhouette width is 
-`r sprintf("%.03f", dianaXParentChild[["hcut"]][["silinfo"]][["avg.width"]])`.
+* Hopkins statistic is `r sprintf("%.03f", hopkins$hopkins_stat)`
+* Analysis identified $k = `r k`$ clusters
+* Divisive coefficient is `r sprintf("%.03f", diana$dc)`
+* Average silhouette width is `r sprintf("%.03f", dianaXMetrics[["hcut"]][["silinfo"]][["avg.width"]])`
 
 
 ```{r}
@@ -181,6 +175,7 @@ dist <- mat %>% dist(method = metric)
 dim(mat)
 dim(dist)
 colnames(mat)
+hopkins <- get_clust_tendency(mat, n = nrow(mat) - 1, graph = FALSE)
 diana <- dist %>% diana(metric = metric)
 k <- 4
 dianaXDemog <- hcDIANA(k)
@@ -190,13 +185,10 @@ dianaXDemog[["clusters2d"]]
 dianaXDemog[["silhouette"]]
 ```
 
-Analysis identified $k = `r k`$ clusters.
-
-Divisive coefficient is
-`r sprintf("%.03f", diana$dc)`.
-
-Average silhouette width is 
-`r sprintf("%.03f", dianaXDemog[["hcut"]][["silinfo"]][["avg.width"]])`.
+* Hopkins statistic is `r sprintf("%.03f", hopkins$hopkins_stat)`
+* Analysis identified $k = `r k`$ clusters
+* Divisive coefficient is `r sprintf("%.03f", diana$dc)`
+* Average silhouette width is `r sprintf("%.03f", dianaXMetrics[["hcut"]][["silinfo"]][["avg.width"]])`
 
 ```{r}
 bind_cols(dfXDemog, 
