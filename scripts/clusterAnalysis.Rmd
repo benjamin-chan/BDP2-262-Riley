@@ -1,0 +1,227 @@
+# Cluster analysis
+
+Use divisive hierarchical clustering (DIANA).
+See [Divisive Hierarchical Clustering Essentials](http://www.sthda.com/english/articles/28-hierarchical-clustering-essentials/94-divisive-hierarchical-clustering-essentials/).
+
+```{r}
+library(cluster)
+library(ggdendro)
+library(factoextra)
+library(dendextend)
+library(NbClust)
+citation("factoextra")
+pal <- lacroix_palette("PommeBaya", type = "discrete")
+```
+
+```{r}
+metric <- "manhattan"
+plotClusters <- function (df, title = "Cluster plot") {
+  require(magrittr)
+  require(ggplot2)
+  require(factoextra)
+  df %>% 
+  fviz_cluster(data = mat, 
+               palette = sprintf("%s7F", pal[1:k]), 
+               geom = c("points"),
+               labelsize = 8, 
+               ellipse.type = "convex",
+               star.plot = TRUE) + 
+  ggtitle(title) +
+  theme(panel.grid.minor = element_blank())
+}
+hcDIANA <- function(k) {
+  hcut <-
+    dist %>% 
+    hcut(k = k, hc_func = "diana", hc_metric = metric)
+  tab <- hcut$cluster %>% table()
+  dend <- 
+    hcut %>% 
+    fviz_dend(k = k, 
+              type = "circular",
+              rect = TRUE, 
+              rect_fill = TRUE,
+              cex = 0.25, 
+              k_colors = pal[1:k], 
+              main = sprintf("DIANA\nk = %d", k))
+  clust <- hcut %>% plotClusters(sprintf("DIANA\nDivisive coefficient = %.03f\nk = %d", diana$dc, k))
+  silh <- 
+    hcut %>% 
+    fviz_silhouette(palette = sprintf("%s3F", pal[1:k]), ggtheme = theme_minimal()) + 
+    theme(panel.grid.major.x = element_blank()) +
+    ggtitle(sprintf("DIANA\nk = %d\nAverage silhouette width = %.03f\nCluster average silhouette widths = %s",
+                    k,
+                    hcut[["silinfo"]][["avg.width"]],
+                    hcut[["silinfo"]][["clus.avg.widths"]] %>% round(3) %>% paste(collapse = ", ")))
+  list(hcut = hcut,
+       table = tab,
+       dendrogram = dend,
+       clusters2d = clust,
+       silhouette = silh)
+}
+```
+
+Use the **`r metric`** metric.
+
+```{r}
+# load("data/processed/dataframes.RData")
+dfNonMissing <- 
+  df %>% 
+  na.omit()
+dfXMetrics <- 
+  dfNonMissing %>% 
+  select(matches("ECBI|MAPS|SEPTI")) %>% 
+  droplevels()
+dfXParentChild <- 
+  dfNonMissing %>% 
+  select(matches("parent|child|birth", ignore.case = TRUE)) %>% 
+  droplevels()
+dfXDemog <- 
+  dfNonMissing %>% 
+  select(matches("lang|zip|community|distance|income|internet")) %>% 
+  select(-matches("lang")) %>% 
+  droplevels()
+dfYPCB <- 
+  dfNonMissing %>% 
+  select(starts_with("PCB"))
+```
+
+
+## Cluster on PCB metrics
+
+```{r clusterYPCB}
+mat <- model.matrix(~ - 1 + ., data = dfYPCB) %>% scale()
+dist <- mat %>% dist(method = metric)
+dim(mat)
+dim(dist)
+colnames(mat)
+diana <- dist %>% diana(metric = metric)
+k <- 2
+dianaYPCB <- hcDIANA(k)
+dianaYPCB[["table"]]
+dianaYPCB[["dendrogram"]]
+dianaYPCB[["clusters2d"]]
+dianaYPCB[["silhouette"]]
+```
+
+Analysis identified $k = `r k`$ clusters.
+
+Divisive coefficient is
+`r sprintf("%.03f", diana$dc)`.
+
+Average silhouette width is 
+`r sprintf("%.03f", dianaYPCB[["hcut"]][["silinfo"]][["avg.width"]])`.
+
+
+## Cluster on ECBI, MAPS, SEPTI metrics
+
+```{r clusterXMetrics}
+mat <- model.matrix(~ - 1 + ., data = dfXMetrics) %>% scale()
+dist <- mat %>% dist(method = metric)
+dim(mat)
+dim(dist)
+colnames(mat)
+diana <- dist %>% diana(metric = metric)
+k <- 3
+dianaXMetrics <- hcDIANA(k)
+dianaXMetrics[["table"]]
+dianaXMetrics[["dendrogram"]]
+dianaXMetrics[["clusters2d"]]
+dianaXMetrics[["silhouette"]]
+```
+
+Analysis identified $k = `r k`$ clusters.
+
+Divisive coefficient is
+`r sprintf("%.03f", diana$dc)`.
+
+Average silhouette width is 
+`r sprintf("%.03f", dianaXMetrics[["hcut"]][["silinfo"]][["avg.width"]])`.
+
+
+## Cluster on parent/child factors
+
+```{r clusterXParentChild}
+mat <- model.matrix(~ - 1 + ., data = dfXParentChild) %>% scale()
+dist <- mat %>% dist(method = metric)
+dim(mat)
+dim(dist)
+colnames(mat)
+diana <- dist %>% diana(metric = metric)
+k <- 4
+dianaXParentChild <- hcDIANA(k)
+dianaXParentChild[["table"]]
+dianaXParentChild[["dendrogram"]]
+dianaXParentChild[["clusters2d"]]
+dianaXParentChild[["silhouette"]]
+```
+
+Analysis identified $k = `r k`$ clusters.
+
+Divisive coefficient is
+`r sprintf("%.03f", diana$dc)`.
+
+Average silhouette width is 
+`r sprintf("%.03f", dianaXParentChild[["hcut"]][["silinfo"]][["avg.width"]])`.
+
+
+```{r}
+bind_cols(dfXParentChild, 
+          data.frame(cluster = dianaXParentChild[["hcut"]][["cluster"]] %>% factor())) %>%
+  group_by(cluster, totalChildren, birthOrder) %>%
+  summarize(n = n()) %>% 
+  kable()
+```
+
+
+## Cluster on demographic factors
+
+```{r clusterXDemog}
+mat <- model.matrix(~ - 1 + ., data = dfXDemog) %>% scale()
+dist <- mat %>% dist(method = metric)
+dim(mat)
+dim(dist)
+colnames(mat)
+diana <- dist %>% diana(metric = metric)
+k <- 4
+dianaXDemog <- hcDIANA(k)
+dianaXDemog[["table"]]
+dianaXDemog[["dendrogram"]]
+dianaXDemog[["clusters2d"]]
+dianaXDemog[["silhouette"]]
+```
+
+Analysis identified $k = `r k`$ clusters.
+
+Divisive coefficient is
+`r sprintf("%.03f", diana$dc)`.
+
+Average silhouette width is 
+`r sprintf("%.03f", dianaXDemog[["hcut"]][["silinfo"]][["avg.width"]])`.
+
+```{r}
+bind_cols(dfXDemog, 
+          data.frame(cluster = dianaXDemog[["hcut"]][["cluster"]] %>% factor())) %>%
+  mutate(distanceLong = distance > 75) %>% 
+  group_by(cluster, zipcodeClass, community, distanceLong) %>%
+  summarize(n = n()) %>% 
+  kable()
+bind_cols(dfXDemog, 
+          data.frame(cluster = dianaXDemog[["hcut"]][["cluster"]] %>% factor())) %>%
+  group_by(cluster, zipcodeClass, income) %>%
+  summarize(n = n()) %>% 
+  kable()
+bind_cols(dfXDemog, 
+          data.frame(cluster = dianaXDemog[["hcut"]][["cluster"]] %>% factor())) %>%
+  group_by(cluster, zipcodeClass, internet) %>%
+  summarize(n = n()) %>% 
+  kable()
+```
+
+
+## Save objects
+
+```{r}
+f <- "data/processed/clusterAnalysis.RData"
+save(dianaYPCB, dianaXMetrics, dianaXParentChild, dianaXDemog, file = f)
+file.info(f)
+```
