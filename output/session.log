@@ -1,13 +1,13 @@
 $completionDateTime
-[1] "2018-07-03 16:08:07 PDT"
+[1] "2018-07-05 22:13:20 PDT"
 
 $executionTime
-Time difference of 55.38518 mins
+Time difference of 16.24467 mins
 
 $sessionInfo
 R version 3.4.3 (2017-11-30)
 Platform: x86_64-w64-mingw32/x64 (64-bit)
-Running under: Windows 7 x64 (build 7601) Service Pack 1
+Running under: Windows 10 x64 (build 17134)
 
 Matrix products: default
 
@@ -24,7 +24,7 @@ attached base packages:
 
 other attached packages:
  [1] NbClust_3.0        dendextend_1.8.0   factoextra_1.0.5   ggdendro_0.1-20   
- [5] cluster_2.0.7-1    bindrcpp_0.2.2     RANN_2.5.1         doParallel_1.0.11 
+ [5] cluster_2.0.6      bindrcpp_0.2.2     RANN_2.5.1         doParallel_1.0.11 
  [9] iterators_1.0.9    foreach_1.4.4      caret_6.0-78       lattice_0.20-35   
 [13] svglite_1.2.1      LaCroixColoR_0.1.0 RColorBrewer_1.1-2 haven_1.1.1       
 [17] forcats_0.3.0      stringr_1.3.0      dplyr_0.7.4        purrr_0.2.4       
@@ -33,16 +33,16 @@ other attached packages:
 [29] checkpoint_0.4.2  
 
 loaded via a namespace (and not attached):
- [1] colorspace_1.3-2   class_7.3-14       modeltools_0.2-21  mclust_5.4        
+ [1] colorspace_1.3-2   class_7.3-14       modeltools_0.2-21  mclust_5.4.1      
  [5] rprojroot_1.3-2    rstudioapi_0.7     ggpubr_0.1.7       DRR_0.0.3         
- [9] ggrepel_0.8.0      flexmix_2.3-14     prodlim_1.6.1      mvtnorm_1.0-7     
+ [9] ggrepel_0.7.0      flexmix_2.3-14     prodlim_1.6.1      mvtnorm_1.0-8     
 [13] lubridate_1.7.2    xml2_1.2.0         codetools_0.2-15   splines_3.4.3     
 [17] mnormt_1.5-5       robustbase_0.92-8  RcppRoll_0.2.2     jsonlite_1.5      
 [21] broom_0.4.4        ddalpha_1.3.1.1    kernlab_0.9-25     sfsmisc_1.1-2     
 [25] compiler_3.4.3     httr_1.3.1         backports_1.1.2    assertthat_0.2.0  
 [29] Matrix_1.2-12      lazyeval_0.2.1     cli_1.0.0          htmltools_0.3.6   
 [33] tools_3.4.3        gtable_0.2.0       glue_1.2.0         reshape2_1.4.3    
-[37] Rcpp_0.12.16       cellranger_1.1.0   trimcluster_0.1-2  nlme_3.1-131.1    
+[37] Rcpp_0.12.16       cellranger_1.1.0   trimcluster_0.1-2  nlme_3.1-131      
 [41] fpc_2.1-11         psych_1.8.3.3      timeDate_3043.102  gower_0.1.2       
 [45] rvest_0.3.2        DEoptimR_1.0-8     MASS_7.3-49        scales_0.5.0      
 [49] ipred_0.9-6        hms_0.4.2          gridExtra_2.3      gdtools_0.1.7     
