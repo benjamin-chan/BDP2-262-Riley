@@ -227,7 +227,7 @@ Exclude rows if there are a high proportion of row-wise `NA`.
 ```
 
 ```
-## [1] 345  18
+## [1] 345  36
 ```
 
 ```
@@ -235,7 +235,7 @@ Exclude rows if there are a high proportion of row-wise `NA`.
 ```
 
 ```
-## [1] 345  18
+## [1] 345 136
 ```
 
 ```
@@ -269,46 +269,164 @@ Exclude rows if there are a high proportion of row-wise `NA`.
 ```
 ## .
 ##   1   2 
-## 206 139
+##  77 268
 ```
 
 ![plot of chunk predictors_kmeans](figures/predictors_kmeans-4.png)
 
 ```
-## Within cluster sum of squares, cluster 1: 2116.72
-## Within cluster sum of squares, cluster 2: 2638.50
+## Within cluster sum of squares, cluster 1: 13573.82
+## Within cluster sum of squares, cluster 2: 31702.60
 ```
 
 ```
-## Between SS / Total SS: 1436.78 / 6192.00 = 23.20%
+## Between SS / Total SS: 1507.59 / 46784.00 = 3.22%
 ```
 
 ```
-## Total within SS: 4755.22
+## Total within SS: 45276.41
 ```
 
 
 
-|                       |     1|     2|
-|:----------------------|-----:|-----:|
-|ECBI_intensity_T_score | -0.43|  0.63|
-|ECBI_problem_T_score   | -0.42|  0.62|
-|ECBI_Opp               | -0.43|  0.63|
-|ECBI_Inatt             | -0.21|  0.31|
-|ECBI_Cond              | -0.36|  0.53|
-|MAPS_PP                |  0.33| -0.48|
-|MAPS_PR                |  0.35| -0.52|
-|MAPS_WM                |  0.34| -0.50|
-|MAPS_SP                |  0.43| -0.64|
-|MAPS_HS                | -0.43|  0.64|
-|MAPS_LC                | -0.36|  0.54|
-|MAPS_PC                | -0.30|  0.44|
-|MAPS_POS               |  0.46| -0.68|
-|MAPS_NEG               | -0.48|  0.71|
-|SEPTI_nurturance       |  0.47| -0.69|
-|SEPTI_discipline       |  0.45| -0.67|
-|SEPTI_play             |  0.37| -0.55|
-|SEPTI_routine          |  0.41| -0.61|
+|                                                                             |     1|     2|
+|:----------------------------------------------------------------------------|-----:|-----:|
+|languageSurveyEnglish                                                        |  0.05| -0.02|
+|languageSurveySpanish                                                        | -0.05|  0.02|
+|totalChildren                                                                | -0.16|  0.04|
+|birthOrderOldest                                                             | -0.19|  0.05|
+|birthOrderMiddle                                                             | -0.10|  0.03|
+|birthOrderYoungest                                                           |  0.12| -0.03|
+|childSexMale                                                                 | -0.12|  0.04|
+|childAge                                                                     | -0.05|  0.02|
+|childEthnicityNot Hispanic/Latino                                            | -0.72|  0.21|
+|childEthnicityUnknown                                                        | -0.13|  0.04|
+|childEthnicityPrefer not to respond                                          |  0.89| -0.26|
+|childRaceWhite1                                                              | -1.67|  0.48|
+|childRaceAsian1                                                              |  0.93| -0.27|
+|childRaceAfrAm1                                                              |  0.21| -0.06|
+|childRaceAIAN1                                                               | -0.07|  0.02|
+|childRaceNHPI1                                                               |  0.04| -0.01|
+|childRaceOther1                                                              |  0.55| -0.16|
+|childRaceNoResp1                                                             |  0.95| -0.27|
+|childRelationshipBiological or adoptive father                               |  0.11| -0.03|
+|childRelationshipGrandparent                                                 | -0.05|  0.02|
+|childRelationshipOther                                                       |  0.27| -0.08|
+|parentGenderFemale                                                           | -0.18|  0.05|
+|parentGenderTransgender                                                      | -0.05|  0.02|
+|parentGenderOther                                                            |  0.19| -0.05|
+|parentGenderPrefer not to respond                                            |  0.05| -0.01|
+|parentSexMale                                                                |  0.14| -0.04|
+|parentAge                                                                    |  0.19| -0.05|
+|parentEthnicityNot Hispanic/Latino                                           | -0.82|  0.24|
+|parentEthnicityUnknown                                                       |  0.07| -0.02|
+|parentEthnicityPrefer not to respond                                         |  0.85| -0.25|
+|parentRaceWhite1                                                             | -1.72|  0.50|
+|parentRaceAsian1                                                             |  1.02| -0.29|
+|parentRaceAfrAm1                                                             |  0.26| -0.08|
+|parentRaceAIAN1                                                              | -0.07|  0.02|
+|parentRaceNHPI1                                                              | -0.05|  0.01|
+|parentRaceOther1                                                             |  0.66| -0.19|
+|parentRaceNoResp1                                                            |  0.93| -0.27|
+|parentMaritalStatusWidowed                                                   | -0.05|  0.02|
+|parentMaritalStatusDivorced                                                  |  0.15| -0.04|
+|parentMaritalStatusSeparated                                                 | -0.13|  0.04|
+|parentMaritalStatusRemarried                                                 |  0.01|  0.00|
+|parentMaritalStatusNever married                                             | -0.14|  0.04|
+|parentSituationCouple parenting with spouse or partner in the same household |  0.11| -0.03|
+|parentSituationCo-parenting in separate households                           |  0.01|  0.00|
+|parentsNumber                                                                |  0.11| -0.03|
+|parentChildRatio                                                             |  0.21| -0.06|
+|zipcodeClass2                                                                | -0.38|  0.11|
+|zipcode91020                                                                 |  0.19| -0.05|
+|zipcode91204                                                                 |  0.19| -0.05|
+|zipcode91206                                                                 |  0.19| -0.05|
+|zipcode91210                                                                 |  0.19| -0.05|
+|zipcode91402                                                                 |  0.19| -0.05|
+|zipcode97003                                                                 | -0.09|  0.03|
+|zipcode97006                                                                 |  0.21| -0.06|
+|zipcode97007                                                                 |  0.09| -0.03|
+|zipcode97008                                                                 |  0.07| -0.02|
+|zipcode97023                                                                 | -0.05|  0.02|
+|zipcode97027                                                                 |  0.27| -0.08|
+|zipcode97032                                                                 | -0.05|  0.02|
+|zipcode97034                                                                 | -0.08|  0.02|
+|zipcode97035                                                                 | -0.05|  0.02|
+|zipcode97045                                                                 | -0.05|  0.02|
+|zipcode97056                                                                 | -0.05|  0.02|
+|zipcode97060                                                                 | -0.05|  0.02|
+|zipcode97062                                                                 |  0.19| -0.05|
+|zipcode97068                                                                 | -0.05|  0.02|
+|zipcode97071                                                                 | -0.08|  0.02|
+|zipcode97078                                                                 | -0.08|  0.02|
+|zipcode97086                                                                 | -0.05|  0.02|
+|zipcode97089                                                                 |  0.09| -0.03|
+|zipcode97101                                                                 | -0.05|  0.02|
+|zipcode97116                                                                 |  0.09| -0.03|
+|zipcode97123                                                                 | -0.09|  0.03|
+|zipcode97124                                                                 |  0.10| -0.03|
+|zipcode97140                                                                 |  0.09| -0.03|
+|zipcode97141                                                                 | -0.05|  0.02|
+|zipcode97201                                                                 |  0.13| -0.04|
+|zipcode97202                                                                 |  0.06| -0.02|
+|zipcode97203                                                                 |  0.19| -0.05|
+|zipcode97206                                                                 | -0.14|  0.04|
+|zipcode97209                                                                 |  0.19| -0.05|
+|zipcode97210                                                                 | -0.05|  0.02|
+|zipcode97211                                                                 |  0.13| -0.04|
+|zipcode97212                                                                 |  0.01|  0.00|
+|zipcode97213                                                                 | -0.09|  0.03|
+|zipcode97214                                                                 | -0.12|  0.03|
+|zipcode97215                                                                 | -0.05|  0.02|
+|zipcode97217                                                                 |  0.19| -0.05|
+|zipcode97219                                                                 |  0.04| -0.01|
+|zipcode97220                                                                 | -0.08|  0.02|
+|zipcode97221                                                                 |  0.09| -0.03|
+|zipcode97222                                                                 |  0.05| -0.01|
+|zipcode97223                                                                 |  0.20| -0.06|
+|zipcode97224                                                                 | -0.08|  0.02|
+|zipcode97225                                                                 | -0.01|  0.00|
+|zipcode97227                                                                 |  0.19| -0.05|
+|zipcode97229                                                                 |  0.35| -0.10|
+|zipcode97230                                                                 |  0.09| -0.03|
+|zipcode97232                                                                 | -0.08|  0.02|
+|zipcode97233                                                                 |  0.27| -0.08|
+|zipcode97236                                                                 | -0.05|  0.02|
+|zipcode97239                                                                 |  0.04| -0.01|
+|zipcode97266                                                                 |  0.19| -0.05|
+|zipcode97267                                                                 | -0.09|  0.03|
+|zipcode97321                                                                 | -0.05|  0.02|
+|zipcode97325                                                                 | -0.05|  0.02|
+|zipcode97429                                                                 | -0.05|  0.02|
+|zipcode97527                                                                 | -0.08|  0.02|
+|zipcode97701                                                                 | -0.21|  0.06|
+|zipcode97702                                                                 | -0.21|  0.06|
+|zipcode97703                                                                 | -0.10|  0.03|
+|zipcode97707                                                                 | -0.05|  0.02|
+|zipcode97734                                                                 |  0.05| -0.01|
+|zipcode97738                                                                 | -0.05|  0.02|
+|zipcode97741                                                                 | -0.17|  0.05|
+|zipcode97753                                                                 | -0.09|  0.03|
+|zipcode97754                                                                 | -0.15|  0.04|
+|zipcode97756                                                                 | -0.21|  0.06|
+|zipcode97759                                                                 | -0.08|  0.02|
+|zipcode97760                                                                 |  0.05| -0.01|
+|zipcode98632                                                                 | -0.05|  0.02|
+|zipcode98660                                                                 | -0.05|  0.02|
+|zipcode98683                                                                 | -0.05|  0.02|
+|zipcode98685                                                                 |  0.19| -0.05|
+|communitySuburban                                                            |  0.10| -0.03|
+|communityRural                                                               | -0.35|  0.10|
+|distance                                                                     | -0.16|  0.04|
+|parentEducationVocational school/some college                                | -0.14|  0.04|
+|parentEducationCollege                                                       |  0.06| -0.02|
+|parentEducationGraduate/professional school                                  |  0.07| -0.02|
+|income$25,001-$49,999                                                        | -0.05|  0.01|
+|income$50,000-$79,999                                                        | -0.10|  0.03|
+|income$80,000-$119,999                                                       | -0.16|  0.05|
+|income$120,000-$149,999                                                      |  0.22| -0.06|
+|income$150,000 or more                                                       |  0.16| -0.05|
+|internet                                                                     |  0.00|  0.00|
 
 
 ## Partitioning around medoids (PAM)
@@ -335,38 +453,156 @@ Exclude rows if there are a high proportion of row-wise `NA`.
 ```
 ## .
 ##   1   2 
-## 157 188
+## 161 184
 ```
 
 ![plot of chunk predictors_pam](figures/predictors_pam-4.png)
 
 | size| max_diss| av_diss| diameter| separation|
 |----:|--------:|-------:|--------:|----------:|
-|  157|    41.80|   14.97|    65.48|       6.16|
-|  188|    23.96|   11.43|    36.86|       6.16|
+|  161|    76.69|   31.48|   120.59|       3.26|
+|  184|    84.86|   31.77|   128.89|       3.26|
 
 
 
-|                       |   321|   298|
-|:----------------------|-----:|-----:|
-|ECBI_intensity_T_score |  0.19| -0.38|
-|ECBI_problem_T_score   |  0.86| -0.71|
-|ECBI_Opp               |  0.71| -0.06|
-|ECBI_Inatt             | -0.60| -0.12|
-|ECBI_Cond              | -0.09| -0.39|
-|MAPS_PP                |  0.18|  0.77|
-|MAPS_PR                |  0.01|  0.47|
-|MAPS_WM                |  0.13|  0.78|
-|MAPS_SP                | -0.63|  0.97|
-|MAPS_HS                |  0.49| -0.42|
-|MAPS_LC                |  0.43| -0.22|
-|MAPS_PC                | -0.04| -0.74|
-|MAPS_POS               | -0.12|  0.95|
-|MAPS_NEG               |  0.38| -0.62|
-|SEPTI_nurturance       | -0.35|  0.42|
-|SEPTI_discipline       | -1.24|  0.90|
-|SEPTI_play             | -1.11| -0.82|
-|SEPTI_routine          | -0.51|  0.08|
+|                                                                             |    50|   194|
+|:----------------------------------------------------------------------------|-----:|-----:|
+|languageSurveyEnglish                                                        |  0.05|  0.05|
+|languageSurveySpanish                                                        | -0.05| -0.05|
+|totalChildren                                                                | -0.99| -0.06|
+|birthOrderOldest                                                             | -0.62|  1.61|
+|birthOrderMiddle                                                             | -0.38| -0.38|
+|birthOrderYoungest                                                           | -0.61| -0.61|
+|childSexMale                                                                 |  0.92| -1.09|
+|childAge                                                                     | -1.00| -0.31|
+|childEthnicityNot Hispanic/Latino                                            |  0.54|  0.54|
+|childEthnicityUnknown                                                        | -0.13| -0.13|
+|childEthnicityPrefer not to respond                                          | -0.29| -0.29|
+|childRaceWhite1                                                              |  0.49|  0.49|
+|childRaceAsian1                                                              | -0.34| -0.34|
+|childRaceAfrAm1                                                              | -0.20| -0.20|
+|childRaceAIAN1                                                               | -0.15| -0.15|
+|childRaceNHPI1                                                               | -0.14| -0.14|
+|childRaceOther1                                                              | -0.21| -0.21|
+|childRaceNoResp1                                                             | -0.27| -0.27|
+|childRelationshipBiological or adoptive father                               | -0.39| -0.39|
+|childRelationshipGrandparent                                                 | -0.05| -0.05|
+|childRelationshipOther                                                       | -0.08| -0.08|
+|parentGenderFemale                                                           |  0.44|  0.44|
+|parentGenderTransgender                                                      | -0.05| -0.05|
+|parentGenderOther                                                            | -0.05| -0.05|
+|parentGenderPrefer not to respond                                            | -0.09| -0.09|
+|parentSexMale                                                                | -0.41| -0.41|
+|parentAge                                                                    | -1.09| -1.09|
+|parentEthnicityNot Hispanic/Latino                                           |  0.48|  0.48|
+|parentEthnicityUnknown                                                       | -0.13| -0.13|
+|parentEthnicityPrefer not to respond                                         | -0.26| -0.26|
+|parentRaceWhite1                                                             |  0.54|  0.54|
+|parentRaceAsian1                                                             | -0.35| -0.35|
+|parentRaceAfrAm1                                                             | -0.13| -0.13|
+|parentRaceAIAN1                                                              | -0.15| -0.15|
+|parentRaceNHPI1                                                              | -0.14| -0.14|
+|parentRaceOther1                                                             | -0.19| -0.19|
+|parentRaceNoResp1                                                            | -0.27| -0.27|
+|parentMaritalStatusWidowed                                                   | -0.05| -0.05|
+|parentMaritalStatusDivorced                                                  | -0.22| -0.22|
+|parentMaritalStatusSeparated                                                 | -0.13| -0.13|
+|parentMaritalStatusRemarried                                                 | -0.11| -0.11|
+|parentMaritalStatusNever married                                             | -0.43| -0.43|
+|parentSituationCouple parenting with spouse or partner in the same household |  0.38|  0.38|
+|parentSituationCo-parenting in separate households                           | -0.20| -0.20|
+|parentsNumber                                                                |  0.38|  0.38|
+|parentChildRatio                                                             |  1.47| -0.26|
+|zipcodeClass2                                                                |  1.62| -0.62|
+|zipcode91020                                                                 | -0.05| -0.05|
+|zipcode91204                                                                 | -0.05| -0.05|
+|zipcode91206                                                                 | -0.05| -0.05|
+|zipcode91210                                                                 | -0.05| -0.05|
+|zipcode91402                                                                 | -0.05| -0.05|
+|zipcode97003                                                                 | -0.09| -0.09|
+|zipcode97006                                                                 | -0.20| -0.20|
+|zipcode97007                                                                 | -0.08| -0.08|
+|zipcode97008                                                                 | -0.13| -0.13|
+|zipcode97023                                                                 | -0.05| -0.05|
+|zipcode97027                                                                 | -0.08| -0.08|
+|zipcode97032                                                                 | -0.05| -0.05|
+|zipcode97034                                                                 | -0.08| -0.08|
+|zipcode97035                                                                 | -0.05| -0.05|
+|zipcode97045                                                                 | -0.05| -0.05|
+|zipcode97056                                                                 | -0.05| -0.05|
+|zipcode97060                                                                 | -0.05| -0.05|
+|zipcode97062                                                                 | -0.05| -0.05|
+|zipcode97068                                                                 | -0.05| -0.05|
+|zipcode97071                                                                 | -0.08| -0.08|
+|zipcode97078                                                                 | -0.08| -0.08|
+|zipcode97086                                                                 | -0.05| -0.05|
+|zipcode97089                                                                 | -0.08| -0.08|
+|zipcode97101                                                                 | -0.05| -0.05|
+|zipcode97116                                                                 | -0.08| -0.08|
+|zipcode97123                                                                 | -0.09| -0.09|
+|zipcode97124                                                                 | -0.12| -0.12|
+|zipcode97140                                                                 | -0.08| -0.08|
+|zipcode97141                                                                 | -0.05| -0.05|
+|zipcode97201                                                                 | -0.11| -0.11|
+|zipcode97202                                                                 | -0.21| -0.21|
+|zipcode97203                                                                 | -0.05| -0.05|
+|zipcode97206                                                                 | -0.14| -0.14|
+|zipcode97209                                                                 | -0.09| -0.09|
+|zipcode97210                                                                 | -0.05| -0.05|
+|zipcode97211                                                                 | -0.11| -0.11|
+|zipcode97212                                                                 | -0.11| -0.11|
+|zipcode97213                                                                 | -0.09| -0.09|
+|zipcode97214                                                                 | -0.12| -0.12|
+|zipcode97215                                                                 | -0.05| -0.05|
+|zipcode97217                                                                 | -0.09| -0.09|
+|zipcode97219                                                                 | -0.18| -0.18|
+|zipcode97220                                                                 | -0.08| -0.08|
+|zipcode97221                                                                 | -0.08| -0.08|
+|zipcode97222                                                                 | -0.09| -0.09|
+|zipcode97223                                                                 | -0.12| -0.12|
+|zipcode97224                                                                 | -0.08| -0.08|
+|zipcode97225                                                                 | -0.12| -0.12|
+|zipcode97227                                                                 | -0.05| -0.05|
+|zipcode97229                                                                 | -0.20| -0.20|
+|zipcode97230                                                                 | -0.08| -0.08|
+|zipcode97232                                                                 | -0.08| -0.08|
+|zipcode97233                                                                 | -0.08| -0.08|
+|zipcode97236                                                                 | -0.05| -0.05|
+|zipcode97239                                                                 | -0.18| -0.18|
+|zipcode97266                                                                 | -0.05| -0.05|
+|zipcode97267                                                                 | -0.09| -0.09|
+|zipcode97321                                                                 | -0.05| -0.05|
+|zipcode97325                                                                 | -0.05| -0.05|
+|zipcode97429                                                                 | -0.05| -0.05|
+|zipcode97527                                                                 | -0.08| -0.08|
+|zipcode97701                                                                 | -0.37|  2.72|
+|zipcode97702                                                                 | -0.26| -0.26|
+|zipcode97703                                                                 | -0.17| -0.17|
+|zipcode97707                                                                 | -0.05| -0.05|
+|zipcode97734                                                                 | -0.09| -0.09|
+|zipcode97738                                                                 | -0.05| -0.05|
+|zipcode97741                                                                 | -0.17| -0.17|
+|zipcode97753                                                                 | -0.09| -0.09|
+|zipcode97754                                                                 | -0.15| -0.15|
+|zipcode97756                                                                 |  2.34| -0.43|
+|zipcode97759                                                                 | -0.08| -0.08|
+|zipcode97760                                                                 | -0.09| -0.09|
+|zipcode98632                                                                 | -0.05| -0.05|
+|zipcode98660                                                                 | -0.05| -0.05|
+|zipcode98683                                                                 | -0.05| -0.05|
+|zipcode98685                                                                 | -0.05| -0.05|
+|communitySuburban                                                            |  1.09|  1.09|
+|communityRural                                                               | -0.48| -0.48|
+|distance                                                                     | -0.20| -0.34|
+|parentEducationVocational school/some college                                | -0.49| -0.49|
+|parentEducationCollege                                                       | -0.82|  1.22|
+|parentEducationGraduate/professional school                                  | -0.62| -0.62|
+|income$25,001-$49,999                                                        | -0.56|  1.77|
+|income$50,000-$79,999                                                        |  1.67| -0.60|
+|income$80,000-$119,999                                                       | -0.44| -0.44|
+|income$120,000-$149,999                                                      | -0.32| -0.32|
+|income$150,000 or more                                                       | -0.40| -0.40|
+|internet                                                                     |  0.16|  0.16|
 
 
 ## Agglomerative hierarchical clustering (AGNES)
@@ -374,7 +610,7 @@ Exclude rows if there are a high proportion of row-wise `NA`.
 ![plot of chunk predictors_agnes](figures/predictors_agnes-1.png)
 
 Correlation between cophenetic distance and the original distance is
-0.417.
+0.452.
 
 > The closer the value of the correlation coefficient is to 1, the more accurately the clustering solution reflects your data.
 > Values above 0.75 are felt to be good.
@@ -382,7 +618,7 @@ Correlation between cophenetic distance and the original distance is
 Agglomerative coeffficient using the
 Ward
 method is
-0.955.
+0.922.
 
 
 
@@ -391,14 +627,14 @@ method is
 
 ```
 ##   cluster size ave.sil.width
-## 1       1  179          0.05
-## 2       2  166          0.35
+## 1       1  303          0.27
+## 2       2   42          0.06
 ```
 
 ```
 ## .
 ##   1   2 
-## 179 166
+## 303  42
 ```
 
 ![plot of chunk predictors_agnes_k2](figures/predictors_agnes_k2-1.png)![plot of chunk predictors_agnes_k2](figures/predictors_agnes_k2-2.png)![plot of chunk predictors_agnes_k2](figures/predictors_agnes_k2-3.png)
@@ -408,15 +644,15 @@ method is
 
 ```
 ##   cluster size ave.sil.width
-## 1       1  142          0.06
-## 2       2  166          0.26
-## 3       3   37          0.14
+## 1       1  196          0.10
+## 2       2  107          0.06
+## 3       3   42          0.04
 ```
 
 ```
 ## .
 ##   1   2   3 
-## 142 166  37
+## 196 107  42
 ```
 
 ![plot of chunk predictors_agnes_k3](figures/predictors_agnes_k3-1.png)![plot of chunk predictors_agnes_k3](figures/predictors_agnes_k3-2.png)![plot of chunk predictors_agnes_k3](figures/predictors_agnes_k3-3.png)
@@ -427,7 +663,7 @@ method is
 ![plot of chunk predictors_diana](figures/predictors_diana-1.png)
 
 Divisive coefficient is
-0.853.
+0.809.
 
 
 
@@ -436,14 +672,14 @@ Divisive coefficient is
 
 ```
 ##   cluster size ave.sil.width
-## 1       1  297          0.38
-## 2       2   48          0.19
+## 1       1  344          0.51
+## 2       2    1          0.00
 ```
 
 ```
 ## .
 ##   1   2 
-## 297  48
+## 344   1
 ```
 
 ![plot of chunk predictors_diana_k2](figures/predictors_diana_k2-1.png)![plot of chunk predictors_diana_k2](figures/predictors_diana_k2-2.png)![plot of chunk predictors_diana_k2](figures/predictors_diana_k2-3.png)
@@ -453,15 +689,15 @@ Divisive coefficient is
 
 ```
 ##   cluster size ave.sil.width
-## 1       1  297          0.36
-## 2       2   45          0.23
-## 3       3    3          0.28
+## 1       1  308          0.31
+## 2       2   36          0.07
+## 3       3    1          0.00
 ```
 
 ```
 ## .
 ##   1   2   3 
-## 297  45   3
+## 308  36   1
 ```
 
 ![plot of chunk predictors_diana_k3](figures/predictors_diana_k3-1.png)![plot of chunk predictors_diana_k3](figures/predictors_diana_k3-2.png)![plot of chunk predictors_diana_k3](figures/predictors_diana_k3-3.png)
@@ -471,16 +707,16 @@ Divisive coefficient is
 
 ```
 ##   cluster size ave.sil.width
-## 1       1  297          0.29
-## 2       2   26          0.16
-## 3       3    3          0.20
-## 4       4   19          0.21
+## 1       1  308          0.27
+## 2       2   12          0.14
+## 3       3   24          0.23
+## 4       4    1          0.00
 ```
 
 ```
 ## .
 ##   1   2   3   4 
-## 297  26   3  19
+## 308  12  24   1
 ```
 
 ![plot of chunk predictors_diana_k4](figures/predictors_diana_k4-1.png)![plot of chunk predictors_diana_k4](figures/predictors_diana_k4-2.png)![plot of chunk predictors_diana_k4](figures/predictors_diana_k4-3.png)
@@ -490,17 +726,17 @@ Divisive coefficient is
 
 ```
 ##   cluster size ave.sil.width
-## 1       1  108          0.09
-## 2       2  189          0.22
-## 3       3   26          0.08
-## 4       4    3          0.20
-## 5       5   19          0.20
+## 1       1  299          0.27
+## 2       2    9          0.07
+## 3       3   12          0.13
+## 4       4   24          0.22
+## 5       5    1          0.00
 ```
 
 ```
 ## .
 ##   1   2   3   4   5 
-## 108 189  26   3  19
+## 299   9  12  24   1
 ```
 
 ![plot of chunk predictors_diana_k5](figures/predictors_diana_k5-1.png)![plot of chunk predictors_diana_k5](figures/predictors_diana_k5-2.png)![plot of chunk predictors_diana_k5](figures/predictors_diana_k5-3.png)
@@ -523,7 +759,7 @@ Use DIANA, $k = 2$
 ```
 ## .
 ##   1   2 
-## 297  48
+## 344   1
 ```
 
 ![plot of chunk predictors_final_clustering](figures/predictors_final_clustering-1.png)![plot of chunk predictors_final_clustering](figures/predictors_final_clustering-2.png)![plot of chunk predictors_final_clustering](figures/predictors_final_clustering-3.png)
