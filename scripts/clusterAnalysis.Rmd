@@ -116,8 +116,18 @@ bind_cols(dfYPCB,
   summarize(n = n(),
             PCB1_Total_mean      = mean(PCB1_Total),
             PCB1_CondEmot_mean   = mean(PCB1_CondEmot),
-            PCB1_DevHab_mean     = mean(PCB1_DevHab),
-            PCB2_Tot_mean        = mean(PCB2_Tot),
+            PCB1_DevHab_mean     = mean(PCB1_DevHab)) %>% 
+  kable(digits = 1)
+bind_cols(dfYPCB, 
+          data.frame(cluster = dianaYPCB[["hcut"]][["cluster"]] %>% factor())) %>%
+  group_by(cluster) %>%
+  summarize(n = n(),
+            PCB2_Tot_mean        = mean(PCB2_Tot)) %>% 
+  kable(digits = 1)
+bind_cols(dfYPCB, 
+          data.frame(cluster = dianaYPCB[["hcut"]][["cluster"]] %>% factor())) %>%
+  group_by(cluster) %>%
+  summarize(n = n(),
             PCB3_Total_mean      = mean(PCB3_Total),
             PCB3_PCPonly_mean    = mean(PCB3_PCPonly),
             PCB3_Person_mean     = mean(PCB3_Person),
@@ -158,17 +168,7 @@ bind_cols(dfXMetrics,
             ECBI_problem_T_score_mean   = mean(ECBI_problem_T_score),
             ECBI_Opp_mean               = mean(ECBI_Opp),
             ECBI_Inatt_mean             = mean(ECBI_Inatt),
-            ECBI_Cond_mean              = mean(ECBI_Cond))
-  kable(digits = 1)
-bind_cols(dfXMetrics, 
-          data.frame(cluster = dianaXMetrics[["hcut"]][["cluster"]] %>% factor())) %>%
-  group_by(cluster) %>%
-  summarize(n = n(),
-            ECBI_intensity_T_score_mean = mean(ECBI_intensity_T_score),
-            ECBI_problem_T_score_mean   = mean(ECBI_problem_T_score),
-            ECBI_Opp_mean               = mean(ECBI_Opp),
-            ECBI_Inatt_mean             = mean(ECBI_Inatt),
-            ECBI_Cond_mean              = mean(ECBI_Cond))
+            ECBI_Cond_mean              = mean(ECBI_Cond)) %>%
   kable(digits = 1)
 bind_cols(dfXMetrics, 
           data.frame(cluster = dianaXMetrics[["hcut"]][["cluster"]] %>% factor())) %>%
@@ -182,7 +182,7 @@ bind_cols(dfXMetrics,
             MAPS_LC_mean  = mean(MAPS_LC),
             MAPS_PC_mean  = mean(MAPS_PC),
             MAPS_POS_mean = mean(MAPS_POS),
-            MAPS_NEG_mean = mean(MAPS_NEG))
+            MAPS_NEG_mean = mean(MAPS_NEG)) %>%
   kable(digits = 1)
 bind_cols(dfXMetrics, 
           data.frame(cluster = dianaXMetrics[["hcut"]][["cluster"]] %>% factor())) %>%
@@ -191,7 +191,7 @@ bind_cols(dfXMetrics,
             SEPTI_nurturance_mean = mean(SEPTI_nurturance),
             SEPTI_discipline_mean = mean(SEPTI_discipline),
             SEPTI_play_mean       = mean(SEPTI_play),
-            SEPTI_routine_mean    = mean(SEPTI_routine))
+            SEPTI_routine_mean    = mean(SEPTI_routine)) %>%
   kable(digits = 1)
 ```
 
