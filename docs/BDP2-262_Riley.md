@@ -258,13 +258,10 @@ Use the **manhattan** metric.
 
 ![plot of chunk clusterYPCB](figures/clusterYPCB-1.png)![plot of chunk clusterYPCB](figures/clusterYPCB-2.png)![plot of chunk clusterYPCB](figures/clusterYPCB-3.png)
 
-Analysis identified $k = 2$ clusters.
-
-Divisive coefficient is
-0.929.
-
-Average silhouette width is 
-0.394.
+* Hopkins statistic is 0.254
+* Analysis identified $k = 2$ clusters
+* Divisive coefficient is 0.929
+* Average silhouette width is 0.394
 
 
 ## Cluster on ECBI, MAPS, SEPTI metrics
@@ -305,13 +302,10 @@ Average silhouette width is
 
 ![plot of chunk clusterXMetrics](figures/clusterXMetrics-1.png)![plot of chunk clusterXMetrics](figures/clusterXMetrics-2.png)![plot of chunk clusterXMetrics](figures/clusterXMetrics-3.png)
 
-Analysis identified $k = 3$ clusters.
-
-Divisive coefficient is
-0.853.
-
-Average silhouette width is 
-0.340.
+* Hopkins statistic is 0.288
+* Analysis identified $k = 3$ clusters
+* Divisive coefficient is 0.853
+* Average silhouette width is 0.340
 
 
 ## Cluster on parent/child factors
@@ -392,13 +386,10 @@ Average silhouette width is
 
 ![plot of chunk clusterXParentChild](figures/clusterXParentChild-1.png)![plot of chunk clusterXParentChild](figures/clusterXParentChild-2.png)![plot of chunk clusterXParentChild](figures/clusterXParentChild-3.png)
 
-Analysis identified $k = 4$ clusters.
-
-Divisive coefficient is
-0.904.
-
-Average silhouette width is 
-0.329.
+* Hopkins statistic is 0.109
+* Analysis identified $k = 4$ clusters
+* Divisive coefficient is 0.904
+* Average silhouette width is 0.329
 
 
 
@@ -510,13 +501,10 @@ Average silhouette width is
 
 ![plot of chunk clusterXDemog](figures/clusterXDemog-1.png)![plot of chunk clusterXDemog](figures/clusterXDemog-2.png)![plot of chunk clusterXDemog](figures/clusterXDemog-3.png)
 
-Analysis identified $k = 4$ clusters.
-
-Divisive coefficient is
-0.878.
-
-Average silhouette width is 
-0.231.
+* Hopkins statistic is 0.041
+* Analysis identified $k = 4$ clusters
+* Divisive coefficient is 0.878
+* Average silhouette width is 0.231
 
 
 |cluster |zipcodeClass |community |distanceLong |   n|
@@ -570,7 +558,7 @@ Average silhouette width is
 ##                                          size isdir mode
 ## data/processed/clusterAnalysis.RData 10004125 FALSE  666
 ##                                                    mtime
-## data/processed/clusterAnalysis.RData 2018-07-06 12:14:45
+## data/processed/clusterAnalysis.RData 2018-07-06 15:36:38
 ##                                                    ctime
 ## data/processed/clusterAnalysis.RData 2018-07-06 12:14:44
 ##                                                    atime exe

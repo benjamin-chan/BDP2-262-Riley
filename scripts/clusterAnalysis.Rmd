@@ -107,7 +107,7 @@ dianaYPCB[["silhouette"]]
 * Hopkins statistic is `r sprintf("%.03f", hopkins$hopkins_stat)`
 * Analysis identified $k = `r k`$ clusters
 * Divisive coefficient is `r sprintf("%.03f", diana$dc)`
-* Average silhouette width is `r sprintf("%.03f", dianaXMetrics[["hcut"]][["silinfo"]][["avg.width"]])`
+* Average silhouette width is `r sprintf("%.03f", dianaYPCB[["hcut"]][["silinfo"]][["avg.width"]])`
 
 
 ## Cluster on ECBI, MAPS, SEPTI metrics
@@ -155,7 +155,7 @@ dianaXParentChild[["silhouette"]]
 * Hopkins statistic is `r sprintf("%.03f", hopkins$hopkins_stat)`
 * Analysis identified $k = `r k`$ clusters
 * Divisive coefficient is `r sprintf("%.03f", diana$dc)`
-* Average silhouette width is `r sprintf("%.03f", dianaXMetrics[["hcut"]][["silinfo"]][["avg.width"]])`
+* Average silhouette width is `r sprintf("%.03f", dianaXParentChild[["hcut"]][["silinfo"]][["avg.width"]])`
 
 
 ```{r}
@@ -188,7 +188,7 @@ dianaXDemog[["silhouette"]]
 * Hopkins statistic is `r sprintf("%.03f", hopkins$hopkins_stat)`
 * Analysis identified $k = `r k`$ clusters
 * Divisive coefficient is `r sprintf("%.03f", diana$dc)`
-* Average silhouette width is `r sprintf("%.03f", dianaXMetrics[["hcut"]][["silinfo"]][["avg.width"]])`
+* Average silhouette width is `r sprintf("%.03f", dianaXDemog[["hcut"]][["silinfo"]][["avg.width"]])`
 
 ```{r}
 bind_cols(dfXDemog, 
