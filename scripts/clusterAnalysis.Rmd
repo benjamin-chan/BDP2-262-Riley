@@ -224,7 +224,7 @@ dim(mat)
 colnames(mat)
 hopkins <- get_clust_tendency(mat, n = nrow(mat) - 1, graph = FALSE)
 diana <- dist %>% diana(metric = metric)
-k <- 2
+k <- 5
 dianaXParent <- hcDIANA(k)
 dianaXParent[["dendrogram"]]
 dianaXParent[["clusters2d"]]
@@ -292,7 +292,7 @@ dim(mat)
 colnames(mat)
 hopkins <- get_clust_tendency(mat, n = nrow(mat) - 1, graph = FALSE)
 diana <- dist %>% diana(metric = metric)
-k <- 2
+k <- 5
 dianaXChild <- hcDIANA(k)
 dianaXChild[["dendrogram"]]
 dianaXChild[["clusters2d"]]
