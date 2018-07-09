@@ -1,4 +1,4 @@
-setwd("~/Projects/BDP2-262-Riley")
+# setwd("~/Projects/BDP2-262-Riley")
 
 library(checkpoint)
 checkpoint("2018-04-01", use.knitr = TRUE, verbose = FALSE)
