@@ -378,7 +378,7 @@ bind_cols(dfXDemog,
           data.frame(cluster = dianaXDemog[["hcut"]][["cluster"]] %>% factor())) %>%
   group_by(cluster) %>%
   summarize(n = n(),
-         distance_mean = mean(distance),
+            distance_mean = mean(distance),
             distance_median = median(distance),
             distance_range = sprintf("%.01f-%.01f", min(distance), max(distance))) %>% 
   kable(digits = 1)
