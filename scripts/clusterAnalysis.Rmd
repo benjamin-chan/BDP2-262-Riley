@@ -75,6 +75,14 @@ dfXParentChild <-
   dfNonMissing %>% 
   select(matches("parent|child|birth", ignore.case = TRUE)) %>% 
   droplevels()
+dfXParent <- 
+  dfNonMissing %>% 
+  select(matches("^parent|^total", ignore.case = TRUE)) %>% 
+  droplevels()
+dfXChild <- 
+  dfNonMissing %>% 
+  select(matches("^child|^birth", ignore.case = TRUE)) %>% 
+  droplevels()
 dfXDemog <- 
   dfNonMissing %>% 
   select(matches("lang|zip|community|distance|income|internet")) %>% 
@@ -192,36 +200,131 @@ bind_cols(dfXMetrics,
 ```
 
 
-## Cluster on parent/child factors
+## Cluster on parent factors
 
-```{r clusterXParentChild}
-mat <- model.matrix(~ - 1 + ., data = dfXParentChild) %>% scale()
+```{r clusterXParent}
+mat <- model.matrix(~ - 1 + ., data = dfXParent) %>% scale()
 dist <- mat %>% dist(method = metric)
 dim(mat)
 colnames(mat)
 hopkins <- get_clust_tendency(mat, n = nrow(mat) - 1, graph = FALSE)
 diana <- dist %>% diana(metric = metric)
-k <- 4
-dianaXParentChild <- hcDIANA(k)
-dianaXParentChild[["dendrogram"]]
-dianaXParentChild[["clusters2d"]]
-dianaXParentChild[["silhouette"]]
+k <- 2
+dianaXParent <- hcDIANA(k)
+dianaXParent[["dendrogram"]]
+dianaXParent[["clusters2d"]]
+dianaXParent[["silhouette"]]
 ```
 
 * Hopkins statistic is `r sprintf("%.03f", hopkins$hopkins_stat)`
 * Analysis identified $k = `r k`$ clusters
 * Divisive coefficient is `r sprintf("%.03f", diana$dc)`
-* Average silhouette width is `r sprintf("%.03f", dianaXParentChild[["hcut"]][["silinfo"]][["avg.width"]])`
+* Average silhouette width is `r sprintf("%.03f", dianaXParent[["hcut"]][["silinfo"]][["avg.width"]])`
 
 
 ```{r}
-bind_cols(dfXParentChild, 
-          data.frame(cluster = dianaXParentChild[["hcut"]][["cluster"]] %>% factor())) %>%
-  group_by(cluster, birthOrder) %>%
+bind_cols(dfXParent, 
+          data.frame(cluster = dianaXParent[["hcut"]][["cluster"]] %>% factor())) %>%
+  group_by(cluster) %>%
   summarize(n = n(),
             totalChildren_mean = mean(totalChildren),
-            totalChildren_median = median(totalChildren)) %>% 
+            totalChildren_median = median(totalChildren),
+            parentAge_mean = mean(parentAge),
+            parentAge_median = median(parentAge)) %>% 
   kable(digits = 1)
+bind_cols(dfXParent, 
+          data.frame(cluster = dianaXParent[["hcut"]][["cluster"]] %>% factor())) %>%
+  group_by(cluster, parentGender) %>%
+  summarize(n = n()) %>% 
+  mutate(pct = n / sum(n)) %>% 
+  kable(digits = 2)
+bind_cols(dfXParent, 
+          data.frame(cluster = dianaXParent[["hcut"]][["cluster"]] %>% factor())) %>%
+  group_by(cluster, parentSituation) %>%
+  summarize(n = n()) %>% 
+  mutate(pct = n / sum(n)) %>% 
+  kable(digits = 2)
+bind_cols(dfXParent, 
+          data.frame(cluster = dianaXParent[["hcut"]][["cluster"]] %>% factor())) %>%
+  group_by(cluster, parentEducation) %>%
+  summarize(n = n()) %>% 
+  mutate(pct = n / sum(n)) %>% 
+  kable(digits = 2)
+bind_cols(dfXParent, 
+          data.frame(cluster = dianaXParent[["hcut"]][["cluster"]] %>% factor())) %>%
+  group_by(cluster, parentEthnicity) %>%
+  summarize(n = n()) %>% 
+  mutate(pct = n / sum(n)) %>% 
+  kable(digits = 2)
+bind_cols(dfXParent, 
+          data.frame(cluster = dianaXParent[["hcut"]][["cluster"]] %>% factor())) %>%
+  group_by(cluster, parentRaceWhite) %>%
+  summarize(n = n()) %>% 
+  mutate(pct = n / sum(n)) %>% 
+  kable(digits = 2)
+```
+
+
+## Cluster on child factors
+
+```{r clusterXChild}
+mat <- model.matrix(~ - 1 + ., data = dfXChild) %>% scale()
+dist <- mat %>% dist(method = metric)
+dim(mat)
+colnames(mat)
+hopkins <- get_clust_tendency(mat, n = nrow(mat) - 1, graph = FALSE)
+diana <- dist %>% diana(metric = metric)
+k <- 2
+dianaXChild <- hcDIANA(k)
+dianaXChild[["dendrogram"]]
+dianaXChild[["clusters2d"]]
+dianaXChild[["silhouette"]]
+```
+
+* Hopkins statistic is `r sprintf("%.03f", hopkins$hopkins_stat)`
+* Analysis identified $k = `r k`$ clusters
+* Divisive coefficient is `r sprintf("%.03f", diana$dc)`
+* Average silhouette width is `r sprintf("%.03f", dianaXChild[["hcut"]][["silinfo"]][["avg.width"]])`
+
+
+```{r}
+bind_cols(dfXChild, 
+          data.frame(cluster = dianaXChild[["hcut"]][["cluster"]] %>% factor())) %>%
+  group_by(cluster) %>%
+  summarize(n = n(),
+            childAge_mean = mean(childAge),
+            childAge_median = median(childAge)) %>% 
+  kable(digits = 1)
+bind_cols(dfXChild, 
+          data.frame(cluster = dianaXChild[["hcut"]][["cluster"]] %>% factor())) %>%
+  group_by(cluster, birthOrder) %>%
+  summarize(n = n()) %>% 
+  mutate(pct = n / sum(n)) %>% 
+  kable(digits = 2)
+bind_cols(dfXChild, 
+          data.frame(cluster = dianaXChild[["hcut"]][["cluster"]] %>% factor())) %>%
+  group_by(cluster, childSex) %>%
+  summarize(n = n()) %>% 
+  mutate(pct = n / sum(n)) %>% 
+  kable(digits = 2)
+bind_cols(dfXChild, 
+          data.frame(cluster = dianaXChild[["hcut"]][["cluster"]] %>% factor())) %>%
+  group_by(cluster, childEthnicity) %>%
+  summarize(n = n()) %>% 
+  mutate(pct = n / sum(n)) %>% 
+  kable(digits = 2)
+bind_cols(dfXChild, 
+          data.frame(cluster = dianaXChild[["hcut"]][["cluster"]] %>% factor())) %>%
+  group_by(cluster, childRaceWhite) %>%
+  summarize(n = n()) %>% 
+  mutate(pct = n / sum(n)) %>% 
+  kable(digits = 2)
+bind_cols(dfXChild, 
+          data.frame(cluster = dianaXChild[["hcut"]][["cluster"]] %>% factor())) %>%
+  group_by(cluster, childRelationship) %>%
+  summarize(n = n()) %>% 
+  mutate(pct = n / sum(n)) %>% 
+  kable(digits = 2)
 ```
 
 
