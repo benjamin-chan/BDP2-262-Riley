@@ -195,7 +195,7 @@ summary(df[, c("PCB1_Total", "PCB2_Tot", "PCB3_Total")])
 
 ![figures/flowChart.png](figures/flowChart.png)
 
-```{r, eval = FALSE}
+```{r, eval = TRUE}
 label <- sprintf("%s\nN = %d", 
                  c("Initial sample", 
                    sprintf("Excluded\n%d%% missing data", threshold * 100), 
