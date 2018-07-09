@@ -99,7 +99,7 @@ dfYPCB <-
 **Clustering on PCB metrics isn't terrible.**
 
 * Cluster 1 ($n = 253$) has high PCB scores on all domains
-* Cluster 2 ($n = 4925$) has low PCB scores on all domains
+* Cluster 2 ($n = 92$) has low PCB scores on all domains
 
 ```{r clusterYPCB}
 mat <- model.matrix(~ - 1 + ., data = dfYPCB) %>% scale()
@@ -214,7 +214,8 @@ bind_cols(dfXMetrics,
 ## Cluster on parent factors
 
 **Clustering on parent factors is terrible.**
-First split, with $k = 2$, produces one very small cluster.
+
+* First split, with $k = 2$, produces one very small cluster ($n = 8$).
 
 ```{r clusterXParent}
 mat <- model.matrix(~ - 1 + ., data = dfXParent) %>% scale()
@@ -348,8 +349,10 @@ bind_cols(dfXChild,
 ## Cluster on demographic factors
 
 **Clustering on demographic factors is terrible.**
-First two splits, with $k = 3$, produces two very small cluster.
-The next split, at $k = 4$, produces a good sized cluster.
+
+* First two splits, with $k = 3$, produces two very small clusters
+* The next split, at $k = 4$, produces a good sized cluster
+* The clustering between clusters 1 ($n = 249$) and 2 ($n = 93$) appears to have to do more with geography (distance, zipcode class, urban/rural)
 
 ```{r clusterXDemog}
 mat <- model.matrix(~ - 1 + ., data = dfXDemog) %>% scale()
@@ -376,7 +379,8 @@ bind_cols(dfXDemog,
   group_by(cluster) %>%
   summarize(n = n(),
          distance_mean = mean(distance),
-         distance_median = median(distance)) %>% 
+            distance_median = median(distance),
+            distance_range = sprintf("%.01f-%.01f", min(distance), max(distance))) %>% 
   kable(digits = 1)
 bind_cols(dfXDemog, 
           data.frame(cluster = dianaXDemog[["hcut"]][["cluster"]] %>% factor())) %>%
@@ -409,6 +413,6 @@ bind_cols(dfXDemog,
 
 ```{r}
 f <- "data/processed/clusterAnalysis.RData"
-save(dianaYPCB, dianaXMetrics, dianaXParentChild, dianaXDemog, file = f)
+save(dianaYPCB, dianaXMetrics, dianaXParent, dianaXChild, dianaXDemog, file = f)
 file.info(f)
 ```
