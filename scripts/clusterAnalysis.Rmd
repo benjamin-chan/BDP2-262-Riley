@@ -96,6 +96,11 @@ dfYPCB <-
 
 ## Cluster on PCB metrics
 
+**Clustering on PCB metrics isn't terrible.**
+
+* Cluster 1 ($n = 253$) has high PCB scores on all domains
+* Cluster 2 ($n = 4925$) has low PCB scores on all domains
+
 ```{r clusterYPCB}
 mat <- model.matrix(~ - 1 + ., data = dfYPCB) %>% scale()
 dist <- mat %>% dist(method = metric)
@@ -143,6 +148,12 @@ bind_cols(dfYPCB,
 
 
 ## Cluster on ECBI, MAPS, SEPTI metrics
+
+**Clustering on ECBI, MAPS, and SEPTI metrics isn't terrible.**
+
+* Cluster 1 ($n = 297$) has high positive MAPS scores and high SEPTI scores
+* Cluster 2 ($n = 45$) has high negative MAPS scores and high ECBI scores
+* Cluster 3 ($n = 3$) has low ECBI scores
 
 ```{r clusterXMetrics}
 mat <- model.matrix(~ - 1 + ., data = dfXMetrics) %>% scale()
@@ -201,6 +212,9 @@ bind_cols(dfXMetrics,
 
 
 ## Cluster on parent factors
+
+**Clustering on parent factors is terrible.**
+First split, with $k = 2$, produces one very small cluster.
 
 ```{r clusterXParent}
 mat <- model.matrix(~ - 1 + ., data = dfXParent) %>% scale()
@@ -267,6 +281,9 @@ bind_cols(dfXParent,
 
 ## Cluster on child factors
 
+**Clustering on child factors is terrible.**
+First split, with $k = 2$, produces one very small cluster.
+
 ```{r clusterXChild}
 mat <- model.matrix(~ - 1 + ., data = dfXChild) %>% scale()
 dist <- mat %>% dist(method = metric)
@@ -330,6 +347,10 @@ bind_cols(dfXChild,
 
 ## Cluster on demographic factors
 
+**Clustering on demographic factors is terrible.**
+First two splits, with $k = 3$, produces two very small cluster.
+The next split, at $k = 4$, produces a good sized cluster.
+
 ```{r clusterXDemog}
 mat <- model.matrix(~ - 1 + ., data = dfXDemog) %>% scale()
 dist <- mat %>% dist(method = metric)
@@ -352,20 +373,35 @@ dianaXDemog[["silhouette"]]
 ```{r}
 bind_cols(dfXDemog, 
           data.frame(cluster = dianaXDemog[["hcut"]][["cluster"]] %>% factor())) %>%
-  mutate(distanceLong = distance > 75) %>% 
-  group_by(cluster, zipcodeClass, community, distanceLong) %>%
-  summarize(n = n()) %>% 
-  kable()
+  group_by(cluster) %>%
+  summarize(n = n(),
+         distance_mean = mean(distance),
+         distance_median = median(distance)) %>% 
+  kable(digits = 1)
 bind_cols(dfXDemog, 
           data.frame(cluster = dianaXDemog[["hcut"]][["cluster"]] %>% factor())) %>%
-  group_by(cluster, zipcodeClass, income) %>%
+  group_by(cluster, zipcodeClass) %>%
   summarize(n = n()) %>% 
-  kable()
+  mutate(pct = n / sum(n)) %>% 
+  kable(digits = 2)
 bind_cols(dfXDemog, 
           data.frame(cluster = dianaXDemog[["hcut"]][["cluster"]] %>% factor())) %>%
-  group_by(cluster, zipcodeClass, internet) %>%
+  group_by(cluster, community) %>%
   summarize(n = n()) %>% 
-  kable()
+  mutate(pct = n / sum(n)) %>% 
+  kable(digits = 2)
+bind_cols(dfXDemog, 
+          data.frame(cluster = dianaXDemog[["hcut"]][["cluster"]] %>% factor())) %>%
+  group_by(cluster, income) %>%
+  summarize(n = n()) %>% 
+  mutate(pct = n / sum(n)) %>% 
+  kable(digits = 2)
+bind_cols(dfXDemog, 
+          data.frame(cluster = dianaXDemog[["hcut"]][["cluster"]] %>% factor())) %>%
+  group_by(cluster, internet) %>%
+  summarize(n = n()) %>% 
+  mutate(pct = n / sum(n)) %>% 
+  kable(digits = 2)
 ```
 
 
