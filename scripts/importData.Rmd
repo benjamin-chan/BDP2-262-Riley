@@ -187,6 +187,9 @@ df <-
   mutate(propNA = rowSums(is.na(.)) / ncol(.)) %>% 
   filter(propNA < threshold) %>% 
   select(-propNA)
+```
+
+```{r, eval = FALSE}
 summary(df[, c("PCB1_Total", "PCB2_Tot", "PCB3_Total")])
 ```
 

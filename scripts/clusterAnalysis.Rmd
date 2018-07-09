@@ -5,11 +5,11 @@ See [Divisive Hierarchical Clustering Essentials](http://www.sthda.com/english/a
 
 ```{r}
 library(cluster)
-library(ggdendro)
 library(factoextra)
-library(dendextend)
-library(NbClust)
 citation("factoextra")
+# library(ggdendro)
+# library(dendextend)
+# library(NbClust)
 pal <- lacroix_palette("PommeBaya", type = "discrete")
 ```
 
@@ -92,13 +92,11 @@ dfYPCB <-
 mat <- model.matrix(~ - 1 + ., data = dfYPCB) %>% scale()
 dist <- mat %>% dist(method = metric)
 dim(mat)
-dim(dist)
 colnames(mat)
 hopkins <- get_clust_tendency(mat, n = nrow(mat) - 1, graph = FALSE)
 diana <- dist %>% diana(metric = metric)
 k <- 2
 dianaYPCB <- hcDIANA(k)
-dianaYPCB[["table"]]
 dianaYPCB[["dendrogram"]]
 dianaYPCB[["clusters2d"]]
 dianaYPCB[["silhouette"]]
@@ -142,13 +140,11 @@ bind_cols(dfYPCB,
 mat <- model.matrix(~ - 1 + ., data = dfXMetrics) %>% scale()
 dist <- mat %>% dist(method = metric)
 dim(mat)
-dim(dist)
 colnames(mat)
 hopkins <- get_clust_tendency(mat, n = nrow(mat) - 1, graph = FALSE)
 diana <- dist %>% diana(metric = metric)
 k <- 3
 dianaXMetrics <- hcDIANA(k)
-dianaXMetrics[["table"]]
 dianaXMetrics[["dendrogram"]]
 dianaXMetrics[["clusters2d"]]
 dianaXMetrics[["silhouette"]]
@@ -202,13 +198,11 @@ bind_cols(dfXMetrics,
 mat <- model.matrix(~ - 1 + ., data = dfXParentChild) %>% scale()
 dist <- mat %>% dist(method = metric)
 dim(mat)
-dim(dist)
 colnames(mat)
 hopkins <- get_clust_tendency(mat, n = nrow(mat) - 1, graph = FALSE)
 diana <- dist %>% diana(metric = metric)
 k <- 4
 dianaXParentChild <- hcDIANA(k)
-dianaXParentChild[["table"]]
 dianaXParentChild[["dendrogram"]]
 dianaXParentChild[["clusters2d"]]
 dianaXParentChild[["silhouette"]]
@@ -237,13 +231,11 @@ bind_cols(dfXParentChild,
 mat <- model.matrix(~ - 1 + ., data = dfXDemog) %>% scale()
 dist <- mat %>% dist(method = metric)
 dim(mat)
-dim(dist)
 colnames(mat)
 hopkins <- get_clust_tendency(mat, n = nrow(mat) - 1, graph = FALSE)
 diana <- dist %>% diana(metric = metric)
 k <- 4
 dianaXDemog <- hcDIANA(k)
-dianaXDemog[["table"]]
 dianaXDemog[["dendrogram"]]
 dianaXDemog[["clusters2d"]]
 dianaXDemog[["silhouette"]]
