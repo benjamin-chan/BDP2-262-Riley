@@ -101,7 +101,7 @@ dfYPCB <-
 * Cluster 1 ($n = 253$) has high PCB scores on all domains
 * Cluster 2 ($n = 92$) has low PCB scores on all domains
 
-```{r clusterYPCB}
+```{r}
 mat <- model.matrix(~ - 1 + ., data = dfYPCB) %>% scale()
 dist <- mat %>% dist(method = metric)
 dim(mat)
@@ -110,15 +110,18 @@ hopkins <- get_clust_tendency(mat, n = nrow(mat) - 1, graph = FALSE)
 diana <- dist %>% diana(metric = metric)
 k <- 2
 dianaYPCB <- hcDIANA(k)
-dianaYPCB[["dendrogram"]]
-dianaYPCB[["clusters2d"]]
-dianaYPCB[["silhouette"]]
 ```
 
 * Hopkins statistic is `r sprintf("%.03f", hopkins$hopkins_stat)`
 * Analysis identified $k = `r k`$ clusters
 * Divisive coefficient is `r sprintf("%.03f", diana$dc)`
 * Average silhouette width is `r sprintf("%.03f", dianaYPCB[["hcut"]][["silinfo"]][["avg.width"]])`
+
+```{r clusterYPCB}
+dianaYPCB[["dendrogram"]]
+dianaYPCB[["clusters2d"]]
+dianaYPCB[["silhouette"]]
+```
 
 ```{r}
 bind_cols(dfYPCB, 
@@ -155,7 +158,7 @@ bind_cols(dfYPCB,
 * Cluster 2 ($n = 45$) has high negative MAPS scores and high ECBI scores
 * Cluster 3 ($n = 3$) has low ECBI scores
 
-```{r clusterXMetrics}
+```{r}
 mat <- model.matrix(~ - 1 + ., data = dfXMetrics) %>% scale()
 dist <- mat %>% dist(method = metric)
 dim(mat)
@@ -164,15 +167,18 @@ hopkins <- get_clust_tendency(mat, n = nrow(mat) - 1, graph = FALSE)
 diana <- dist %>% diana(metric = metric)
 k <- 3
 dianaXMetrics <- hcDIANA(k)
-dianaXMetrics[["dendrogram"]]
-dianaXMetrics[["clusters2d"]]
-dianaXMetrics[["silhouette"]]
 ```
 
 * Hopkins statistic is `r sprintf("%.03f", hopkins$hopkins_stat)`
 * Analysis identified $k = `r k`$ clusters
 * Divisive coefficient is `r sprintf("%.03f", diana$dc)`
 * Average silhouette width is `r sprintf("%.03f", dianaXMetrics[["hcut"]][["silinfo"]][["avg.width"]])`
+
+```{r clusterXMetrics}
+dianaXMetrics[["dendrogram"]]
+dianaXMetrics[["clusters2d"]]
+dianaXMetrics[["silhouette"]]
+```
 
 ```{r}
 bind_cols(dfXMetrics, 
@@ -217,7 +223,7 @@ bind_cols(dfXMetrics,
 
 * First split, with $k = 2$, produces one very small cluster ($n = 8$).
 
-```{r clusterXParent}
+```{r}
 mat <- model.matrix(~ - 1 + ., data = dfXParent) %>% scale()
 dist <- mat %>% dist(method = metric)
 dim(mat)
@@ -226,9 +232,6 @@ hopkins <- get_clust_tendency(mat, n = nrow(mat) - 1, graph = FALSE)
 diana <- dist %>% diana(metric = metric)
 k <- 5
 dianaXParent <- hcDIANA(k)
-dianaXParent[["dendrogram"]]
-dianaXParent[["clusters2d"]]
-dianaXParent[["silhouette"]]
 ```
 
 * Hopkins statistic is `r sprintf("%.03f", hopkins$hopkins_stat)`
@@ -236,6 +239,11 @@ dianaXParent[["silhouette"]]
 * Divisive coefficient is `r sprintf("%.03f", diana$dc)`
 * Average silhouette width is `r sprintf("%.03f", dianaXParent[["hcut"]][["silinfo"]][["avg.width"]])`
 
+```{r clusterXParent}
+dianaXParent[["dendrogram"]]
+dianaXParent[["clusters2d"]]
+dianaXParent[["silhouette"]]
+```
 
 ```{r}
 bind_cols(dfXParent, 
@@ -285,7 +293,7 @@ bind_cols(dfXParent,
 **Clustering on child factors is terrible.**
 First split, with $k = 2$, produces one very small cluster.
 
-```{r clusterXChild}
+```{r}
 mat <- model.matrix(~ - 1 + ., data = dfXChild) %>% scale()
 dist <- mat %>% dist(method = metric)
 dim(mat)
@@ -294,9 +302,6 @@ hopkins <- get_clust_tendency(mat, n = nrow(mat) - 1, graph = FALSE)
 diana <- dist %>% diana(metric = metric)
 k <- 5
 dianaXChild <- hcDIANA(k)
-dianaXChild[["dendrogram"]]
-dianaXChild[["clusters2d"]]
-dianaXChild[["silhouette"]]
 ```
 
 * Hopkins statistic is `r sprintf("%.03f", hopkins$hopkins_stat)`
@@ -304,6 +309,11 @@ dianaXChild[["silhouette"]]
 * Divisive coefficient is `r sprintf("%.03f", diana$dc)`
 * Average silhouette width is `r sprintf("%.03f", dianaXChild[["hcut"]][["silinfo"]][["avg.width"]])`
 
+```{r clusterXChild}
+dianaXChild[["dendrogram"]]
+dianaXChild[["clusters2d"]]
+dianaXChild[["silhouette"]]
+```
 
 ```{r}
 bind_cols(dfXChild, 
@@ -354,7 +364,7 @@ bind_cols(dfXChild,
 * The next split, at $k = 4$, produces a good sized cluster
 * The clustering between clusters 1 ($n = 249$) and 2 ($n = 93$) appears to have to do more with geography (distance, zipcode class, urban/rural)
 
-```{r clusterXDemog}
+```{r}
 mat <- model.matrix(~ - 1 + ., data = dfXDemog) %>% scale()
 dist <- mat %>% dist(method = metric)
 dim(mat)
@@ -363,15 +373,18 @@ hopkins <- get_clust_tendency(mat, n = nrow(mat) - 1, graph = FALSE)
 diana <- dist %>% diana(metric = metric)
 k <- 4
 dianaXDemog <- hcDIANA(k)
-dianaXDemog[["dendrogram"]]
-dianaXDemog[["clusters2d"]]
-dianaXDemog[["silhouette"]]
 ```
 
 * Hopkins statistic is `r sprintf("%.03f", hopkins$hopkins_stat)`
 * Analysis identified $k = `r k`$ clusters
 * Divisive coefficient is `r sprintf("%.03f", diana$dc)`
 * Average silhouette width is `r sprintf("%.03f", dianaXDemog[["hcut"]][["silinfo"]][["avg.width"]])`
+
+```{r clusterXDemog}
+dianaXDemog[["dendrogram"]]
+dianaXDemog[["clusters2d"]]
+dianaXDemog[["silhouette"]]
+```
 
 ```{r}
 bind_cols(dfXDemog, 
