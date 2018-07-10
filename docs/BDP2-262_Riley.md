@@ -1,6 +1,6 @@
 ---
 title: "Parent and Provider Perceptions of Behavioral Healthcare in Pediatric Primary Care (PI: Andrew Riley; BDP2-262)"
-date: "2018-07-09"
+date: "2018-07-10"
 author: Benjamin Chan (chanb@ohsu.edu)
 output:
   html_document:
@@ -203,12 +203,12 @@ Use the **manhattan** metric.
 ## 2       2   92          0.31
 ```
 
-![plot of chunk clusterYPCB](figures/clusterYPCB-1.png)![plot of chunk clusterYPCB](figures/clusterYPCB-2.png)![plot of chunk clusterYPCB](figures/clusterYPCB-3.png)
-
 * Hopkins statistic is 0.254
 * Analysis identified $k = 2$ clusters
 * Divisive coefficient is 0.929
 * Average silhouette width is 0.394
+
+![plot of chunk clusterYPCB](figures/clusterYPCB-1.png)![plot of chunk clusterYPCB](figures/clusterYPCB-2.png)![plot of chunk clusterYPCB](figures/clusterYPCB-3.png)
 
 
 |cluster |   n| PCB1_Total_mean| PCB1_CondEmot_mean| PCB1_DevHab_mean|
@@ -263,12 +263,12 @@ Use the **manhattan** metric.
 ## 3       3    3          0.28
 ```
 
-![plot of chunk clusterXMetrics](figures/clusterXMetrics-1.png)![plot of chunk clusterXMetrics](figures/clusterXMetrics-2.png)![plot of chunk clusterXMetrics](figures/clusterXMetrics-3.png)
-
 * Hopkins statistic is 0.288
 * Analysis identified $k = 3$ clusters
 * Divisive coefficient is 0.853
 * Average silhouette width is 0.340
+
+![plot of chunk clusterXMetrics](figures/clusterXMetrics-1.png)![plot of chunk clusterXMetrics](figures/clusterXMetrics-2.png)![plot of chunk clusterXMetrics](figures/clusterXMetrics-3.png)
 
 
 |cluster |   n| ECBI_intensity_T_score_mean| ECBI_problem_T_score_mean| ECBI_Opp_mean| ECBI_Inatt_mean| ECBI_Cond_mean|
@@ -292,6 +292,168 @@ Use the **manhattan** metric.
 |1       | 297|                  38.1|                  24.3|            32.8|               29.4|
 |2       |  45|                  33.4|                  18.8|            25.0|               23.5|
 |3       |   3|                  26.3|                  19.3|            25.7|               24.0|
+
+
+## Cluster on ECBI, MAPS, SEPTI metrics and demographics
+
+**Clustering on ECBI, MAPS, and SEPTI metrics isn't terrible.**
+
+* `languageSurvey` dropped from consideration; $n = 1$
+* Cluster 1 ($n = 297$) has high positive MAPS scores and high SEPTI scores
+* Cluster 2 ($n = 45$) has high negative MAPS scores and high ECBI scores
+* Cluster 3 ($n = 3$) has low ECBI scores
+
+
+```
+## [1] 345  29
+```
+
+```
+##  [1] "zipcodeClass1"           "zipcodeClass2"          
+##  [3] "communitySuburban"       "communityRural"         
+##  [5] "distance"                "income$25,001-$49,999"  
+##  [7] "income$50,000-$79,999"   "income$80,000-$119,999" 
+##  [9] "income$120,000-$149,999" "income$150,000 or more" 
+## [11] "internet"                "ECBI_intensity_T_score" 
+## [13] "ECBI_problem_T_score"    "ECBI_Opp"               
+## [15] "ECBI_Inatt"              "ECBI_Cond"              
+## [17] "MAPS_PP"                 "MAPS_PR"                
+## [19] "MAPS_WM"                 "MAPS_SP"                
+## [21] "MAPS_HS"                 "MAPS_LC"                
+## [23] "MAPS_PC"                 "MAPS_POS"               
+## [25] "MAPS_NEG"                "SEPTI_nurturance"       
+## [27] "SEPTI_discipline"        "SEPTI_play"             
+## [29] "SEPTI_routine"
+```
+
+```
+##   cluster size ave.sil.width
+## 1       1   63          0.10
+## 2       2  140          0.15
+## 3       3   64          0.02
+## 4       4   77          0.13
+## 5       5    1          0.00
+```
+
+* Hopkins statistic is 0.272
+* Analysis identified $k = 5$ clusters
+* Divisive coefficient is 0.816
+* Average silhouette width is 0.108
+
+![plot of chunk clusterXMetricsDemog](figures/clusterXMetricsDemog-1.png)![plot of chunk clusterXMetricsDemog](figures/clusterXMetricsDemog-2.png)![plot of chunk clusterXMetricsDemog](figures/clusterXMetricsDemog-3.png)
+
+
+|cluster |   n| ECBI_intensity_T_score_mean| ECBI_problem_T_score_mean| ECBI_Opp_mean| ECBI_Inatt_mean| ECBI_Cond_mean|
+|:-------|---:|---------------------------:|-------------------------:|-------------:|---------------:|--------------:|
+|1       |  63|                        52.8|                      52.5|          32.3|            13.1|           14.2|
+|2       | 140|                        52.9|                      52.5|          32.5|            13.7|           14.3|
+|3       |  64|                        59.7|                      61.8|          40.6|            15.2|           21.7|
+|4       |  77|                        50.5|                      50.0|          30.5|            11.9|           13.6|
+|5       |   1|                        78.0|                      84.0|          53.0|            23.0|           41.0|
+
+
+
+|cluster |   n| MAPS_PP_mean| MAPS_PR_mean| MAPS_WM_mean| MAPS_SP_mean| MAPS_HS_mean| MAPS_LC_mean| MAPS_PC_mean| MAPS_POS_mean| MAPS_NEG_mean|
+|:-------|---:|------------:|------------:|------------:|------------:|------------:|------------:|------------:|-------------:|-------------:|
+|1       |  63|          3.8|          4.2|          4.4|          4.0|          2.1|          2.0|          1.2|           4.1|           1.8|
+|2       | 140|          4.3|          4.7|          4.8|          4.7|          1.9|          1.8|          1.3|           4.6|           1.7|
+|3       |  64|          3.6|          4.0|          4.1|          3.8|          2.8|          2.6|          2.3|           3.9|           2.6|
+|4       |  77|          4.2|          4.7|          4.8|          4.6|          1.9|          1.8|          1.5|           4.6|           1.8|
+|5       |   1|          4.3|          5.0|          3.0|          4.7|          3.6|          3.9|          1.8|           4.2|           3.1|
+
+
+
+|cluster |   n| SEPTI_nurturance_mean| SEPTI_discipline_mean| SEPTI_play_mean| SEPTI_routine_mean|
+|:-------|---:|---------------------:|---------------------:|---------------:|------------------:|
+|1       |  63|                  35.0|                  21.9|            29.4|               28.1|
+|2       | 140|                  39.3|                  25.2|            34.6|               30.1|
+|3       |  64|                  33.5|                  19.2|            25.8|               23.7|
+|4       |  77|                  39.1|                  25.6|            33.8|               30.4|
+|5       |   1|                  29.0|                  13.0|            11.0|               20.0|
+
+
+|cluster |   n| distance_mean| distance_median|distance_range |
+|:-------|---:|-------------:|---------------:|:--------------|
+|1       |  63|           5.7|               5|1.0-20.0       |
+|2       | 140|           6.5|               5|0.4-30.0       |
+|3       |  64|          12.3|               9|1.0-150.0      |
+|4       |  77|          17.5|              14|1.0-130.0      |
+|5       |   1|          10.0|              10|10.0-10.0      |
+
+
+
+|cluster |zipcodeClass |   n|  pct|
+|:-------|:------------|---:|----:|
+|1       |1            |  55| 0.87|
+|1       |2            |   8| 0.13|
+|2       |1            | 139| 0.99|
+|2       |2            |   1| 0.01|
+|3       |1            |  53| 0.83|
+|3       |2            |  11| 0.17|
+|4       |1            |   2| 0.03|
+|4       |2            |  75| 0.97|
+|5       |1            |   1| 1.00|
+
+
+
+|cluster |community |  n|  pct|
+|:-------|:---------|--:|----:|
+|1       |Urban     | 30| 0.48|
+|1       |Suburban  | 30| 0.48|
+|1       |Rural     |  3| 0.05|
+|2       |Urban     | 55| 0.39|
+|2       |Suburban  | 78| 0.56|
+|2       |Rural     |  7| 0.05|
+|3       |Urban     | 27| 0.42|
+|3       |Suburban  | 29| 0.45|
+|3       |Rural     |  8| 0.12|
+|4       |Urban     | 10| 0.13|
+|4       |Suburban  | 21| 0.27|
+|4       |Rural     | 46| 0.60|
+|5       |Rural     |  1| 1.00|
+
+
+
+|cluster |income            |  n|  pct|
+|:-------|:-----------------|--:|----:|
+|1       |$25,000 or less   |  7| 0.11|
+|1       |$25,001-$49,999   |  9| 0.14|
+|1       |$50,000-$79,999   | 16| 0.25|
+|1       |$80,000-$119,999  | 13| 0.21|
+|1       |$120,000-$149,999 |  7| 0.11|
+|1       |$150,000 or more  | 11| 0.17|
+|2       |$25,000 or less   | 13| 0.09|
+|2       |$25,001-$49,999   | 28| 0.20|
+|2       |$50,000-$79,999   | 32| 0.23|
+|2       |$80,000-$119,999  | 23| 0.16|
+|2       |$120,000-$149,999 | 14| 0.10|
+|2       |$150,000 or more  | 30| 0.21|
+|3       |$25,000 or less   |  7| 0.11|
+|3       |$25,001-$49,999   | 26| 0.41|
+|3       |$50,000-$79,999   | 12| 0.19|
+|3       |$80,000-$119,999  |  6| 0.09|
+|3       |$120,000-$149,999 |  8| 0.12|
+|3       |$150,000 or more  |  5| 0.08|
+|4       |$25,000 or less   |  7| 0.09|
+|4       |$25,001-$49,999   | 20| 0.26|
+|4       |$50,000-$79,999   | 31| 0.40|
+|4       |$80,000-$119,999  | 14| 0.18|
+|4       |$120,000-$149,999 |  3| 0.04|
+|4       |$150,000 or more  |  2| 0.03|
+|5       |$25,000 or less   |  1| 1.00|
+
+
+
+|cluster | internet|   n|  pct|
+|:-------|--------:|---:|----:|
+|1       |        1|  63| 1.00|
+|2       |        0|   1| 0.01|
+|2       |        1| 139| 0.99|
+|3       |        0|   2| 0.03|
+|3       |        1|  62| 0.97|
+|4       |        0|   5| 0.06|
+|4       |        1|  72| 0.94|
+|5       |        0|   1| 1.00|
 
 
 ## Cluster on parent factors
@@ -347,13 +509,12 @@ Use the **manhattan** metric.
 ## 5       5    1          0.00
 ```
 
-![plot of chunk clusterXParent](figures/clusterXParent-1.png)![plot of chunk clusterXParent](figures/clusterXParent-2.png)![plot of chunk clusterXParent](figures/clusterXParent-3.png)
-
 * Hopkins statistic is 0.078
 * Analysis identified $k = 5$ clusters
 * Divisive coefficient is 0.945
 * Average silhouette width is 0.435
 
+![plot of chunk clusterXParent](figures/clusterXParent-1.png)![plot of chunk clusterXParent](figures/clusterXParent-2.png)![plot of chunk clusterXParent](figures/clusterXParent-3.png)
 
 
 |cluster |   n| totalChildren_mean| totalChildren_median| parentAge_mean| parentAge_median|
@@ -479,13 +640,12 @@ First split, with $k = 2$, produces one very small cluster.
 ## 5       5    1          0.00
 ```
 
-![plot of chunk clusterXChild](figures/clusterXChild-1.png)![plot of chunk clusterXChild](figures/clusterXChild-2.png)![plot of chunk clusterXChild](figures/clusterXChild-3.png)
-
 * Hopkins statistic is 0.065
 * Analysis identified $k = 5$ clusters
 * Divisive coefficient is 0.967
 * Average silhouette width is 0.432
 
+![plot of chunk clusterXChild](figures/clusterXChild-1.png)![plot of chunk clusterXChild](figures/clusterXChild-2.png)![plot of chunk clusterXChild](figures/clusterXChild-3.png)
 
 
 |cluster |   n| childAge_mean| childAge_median|
@@ -570,6 +730,7 @@ First split, with $k = 2$, produces one very small cluster.
 
 **Clustering on demographic factors is terrible.**
 
+* `languageSurvey` dropped from consideration; $n = 1$
 * First two splits, with $k = 3$, produces two very small clusters
 * The next split, at $k = 4$, produces a good sized cluster
 * The clustering between clusters 1 ($n = 249$) and 2 ($n = 93$) appears to have to do more with geography (distance, zipcode class, urban/rural)
@@ -634,12 +795,12 @@ First split, with $k = 2$, produces one very small cluster.
 ## 4       4    1          0.00
 ```
 
-![plot of chunk clusterXDemog](figures/clusterXDemog-1.png)![plot of chunk clusterXDemog](figures/clusterXDemog-2.png)![plot of chunk clusterXDemog](figures/clusterXDemog-3.png)
-
 * Hopkins statistic is 0.041
 * Analysis identified $k = 4$ clusters
 * Divisive coefficient is 0.878
 * Average silhouette width is 0.231
+
+![plot of chunk clusterXDemog](figures/clusterXDemog-1.png)![plot of chunk clusterXDemog](figures/clusterXDemog-2.png)![plot of chunk clusterXDemog](figures/clusterXDemog-3.png)
 
 
 |cluster |   n| distance_mean| distance_median|distance_range |
@@ -710,7 +871,7 @@ First split, with $k = 2$, produces one very small cluster.
 ##                                          size isdir mode
 ## data/processed/clusterAnalysis.RData 11984348 FALSE  666
 ##                                                    mtime
-## data/processed/clusterAnalysis.RData 2018-07-09 10:18:06
+## data/processed/clusterAnalysis.RData 2018-07-10 07:56:24
 ##                                                    ctime
 ## data/processed/clusterAnalysis.RData 2018-07-06 12:14:44
 ##                                                    atime exe
