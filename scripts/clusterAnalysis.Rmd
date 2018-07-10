@@ -360,6 +360,7 @@ bind_cols(dfXChild,
 
 **Clustering on demographic factors is terrible.**
 
+* `languageSurvey` dropped from consideration; $n = 1$
 * First two splits, with $k = 3$, produces two very small clusters
 * The next split, at $k = 4$, produces a good sized cluster
 * The clustering between clusters 1 ($n = 249$) and 2 ($n = 93$) appears to have to do more with geography (distance, zipcode class, urban/rural)
