@@ -1,8 +1,8 @@
 $completionDateTime
-[1] "2018-07-10 07:56:34 PDT"
+[1] "2018-07-11 08:59:18 PDT"
 
 $executionTime
-Time difference of 8.182051 mins
+Time difference of 6.774277 mins
 
 $sessionInfo
 R version 3.4.3 (2017-11-30)
@@ -22,13 +22,13 @@ attached base packages:
 [1] parallel  stats     graphics  grDevices utils     datasets  base     
 
 other attached packages:
- [1] factoextra_1.0.5   cluster_2.0.7-1    bindrcpp_0.2.2     RANN_2.5.1        
- [5] doParallel_1.0.11  iterators_1.0.9    foreach_1.4.4      caret_6.0-78      
- [9] lattice_0.20-35    svglite_1.2.1      LaCroixColoR_0.1.0 RColorBrewer_1.1-2
-[13] DiagrammeRsvg_0.1  DiagrammeR_1.0.0   haven_1.1.1        forcats_0.3.0     
-[17] stringr_1.3.0      dplyr_0.7.4        purrr_0.2.4        readr_1.1.1       
-[21] tidyr_0.8.0        tibble_1.4.2       ggplot2_2.2.1      tidyverse_1.2.1   
-[25] magrittr_1.5       rmarkdown_1.9      knitr_1.20         checkpoint_0.4.2  
+ [1] factoextra_1.0.5  cluster_2.0.7-1   bindrcpp_0.2.2    RANN_2.5.1       
+ [5] doParallel_1.0.11 iterators_1.0.9   foreach_1.4.4     caret_6.0-78     
+ [9] lattice_0.20-35   svglite_1.2.1     viridis_0.5.1     viridisLite_0.3.0
+[13] DiagrammeRsvg_0.1 DiagrammeR_1.0.0  haven_1.1.1       forcats_0.3.0    
+[17] stringr_1.3.0     dplyr_0.7.4       purrr_0.2.4       readr_1.1.1      
+[21] tidyr_0.8.0       tibble_1.4.2      ggplot2_2.2.1     tidyverse_1.2.1  
+[25] magrittr_1.5      rmarkdown_1.9     knitr_1.20        checkpoint_0.4.2 
 
 loaded via a namespace (and not attached):
  [1] colorspace_1.3-2   modeltools_0.2-21  class_7.3-14       mclust_5.4        
@@ -45,15 +45,15 @@ loaded via a namespace (and not attached):
 [45] nlme_3.1-131.1     fpc_2.1-11         psych_1.8.3.3      timeDate_3043.102 
 [49] gower_0.1.2        rvest_0.3.2        XML_3.98-1.10      dendextend_1.8.0  
 [53] DEoptimR_1.0-8     MASS_7.3-49        scales_0.5.0       ipred_0.9-6       
-[57] hms_0.4.2          curl_3.2           gridExtra_2.3      downloader_0.4    
-[61] gdtools_0.1.7      rpart_4.1-11       stringi_1.1.7      highr_0.6         
-[65] Rook_1.1-1         lava_1.6.1         prabclus_2.2-6     rlang_0.2.0       
-[69] pkgconfig_2.0.1    evaluate_0.10.1    bindr_0.1.1        labeling_0.3      
-[73] recipes_0.1.2      htmlwidgets_1.0    CVST_0.2-1         tidyselect_0.2.4  
-[77] plyr_1.8.4         R6_2.2.2           dimRed_0.1.0       pillar_1.2.1      
-[81] whisker_0.3-2      foreign_0.8-69     withr_2.1.2        survival_2.41-3   
-[85] nnet_7.3-12        modelr_0.1.1       crayon_1.3.4       viridis_0.5.1     
+[57] hms_0.4.2          RColorBrewer_1.1-2 curl_3.2           gridExtra_2.3     
+[61] downloader_0.4     gdtools_0.1.7      rpart_4.1-11       stringi_1.1.7     
+[65] highr_0.6          Rook_1.1-1         lava_1.6.1         prabclus_2.2-6    
+[69] rlang_0.2.0        pkgconfig_2.0.1    evaluate_0.10.1    bindr_0.1.1       
+[73] labeling_0.3       recipes_0.1.2      htmlwidgets_1.0    CVST_0.2-1        
+[77] tidyselect_0.2.4   plyr_1.8.4         R6_2.2.2           dimRed_0.1.0      
+[81] pillar_1.2.1       whisker_0.3-2      foreign_0.8-69     withr_2.1.2       
+[85] survival_2.41-3    nnet_7.3-12        modelr_0.1.1       crayon_1.3.4      
 [89] grid_3.4.3         readxl_1.0.0       influenceR_0.1.0   methods_3.4.3     
 [93] ModelMetrics_1.1.0 diptest_0.75-7     digest_0.6.15      brew_1.0-6        
-[97] stats4_3.4.3       munsell_0.4.3      viridisLite_0.3.0 
+[97] stats4_3.4.3       munsell_0.4.3     
 
