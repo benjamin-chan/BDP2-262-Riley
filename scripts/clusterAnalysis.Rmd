@@ -40,7 +40,7 @@ hcDIANA <- function(k) {
               type = "circular",
               rect = TRUE, 
               rect_fill = TRUE,
-              cex = 0.25, 
+              cex = 0.2, 
               k_colors = pal[1:k], 
               main = sprintf("DIANA\nk = %d", k))
   clust <- hcut %>% plotClusters(sprintf("DIANA\nDivisive coefficient = %.03f\nk = %d", diana$dc, k))
@@ -90,6 +90,7 @@ dfXDemog <-
   droplevels()
 dfXMetricsDemog <- 
   dfNonMissing %>% 
+  # filter(id != 461) %>% 
   select(matches("ECBI|MAPS|SEPTI|lang|zip|community|distance|income|internet")) %>% 
   select(-zipcode) %>% 
   select(-languageSurvey) %>% 
@@ -239,7 +240,7 @@ dim(mat)
 colnames(mat)
 hopkins <- get_clust_tendency(mat, n = nrow(mat) - 1, graph = FALSE)
 diana <- dist %>% diana(metric = metric)
-k <- 5
+k <- 3
 dianaXMetricsDemog <- hcDIANA(k)
 ```
 
