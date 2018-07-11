@@ -75,6 +75,18 @@ dfXMetrics <-
   dfNonMissing %>% 
   select(matches("ECBI|MAPS|SEPTI")) %>% 
   droplevels()
+dfXECBI <- 
+  dfNonMissing %>% 
+  select(starts_with("ECBI")) %>% 
+  droplevels()
+dfXMAPS <- 
+  dfNonMissing %>% 
+  select(starts_with("MAPS")) %>% 
+  droplevels()
+dfXSEPTI <- 
+  dfNonMissing %>% 
+  select(starts_with("SEPTI")) %>% 
+  droplevels()
 dfXParentChild <- 
   dfNonMissing %>% 
   select(matches("parent|child|birth", ignore.case = TRUE)) %>% 
@@ -161,13 +173,154 @@ bind_cols(dfYPCB,
 ```
 
 
-## Cluster on ECBI, MAPS, SEPTI metrics
+## Cluster on ECBI metrics
+
+**Clustering on ECBI alone is good**
+
+* Cluster 1 ($n = 260$) has low ECBI scores
+* Cluster 2 ($n = 85$) has high ECBI scores
+
+```{r}
+mat <- model.matrix(~ - 1 + ., data = dfXECBI) %>% scale()
+dist <- mat %>% dist(method = metric)
+dim(mat)
+colnames(mat)
+hopkins <- get_clust_tendency(mat, n = nrow(mat) - 1, graph = FALSE)
+diana <- dist %>% diana(metric = metric)
+k <- 2
+dianaXECBI <- hcDIANA(k)
+```
+
+* Hopkins statistic is `r sprintf("%.03f", hopkins$hopkins_stat)`
+* Analysis identified $k = `r k`$ clusters
+* Divisive coefficient is `r sprintf("%.03f", diana$dc)`
+* Average silhouette width is `r sprintf("%.03f", dianaXECBI[["hcut"]][["silinfo"]][["avg.width"]])`
+
+```{r clusterXECBI}
+dianaXECBI[["dendrogram"]]
+dianaXECBI[["clusters2d"]]
+dianaXECBI[["silhouette"]]
+```
+
+```{r}
+bind_cols(dfXECBI, 
+          data.frame(cluster = dianaXECBI[["hcut"]][["cluster"]] %>% factor())) %>%
+  group_by(cluster) %>%
+  summarize(n = n(),
+            ECBI_intensity_T_score_mean = mean(ECBI_intensity_T_score),
+            ECBI_problem_T_score_mean   = mean(ECBI_problem_T_score),
+            ECBI_Opp_mean               = mean(ECBI_Opp),
+            ECBI_Inatt_mean             = mean(ECBI_Inatt),
+            ECBI_Cond_mean              = mean(ECBI_Cond)) %>%
+  kable(digits = 1)
+```
+
+
+## Cluster on MAPS metrics
+
+**Clustering on MAPS alone is good**
+
+* Cluster 1 ($n = 305$) has high *positive* MAPS scores
+* Cluster 2 ($n = 39$) has high *negative* MAPS scores
+* Cluster 3 ($n = 1$) is an outlier with low positive and low negative MAPS scores
+
+```{r}
+mat <- model.matrix(~ - 1 + ., data = dfXMAPS) %>% scale()
+dist <- mat %>% dist(method = metric)
+dim(mat)
+colnames(mat)
+hopkins <- get_clust_tendency(mat, n = nrow(mat) - 1, graph = FALSE)
+diana <- dist %>% diana(metric = metric)
+k <- 3
+dianaXMAPS <- hcDIANA(k)
+```
+
+* Hopkins statistic is `r sprintf("%.03f", hopkins$hopkins_stat)`
+* Analysis identified $k = `r k`$ clusters
+* Divisive coefficient is `r sprintf("%.03f", diana$dc)`
+* Average silhouette width is `r sprintf("%.03f", dianaXMAPS[["hcut"]][["silinfo"]][["avg.width"]])`
+
+```{r clusterXMAPS}
+dianaXMAPS[["dendrogram"]]
+dianaXMAPS[["clusters2d"]]
+dianaXMAPS[["silhouette"]]
+```
+
+```{r}
+bind_cols(dfXMAPS, 
+          data.frame(cluster = dianaXMAPS[["hcut"]][["cluster"]] %>% factor())) %>%
+  group_by(cluster) %>%
+  summarize(n = n(),
+            MAPS_PP_mean  = mean(MAPS_PP),
+            MAPS_PR_mean  = mean(MAPS_PR),
+            MAPS_WM_mean  = mean(MAPS_WM),
+            MAPS_SP_mean  = mean(MAPS_SP),
+            MAPS_HS_mean  = mean(MAPS_HS),
+            MAPS_LC_mean  = mean(MAPS_LC),
+            MAPS_PC_mean  = mean(MAPS_PC),
+            MAPS_POS_mean = mean(MAPS_POS),
+            MAPS_NEG_mean = mean(MAPS_NEG)) %>%
+  kable(digits = 1)
+```
+
+
+## Cluster on SEPTI metrics
 
 **Clustering on ECBI, MAPS, and SEPTI metrics isn't terrible.**
 
-* Cluster 1 ($n = 297$) has high positive MAPS scores and high SEPTI scores
-* Cluster 2 ($n = 45$) has high negative MAPS scores and high ECBI scores
-* Cluster 3 ($n = 3$) has low ECBI scores
+* Cluster 1 ($n = 193$) has high SEPTI scores
+* Cluster 2 ($n = 152$) has low SEPTI scores
+
+```{r}
+mat <- model.matrix(~ - 1 + ., data = dfXSEPTI) %>% scale()
+dist <- mat %>% dist(method = metric)
+dim(mat)
+colnames(mat)
+hopkins <- get_clust_tendency(mat, n = nrow(mat) - 1, graph = FALSE)
+diana <- dist %>% diana(metric = metric)
+k <- 2
+dianaXSEPTI <- hcDIANA(k)
+```
+
+* Hopkins statistic is `r sprintf("%.03f", hopkins$hopkins_stat)`
+* Analysis identified $k = `r k`$ clusters
+* Divisive coefficient is `r sprintf("%.03f", diana$dc)`
+* Average silhouette width is `r sprintf("%.03f", dianaXSEPTI[["hcut"]][["silinfo"]][["avg.width"]])`
+
+```{r clusterXSEPTI}
+dianaXSEPTI[["dendrogram"]]
+dianaXSEPTI[["clusters2d"]]
+dianaXSEPTI[["silhouette"]]
+```
+
+```{r}
+bind_cols(dfXSEPTI, 
+          data.frame(cluster = dianaXSEPTI[["hcut"]][["cluster"]] %>% factor())) %>%
+  group_by(cluster) %>%
+  summarize(n = n(),
+            SEPTI_nurturance_mean = mean(SEPTI_nurturance),
+            SEPTI_discipline_mean = mean(SEPTI_discipline),
+            SEPTI_play_mean       = mean(SEPTI_play),
+            SEPTI_routine_mean    = mean(SEPTI_routine)) %>%
+  kable(digits = 1)
+```
+
+
+## Cluster on ECBI, MAPS, SEPTI metrics
+
+Attempt to identify clusters using all metrics.
+
+**Clustering on ECBI, MAPS, and SEPTI metrics isn't terrible.**
+
+* Cluster 1 ($n = 297$) has
+  * Low ECBI scores
+  * High *positive* MAPS scores
+  * High SEPTI scores
+* Cluster 2 ($n = 45$) has
+  * High ECBI scores
+  * High *negative* MAPS scores
+  * Low SEPTI scores
+* Cluster 3 ($n = 3$) is the outlier; have low positive and low negative MAPS scores
 
 ```{r}
 mat <- model.matrix(~ - 1 + ., data = dfXMetrics) %>% scale()
