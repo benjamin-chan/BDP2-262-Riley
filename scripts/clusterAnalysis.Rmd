@@ -10,7 +10,6 @@ citation("factoextra")
 # library(ggdendro)
 # library(dendextend)
 # library(NbClust)
-pal <- lacroix_palette("PommeBaya", type = "discrete")
 ```
 
 ```{r}
@@ -19,9 +18,10 @@ plotClusters <- function (df, title = "Cluster plot") {
   require(magrittr)
   require(ggplot2)
   require(factoextra)
+  require(viridis)
   df %>% 
   fviz_cluster(data = mat, 
-               palette = sprintf("%s7F", pal[1:k]), 
+               palette = viridis(k, alpha = 1/16), 
                geom = c("points"),
                labelsize = 8, 
                ellipse.type = "convex",
@@ -30,6 +30,10 @@ plotClusters <- function (df, title = "Cluster plot") {
   theme(panel.grid.minor = element_blank())
 }
 hcDIANA <- function(k) {
+  require(magrittr)
+  require(ggplot2)
+  require(factoextra)
+  require(viridis)
   hcut <-
     dist %>% 
     hcut(k = k, hc_func = "diana", hc_metric = metric)
@@ -41,12 +45,12 @@ hcDIANA <- function(k) {
               rect = TRUE, 
               rect_fill = TRUE,
               cex = 0.2, 
-              k_colors = pal[1:k], 
+              k_colors = viridis(k), 
               main = sprintf("DIANA\nk = %d", k))
   clust <- hcut %>% plotClusters(sprintf("DIANA\nDivisive coefficient = %.03f\nk = %d", diana$dc, k))
   silh <- 
     hcut %>% 
-    fviz_silhouette(palette = sprintf("%s3F", pal[1:k]), ggtheme = theme_minimal()) + 
+    fviz_silhouette(palette = viridis(k), ggtheme = theme_minimal()) + 
     theme(panel.grid.major.x = element_blank()) +
     ggtitle(sprintf("DIANA\nk = %d\nAverage silhouette width = %.03f\nCluster average silhouette widths = %s",
                     k,
