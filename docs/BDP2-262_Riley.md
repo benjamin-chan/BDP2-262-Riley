@@ -231,13 +231,136 @@ Use the **manhattan** metric.
 |2       |  92|            34.2|               3.3|             11.9|                 19|
 
 
-## Cluster on ECBI, MAPS, SEPTI metrics
+## Cluster on ECBI metrics
+
+**Clustering on ECBI alone is good**
+
+* Cluster 1 ($n = 260$) has low ECBI scores
+* Cluster 2 ($n = 85$) has high ECBI scores
+
+
+```
+## [1] 345   5
+```
+
+```
+## [1] "ECBI_intensity_T_score" "ECBI_problem_T_score"  
+## [3] "ECBI_Opp"               "ECBI_Inatt"            
+## [5] "ECBI_Cond"
+```
+
+```
+##   cluster size ave.sil.width
+## 1       1  258          0.45
+## 2       2   87          0.33
+```
+
+* Hopkins statistic is 0.197
+* Analysis identified $k = 2$ clusters
+* Divisive coefficient is 0.950
+* Average silhouette width is 0.419
+
+![plot of chunk clusterXECBI](figures/clusterXECBI-1.png)![plot of chunk clusterXECBI](figures/clusterXECBI-2.png)![plot of chunk clusterXECBI](figures/clusterXECBI-3.png)
+
+
+|cluster |   n| ECBI_intensity_T_score_mean| ECBI_problem_T_score_mean| ECBI_Opp_mean| ECBI_Inatt_mean| ECBI_Cond_mean|
+|:-------|---:|---------------------------:|-------------------------:|-------------:|---------------:|--------------:|
+|1       | 258|                        50.7|                      49.8|          30.1|            12.4|           13.4|
+|2       |  87|                        62.4|                      65.4|          43.7|            16.9|           21.9|
+
+
+## Cluster on MAPS metrics
+
+**Clustering on MAPS alone is good**
+
+* Cluster 1 ($n = 305$) has high *positive* MAPS scores
+* Cluster 2 ($n = 39$) has high *negative* MAPS scores
+* Cluster 3 ($n = 1$) is an outlier with low positive and low negative MAPS scores
+
+
+```
+## [1] 345   9
+```
+
+```
+## [1] "MAPS_PP"  "MAPS_PR"  "MAPS_WM"  "MAPS_SP"  "MAPS_HS"  "MAPS_LC" 
+## [7] "MAPS_PC"  "MAPS_POS" "MAPS_NEG"
+```
+
+```
+##   cluster size ave.sil.width
+## 1       1  305          0.45
+## 2       2   39          0.30
+## 3       3    1          0.00
+```
+
+* Hopkins statistic is 0.213
+* Analysis identified $k = 3$ clusters
+* Divisive coefficient is 0.923
+* Average silhouette width is 0.436
+
+![plot of chunk clusterXMAPS](figures/clusterXMAPS-1.png)![plot of chunk clusterXMAPS](figures/clusterXMAPS-2.png)![plot of chunk clusterXMAPS](figures/clusterXMAPS-3.png)
+
+
+|cluster |   n| MAPS_PP_mean| MAPS_PR_mean| MAPS_WM_mean| MAPS_SP_mean| MAPS_HS_mean| MAPS_LC_mean| MAPS_PC_mean| MAPS_POS_mean| MAPS_NEG_mean|
+|:-------|---:|------------:|------------:|------------:|------------:|------------:|------------:|------------:|-------------:|-------------:|
+|1       | 305|          4.1|          4.6|          4.7|          4.5|            2|          1.9|          1.4|           4.5|           1.8|
+|2       |  39|          3.4|          3.7|          4.0|          3.4|            3|          2.6|          2.6|           3.7|           2.7|
+|3       |   1|          2.3|          3.0|          1.7|          1.0|            1|          1.0|          1.0|           2.0|           1.0|
+
+
+## Cluster on SEPTI metrics
 
 **Clustering on ECBI, MAPS, and SEPTI metrics isn't terrible.**
 
-* Cluster 1 ($n = 297$) has high positive MAPS scores and high SEPTI scores
-* Cluster 2 ($n = 45$) has high negative MAPS scores and high ECBI scores
-* Cluster 3 ($n = 3$) has low ECBI scores
+* Cluster 1 ($n = 193$) has high SEPTI scores
+* Cluster 2 ($n = 152$) has low SEPTI scores
+
+
+```
+## [1] 345   4
+```
+
+```
+## [1] "SEPTI_nurturance" "SEPTI_discipline" "SEPTI_play"      
+## [4] "SEPTI_routine"
+```
+
+```
+##   cluster size ave.sil.width
+## 1       1  185          0.38
+## 2       2  160          0.29
+```
+
+* Hopkins statistic is 0.285
+* Analysis identified $k = 2$ clusters
+* Divisive coefficient is 0.929
+* Average silhouette width is 0.339
+
+![plot of chunk clusterXSEPTI](figures/clusterXSEPTI-1.png)![plot of chunk clusterXSEPTI](figures/clusterXSEPTI-2.png)![plot of chunk clusterXSEPTI](figures/clusterXSEPTI-3.png)
+
+
+|cluster |   n| SEPTI_nurturance_mean| SEPTI_discipline_mean| SEPTI_play_mean| SEPTI_routine_mean|
+|:-------|---:|---------------------:|---------------------:|---------------:|------------------:|
+|1       | 185|                  39.6|                  26.8|            35.8|               31.5|
+|2       | 160|                  34.8|                  19.8|            27.0|               25.3|
+
+
+## Cluster on ECBI, MAPS, SEPTI metrics
+
+Attempt to identify clusters using all metrics.
+
+**Clustering on ECBI, MAPS, and SEPTI metrics isn't terrible.**
+
+* Cluster 1 ($n = 297$) has
+  * Low ECBI scores
+  * High *positive* MAPS scores
+  * High SEPTI scores
+* Cluster 2 ($n = 45$) has
+  * High ECBI scores
+  * High *negative* MAPS scores
+  * Low SEPTI scores
+* Cluster 3 ($n = 3$) is the outlier; have low positive and low negative MAPS scores
 
 
 ```
@@ -836,7 +959,7 @@ First split, with $k = 2$, produces one very small cluster.
 ##                                          size isdir mode
 ## data/processed/clusterAnalysis.RData 11981880 FALSE  666
 ##                                                    mtime
-## data/processed/clusterAnalysis.RData 2018-07-11 08:59:13
+## data/processed/clusterAnalysis.RData 2018-07-11 14:15:05
 ##                                                    ctime
 ## data/processed/clusterAnalysis.RData 2018-07-06 12:14:44
 ##                                                    atime exe
