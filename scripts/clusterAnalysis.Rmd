@@ -460,18 +460,27 @@ bind_cols(dfXMetricsDemog,
   kable(digits = 2)
 ```
 
-**Clustering on ECBI, MAPS, and SEPTI metrics isn't terrible.**
+**Clustering on ECBI, MAPS, and SEPTI metrics and a limited set of demographic factors is good.**
 
 * Demographic factors considered
   * Income
   * Parent education level
   * Parent race, White/Non-White
 * Cluster 1 ($`r sprintf("n = %d", dianaXMetricsDemog[["hcut"]][["size"]][1])`$)
+  * Majority White
+  * Lower ECBI scores than Cluster 2
+  * Higher positive MAPS scores than Cluster 2, lower negative MAPS scores than Cluster 2
+  * Higher SEPTI scores than Cluster 2
 * Cluster 2 ($`r sprintf("n = %d", dianaXMetricsDemog[["hcut"]][["size"]][2])`$)
+  * Majority non-White
+  * High ECBI scores
+  * Low positive MAPS scores, high negative MAPS scores
+  * Low SEPTI scores
 * Cluster 3 ($`r sprintf("n = %d", dianaXMetricsDemog[["hcut"]][["size"]][3])`$)
-* Clusters 1 & 3 are similar in their demographic factors, ECBI, and MAPS metrics
-  * However, they are dissimilar in their SEPTI metrics
-* Clusters 2 & 3 are more similar in their SEPTI metrics
+  * Is a small outlier cluster
+  * Middle income
+  * Low ECBI scores
+  * Low positive MAPS scores, low negative MAPS scores
 
 
 ## Cluster on parent factors
