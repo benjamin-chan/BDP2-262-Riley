@@ -107,9 +107,7 @@ dfXDemog <-
 dfXMetricsDemog <- 
   dfNonMissing %>% 
   # filter(id != 461) %>% 
-  select(matches("ECBI|MAPS|SEPTI|lang|zip|community|distance|income|internet")) %>% 
-  select(-zipcode) %>% 
-  select(-languageSurvey) %>% 
+  select(matches("ECBI|MAPS|SEPTI|income|parentEduc|parentRaceW")) %>% 
   droplevels()
 dfYPCB <- 
   dfNonMissing %>% 
@@ -385,10 +383,16 @@ bind_cols(dfXMetrics,
 
 **Clustering on ECBI, MAPS, and SEPTI metrics isn't terrible.**
 
-* `languageSurvey` dropped from consideration; $n = 1$
-* Cluster 1 ($n = 297$) has high positive MAPS scores and high SEPTI scores
-* Cluster 2 ($n = 45$) has high negative MAPS scores and high ECBI scores
-* Cluster 3 ($n = 3$) has low ECBI scores
+* Demographic factors considered
+  * Income
+  * Parent education level
+  * Parent race, White/Non-White
+* Cluster 1 ($n = 192$)
+* Cluster 2 ($n = 79$)
+* Cluster 3 ($n = 74$)
+* Clusters 1 & 3 are similar in their demographic factors, ECBI, and MAPS metrics
+  * However, they are dissimilar in their SEPTI metrics
+* Clusters 2 & 3 are more similar in their SEPTI metrics
 
 ```{r}
 mat <- model.matrix(~ - 1 + ., data = dfXMetricsDemog) %>% scale()
@@ -451,33 +455,19 @@ bind_cols(dfXMetricsDemog,
 ```{r}
 bind_cols(dfXMetricsDemog, 
           data.frame(cluster = dianaXMetricsDemog[["hcut"]][["cluster"]] %>% factor())) %>%
-  group_by(cluster) %>%
-  summarize(n = n(),
-            distance_mean = mean(distance),
-            distance_median = median(distance),
-            distance_range = sprintf("%.01f-%.01f", min(distance), max(distance))) %>% 
-  kable(digits = 1)
-bind_cols(dfXMetricsDemog, 
-          data.frame(cluster = dianaXMetricsDemog[["hcut"]][["cluster"]] %>% factor())) %>%
-  group_by(cluster, zipcodeClass) %>%
-  summarize(n = n()) %>% 
-  mutate(pct = n / sum(n)) %>% 
-  kable(digits = 2)
-bind_cols(dfXMetricsDemog, 
-          data.frame(cluster = dianaXMetricsDemog[["hcut"]][["cluster"]] %>% factor())) %>%
-  group_by(cluster, community) %>%
-  summarize(n = n()) %>% 
-  mutate(pct = n / sum(n)) %>% 
-  kable(digits = 2)
-bind_cols(dfXMetricsDemog, 
-          data.frame(cluster = dianaXMetricsDemog[["hcut"]][["cluster"]] %>% factor())) %>%
   group_by(cluster, income) %>%
   summarize(n = n()) %>% 
   mutate(pct = n / sum(n)) %>% 
   kable(digits = 2)
 bind_cols(dfXMetricsDemog, 
           data.frame(cluster = dianaXMetricsDemog[["hcut"]][["cluster"]] %>% factor())) %>%
-  group_by(cluster, internet) %>%
+  group_by(cluster, parentEducation) %>%
+  summarize(n = n()) %>% 
+  mutate(pct = n / sum(n)) %>% 
+  kable(digits = 2)
+bind_cols(dfXMetricsDemog, 
+          data.frame(cluster = dianaXMetricsDemog[["hcut"]][["cluster"]] %>% factor())) %>%
+  group_by(cluster, parentRaceWhite) %>%
   summarize(n = n()) %>% 
   mutate(pct = n / sum(n)) %>% 
   kable(digits = 2)
