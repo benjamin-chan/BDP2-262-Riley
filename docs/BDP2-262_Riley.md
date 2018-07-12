@@ -1,6 +1,6 @@
 ---
 title: "Parent and Provider Perceptions of Behavioral Healthcare in Pediatric Primary Care (PI: Andrew Riley; BDP2-262)"
-date: "2018-07-11"
+date: "2018-07-12"
 author: Benjamin Chan (chanb@ohsu.edu)
 output:
   html_document:
@@ -184,9 +184,6 @@ Use the **manhattan** metric.
 
 **Clustering on PCB metrics isn't terrible.**
 
-* Cluster 1 ($n = 253$) has high PCB scores on all domains
-* Cluster 2 ($n = 92$) has low PCB scores on all domains
-
 
 ```
 ## [1] 345   8
@@ -230,13 +227,11 @@ Use the **manhattan** metric.
 |1       | 253|            51.7|               4.4|             17.4|                 30|
 |2       |  92|            34.2|               3.3|             11.9|                 19|
 
+* Cluster 1 ($n = 253$) has high PCB scores on all domains
+* Cluster 2 ($n = 92$) has low PCB scores on all domains
+
 
 ## Cluster on ECBI metrics
-
-**Clustering on ECBI alone is good**
-
-* Cluster 1 ($n = 260$) has low ECBI scores
-* Cluster 2 ($n = 85$) has high ECBI scores
 
 
 ```
@@ -268,14 +263,13 @@ Use the **manhattan** metric.
 |1       | 258|                        50.7|                      49.8|          30.1|            12.4|           13.4|
 |2       |  87|                        62.4|                      65.4|          43.7|            16.9|           21.9|
 
+**Clustering on ECBI alone is good**
+
+* Cluster 1 ($n = 258$) has low ECBI scores
+* Cluster 2 ($n = 87$) has high ECBI scores
+
 
 ## Cluster on MAPS metrics
-
-**Clustering on MAPS alone is good**
-
-* Cluster 1 ($n = 305$) has high *positive* MAPS scores
-* Cluster 2 ($n = 39$) has high *negative* MAPS scores
-* Cluster 3 ($n = 1$) is an outlier with low positive and low negative MAPS scores
 
 
 ```
@@ -308,13 +302,14 @@ Use the **manhattan** metric.
 |2       |  39|          3.4|          3.7|          4.0|          3.4|            3|          2.6|          2.6|           3.7|           2.7|
 |3       |   1|          2.3|          3.0|          1.7|          1.0|            1|          1.0|          1.0|           2.0|           1.0|
 
+**Clustering on MAPS alone is good**
+
+* Cluster 1 ($n = 305$) has high *positive* MAPS scores
+* Cluster 2 ($n = 39$) has high *negative* MAPS scores
+* Cluster 3 ($n = 1$) is an outlier with low positive and low negative MAPS scores
+
 
 ## Cluster on SEPTI metrics
-
-**Clustering on ECBI, MAPS, and SEPTI metrics isn't terrible.**
-
-* Cluster 1 ($n = 193$) has high SEPTI scores
-* Cluster 2 ($n = 152$) has low SEPTI scores
 
 
 ```
@@ -345,22 +340,15 @@ Use the **manhattan** metric.
 |1       | 185|                  39.6|                  26.8|            35.8|               31.5|
 |2       | 160|                  34.8|                  19.8|            27.0|               25.3|
 
+**Clustering on ECBI, MAPS, and SEPTI metrics isn't terrible.**
+
+* Cluster 1 ($n = 185$) has high SEPTI scores
+* Cluster 2 ($n = 160$) has low SEPTI scores
+
 
 ## Cluster on ECBI, MAPS, SEPTI metrics
 
 Attempt to identify clusters using all metrics.
-
-**Clustering on ECBI, MAPS, and SEPTI metrics isn't terrible.**
-
-* Cluster 1 ($n = 297$) has
-  * Low ECBI scores
-  * High *positive* MAPS scores
-  * High SEPTI scores
-* Cluster 2 ($n = 45$) has
-  * High ECBI scores
-  * High *negative* MAPS scores
-  * Low SEPTI scores
-* Cluster 3 ($n = 3$) is the outlier; have low positive and low negative MAPS scores
 
 
 ```
@@ -416,132 +404,253 @@ Attempt to identify clusters using all metrics.
 |2       |  45|                  33.4|                  18.8|            25.0|               23.5|
 |3       |   3|                  26.3|                  19.3|            25.7|               24.0|
 
+**Clustering on ECBI, MAPS, and SEPTI metrics isn't terrible.**
+
+* Cluster 1 ($n = 297$) has
+  * Low ECBI scores
+  * High *positive* MAPS scores
+  * High SEPTI scores
+* Cluster 2 ($n = 45$) has
+  * High ECBI scores
+  * High *negative* MAPS scores
+  * Low SEPTI scores
+* Cluster 3 ($n = 3$) is the outlier; have low positive and low negative MAPS scores
+
 
 ## Cluster on ECBI, MAPS, SEPTI metrics and demographics
 
-**Clustering on ECBI, MAPS, and SEPTI metrics isn't terrible.**
-
-* `languageSurvey` dropped from consideration; $n = 1$
-* Cluster 1 ($n = 297$) has high positive MAPS scores and high SEPTI scores
-* Cluster 2 ($n = 45$) has high negative MAPS scores and high ECBI scores
-* Cluster 3 ($n = 3$) has low ECBI scores
-
 
 ```
-## [1] 345  29
+## [1] 345  28
 ```
 
 ```
-##  [1] "zipcodeClass1"           "zipcodeClass2"          
-##  [3] "communitySuburban"       "communityRural"         
-##  [5] "distance"                "income$25,001-$49,999"  
-##  [7] "income$50,000-$79,999"   "income$80,000-$119,999" 
-##  [9] "income$120,000-$149,999" "income$150,000 or more" 
-## [11] "internet"                "ECBI_intensity_T_score" 
-## [13] "ECBI_problem_T_score"    "ECBI_Opp"               
-## [15] "ECBI_Inatt"              "ECBI_Cond"              
-## [17] "MAPS_PP"                 "MAPS_PR"                
-## [19] "MAPS_WM"                 "MAPS_SP"                
-## [21] "MAPS_HS"                 "MAPS_LC"                
-## [23] "MAPS_PC"                 "MAPS_POS"               
-## [25] "MAPS_NEG"                "SEPTI_nurturance"       
-## [27] "SEPTI_discipline"        "SEPTI_play"             
-## [29] "SEPTI_routine"
+##  [1] "parentRaceWhite0"                             
+##  [2] "parentRaceWhite1"                             
+##  [3] "parentEducationVocational school/some college"
+##  [4] "parentEducationCollege"                       
+##  [5] "parentEducationGraduate/professional school"  
+##  [6] "income$25,001-$49,999"                        
+##  [7] "income$50,000-$79,999"                        
+##  [8] "income$80,000-$119,999"                       
+##  [9] "income$120,000-$149,999"                      
+## [10] "income$150,000 or more"                       
+## [11] "ECBI_intensity_T_score"                       
+## [12] "ECBI_problem_T_score"                         
+## [13] "ECBI_Opp"                                     
+## [14] "ECBI_Inatt"                                   
+## [15] "ECBI_Cond"                                    
+## [16] "MAPS_PP"                                      
+## [17] "MAPS_PR"                                      
+## [18] "MAPS_WM"                                      
+## [19] "MAPS_SP"                                      
+## [20] "MAPS_HS"                                      
+## [21] "MAPS_LC"                                      
+## [22] "MAPS_PC"                                      
+## [23] "MAPS_POS"                                     
+## [24] "MAPS_NEG"                                     
+## [25] "SEPTI_nurturance"                             
+## [26] "SEPTI_discipline"                             
+## [27] "SEPTI_play"                                   
+## [28] "SEPTI_routine"
 ```
 
 ```
 ##   cluster size ave.sil.width
-## 1       1  280          0.25
-## 2       2   64          0.15
-## 3       3    1          0.00
+## 1       1  305          0.30
+## 2       2   37          0.18
+## 3       3    3          0.32
 ```
 
-* Hopkins statistic is 0.272
+* Hopkins statistic is 0.311
 * Analysis identified $k = 3$ clusters
-* Divisive coefficient is 0.816
-* Average silhouette width is 0.230
+* Divisive coefficient is 0.809
+* Average silhouette width is 0.290
 
 ![plot of chunk clusterXMetricsDemog](figures/clusterXMetricsDemog-1.png)![plot of chunk clusterXMetricsDemog](figures/clusterXMetricsDemog-2.png)![plot of chunk clusterXMetricsDemog](figures/clusterXMetricsDemog-3.png)
 
 
 |cluster |   n| ECBI_intensity_T_score_mean| ECBI_problem_T_score_mean| ECBI_Opp_mean| ECBI_Inatt_mean| ECBI_Cond_mean|
 |:-------|---:|---------------------------:|-------------------------:|-------------:|---------------:|--------------:|
-|1       | 280|                        52.2|                      51.8|          31.9|            13.1|           14.1|
-|2       |  64|                        59.7|                      61.8|          40.6|            15.2|           21.7|
-|3       |   1|                        78.0|                      84.0|          53.0|            23.0|           41.0|
+|1       | 305|                        52.9|                      52.9|          32.7|            13.4|           14.7|
+|2       |  37|                        61.3|                      62.0|          42.2|            15.1|           23.6|
+|3       |   3|                        37.7|                      44.3|          17.7|             5.3|            8.0|
 
 
 
 |cluster |   n| MAPS_PP_mean| MAPS_PR_mean| MAPS_WM_mean| MAPS_SP_mean| MAPS_HS_mean| MAPS_LC_mean| MAPS_PC_mean| MAPS_POS_mean| MAPS_NEG_mean|
 |:-------|---:|------------:|------------:|------------:|------------:|------------:|------------:|------------:|-------------:|-------------:|
-|1       | 280|          4.2|          4.6|          4.7|          4.5|          2.0|          1.9|          1.3|           4.5|           1.7|
-|2       |  64|          3.6|          4.0|          4.1|          3.8|          2.8|          2.6|          2.3|           3.9|           2.6|
-|3       |   1|          4.3|          5.0|          3.0|          4.7|          3.6|          3.9|          1.8|           4.2|           3.1|
+|1       | 305|          4.1|          4.6|          4.7|          4.5|          2.0|          1.9|          1.4|           4.5|           1.8|
+|2       |  37|          3.5|          3.8|          3.9|          3.6|          3.0|          2.8|          2.4|           3.7|           2.7|
+|3       |   3|          2.4|          2.9|          3.2|          2.1|          1.5|          1.9|          1.9|           2.7|           1.8|
 
 
 
 |cluster |   n| SEPTI_nurturance_mean| SEPTI_discipline_mean| SEPTI_play_mean| SEPTI_routine_mean|
 |:-------|---:|---------------------:|---------------------:|---------------:|------------------:|
-|1       | 280|                  38.3|                  24.6|            33.2|               29.7|
-|2       |  64|                  33.5|                  19.2|            25.8|               23.7|
-|3       |   1|                  29.0|                  13.0|            11.0|               20.0|
-
-
-|cluster |   n| distance_mean| distance_median|distance_range |
-|:-------|---:|-------------:|---------------:|:--------------|
-|1       | 280|           9.4|               5|0.4-130.0      |
-|2       |  64|          12.3|               9|1.0-150.0      |
-|3       |   1|          10.0|              10|10.0-10.0      |
-
-
-
-|cluster |zipcodeClass |   n|  pct|
-|:-------|:------------|---:|----:|
-|1       |1            | 196| 0.70|
-|1       |2            |  84| 0.30|
-|2       |1            |  53| 0.83|
-|2       |2            |  11| 0.17|
-|3       |1            |   1| 1.00|
-
-
-
-|cluster |community |   n|  pct|
-|:-------|:---------|---:|----:|
-|1       |Urban     |  95| 0.34|
-|1       |Suburban  | 129| 0.46|
-|1       |Rural     |  56| 0.20|
-|2       |Urban     |  27| 0.42|
-|2       |Suburban  |  29| 0.45|
-|2       |Rural     |   8| 0.12|
-|3       |Rural     |   1| 1.00|
-
+|1       | 305|                  38.1|                  24.2|            32.6|               29.4|
+|2       |  37|                  32.2|                  17.9|            25.1|               22.7|
+|3       |   3|                  26.3|                  19.3|            25.7|               24.0|
 
 
 |cluster |income            |  n|  pct|
 |:-------|:-----------------|--:|----:|
-|1       |$25,000 or less   | 27| 0.10|
-|1       |$25,001-$49,999   | 57| 0.20|
-|1       |$50,000-$79,999   | 79| 0.28|
-|1       |$80,000-$119,999  | 50| 0.18|
-|1       |$120,000-$149,999 | 24| 0.09|
-|1       |$150,000 or more  | 43| 0.15|
-|2       |$25,000 or less   |  7| 0.11|
-|2       |$25,001-$49,999   | 26| 0.41|
-|2       |$50,000-$79,999   | 12| 0.19|
-|2       |$80,000-$119,999  |  6| 0.09|
-|2       |$120,000-$149,999 |  8| 0.12|
-|2       |$150,000 or more  |  5| 0.08|
-|3       |$25,000 or less   |  1| 1.00|
+|1       |$25,000 or less   | 29| 0.10|
+|1       |$25,001-$49,999   | 72| 0.24|
+|1       |$50,000-$79,999   | 82| 0.27|
+|1       |$80,000-$119,999  | 53| 0.17|
+|1       |$120,000-$149,999 | 24| 0.08|
+|1       |$150,000 or more  | 45| 0.15|
+|2       |$25,000 or less   |  4| 0.11|
+|2       |$25,001-$49,999   | 11| 0.30|
+|2       |$50,000-$79,999   |  9| 0.24|
+|2       |$80,000-$119,999  |  2| 0.05|
+|2       |$120,000-$149,999 |  8| 0.22|
+|2       |$150,000 or more  |  3| 0.08|
+|3       |$25,000 or less   |  2| 0.67|
+|3       |$80,000-$119,999  |  1| 0.33|
 
 
 
-|cluster | internet|   n|  pct|
-|:-------|--------:|---:|----:|
-|1       |        0|   6| 0.02|
-|1       |        1| 274| 0.98|
-|2       |        0|   2| 0.03|
-|2       |        1|  62| 0.97|
-|3       |        0|   1| 1.00|
+|cluster |parentEducation                |   n|  pct|
+|:-------|:------------------------------|---:|----:|
+|1       |High school or less            |  37| 0.12|
+|1       |Vocational school/some college |  57| 0.19|
+|1       |College                        | 124| 0.41|
+|1       |Graduate/professional school   |  87| 0.29|
+|2       |High school or less            |   4| 0.11|
+|2       |Vocational school/some college |  11| 0.30|
+|2       |College                        |  12| 0.32|
+|2       |Graduate/professional school   |  10| 0.27|
+|3       |High school or less            |   1| 0.33|
+|3       |College                        |   2| 0.67|
+
+
+
+|cluster |parentRaceWhite |   n|  pct|
+|:-------|:---------------|---:|----:|
+|1       |0               |  54| 0.18|
+|1       |1               | 251| 0.82|
+|2       |0               |  24| 0.65|
+|2       |1               |  13| 0.35|
+|3       |1               |   3| 1.00|
+
+**Clustering on ECBI, MAPS, and SEPTI metrics and a limited set of demographic factors is good.**
+
+* Demographic factors considered
+  * Income
+  * Parent education level
+  * Parent race, White/Non-White
+* Cluster 1 ($n = 305$)
+  * Majority White
+  * Lower ECBI scores than Cluster 2
+  * Higher positive MAPS scores than Cluster 2, lower negative MAPS scores than Cluster 2
+  * Higher SEPTI scores than Cluster 2
+* Cluster 2 ($n = 37$)
+  * Majority non-White
+  * High ECBI scores
+  * Low positive MAPS scores, high negative MAPS scores
+  * Low SEPTI scores
+* Cluster 3 ($n = 3$)
+  * Is a small outlier cluster
+  * Middle income
+  * Low ECBI scores
+  * Low positive MAPS scores, low negative MAPS scores
+* Removing income and parent education level produces better defined clusters
+  * **See further analysis below**
+
+
+```
+## [1] 345  20
+```
+
+```
+##  [1] "parentRaceWhite0"       "parentRaceWhite1"      
+##  [3] "ECBI_intensity_T_score" "ECBI_problem_T_score"  
+##  [5] "ECBI_Opp"               "ECBI_Inatt"            
+##  [7] "ECBI_Cond"              "MAPS_PP"               
+##  [9] "MAPS_PR"                "MAPS_WM"               
+## [11] "MAPS_SP"                "MAPS_HS"               
+## [13] "MAPS_LC"                "MAPS_PC"               
+## [15] "MAPS_POS"               "MAPS_NEG"              
+## [17] "SEPTI_nurturance"       "SEPTI_discipline"      
+## [19] "SEPTI_play"             "SEPTI_routine"
+```
+
+```
+##   cluster size ave.sil.width
+## 1       1  306          0.31
+## 2       2   14          0.17
+## 3       3    3          0.28
+## 4       4   22          0.21
+```
+
+* Hopkins statistic is 0.289
+* Analysis identified $k = 4$ clusters
+* Divisive coefficient is 0.848
+* Average silhouette width is 0.297
+
+![plot of chunk clusterXMetricsDemog2](figures/clusterXMetricsDemog2-1.png)![plot of chunk clusterXMetricsDemog2](figures/clusterXMetricsDemog2-2.png)![plot of chunk clusterXMetricsDemog2](figures/clusterXMetricsDemog2-3.png)
+
+
+|cluster |   n| ECBI_intensity_T_score_mean| ECBI_problem_T_score_mean| ECBI_Opp_mean| ECBI_Inatt_mean| ECBI_Cond_mean|
+|:-------|---:|---------------------------:|-------------------------:|-------------:|---------------:|--------------:|
+|1       | 306|                        52.9|                      53.0|          32.7|            13.4|           14.7|
+|2       |  14|                        63.9|                      68.8|          46.3|            16.6|           22.4|
+|3       |   3|                        37.7|                      44.3|          17.7|             5.3|            8.0|
+|4       |  22|                        59.5|                      56.0|          39.0|            14.4|           24.4|
+
+
+
+|cluster |   n| MAPS_PP_mean| MAPS_PR_mean| MAPS_WM_mean| MAPS_SP_mean| MAPS_HS_mean| MAPS_LC_mean| MAPS_PC_mean| MAPS_POS_mean| MAPS_NEG_mean|
+|:-------|---:|------------:|------------:|------------:|------------:|------------:|------------:|------------:|-------------:|-------------:|
+|1       | 306|          4.1|          4.6|          4.7|          4.5|          2.0|          1.9|          1.4|           4.5|           1.8|
+|2       |  14|          4.0|          4.1|          4.1|          3.9|          3.2|          2.6|          2.4|           4.0|           2.7|
+|3       |   3|          2.4|          2.9|          3.2|          2.1|          1.5|          1.9|          1.9|           2.7|           1.8|
+|4       |  22|          3.2|          3.6|          3.8|          3.4|          2.8|          2.9|          2.3|           3.5|           2.7|
+
+
+
+|cluster |   n| SEPTI_nurturance_mean| SEPTI_discipline_mean| SEPTI_play_mean| SEPTI_routine_mean|
+|:-------|---:|---------------------:|---------------------:|---------------:|------------------:|
+|1       | 306|                  38.1|                  24.2|            32.6|               29.3|
+|2       |  14|                  34.1|                  15.9|            21.8|               21.6|
+|3       |   3|                  26.3|                  19.3|            25.7|               24.0|
+|4       |  22|                  30.8|                  18.9|            27.0|               23.5|
+
+
+|cluster |parentRaceWhite |   n|  pct|
+|:-------|:---------------|---:|----:|
+|1       |0               |  53| 0.17|
+|1       |1               | 253| 0.83|
+|2       |0               |   4| 0.29|
+|2       |1               |  10| 0.71|
+|3       |1               |   3| 1.00|
+|4       |0               |  21| 0.95|
+|4       |1               |   1| 0.05|
+
+* Demographic factors considered
+  * Parent race, White/Non-White
+* Cluster 1 ($n = 306$)
+  * Majority White
+  * Lower ECBI scores than Clusters 2/4
+  * Higher positive MAPS scores than Clusters 2/4, lower negative MAPS scores than Clusters 2/4
+  * Higher SEPTI scores than Clusters 2/4
+* Cluster 2 ($n = 14$)
+  * Majority White, *more similar to Cluster 1*
+  * High ECBI scores, *more similar to Cluster 4*
+  * Low positive MAPS scores, high negative MAPS scores, *more similar to Cluster 4*
+  * Low SEPTI scores, *more similar to Cluster 4*
+* Cluster 3 ($n = 3$)
+  * Is a small outlier cluster
+  * Middle income
+  * Low ECBI scores
+  * Low positive MAPS scores, low negative MAPS scores
+* Cluster 4 ($n = 14$)
+  * Majority non-White
+  * High ECBI scores
+  * Low positive MAPS scores, high negative MAPS scores
+  * Low SEPTI scores
 
 
 ## Cluster on parent factors
@@ -959,7 +1068,7 @@ First split, with $k = 2$, produces one very small cluster.
 ##                                          size isdir mode
 ## data/processed/clusterAnalysis.RData 11981880 FALSE  666
 ##                                                    mtime
-## data/processed/clusterAnalysis.RData 2018-07-11 14:15:05
+## data/processed/clusterAnalysis.RData 2018-07-12 10:04:20
 ##                                                    ctime
 ## data/processed/clusterAnalysis.RData 2018-07-06 12:14:44
 ##                                                    atime exe
