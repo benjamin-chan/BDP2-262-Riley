@@ -108,6 +108,10 @@ dfXMetricsDemog <-
 dfYPCB <- 
   dfNonMissing %>% 
   select(starts_with("PCB"))
+dfXY <- 
+  bind_cols(dfXMetricsDemog, dfYPCB) %>%
+  select(-income) %>%
+  select(-parentEducation)
 ```
 
 
@@ -476,6 +480,32 @@ bind_cols(dfXMetricsDemog2,
   kable(digits = 2)
 ```
 
+```{r}
+bind_cols(dfYPCB, 
+          data.frame(cluster = dianaXMetricsDemog[["hcut"]][["cluster"]] %>% factor())) %>%
+  group_by(cluster) %>%
+  summarize(n = n(),
+            PCB1_Total_mean      = mean(PCB1_Total),
+            PCB1_CondEmot_mean   = mean(PCB1_CondEmot),
+            PCB1_DevHab_mean     = mean(PCB1_DevHab)) %>% 
+  kable(digits = 1)
+bind_cols(dfYPCB, 
+          data.frame(cluster = dianaXMetricsDemog[["hcut"]][["cluster"]] %>% factor())) %>%
+  group_by(cluster) %>%
+  summarize(n = n(),
+            PCB2_Tot_mean        = mean(PCB2_Tot)) %>% 
+  kable(digits = 1)
+bind_cols(dfYPCB, 
+          data.frame(cluster = dianaXMetricsDemog[["hcut"]][["cluster"]] %>% factor())) %>%
+  group_by(cluster) %>%
+  summarize(n = n(),
+            PCB3_Total_mean      = mean(PCB3_Total),
+            PCB3_PCPonly_mean    = mean(PCB3_PCPonly),
+            PCB3_Person_mean     = mean(PCB3_Person),
+            PCB3_Resource_mean   = mean(PCB3_Resource)) %>% 
+  kable(digits = 1)
+```
+
 * Demographic factors considered
   * Parent race, White/Non-White
 * Cluster 1 ($`r sprintf("n = %d", dianaXMetricsDemog[["hcut"]][["size"]][1])`$)
@@ -500,10 +530,106 @@ bind_cols(dfXMetricsDemog2,
   * Low SEPTI scores
 
 
+## Cluster on PCB, ECBI, MAPS, SEPTI metrics and demographics
+
+```{r}
+mat <- model.matrix(~ - 1 + ., data = dfXY) %>% scale()
+dist <- mat %>% dist(method = metric)
+dim(mat)
+colnames(mat)
+hopkins <- get_clust_tendency(mat, n = nrow(mat) - 1, graph = FALSE)
+diana <- dist %>% diana(metric = metric)
+k <- 2
+dianaXY <- hcDIANA(k)
+```
+
+* Hopkins statistic is `r sprintf("%.03f", hopkins$hopkins_stat)`
+* Analysis identified $k = `r k`$ clusters
+* Divisive coefficient is `r sprintf("%.03f", diana$dc)`
+* Average silhouette width is `r sprintf("%.03f", dianaXY[["hcut"]][["silinfo"]][["avg.width"]])`
+
+```{r clusterXY}
+dianaXY[["dendrogram"]]
+dianaXY[["clusters2d"]]
+dianaXY[["silhouette"]]
+```
+
+```{r}
+bind_cols(dfXY, 
+          data.frame(cluster = dianaXY[["hcut"]][["cluster"]] %>% factor())) %>%
+  group_by(cluster) %>%
+  summarize(n = n(),
+            ECBI_intensity_T_score_mean = mean(ECBI_intensity_T_score),
+            ECBI_problem_T_score_mean   = mean(ECBI_problem_T_score),
+            ECBI_Opp_mean               = mean(ECBI_Opp),
+            ECBI_Inatt_mean             = mean(ECBI_Inatt),
+            ECBI_Cond_mean              = mean(ECBI_Cond)) %>%
+  kable(digits = 1)
+bind_cols(dfXY, 
+          data.frame(cluster = dianaXY[["hcut"]][["cluster"]] %>% factor())) %>%
+  group_by(cluster) %>%
+  summarize(n = n(),
+            MAPS_PP_mean  = mean(MAPS_PP),
+            MAPS_PR_mean  = mean(MAPS_PR),
+            MAPS_WM_mean  = mean(MAPS_WM),
+            MAPS_SP_mean  = mean(MAPS_SP),
+            MAPS_HS_mean  = mean(MAPS_HS),
+            MAPS_LC_mean  = mean(MAPS_LC),
+            MAPS_PC_mean  = mean(MAPS_PC),
+            MAPS_POS_mean = mean(MAPS_POS),
+            MAPS_NEG_mean = mean(MAPS_NEG)) %>%
+  kable(digits = 1)
+bind_cols(dfXY, 
+          data.frame(cluster = dianaXY[["hcut"]][["cluster"]] %>% factor())) %>%
+  group_by(cluster) %>%
+  summarize(n = n(),
+            SEPTI_nurturance_mean = mean(SEPTI_nurturance),
+            SEPTI_discipline_mean = mean(SEPTI_discipline),
+            SEPTI_play_mean       = mean(SEPTI_play),
+            SEPTI_routine_mean    = mean(SEPTI_routine)) %>%
+  kable(digits = 1)
+```
+
+```{r}
+bind_cols(dfXY, 
+          data.frame(cluster = dianaXY[["hcut"]][["cluster"]] %>% factor())) %>%
+  group_by(cluster, parentRaceWhite) %>%
+  summarize(n = n()) %>% 
+  mutate(pct = n / sum(n)) %>% 
+  kable(digits = 2)
+```
+
+```{r}
+bind_cols(dfXY, 
+          data.frame(cluster = dianaXY[["hcut"]][["cluster"]] %>% factor())) %>%
+  group_by(cluster) %>%
+  summarize(n = n(),
+            PCB1_Total_mean      = mean(PCB1_Total),
+            PCB1_CondEmot_mean   = mean(PCB1_CondEmot),
+            PCB1_DevHab_mean     = mean(PCB1_DevHab)) %>% 
+  kable(digits = 1)
+bind_cols(dfXY, 
+          data.frame(cluster = dianaXY[["hcut"]][["cluster"]] %>% factor())) %>%
+  group_by(cluster) %>%
+  summarize(n = n(),
+            PCB2_Tot_mean        = mean(PCB2_Tot)) %>% 
+  kable(digits = 1)
+bind_cols(dfXY, 
+          data.frame(cluster = dianaXY[["hcut"]][["cluster"]] %>% factor())) %>%
+  group_by(cluster) %>%
+  summarize(n = n(),
+            PCB3_Total_mean      = mean(PCB3_Total),
+            PCB3_PCPonly_mean    = mean(PCB3_PCPonly),
+            PCB3_Person_mean     = mean(PCB3_Person),
+            PCB3_Resource_mean   = mean(PCB3_Resource)) %>% 
+  kable(digits = 1)
+```
+
+
 ## Save objects
 
 ```{r}
 f <- "data/processed/clusterAnalysis.RData"
-save(dianaYPCB, dianaXMetricsDemog, file = f)
+save(dianaYPCB, dianaXECBI, dianaXMAPS, dianaXSEPTI, dianaXMetricsDemog, dianaXY, file = f)
 file.info(f)
 ```
