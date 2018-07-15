@@ -558,6 +558,32 @@ Use the **manhattan** metric.
 |4       |0               |  21| 0.95|
 |4       |1               |   1| 0.05|
 
+
+|cluster |   n| PCB1_Total_mean| PCB1_CondEmot_mean| PCB1_DevHab_mean|
+|:-------|---:|---------------:|------------------:|----------------:|
+|1       | 306|            66.0|               47.7|             18.2|
+|2       |  14|            73.1|               53.3|             19.8|
+|3       |   3|            85.3|               62.3|             23.0|
+|4       |  22|            71.8|               51.8|             20.0|
+
+
+
+|cluster |   n| PCB2_Tot_mean|
+|:-------|---:|-------------:|
+|1       | 306|          24.4|
+|2       |  14|          24.4|
+|3       |   3|          27.3|
+|4       |  22|          23.9|
+
+
+
+|cluster |   n| PCB3_Total_mean| PCB3_PCPonly_mean| PCB3_Person_mean| PCB3_Resource_mean|
+|:-------|---:|---------------:|-----------------:|----------------:|------------------:|
+|1       | 306|            46.3|               4.1|             15.7|               26.6|
+|2       |  14|            50.9|               4.1|             17.1|               29.6|
+|3       |   3|            65.7|               4.7|             23.3|               37.7|
+|4       |  22|            52.5|               4.1|             18.1|               30.2|
+
 * Demographic factors considered
   * Parent race, White/Non-White
 * Cluster 1 ($n = 306$)
@@ -582,18 +608,104 @@ Use the **manhattan** metric.
   * Low SEPTI scores
 
 
+## Cluster on PCB, ECBI, MAPS, SEPTI metrics and demographics
+
+
+```
+## [1] 345  28
+```
+
+```
+##  [1] "parentRaceWhite0"       "parentRaceWhite1"      
+##  [3] "ECBI_intensity_T_score" "ECBI_problem_T_score"  
+##  [5] "ECBI_Opp"               "ECBI_Inatt"            
+##  [7] "ECBI_Cond"              "MAPS_PP"               
+##  [9] "MAPS_PR"                "MAPS_WM"               
+## [11] "MAPS_SP"                "MAPS_HS"               
+## [13] "MAPS_LC"                "MAPS_PC"               
+## [15] "MAPS_POS"               "MAPS_NEG"              
+## [17] "SEPTI_nurturance"       "SEPTI_discipline"      
+## [19] "SEPTI_play"             "SEPTI_routine"         
+## [21] "PCB1_Total"             "PCB1_CondEmot"         
+## [23] "PCB1_DevHab"            "PCB2_Tot"              
+## [25] "PCB3_Total"             "PCB3_PCPonly"          
+## [27] "PCB3_Person"            "PCB3_Resource"
+```
+
+```
+##   cluster size ave.sil.width
+## 1       1  296          0.27
+## 2       2   49          0.17
+```
+
+* Hopkins statistic is 0.314
+* Analysis identified $k = 2$ clusters
+* Divisive coefficient is 0.802
+* Average silhouette width is 0.258
+
+![plot of chunk clusterXY](figures/clusterXY-1.png)![plot of chunk clusterXY](figures/clusterXY-2.png)![plot of chunk clusterXY](figures/clusterXY-3.png)
+
+
+|cluster |   n| ECBI_intensity_T_score_mean| ECBI_problem_T_score_mean| ECBI_Opp_mean| ECBI_Inatt_mean| ECBI_Cond_mean|
+|:-------|---:|---------------------------:|-------------------------:|-------------:|---------------:|--------------:|
+|1       | 296|                        52.8|                      52.6|          32.6|            13.3|           14.6|
+|2       |  49|                        59.0|                      60.7|          39.5|            14.6|           21.8|
+
+
+
+|cluster |   n| MAPS_PP_mean| MAPS_PR_mean| MAPS_WM_mean| MAPS_SP_mean| MAPS_HS_mean| MAPS_LC_mean| MAPS_PC_mean| MAPS_POS_mean| MAPS_NEG_mean|
+|:-------|---:|------------:|------------:|------------:|------------:|------------:|------------:|------------:|-------------:|-------------:|
+|1       | 296|          4.2|          4.6|          4.7|          4.5|          2.0|          1.9|          1.4|           4.5|           1.8|
+|2       |  49|          3.5|          3.8|          4.0|          3.5|          2.8|          2.6|          2.3|           3.7|           2.6|
+
+
+
+|cluster |   n| SEPTI_nurturance_mean| SEPTI_discipline_mean| SEPTI_play_mean| SEPTI_routine_mean|
+|:-------|---:|---------------------:|---------------------:|---------------:|------------------:|
+|1       | 296|                  38.2|                  24.3|            32.8|               29.5|
+|2       |  49|                  32.3|                  18.6|            25.4|               22.9|
+
+
+|cluster |parentRaceWhite |   n|  pct|
+|:-------|:---------------|---:|----:|
+|1       |0               |  52| 0.18|
+|1       |1               | 244| 0.82|
+|2       |0               |  26| 0.53|
+|2       |1               |  23| 0.47|
+
+
+|cluster |   n| PCB1_Total_mean| PCB1_CondEmot_mean| PCB1_DevHab_mean|
+|:-------|---:|---------------:|------------------:|----------------:|
+|1       | 296|            65.4|               47.3|             18.1|
+|2       |  49|            75.0|               54.5|             20.5|
+
+
+
+|cluster |   n| PCB2_Tot_mean|
+|:-------|---:|-------------:|
+|1       | 296|          24.3|
+|2       |  49|          24.9|
+
+
+
+|cluster |   n| PCB3_Total_mean| PCB3_PCPonly_mean| PCB3_Person_mean| PCB3_Resource_mean|
+|:-------|---:|---------------:|-----------------:|----------------:|------------------:|
+|1       | 296|            45.9|               4.1|             15.6|               26.3|
+|2       |  49|            54.0|               4.3|             18.3|               31.4|
+
+
 ## Save objects
 
 
 ```
-##                                         size isdir mode
-## data/processed/clusterAnalysis.RData 5216263 FALSE  666
+##                                          size isdir mode
+## data/processed/clusterAnalysis.RData 15330777 FALSE  666
 ##                                                    mtime
-## data/processed/clusterAnalysis.RData 2018-07-12 10:20:42
+## data/processed/clusterAnalysis.RData 2018-07-12 23:41:15
 ##                                                    ctime
-## data/processed/clusterAnalysis.RData 2018-07-06 12:14:44
+## data/processed/clusterAnalysis.RData 2018-07-06 20:22:46
 ##                                                    atime exe
-## data/processed/clusterAnalysis.RData 2018-07-06 12:14:44  no
+## data/processed/clusterAnalysis.RData 2018-07-12 21:54:36  no
 ```
 
 
