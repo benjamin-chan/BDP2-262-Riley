@@ -68,243 +68,21 @@ Use the **`r metric`** metric.
 dfNonMissing <- 
   df %>% 
   na.omit()
-dfXMetrics <- 
+dfCrosswalk <- 
   dfNonMissing %>% 
-  select(matches("ECBI|MAPS|SEPTI")) %>% 
-  droplevels()
-dfXECBI <- 
-  dfNonMissing %>% 
-  select(starts_with("ECBI")) %>% 
-  droplevels()
-dfXMAPS <- 
-  dfNonMissing %>% 
-  select(starts_with("MAPS")) %>% 
-  droplevels()
-dfXSEPTI <- 
-  dfNonMissing %>% 
-  select(starts_with("SEPTI")) %>% 
-  droplevels()
-dfXParentChild <- 
-  dfNonMissing %>% 
-  select(matches("parent|child|birth", ignore.case = TRUE)) %>% 
-  droplevels()
-dfXParent <- 
-  dfNonMissing %>% 
-  select(matches("^parent|^total", ignore.case = TRUE)) %>% 
-  droplevels()
-dfXChild <- 
-  dfNonMissing %>% 
-  select(matches("^child|^birth", ignore.case = TRUE)) %>% 
-  droplevels()
-dfXDemog <- 
-  dfNonMissing %>% 
-  select(matches("lang|zip|community|distance|income|internet")) %>% 
-  select(-languageSurvey) %>% 
-  droplevels()
+  select(id) %>% 
+  mutate(rowid = row_number())
 dfXMetricsDemog <- 
   dfNonMissing %>% 
-  select(matches("ECBI|MAPS|SEPTI|income|parentEduc|parentRaceW")) %>% 
+  select(matches("ECBI|MAPS|SEPTI|parentRaceW")) %>% 
   droplevels()
 dfYPCB <- 
   dfNonMissing %>% 
   select(starts_with("PCB"))
-dfXY <- 
-  bind_cols(dfXMetricsDemog, dfYPCB) %>%
-  select(-income) %>%
-  select(-parentEducation)
 ```
 
 
-## Cluster on PCB metrics
-
-**Clustering on PCB metrics isn't terrible.**
-
-```{r}
-mat <- model.matrix(~ - 1 + ., data = dfYPCB) %>% scale()
-dist <- mat %>% dist(method = metric)
-dim(mat)
-colnames(mat)
-hopkins <- get_clust_tendency(mat, n = nrow(mat) - 1, graph = FALSE)
-diana <- dist %>% diana(metric = metric)
-k <- 2
-dianaYPCB <- hcDIANA(k)
-```
-
-* Hopkins statistic is `r sprintf("%.03f", hopkins$hopkins_stat)`
-* Analysis identified $k = `r k`$ clusters
-* Divisive coefficient is `r sprintf("%.03f", diana$dc)`
-* Average silhouette width is `r sprintf("%.03f", dianaYPCB[["hcut"]][["silinfo"]][["avg.width"]])`
-
-```{r clusterYPCB}
-dianaYPCB[["dendrogram"]]
-dianaYPCB[["clusters2d"]]
-dianaYPCB[["silhouette"]]
-```
-
-```{r}
-bind_cols(dfYPCB, 
-          data.frame(cluster = dianaYPCB[["hcut"]][["cluster"]] %>% factor())) %>%
-  group_by(cluster) %>%
-  summarize(n = n(),
-            PCB1_Total_mean      = mean(PCB1_Total),
-            PCB1_CondEmot_mean   = mean(PCB1_CondEmot),
-            PCB1_DevHab_mean     = mean(PCB1_DevHab)) %>% 
-  kable(digits = 1)
-bind_cols(dfYPCB, 
-          data.frame(cluster = dianaYPCB[["hcut"]][["cluster"]] %>% factor())) %>%
-  group_by(cluster) %>%
-  summarize(n = n(),
-            PCB2_Tot_mean        = mean(PCB2_Tot)) %>% 
-  kable(digits = 1)
-bind_cols(dfYPCB, 
-          data.frame(cluster = dianaYPCB[["hcut"]][["cluster"]] %>% factor())) %>%
-  group_by(cluster) %>%
-  summarize(n = n(),
-            PCB3_Total_mean      = mean(PCB3_Total),
-            PCB3_PCPonly_mean    = mean(PCB3_PCPonly),
-            PCB3_Person_mean     = mean(PCB3_Person),
-            PCB3_Resource_mean   = mean(PCB3_Resource)) %>% 
-  kable(digits = 1)
-```
-
-* Cluster 1 ($`r sprintf("n = %d", dianaYPCB[["hcut"]][["size"]][1])`$) has high PCB scores on all domains
-* Cluster 2 ($`r sprintf("n = %d", dianaYPCB[["hcut"]][["size"]][2])`$) has low PCB scores on all domains
-
-
-## Cluster on ECBI metrics
-
-```{r}
-mat <- model.matrix(~ - 1 + ., data = dfXECBI) %>% scale()
-dist <- mat %>% dist(method = metric)
-dim(mat)
-colnames(mat)
-hopkins <- get_clust_tendency(mat, n = nrow(mat) - 1, graph = FALSE)
-diana <- dist %>% diana(metric = metric)
-k <- 2
-dianaXECBI <- hcDIANA(k)
-```
-
-* Hopkins statistic is `r sprintf("%.03f", hopkins$hopkins_stat)`
-* Analysis identified $k = `r k`$ clusters
-* Divisive coefficient is `r sprintf("%.03f", diana$dc)`
-* Average silhouette width is `r sprintf("%.03f", dianaXECBI[["hcut"]][["silinfo"]][["avg.width"]])`
-
-```{r clusterXECBI}
-dianaXECBI[["dendrogram"]]
-dianaXECBI[["clusters2d"]]
-dianaXECBI[["silhouette"]]
-```
-
-```{r}
-bind_cols(dfXECBI, 
-          data.frame(cluster = dianaXECBI[["hcut"]][["cluster"]] %>% factor())) %>%
-  group_by(cluster) %>%
-  summarize(n = n(),
-            ECBI_intensity_T_score_mean = mean(ECBI_intensity_T_score),
-            ECBI_problem_T_score_mean   = mean(ECBI_problem_T_score),
-            ECBI_Opp_mean               = mean(ECBI_Opp),
-            ECBI_Inatt_mean             = mean(ECBI_Inatt),
-            ECBI_Cond_mean              = mean(ECBI_Cond)) %>%
-  kable(digits = 1)
-```
-
-**Clustering on ECBI alone is good**
-
-* Cluster 1 ($`r sprintf("n = %d", dianaXECBI[["hcut"]][["size"]][1])`$) has low ECBI scores
-* Cluster 2 ($`r sprintf("n = %d", dianaXECBI[["hcut"]][["size"]][2])`$) has high ECBI scores
-
-
-## Cluster on MAPS metrics
-
-```{r}
-mat <- model.matrix(~ - 1 + ., data = dfXMAPS) %>% scale()
-dist <- mat %>% dist(method = metric)
-dim(mat)
-colnames(mat)
-hopkins <- get_clust_tendency(mat, n = nrow(mat) - 1, graph = FALSE)
-diana <- dist %>% diana(metric = metric)
-k <- 3
-dianaXMAPS <- hcDIANA(k)
-```
-
-* Hopkins statistic is `r sprintf("%.03f", hopkins$hopkins_stat)`
-* Analysis identified $k = `r k`$ clusters
-* Divisive coefficient is `r sprintf("%.03f", diana$dc)`
-* Average silhouette width is `r sprintf("%.03f", dianaXMAPS[["hcut"]][["silinfo"]][["avg.width"]])`
-
-```{r clusterXMAPS}
-dianaXMAPS[["dendrogram"]]
-dianaXMAPS[["clusters2d"]]
-dianaXMAPS[["silhouette"]]
-```
-
-```{r}
-bind_cols(dfXMAPS, 
-          data.frame(cluster = dianaXMAPS[["hcut"]][["cluster"]] %>% factor())) %>%
-  group_by(cluster) %>%
-  summarize(n = n(),
-            MAPS_PP_mean  = mean(MAPS_PP),
-            MAPS_PR_mean  = mean(MAPS_PR),
-            MAPS_WM_mean  = mean(MAPS_WM),
-            MAPS_SP_mean  = mean(MAPS_SP),
-            MAPS_HS_mean  = mean(MAPS_HS),
-            MAPS_LC_mean  = mean(MAPS_LC),
-            MAPS_PC_mean  = mean(MAPS_PC),
-            MAPS_POS_mean = mean(MAPS_POS),
-            MAPS_NEG_mean = mean(MAPS_NEG)) %>%
-  kable(digits = 1)
-```
-
-**Clustering on MAPS alone is good**
-
-* Cluster 1 ($`r sprintf("n = %d", dianaXMAPS[["hcut"]][["size"]][1])`$) has high *positive* MAPS scores
-* Cluster 2 ($`r sprintf("n = %d", dianaXMAPS[["hcut"]][["size"]][2])`$) has high *negative* MAPS scores
-* Cluster 3 ($`r sprintf("n = %d", dianaXMAPS[["hcut"]][["size"]][3])`$) is an outlier with low positive and low negative MAPS scores
-
-
-## Cluster on SEPTI metrics
-
-```{r}
-mat <- model.matrix(~ - 1 + ., data = dfXSEPTI) %>% scale()
-dist <- mat %>% dist(method = metric)
-dim(mat)
-colnames(mat)
-hopkins <- get_clust_tendency(mat, n = nrow(mat) - 1, graph = FALSE)
-diana <- dist %>% diana(metric = metric)
-k <- 2
-dianaXSEPTI <- hcDIANA(k)
-```
-
-* Hopkins statistic is `r sprintf("%.03f", hopkins$hopkins_stat)`
-* Analysis identified $k = `r k`$ clusters
-* Divisive coefficient is `r sprintf("%.03f", diana$dc)`
-* Average silhouette width is `r sprintf("%.03f", dianaXSEPTI[["hcut"]][["silinfo"]][["avg.width"]])`
-
-```{r clusterXSEPTI}
-dianaXSEPTI[["dendrogram"]]
-dianaXSEPTI[["clusters2d"]]
-dianaXSEPTI[["silhouette"]]
-```
-
-```{r}
-bind_cols(dfXSEPTI, 
-          data.frame(cluster = dianaXSEPTI[["hcut"]][["cluster"]] %>% factor())) %>%
-  group_by(cluster) %>%
-  summarize(n = n(),
-            SEPTI_nurturance_mean = mean(SEPTI_nurturance),
-            SEPTI_discipline_mean = mean(SEPTI_discipline),
-            SEPTI_play_mean       = mean(SEPTI_play),
-            SEPTI_routine_mean    = mean(SEPTI_routine)) %>%
-  kable(digits = 1)
-```
-
-**Clustering on ECBI, MAPS, and SEPTI metrics isn't terrible.**
-
-* Cluster 1 ($`r sprintf("n = %d", dianaXSEPTI[["hcut"]][["size"]][1])`$) has high SEPTI scores
-* Cluster 2 ($`r sprintf("n = %d", dianaXSEPTI[["hcut"]][["size"]][2])`$) has low SEPTI scores
-
-
-## Cluster on ECBI, MAPS, SEPTI metrics and demographics
+## Cluster on ECBI, MAPS, SEPTI metrics and parent's race
 
 ```{r}
 mat <- model.matrix(~ - 1 + ., data = dfXMetricsDemog) %>% scale()
@@ -313,7 +91,7 @@ dim(mat)
 colnames(mat)
 hopkins <- get_clust_tendency(mat, n = nrow(mat) - 1, graph = FALSE)
 diana <- dist %>% diana(metric = metric)
-k <- 3
+k <- 4
 dianaXMetricsDemog <- hcDIANA(k)
 ```
 
@@ -366,113 +144,6 @@ bind_cols(dfXMetricsDemog,
 
 ```{r}
 bind_cols(dfXMetricsDemog, 
-          data.frame(cluster = dianaXMetricsDemog[["hcut"]][["cluster"]] %>% factor())) %>%
-  group_by(cluster, income) %>%
-  summarize(n = n()) %>% 
-  mutate(pct = n / sum(n)) %>% 
-  kable(digits = 2)
-bind_cols(dfXMetricsDemog, 
-          data.frame(cluster = dianaXMetricsDemog[["hcut"]][["cluster"]] %>% factor())) %>%
-  group_by(cluster, parentEducation) %>%
-  summarize(n = n()) %>% 
-  mutate(pct = n / sum(n)) %>% 
-  kable(digits = 2)
-bind_cols(dfXMetricsDemog, 
-          data.frame(cluster = dianaXMetricsDemog[["hcut"]][["cluster"]] %>% factor())) %>%
-  group_by(cluster, parentRaceWhite) %>%
-  summarize(n = n()) %>% 
-  mutate(pct = n / sum(n)) %>% 
-  kable(digits = 2)
-```
-
-**Clustering on ECBI, MAPS, and SEPTI metrics and a limited set of demographic factors is good.**
-
-* Demographic factors considered
-  * Income
-  * Parent education level
-  * Parent race, White/Non-White
-* Cluster 1 ($`r sprintf("n = %d", dianaXMetricsDemog[["hcut"]][["size"]][1])`$)
-  * Majority White
-  * Lower ECBI scores than Cluster 2
-  * Higher positive MAPS scores than Cluster 2, lower negative MAPS scores than Cluster 2
-  * Higher SEPTI scores than Cluster 2
-* Cluster 2 ($`r sprintf("n = %d", dianaXMetricsDemog[["hcut"]][["size"]][2])`$)
-  * Majority non-White
-  * High ECBI scores
-  * Low positive MAPS scores, high negative MAPS scores
-  * Low SEPTI scores
-* Cluster 3 ($`r sprintf("n = %d", dianaXMetricsDemog[["hcut"]][["size"]][3])`$)
-  * Is a small outlier cluster
-  * Middle income
-  * Low ECBI scores
-  * Low positive MAPS scores, low negative MAPS scores
-* Removing income and parent education level produces better defined clusters
-  * **See further analysis below**
-
-```{r}
-dfXMetricsDemog2 <- 
-  dfXMetricsDemog %>%
-  select(-income) %>%
-  select(-parentEducation)
-mat <- model.matrix(~ - 1 + ., data = dfXMetricsDemog2) %>% scale()
-dist <- mat %>% dist(method = metric)
-dim(mat)
-colnames(mat)
-hopkins <- get_clust_tendency(mat, n = nrow(mat) - 1, graph = FALSE)
-diana <- dist %>% diana(metric = metric)
-k <- 4
-dianaXMetricsDemog <- hcDIANA(k)
-```
-
-* Hopkins statistic is `r sprintf("%.03f", hopkins$hopkins_stat)`
-* Analysis identified $k = `r k`$ clusters
-* Divisive coefficient is `r sprintf("%.03f", diana$dc)`
-* Average silhouette width is `r sprintf("%.03f", dianaXMetricsDemog[["hcut"]][["silinfo"]][["avg.width"]])`
-
-```{r clusterXMetricsDemog2}
-dianaXMetricsDemog[["dendrogram"]]
-dianaXMetricsDemog[["clusters2d"]]
-dianaXMetricsDemog[["silhouette"]]
-```
-
-```{r}
-bind_cols(dfXMetricsDemog2, 
-          data.frame(cluster = dianaXMetricsDemog[["hcut"]][["cluster"]] %>% factor())) %>%
-  group_by(cluster) %>%
-  summarize(n = n(),
-            ECBI_intensity_T_score_mean = mean(ECBI_intensity_T_score),
-            ECBI_problem_T_score_mean   = mean(ECBI_problem_T_score),
-            ECBI_Opp_mean               = mean(ECBI_Opp),
-            ECBI_Inatt_mean             = mean(ECBI_Inatt),
-            ECBI_Cond_mean              = mean(ECBI_Cond)) %>%
-  kable(digits = 1)
-bind_cols(dfXMetricsDemog2, 
-          data.frame(cluster = dianaXMetricsDemog[["hcut"]][["cluster"]] %>% factor())) %>%
-  group_by(cluster) %>%
-  summarize(n = n(),
-            MAPS_PP_mean  = mean(MAPS_PP),
-            MAPS_PR_mean  = mean(MAPS_PR),
-            MAPS_WM_mean  = mean(MAPS_WM),
-            MAPS_SP_mean  = mean(MAPS_SP),
-            MAPS_HS_mean  = mean(MAPS_HS),
-            MAPS_LC_mean  = mean(MAPS_LC),
-            MAPS_PC_mean  = mean(MAPS_PC),
-            MAPS_POS_mean = mean(MAPS_POS),
-            MAPS_NEG_mean = mean(MAPS_NEG)) %>%
-  kable(digits = 1)
-bind_cols(dfXMetricsDemog2, 
-          data.frame(cluster = dianaXMetricsDemog[["hcut"]][["cluster"]] %>% factor())) %>%
-  group_by(cluster) %>%
-  summarize(n = n(),
-            SEPTI_nurturance_mean = mean(SEPTI_nurturance),
-            SEPTI_discipline_mean = mean(SEPTI_discipline),
-            SEPTI_play_mean       = mean(SEPTI_play),
-            SEPTI_routine_mean    = mean(SEPTI_routine)) %>%
-  kable(digits = 1)
-```
-
-```{r}
-bind_cols(dfXMetricsDemog2, 
           data.frame(cluster = dianaXMetricsDemog[["hcut"]][["cluster"]] %>% factor())) %>%
   group_by(cluster, parentRaceWhite) %>%
   summarize(n = n()) %>% 
@@ -530,106 +201,25 @@ bind_cols(dfYPCB,
   * Low SEPTI scores
 
 
-## Cluster on PCB, ECBI, MAPS, SEPTI metrics and demographics
-
-```{r}
-mat <- model.matrix(~ - 1 + ., data = dfXY) %>% scale()
-dist <- mat %>% dist(method = metric)
-dim(mat)
-colnames(mat)
-hopkins <- get_clust_tendency(mat, n = nrow(mat) - 1, graph = FALSE)
-diana <- dist %>% diana(metric = metric)
-k <- 2
-dianaXY <- hcDIANA(k)
-```
-
-* Hopkins statistic is `r sprintf("%.03f", hopkins$hopkins_stat)`
-* Analysis identified $k = `r k`$ clusters
-* Divisive coefficient is `r sprintf("%.03f", diana$dc)`
-* Average silhouette width is `r sprintf("%.03f", dianaXY[["hcut"]][["silinfo"]][["avg.width"]])`
-
-```{r clusterXY}
-dianaXY[["dendrogram"]]
-dianaXY[["clusters2d"]]
-dianaXY[["silhouette"]]
-```
-
-```{r}
-bind_cols(dfXY, 
-          data.frame(cluster = dianaXY[["hcut"]][["cluster"]] %>% factor())) %>%
-  group_by(cluster) %>%
-  summarize(n = n(),
-            ECBI_intensity_T_score_mean = mean(ECBI_intensity_T_score),
-            ECBI_problem_T_score_mean   = mean(ECBI_problem_T_score),
-            ECBI_Opp_mean               = mean(ECBI_Opp),
-            ECBI_Inatt_mean             = mean(ECBI_Inatt),
-            ECBI_Cond_mean              = mean(ECBI_Cond)) %>%
-  kable(digits = 1)
-bind_cols(dfXY, 
-          data.frame(cluster = dianaXY[["hcut"]][["cluster"]] %>% factor())) %>%
-  group_by(cluster) %>%
-  summarize(n = n(),
-            MAPS_PP_mean  = mean(MAPS_PP),
-            MAPS_PR_mean  = mean(MAPS_PR),
-            MAPS_WM_mean  = mean(MAPS_WM),
-            MAPS_SP_mean  = mean(MAPS_SP),
-            MAPS_HS_mean  = mean(MAPS_HS),
-            MAPS_LC_mean  = mean(MAPS_LC),
-            MAPS_PC_mean  = mean(MAPS_PC),
-            MAPS_POS_mean = mean(MAPS_POS),
-            MAPS_NEG_mean = mean(MAPS_NEG)) %>%
-  kable(digits = 1)
-bind_cols(dfXY, 
-          data.frame(cluster = dianaXY[["hcut"]][["cluster"]] %>% factor())) %>%
-  group_by(cluster) %>%
-  summarize(n = n(),
-            SEPTI_nurturance_mean = mean(SEPTI_nurturance),
-            SEPTI_discipline_mean = mean(SEPTI_discipline),
-            SEPTI_play_mean       = mean(SEPTI_play),
-            SEPTI_routine_mean    = mean(SEPTI_routine)) %>%
-  kable(digits = 1)
-```
-
-```{r}
-bind_cols(dfXY, 
-          data.frame(cluster = dianaXY[["hcut"]][["cluster"]] %>% factor())) %>%
-  group_by(cluster, parentRaceWhite) %>%
-  summarize(n = n()) %>% 
-  mutate(pct = n / sum(n)) %>% 
-  kable(digits = 2)
-```
-
-```{r}
-bind_cols(dfXY, 
-          data.frame(cluster = dianaXY[["hcut"]][["cluster"]] %>% factor())) %>%
-  group_by(cluster) %>%
-  summarize(n = n(),
-            PCB1_Total_mean      = mean(PCB1_Total),
-            PCB1_CondEmot_mean   = mean(PCB1_CondEmot),
-            PCB1_DevHab_mean     = mean(PCB1_DevHab)) %>% 
-  kable(digits = 1)
-bind_cols(dfXY, 
-          data.frame(cluster = dianaXY[["hcut"]][["cluster"]] %>% factor())) %>%
-  group_by(cluster) %>%
-  summarize(n = n(),
-            PCB2_Tot_mean        = mean(PCB2_Tot)) %>% 
-  kable(digits = 1)
-bind_cols(dfXY, 
-          data.frame(cluster = dianaXY[["hcut"]][["cluster"]] %>% factor())) %>%
-  group_by(cluster) %>%
-  summarize(n = n(),
-            PCB3_Total_mean      = mean(PCB3_Total),
-            PCB3_PCPonly_mean    = mean(PCB3_PCPonly),
-            PCB3_Person_mean     = mean(PCB3_Person),
-            PCB3_Resource_mean   = mean(PCB3_Resource)) %>% 
-  kable(digits = 1)
-```
-
-
 ## Save objects
+
+Bind study ID, `id`, to cluster ID, `cluster`.
+
+```{r}
+dfCrosswalk <- 
+  bind_cols(dfCrosswalk, 
+            data.frame(cluster = dianaXMetricsDemog[["hcut"]][["cluster"]] %>% factor())) %>% 
+  select(-rowid)
+```
 
 ```{r}
 f <- "data/processed/clusterAnalysis.RData"
-save(dianaYPCB, dianaXECBI, dianaXMAPS, dianaXSEPTI, dianaXMetricsDemog, dianaXY, file = f)
-file.info(f)
+save(dianaXMetricsDemog, dfXMetricsDemog, dfCrosswalk, file = f)
+file.info(f)[c("mtime", "size")]
+f <- "data/processed/clusterCrosswalk.csv"
+write.csv(dfCrosswalk, f, row.names = FALSE)
+file.info(f)[c("mtime", "size")]
+f <- "data/processed/clusterCrosswalk.sav"
+write_sav(dfCrosswalk, f)
+file.info(f)[c("mtime", "size")]
 ```
