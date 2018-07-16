@@ -208,7 +208,7 @@ Bind study ID, `id`, to cluster ID, `cluster`.
 ```{r}
 dfCrosswalk <- 
   bind_cols(dfCrosswalk, 
-            data.frame(cluster = dianaXMetricsDemog[["hcut"]][["cluster"]] %>% factor())) %>% 
+            data.frame(cluster = dianaXMetricsDemog[["hcut"]][["cluster"]] %>% as.numeric())) %>% 
   select(-rowid)
 ```
 
@@ -222,4 +222,12 @@ file.info(f)[c("mtime", "size")]
 f <- "data/processed/clusterCrosswalk.sav"
 write_sav(dfCrosswalk, f)
 file.info(f)[c("mtime", "size")]
+```
+
+Test SPSS data file.
+
+```{r, echo = TRUE}
+all.equal(dfCrosswalk, read_sav(f))
+str(dfCrosswalk)
+str(read_sav(f))
 ```
