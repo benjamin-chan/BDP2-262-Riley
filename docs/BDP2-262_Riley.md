@@ -1,6 +1,6 @@
 ---
 title: "Parent and Provider Perceptions of Behavioral Healthcare in Pediatric Primary Care (PI: Andrew Riley; BDP2-262)"
-date: "2018-07-14"
+date: "2018-07-16"
 author: Benjamin Chan (chanb@ohsu.edu)
 output:
   html_document:
@@ -180,6 +180,95 @@ Use the **manhattan** metric.
 
 
 
+## Cluster on ECBI, MAPS, SEPTI metrics (no demographics)
+
+
+```
+## [1] 345  18
+```
+
+```
+##  [1] "ECBI_intensity_T_score" "ECBI_problem_T_score"  
+##  [3] "ECBI_Opp"               "ECBI_Inatt"            
+##  [5] "ECBI_Cond"              "MAPS_PP"               
+##  [7] "MAPS_PR"                "MAPS_WM"               
+##  [9] "MAPS_SP"                "MAPS_HS"               
+## [11] "MAPS_LC"                "MAPS_PC"               
+## [13] "MAPS_POS"               "MAPS_NEG"              
+## [15] "SEPTI_nurturance"       "SEPTI_discipline"      
+## [17] "SEPTI_play"             "SEPTI_routine"
+```
+
+```
+##   cluster size ave.sil.width
+## 1       1  297          0.36
+## 2       2   45          0.23
+## 3       3    3          0.28
+```
+
+* Hopkins statistic is 0.288
+* Analysis identified $k = 3$ clusters
+* Divisive coefficient is 0.853
+* Average silhouette width is 0.340
+
+![plot of chunk clusterXMetrics](figures/clusterXMetrics-1.png)![plot of chunk clusterXMetrics](figures/clusterXMetrics-2.png)![plot of chunk clusterXMetrics](figures/clusterXMetrics-3.png)
+
+
+|cluster |   n| ECBI_intensity_T_score_mean| ECBI_problem_T_score_mean| ECBI_Opp_mean| ECBI_Inatt_mean| ECBI_Cond_mean|
+|:-------|---:|---------------------------:|-------------------------:|-------------:|---------------:|--------------:|
+|1       | 297|                        52.5|                      52.2|          32.3|            13.2|           14.3|
+|2       |  45|                        62.3|                      64.6|          43.2|            15.8|           24.4|
+|3       |   3|                        37.7|                      44.3|          17.7|             5.3|            8.0|
+
+```
+## Error in dots_values(...): object 'dfXMetricsg' not found
+```
+
+
+
+|cluster |   n| SEPTI_nurturance_mean| SEPTI_discipline_mean| SEPTI_play_mean| SEPTI_routine_mean|
+|:-------|---:|---------------------:|---------------------:|---------------:|------------------:|
+|1       | 297|                  38.1|                  24.3|            32.8|               29.4|
+|2       |  45|                  33.4|                  18.8|            25.0|               23.5|
+|3       |   3|                  26.3|                  19.3|            25.7|               24.0|
+
+
+|cluster |parentRaceWhite |   n|  pct|
+|:-------|:---------------|---:|----:|
+|1       |0               |  58| 0.20|
+|1       |1               | 239| 0.80|
+|2       |0               |  20| 0.44|
+|2       |1               |  25| 0.56|
+|3       |1               |   3| 1.00|
+
+
+|cluster |   n| PCB1_Total_mean| PCB1_CondEmot_mean| PCB1_DevHab_mean|
+|:-------|---:|---------------:|------------------:|----------------:|
+|1       | 297|            65.8|               47.5|             18.3|
+|2       |  45|            71.9|               52.6|             19.3|
+|3       |   3|            85.3|               62.3|             23.0|
+
+
+
+|cluster |   n| PCB2_Tot_mean|
+|:-------|---:|-------------:|
+|1       | 297|          24.4|
+|2       |  45|          24.2|
+|3       |   3|          27.3|
+
+
+
+|cluster |   n| PCB3_Total_mean| PCB3_PCPonly_mean| PCB3_Person_mean| PCB3_Resource_mean|
+|:-------|---:|---------------:|-----------------:|----------------:|------------------:|
+|1       | 297|            46.4|               4.1|             15.7|               26.7|
+|2       |  45|            50.1|               4.2|             17.2|               28.7|
+|3       |   3|            65.7|               4.7|             23.3|               37.7|
+
+* Cluster 1 ($n = 297$) has high positive MAPS scores and high SEPTI scores 
+* Cluster 2 ($n = 45$) has high negative MAPS scores and high ECBI scores 
+* Cluster 3 ($n = 3$) has low ECBI scores 
+
+
 ## Cluster on ECBI, MAPS, SEPTI metrics and parent's race
 
 
@@ -302,6 +391,19 @@ Use the **manhattan** metric.
   * Low SEPTI scores
 
 
+## Compare clusterings
+
+
+| clusterMetrics| clusterMetricsDemog|   n|
+|--------------:|-------------------:|---:|
+|              1|                   1| 292|
+|              1|                   4|   5|
+|              2|                   1|  14|
+|              2|                   2|  14|
+|              2|                   4|  17|
+|              3|                   3|   3|
+
+
 ## Save objects
 
 Bind study ID, `id`, to cluster ID, `cluster`.
@@ -311,17 +413,67 @@ Bind study ID, `id`, to cluster ID, `cluster`.
 
 ```
 ##                                                    mtime    size
-## data/processed/clusterAnalysis.RData 2018-07-14 23:11:12 2599485
+## data/processed/clusterAnalysis.RData 2018-07-16 15:51:28 5239484
 ```
 
 ```
 ##                                                   mtime size
-## data/processed/clusterCrosswalk.csv 2018-07-14 23:11:12 3062
+## data/processed/clusterCrosswalk.csv 2018-07-16 15:51:29 3091
 ```
 
 ```
 ##                                                   mtime size
-## data/processed/clusterCrosswalk.sav 2018-07-14 23:11:12 6016
+## data/processed/clusterCrosswalk.sav 2018-07-16 15:51:29 8768
+```
+
+Test SPSS data file.
+
+
+```r
+all.equal(dfCrosswalk, read_sav(f))
+```
+
+```
+## Warning: Column `id` has different attributes on LHS and RHS of join
+```
+
+```
+## Warning: Column `clusterMetrics` has different attributes on LHS and RHS of
+## join
+```
+
+```
+## Warning: Column `clusterMetricsDemog` has different attributes on LHS and
+## RHS of join
+```
+
+```
+## [1] TRUE
+```
+
+```r
+str(dfCrosswalk)
+```
+
+```
+## Classes 'tbl_df', 'tbl' and 'data.frame':	345 obs. of  3 variables:
+##  $ id                 : num  1 3 4 5 6 7 8 9 10 11 ...
+##  $ clusterMetrics     : num  1 1 1 1 2 1 2 1 1 1 ...
+##  $ clusterMetricsDemog: num  1 1 1 1 2 1 1 1 1 1 ...
+```
+
+```r
+str(read_sav(f))
+```
+
+```
+## Classes 'tbl_df', 'tbl' and 'data.frame':	345 obs. of  3 variables:
+##  $ id                 : atomic  1 3 4 5 6 7 8 9 10 11 ...
+##   ..- attr(*, "format.spss")= chr "F8.2"
+##  $ clusterMetrics     : atomic  1 1 1 1 2 1 2 1 1 1 ...
+##   ..- attr(*, "format.spss")= chr "F8.2"
+##  $ clusterMetricsDemog: atomic  1 1 1 1 2 1 1 1 1 1 ...
+##   ..- attr(*, "format.spss")= chr "F8.2"
 ```
 
 
