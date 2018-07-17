@@ -184,7 +184,7 @@ Use the **manhattan** metric.
 
 
 ```
-## [1] 345  18
+## [1] 361  18
 ```
 
 ```
@@ -201,23 +201,23 @@ Use the **manhattan** metric.
 
 ```
 ##   cluster size ave.sil.width
-## 1       1  297          0.36
-## 2       2   45          0.23
-## 3       3    3          0.28
+## 1       1  296          0.33
+## 2       2   62          0.20
+## 3       3    3          0.26
 ```
 
-* Hopkins statistic is 0.288
+* Hopkins statistic is 0.291
 * Analysis identified $k = 3$ clusters
-* Divisive coefficient is 0.853
-* Average silhouette width is 0.340
+* Divisive coefficient is 0.852
+* Average silhouette width is 0.308
 
 ![plot of chunk clusterXMetrics](figures/clusterXMetrics-1.png)![plot of chunk clusterXMetrics](figures/clusterXMetrics-2.png)![plot of chunk clusterXMetrics](figures/clusterXMetrics-3.png)
 
 
 |cluster |   n| ECBI_intensity_T_score_mean| ECBI_problem_T_score_mean| ECBI_Opp_mean| ECBI_Inatt_mean| ECBI_Cond_mean|
 |:-------|---:|---------------------------:|-------------------------:|-------------:|---------------:|--------------:|
-|1       | 297|                        52.5|                      52.2|          32.3|            13.2|           14.3|
-|2       |  45|                        62.3|                      64.6|          43.2|            15.8|           24.4|
+|1       | 296|                        52.2|                      52.0|          31.9|            13.0|           14.2|
+|2       |  62|                        60.6|                      62.7|          41.3|            15.4|           22.5|
 |3       |   3|                        37.7|                      44.3|          17.7|             5.3|            8.0|
 
 ```
@@ -228,44 +228,44 @@ Use the **manhattan** metric.
 
 |cluster |   n| SEPTI_nurturance_mean| SEPTI_discipline_mean| SEPTI_play_mean| SEPTI_routine_mean|
 |:-------|---:|---------------------:|---------------------:|---------------:|------------------:|
-|1       | 297|                  38.1|                  24.3|            32.8|               29.4|
-|2       |  45|                  33.4|                  18.8|            25.0|               23.5|
+|1       | 296|                  38.3|                  24.4|            33.2|               29.6|
+|2       |  62|                  33.8|                  19.1|            24.7|               23.7|
 |3       |   3|                  26.3|                  19.3|            25.7|               24.0|
 
 
 |cluster |parentRaceWhite |   n|  pct|
 |:-------|:---------------|---:|----:|
-|1       |0               |  58| 0.20|
-|1       |1               | 239| 0.80|
-|2       |0               |  20| 0.44|
-|2       |1               |  25| 0.56|
+|1       |0               |  63| 0.21|
+|1       |1               | 233| 0.79|
+|2       |0               |  27| 0.44|
+|2       |1               |  35| 0.56|
 |3       |1               |   3| 1.00|
 
 
 |cluster |   n| PCB1_Total_mean| PCB1_CondEmot_mean| PCB1_DevHab_mean|
 |:-------|---:|---------------:|------------------:|----------------:|
-|1       | 297|            65.8|               47.5|             18.3|
-|2       |  45|            71.9|               52.6|             19.3|
+|1       | 296|            66.2|               47.8|             18.3|
+|2       |  62|            70.7|               51.6|             19.1|
 |3       |   3|            85.3|               62.3|             23.0|
 
 
 
 |cluster |   n| PCB2_Tot_mean|
 |:-------|---:|-------------:|
-|1       | 297|          24.4|
-|2       |  45|          24.2|
+|1       | 296|          24.5|
+|2       |  62|          24.0|
 |3       |   3|          27.3|
 
 
 
 |cluster |   n| PCB3_Total_mean| PCB3_PCPonly_mean| PCB3_Person_mean| PCB3_Resource_mean|
 |:-------|---:|---------------:|-----------------:|----------------:|------------------:|
-|1       | 297|            46.4|               4.1|             15.7|               26.7|
-|2       |  45|            50.1|               4.2|             17.2|               28.7|
+|1       | 296|            46.5|               4.1|             15.7|               26.8|
+|2       |  62|            49.5|               4.2|             17.1|               28.1|
 |3       |   3|            65.7|               4.7|             23.3|               37.7|
 
-* Cluster 1 ($n = 297$) has high positive MAPS scores and high SEPTI scores 
-* Cluster 2 ($n = 45$) has high negative MAPS scores and high ECBI scores 
+* Cluster 1 ($n = 296$) has high positive MAPS scores and high SEPTI scores 
+* Cluster 2 ($n = 62$) has high negative MAPS scores and high ECBI scores 
 * Cluster 3 ($n = 3$) has low ECBI scores 
 
 
@@ -273,7 +273,7 @@ Use the **manhattan** metric.
 
 
 ```
-## [1] 345  20
+## [1] 361  20
 ```
 
 ```
@@ -291,90 +291,90 @@ Use the **manhattan** metric.
 
 ```
 ##   cluster size ave.sil.width
-## 1       1  306          0.31
-## 2       2   14          0.17
+## 1       1  311          0.29
+## 2       2   22          0.18
 ## 3       3    3          0.28
-## 4       4   22          0.21
+## 4       4   25          0.19
 ```
 
-* Hopkins statistic is 0.289
+* Hopkins statistic is 0.285
 * Analysis identified $k = 4$ clusters
-* Divisive coefficient is 0.848
-* Average silhouette width is 0.297
+* Divisive coefficient is 0.849
+* Average silhouette width is 0.274
 
 ![plot of chunk clusterXMetricsDemog](figures/clusterXMetricsDemog-1.png)![plot of chunk clusterXMetricsDemog](figures/clusterXMetricsDemog-2.png)![plot of chunk clusterXMetricsDemog](figures/clusterXMetricsDemog-3.png)
 
 
 |cluster |   n| ECBI_intensity_T_score_mean| ECBI_problem_T_score_mean| ECBI_Opp_mean| ECBI_Inatt_mean| ECBI_Cond_mean|
 |:-------|---:|---------------------------:|-------------------------:|-------------:|---------------:|--------------:|
-|1       | 306|                        52.9|                      53.0|          32.7|            13.4|           14.7|
-|2       |  14|                        63.9|                      68.8|          46.3|            16.6|           22.4|
+|1       | 311|                        52.6|                      52.6|          32.3|            13.2|           14.5|
+|2       |  22|                        62.4|                      69.8|          44.3|            16.1|           21.9|
 |3       |   3|                        37.7|                      44.3|          17.7|             5.3|            8.0|
-|4       |  22|                        59.5|                      56.0|          39.0|            14.4|           24.4|
+|4       |  25|                        59.4|                      55.5|          39.1|            14.2|           24.0|
 
 
 
 |cluster |   n| MAPS_PP_mean| MAPS_PR_mean| MAPS_WM_mean| MAPS_SP_mean| MAPS_HS_mean| MAPS_LC_mean| MAPS_PC_mean| MAPS_POS_mean| MAPS_NEG_mean|
 |:-------|---:|------------:|------------:|------------:|------------:|------------:|------------:|------------:|-------------:|-------------:|
-|1       | 306|          4.1|          4.6|          4.7|          4.5|          2.0|          1.9|          1.4|           4.5|           1.8|
-|2       |  14|          4.0|          4.1|          4.1|          3.9|          3.2|          2.6|          2.4|           4.0|           2.7|
+|1       | 311|          4.1|          4.6|          4.7|          4.5|          2.0|          1.9|          1.4|           4.5|           1.8|
+|2       |  22|          3.8|          4.2|          4.2|          3.9|          3.1|          2.5|          2.4|           4.0|           2.6|
 |3       |   3|          2.4|          2.9|          3.2|          2.1|          1.5|          1.9|          1.9|           2.7|           1.8|
-|4       |  22|          3.2|          3.6|          3.8|          3.4|          2.8|          2.9|          2.3|           3.5|           2.7|
+|4       |  25|          3.2|          3.6|          3.9|          3.5|          2.7|          2.9|          2.2|           3.5|           2.6|
 
 
 
 |cluster |   n| SEPTI_nurturance_mean| SEPTI_discipline_mean| SEPTI_play_mean| SEPTI_routine_mean|
 |:-------|---:|---------------------:|---------------------:|---------------:|------------------:|
-|1       | 306|                  38.1|                  24.2|            32.6|               29.3|
-|2       |  14|                  34.1|                  15.9|            21.8|               21.6|
+|1       | 311|                  38.2|                  24.3|            32.8|               29.4|
+|2       |  22|                  34.1|                  17.5|            22.6|               21.9|
 |3       |   3|                  26.3|                  19.3|            25.7|               24.0|
-|4       |  22|                  30.8|                  18.9|            27.0|               23.5|
+|4       |  25|                  31.8|                  18.8|            27.1|               23.6|
 
 
 |cluster |parentRaceWhite |   n|  pct|
 |:-------|:---------------|---:|----:|
-|1       |0               |  53| 0.17|
-|1       |1               | 253| 0.83|
-|2       |0               |   4| 0.29|
-|2       |1               |  10| 0.71|
+|1       |0               |  60| 0.19|
+|1       |1               | 251| 0.81|
+|2       |0               |   6| 0.27|
+|2       |1               |  16| 0.73|
 |3       |1               |   3| 1.00|
-|4       |0               |  21| 0.95|
-|4       |1               |   1| 0.05|
+|4       |0               |  24| 0.96|
+|4       |1               |   1| 0.04|
 
 
 |cluster |   n| PCB1_Total_mean| PCB1_CondEmot_mean| PCB1_DevHab_mean|
 |:-------|---:|---------------:|------------------:|----------------:|
-|1       | 306|            66.0|               47.7|             18.2|
-|2       |  14|            73.1|               53.3|             19.8|
+|1       | 311|            66.2|               47.9|             18.3|
+|2       |  22|            71.5|               52.5|             19.0|
 |3       |   3|            85.3|               62.3|             23.0|
-|4       |  22|            71.8|               51.8|             20.0|
+|4       |  25|            72.2|               52.0|             20.2|
 
 
 
 |cluster |   n| PCB2_Tot_mean|
 |:-------|---:|-------------:|
-|1       | 306|          24.4|
-|2       |  14|          24.4|
+|1       | 311|          24.4|
+|2       |  22|          24.4|
 |3       |   3|          27.3|
-|4       |  22|          23.9|
+|4       |  25|          24.0|
 
 
 
 |cluster |   n| PCB3_Total_mean| PCB3_PCPonly_mean| PCB3_Person_mean| PCB3_Resource_mean|
 |:-------|---:|---------------:|-----------------:|----------------:|------------------:|
-|1       | 306|            46.3|               4.1|             15.7|               26.6|
-|2       |  14|            50.9|               4.1|             17.1|               29.6|
+|1       | 311|            46.4|               4.1|             15.7|               26.6|
+|2       |  22|            48.9|               4.1|             16.1|               28.7|
 |3       |   3|            65.7|               4.7|             23.3|               37.7|
-|4       |  22|            52.5|               4.1|             18.1|               30.2|
+|4       |  25|            53.5|               4.2|             18.4|               30.9|
 
 * Demographic factors considered
   * Parent race, White/Non-White
-* Cluster 1 ($n = 306$)
+* Cluster 1 ($n = 311$)
   * Majority White
   * Lower ECBI scores than Clusters 2/4
   * Higher positive MAPS scores than Clusters 2/4, lower negative MAPS scores than Clusters 2/4
   * Higher SEPTI scores than Clusters 2/4
-* Cluster 2 ($n = 14$)
+* Cluster 2 ($n = 22$)
   * Majority White, *more similar to Cluster 1*
   * High ECBI scores, *more similar to Cluster 4*
   * Low positive MAPS scores, high negative MAPS scores, *more similar to Cluster 4*
@@ -384,7 +384,7 @@ Use the **manhattan** metric.
   * Middle income
   * Low ECBI scores
   * Low positive MAPS scores, low negative MAPS scores
-* Cluster 4 ($n = 22$)
+* Cluster 4 ($n = 25$)
   * Majority non-White
   * High ECBI scores
   * Low positive MAPS scores, high negative MAPS scores
@@ -396,11 +396,11 @@ Use the **manhattan** metric.
 
 | clusterMetrics| clusterMetricsDemog|   n|
 |--------------:|-------------------:|---:|
-|              1|                   1| 292|
-|              1|                   4|   5|
-|              2|                   1|  14|
-|              2|                   2|  14|
-|              2|                   4|  17|
+|              1|                   1| 293|
+|              1|                   4|   3|
+|              2|                   1|  18|
+|              2|                   2|  22|
+|              2|                   4|  22|
 |              3|                   3|   3|
 
 
@@ -413,17 +413,17 @@ Bind study ID, `id`, to cluster ID, `cluster`.
 
 ```
 ##                                                    mtime    size
-## data/processed/clusterAnalysis.RData 2018-07-17 08:29:54 5239484
+## data/processed/clusterAnalysis.RData 2018-07-17 14:28:09 5735437
 ```
 
 ```
 ##                                                   mtime size
-## data/processed/clusterCrosswalk.csv 2018-07-17 08:29:54 3091
+## data/processed/clusterCrosswalk.csv 2018-07-17 14:28:09 3234
 ```
 
 ```
 ##                                                   mtime size
-## data/processed/clusterCrosswalk.sav 2018-07-17 08:29:54 8768
+## data/processed/clusterCrosswalk.sav 2018-07-17 14:28:09 9152
 ```
 
 Test SPSS data file.
@@ -456,7 +456,7 @@ str(dfCrosswalk)
 ```
 
 ```
-## Classes 'tbl_df', 'tbl' and 'data.frame':	345 obs. of  3 variables:
+## Classes 'tbl_df', 'tbl' and 'data.frame':	361 obs. of  3 variables:
 ##  $ id                 : num  1 3 4 5 6 7 8 9 10 11 ...
 ##  $ clusterMetrics     : num  1 1 1 1 2 1 2 1 1 1 ...
 ##  $ clusterMetricsDemog: num  1 1 1 1 2 1 1 1 1 1 ...
@@ -467,7 +467,7 @@ str(read_sav(f))
 ```
 
 ```
-## Classes 'tbl_df', 'tbl' and 'data.frame':	345 obs. of  3 variables:
+## Classes 'tbl_df', 'tbl' and 'data.frame':	361 obs. of  3 variables:
 ##  $ id                 : atomic  1 3 4 5 6 7 8 9 10 11 ...
 ##   ..- attr(*, "format.spss")= chr "F8.2"
 ##  $ clusterMetrics     : atomic  1 1 1 1 2 1 2 1 1 1 ...
