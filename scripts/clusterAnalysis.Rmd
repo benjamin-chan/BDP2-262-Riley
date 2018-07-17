@@ -67,6 +67,7 @@ Use the **`r metric`** metric.
 # load("data/processed/dataframes.RData")
 dfNonMissing <- 
   df %>% 
+  select(matches("id|ECBI|MAPS|SEPTI|parentRaceW|PCB")) %>% 
   na.omit()
 dfCrosswalk <- 
   dfNonMissing %>% 
