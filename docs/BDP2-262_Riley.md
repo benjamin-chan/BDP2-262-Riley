@@ -1,6 +1,6 @@
 ---
 title: "Parent and Provider Perceptions of Behavioral Healthcare in Pediatric Primary Care (PI: Andrew Riley; BDP2-262)"
-date: "2018-07-16"
+date: "2018-07-17"
 author: Benjamin Chan (chanb@ohsu.edu)
 output:
   html_document:
@@ -384,7 +384,7 @@ Use the **manhattan** metric.
   * Middle income
   * Low ECBI scores
   * Low positive MAPS scores, low negative MAPS scores
-* Cluster 4 ($n = 14$)
+* Cluster 4 ($n = 22$)
   * Majority non-White
   * High ECBI scores
   * Low positive MAPS scores, high negative MAPS scores
@@ -413,17 +413,17 @@ Bind study ID, `id`, to cluster ID, `cluster`.
 
 ```
 ##                                                    mtime    size
-## data/processed/clusterAnalysis.RData 2018-07-16 15:51:28 5239484
+## data/processed/clusterAnalysis.RData 2018-07-17 08:29:54 5239484
 ```
 
 ```
 ##                                                   mtime size
-## data/processed/clusterCrosswalk.csv 2018-07-16 15:51:29 3091
+## data/processed/clusterCrosswalk.csv 2018-07-17 08:29:54 3091
 ```
 
 ```
 ##                                                   mtime size
-## data/processed/clusterCrosswalk.sav 2018-07-16 15:51:29 8768
+## data/processed/clusterCrosswalk.sav 2018-07-17 08:29:54 8768
 ```
 
 Test SPSS data file.
