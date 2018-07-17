@@ -298,7 +298,7 @@ bind_cols(dfYPCB,
   * Middle income
   * Low ECBI scores
   * Low positive MAPS scores, low negative MAPS scores
-* Cluster 4 ($`r sprintf("n = %d", dianaXMetricsDemog[["hcut"]][["size"]][2])`$)
+* Cluster 4 ($`r sprintf("n = %d", dianaXMetricsDemog[["hcut"]][["size"]][4])`$)
   * Majority non-White
   * High ECBI scores
   * Low positive MAPS scores, high negative MAPS scores
